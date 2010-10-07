@@ -1,0 +1,26 @@
+<p>
+    <b>Name:</b>
+    <%= @cause.name %>
+</p>
+<p>
+    <b>Title:</b>
+    <%= @cause.url %>
+</p>
+<p>
+    <b>Content:</b>
+    <%= @cause.description %>
+</p>
+<p>
+    <b>City:</b>
+    <%= @cause.city %>
+</p>
+<p>
+    <b>Founds Needed:</b>
+    <%= @cause.funds_needed %> 
+</p>
+
+<p>
+    <b>Status:</b>
+    ( <%= @cause.funds_raised/@cause.funds_needed %> % Complete)
+</p>
+
