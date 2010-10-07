@@ -34,8 +34,10 @@ GEM
     daemons (1.0.10)
     erubis (2.6.6)
       abstract (>= 1.0.0)
+    ffaker (0.4.0)
     gem_plugin (0.2.3)
     i18n (0.4.1)
+    machinist (1.0.6)
     mail (2.2.6.1)
       activesupport (>= 2.3.6)
       mime-types
@@ -78,6 +80,8 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  ffaker
+  machinist
   mongrel
   pg
   rails (= 3.0.0)
