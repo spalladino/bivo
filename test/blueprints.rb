@@ -33,3 +33,10 @@ Cause.blueprint do
   funds_raised  {Sham.funds}
   status        {%w(pending_approval approved raising_funds completed)[rand(4)]}
 end
+
+PersonalUser.blueprint do
+  first_name   {Sham.simple_name}
+  last_name    {Sham.simple_name}
+  email
+  password
+end

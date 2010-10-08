@@ -10,4 +10,7 @@ class ActiveSupport::TestCase
   fixtures :all
   setup { Sham.reset }
   # Add more helper methods to be used by all tests here...
+  def assert_save(obj)
+    assert obj.save, "could not save "+obj.class.name+" because: "+obj.errors.to_s
+  end
 end
