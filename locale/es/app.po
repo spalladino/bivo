@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: version 0.0.1\n"
-"POT-Creation-Date: 2010-10-08 15:38-0300\n"
+"POT-Creation-Date: 2010-10-08 17:03-0300\n"
 "PO-Revision-Date: 2010-10-08 14:49-0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,55 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
+#: locale/model_attributes.rb:5
+msgid "CauseCategory|Name"
+msgstr ""
+
+#: locale/model_attributes.rb:10
+msgid "Cause|City"
+msgstr ""
+
+#: locale/model_attributes.rb:11
+msgid "Cause|Description"
+msgstr ""
+
+#: locale/model_attributes.rb:9
+msgid "Cause|Funds needed"
+msgstr ""
+
+#: locale/model_attributes.rb:12
+msgid "Cause|Funds raised"
+msgstr ""
+
+#: locale/model_attributes.rb:7
+msgid "Cause|Name"
+msgstr ""
+
+#: locale/model_attributes.rb:13
+#, fuzzy
+msgid "Cause|Status"
+msgstr "Estado"
+
+#: locale/model_attributes.rb:8
+msgid "Cause|Url"
+msgstr ""
+
+#: locale/model_attributes.rb:3
+msgid "Country|Name"
+msgstr ""
+
 #: app/views/cause/details.html.erb:23
 msgid "Status"
 msgstr "Estado"
+
+#: locale/model_attributes.rb:6
+msgid "cause"
+msgstr ""
+
+#: locale/model_attributes.rb:4
+msgid "cause category"
+msgstr ""
+
+#: locale/model_attributes.rb:2
+msgid "country"
+msgstr ""
