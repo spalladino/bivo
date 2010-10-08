@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101008132941) do
+ActiveRecord::Schema.define(:version => 20101008162949) do
 
   create_table "cause_categories", :force => true do |t|
     t.string   "name"
@@ -32,6 +32,12 @@ ActiveRecord::Schema.define(:version => 20101008132941) do
     t.datetime "updated_at"
   end
 
+  create_table "charity_categories", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "countries", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -39,13 +45,13 @@ ActiveRecord::Schema.define(:version => 20101008132941) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "email",                               :default => "", :null => false
-    t.string   "encrypted_password",   :limit => 128, :default => "", :null => false
-    t.string   "password_salt",                       :default => "", :null => false
+    t.string   "email",                                         :default => "", :null => false
+    t.string   "encrypted_password",             :limit => 128, :default => "", :null => false
+    t.string   "password_salt",                                 :default => "", :null => false
     t.string   "reset_password_token"
     t.string   "remember_token"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                       :default => 0
+    t.integer  "sign_in_count",                                 :default => 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -53,6 +59,31 @@ ActiveRecord::Schema.define(:version => 20101008132941) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "rpx_identifier"
+    t.string   "type"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "nickname"
+    t.date     "birthday"
+    t.string   "gender"
+    t.string   "about_me"
+    t.string   "charity_name"
+    t.string   "charity_website"
+    t.string   "short_url"
+    t.integer  "charity_category_id"
+    t.string   "charity_type"
+    t.string   "tax_reg_number"
+    t.string   "rating"
+    t.string   "rating_url"
+    t.integer  "country_id"
+    t.string   "city"
+    t.string   "description"
+    t.boolean  "active"
+    t.boolean  "notice_all_funds_raised"
+    t.boolean  "notice_status_change"
+    t.boolean  "notice_status_update_published"
+    t.boolean  "notice_comment_added"
+    t.boolean  "send_me_news"
+    t.boolean  "auto_approve_comments"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
