@@ -5,11 +5,11 @@ class Cause < ActiveRecord::Base
   
   validates_presence_of :name
   validates_length_of :name, :maximum => 255
-  validates_uniqueness_of :name
+  validates_uniqueness_of :name, :case_sensitive => false
   
   validates_presence_of :url
   validates_length_of :url, :maximum => 255
-  validates_uniqueness_of :url
+  validates_uniqueness_of :url, :case_sensitive => false
   
   validates_presence_of :funds_needed
   validates_numericality_of :funds_needed, :greater_than => 0
