@@ -3,14 +3,21 @@ source 'http://rubygems.org'
 gem 'rails', '3.0.0'
 gem 'devise'
 gem 'devise_rpx_connectable'
-
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
-
 gem 'pg'
 gem 'mongrel'
-gem 'machinist'
-gem 'ffaker'
+gem 'gettext_i18n_rails'
+
+group :test do
+  gem 'machinist'
+  gem 'ffaker'
+end
+
+group :development do
+  gem 'rails3-generators'
+  gem 'gettext', '>=1.9.3', :require => false
+end
+
+
 
 # Use unicorn as the web server
 # gem 'unicorn'
