@@ -38,5 +38,10 @@ module Bivo
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
+    
+    # Configure generator options
+    config.generators do |g|
+      g.fixture :false
+    end
   end
 end

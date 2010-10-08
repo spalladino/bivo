@@ -7,8 +7,17 @@ gem 'rails', '3.0.0'
 
 gem 'pg'
 gem 'mongrel'
-gem 'machinist'
-gem 'ffaker'
+
+group :test do
+  gem 'machinist'
+  gem 'ffaker'
+end
+
+group :development do
+  gem 'rails3-generators'
+end
+
+
 
 # Use unicorn as the web server
 # gem 'unicorn'
