@@ -52,7 +52,7 @@ GEM
     json_pure (1.4.6)
     locale (2.0.5)
     machinist (1.0.6)
-    mail (2.2.6.1)
+    mail (2.2.7)
       activesupport (>= 2.3.6)
       mime-types
       treetop (>= 1.4.5)
@@ -60,11 +60,7 @@ GEM
     mongrel (1.2.0.pre2)
       daemons (~> 1.0.10)
       gem_plugin (~> 0.2.3)
-      gem_plugin (~> 0.2.3)
-    mongrel (1.2.0.pre2-x86-mingw32)
-      gem_plugin (~> 0.2.3)
     pg (0.9.0)
-    pg (0.9.0-x86-mingw32)
     polyglot (0.3.1)
     rack (1.2.1)
     rack-mount (0.6.13)
@@ -97,7 +93,6 @@ GEM
 
 PLATFORMS
   ruby
-  x86-mingw32
 
 DEPENDENCIES
   devise
