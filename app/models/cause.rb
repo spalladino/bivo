@@ -1,3 +1,5 @@
+require 'enumerated_attribute'
+
 class Cause < ActiveRecord::Base
   
   belongs_to :category, :class_name => "CauseCategory"
@@ -23,5 +25,7 @@ class Cause < ActiveRecord::Base
   validates_length_of :description, :maximum => 255
   
   validates_numericality_of :funds_raised, :greater_than_or_equal_to => 0
+  
+  enum_attr :status, %w(^inactive active raising_funds completed paid deleted)
   
 end

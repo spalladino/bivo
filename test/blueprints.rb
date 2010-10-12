@@ -31,7 +31,6 @@ Cause.blueprint do
   url           {Sham.simple_name}
   funds_needed  {Sham.funds}
   funds_raised  {Sham.funds}
-  status        {%w(pending_approval approved raising_funds completed)[rand(4)]}
 end
 
 PersonalUser.blueprint do
