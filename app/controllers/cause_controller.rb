@@ -1,7 +1,10 @@
 class CauseController < ApplicationController
   
+
   UserId = 1
   
+
+
   def details 
     @cause = Cause.find_by_url(params[:url])
   end
