@@ -45,4 +45,9 @@ class PersonalUserTest < ActiveSupport::TestCase
     assert !user.save, "should not be able to save"
     
   end
+  
+  test "type is personal user" do
+    user = PersonalUser.make
+    assert_equal user.type, "PersonalUser"
+  end
 end

@@ -7,6 +7,7 @@ gem 'pg'
 gem 'mongrel'
 gem 'gettext_i18n_rails'
 gem 'will_paginate'
+gem 'enumerated_attribute'
 
 group :test do
   gem 'machinist'
