@@ -2,6 +2,11 @@ require 'test_helper'
 
 class CauseControllerTest < ActionController::TestCase
   
+  MESSAGE_OK = "Ok"
+  MESSAGE_FAIL_ALREADY_VOTE = "Already voted"
+  MESSAGE_FAIL_STATUS_PROBLEM = "The cause status doesnt allow voting"
+  MESSAGE_FAIL_AUTH_PROBLEM = "The user should be authenticated"
+  
   test "should get details" do
     cause = Cause.make :url => "foobar"
     
@@ -36,40 +41,62 @@ class CauseControllerTest < ActionController::TestCase
   end
   
   
-  test "should fail on vote if already voted (ajax)" do
+  test "should fail on vote if already voted (ajax) and response is correct" do
     user = create_user
     user.confirm!
     sign_in user
     
-    existing_vote = Vote.find(:first)
+    existing_vote = Vote.create :user_id => user.id, :cause_id => 0   
+    
     votes_count = Vote.length
     
     xhr :post, :vote, :cause_id => existing_vote.cause_id
     
+    #no votes added:
     assert_equal votes_count,Vote.length
-    #deberia testear que se produce un error?
     
+    #response ok:
+    vote_result = JSON.parse(@request.body)
+    assert_equal false, vote_result['success']
+    assert_equal MESSAGE_FAIL_ALREADY_VOTE, vote_result['message']
   end
   
   
-  test "should fail on vote if not authenticated user (no ajax)" do
+  test "should fail on vote if not authenticated user and error is correct (no ajax)" do
     cause = Cause.make
     cause_counter = cause.votes.length
     
     post :vote, {'cause_id' => cause.id.to_s} 
     cause.reload
     
+    #no votes added:
     assert_equal cause_counter,cause.votes.length
-    #deberia testear que se produce un error?
+    
+    #error is correct:
+    assert_equal flash[:notice], MESSAGE_FAIL_AUTH_PROBLEM
+    assert_response :error
   end 
   
   
   test "should fail on vote if cause status doesnt support voting (ajax)" do
+    user = create_user
+    user.confirm!
+    sign_in user
+    cause = Cause.make(:status => "raising_funds")
     
+    xhr :post, :vote, :cause_id => cause.id
+    
+    #response correct:
+    vote_result = JSON.parse(@request.body)
+    assert_equal false, vote_result['success']
+    assert_equal MESSAGE_FAIL_STATUS_PROBLEM, vote_result['message']
+    
+    #the information doesnt persist:
+    assert_nil Vote.find_by_cause_id_and_user_id cause.id, user.id
   end
   
   
-  test "votes should persist in database if everything is ok (ajax)" do
+  test "votes should persist in database if everything is ok and response is ok(ajax)" do
     user = create_user
     user.confirm!
     sign_in user
@@ -77,39 +104,33 @@ class CauseControllerTest < ActionController::TestCase
     
     xhr :post, :vote, :cause_id => cause.id
     
-    cause.reload
+    #changes persisted:
+    assert_not_nil Vote.find_by_cause_id_and_user_id cause.id, user.id
     
-    assert_not_equal Vote.find_by_cause_id_and_user_id(cause.id, user.id), nil
+    #response ok:
+    vote_result = JSON.parse(@request.body)
+    assert_equal true, vote_result['success']
+    assert_equal MESSAGE_OK, vote_result['message']
   end
   
   
-  test "votes should persist in database if everithing is ok (no ajax) " do
+  test "votes should persist in database if everything is ok (no ajax) " do
     user = create_user
     user.confirm!
     sign_in user
     cause = Cause.make
-    cause_counter = cause.votes.length
-    
-    cause.reload
-    
-    assert_not_equal Vote.find_by_cause_id_and_user_id(cause.id, user.id), nil   
-  end
-  
-  
-  test "votes of the cause should be incremented by one if everthing worked (no ajax)" do
-    user = create_user
-    user.confirm!
-    sign_in user
-    cause = Cause.make
-    cause_counter = cause.votes.length
+    votes_count = Vote.length
     
     post :vote, {'cause_id' => cause.id.to_s} 
-    cause.reload
     
-    assert_equal cause_counter+1,cause.votes.length
-  end    
+    #vote persisted:
+    assert_equal votes_count+1,Vote.length
+    
+    #response ok
+    assert_response :success
+    
+  end
 end
-
 
 
 #    * :success - Status code was 200

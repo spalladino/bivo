@@ -1,6 +1,7 @@
 class CauseController < ApplicationController
   
-
+  before_filter :authenticate_user!, :except => :details
+  
   UserId = 1
   
 
