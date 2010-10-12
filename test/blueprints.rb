@@ -33,3 +33,14 @@ Cause.blueprint do
   funds_raised  {Sham.funds}
   status        {%w(pending_approval approved raising_funds completed)[rand(4)]}
 end
+
+class << Cause
+  def make_with_votes(attributes = {})
+    votes_count = attributes[:votes_count] || rand(10)
+    attributes.delete(:votes_count)
+    
+    Cause.make(attributes) do |cause|
+      votes_count.to_i.times { cause.votes.make }
+    end
+  end
+end
