@@ -2,12 +2,13 @@ class CauseController < ApplicationController
   
   before_filter :authenticate_user!, :except => :details
   
-  UserId = 1
-  
-  
   
   def details 
     @cause = Cause.find_by_url(params[:url])
+  end
+  
+  def index
+    @causes = Cause.order('votes_count DESC').paginate(:per_page => params[:per_page] || 20, :page => params[:page])
   end
   
   def vote
@@ -20,6 +21,7 @@ class CauseController < ApplicationController
     end
   end 
   
+  
   def self.custom_response(message,success)
     if request.xhr? 
       #AJAX 
@@ -31,5 +33,5 @@ class CauseController < ApplicationController
     end
   end  
   
-  
+    
 end
