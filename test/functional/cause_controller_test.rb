@@ -15,6 +15,7 @@ class CauseControllerTest < ActionController::TestCase
     assert_response :success
   end
   
+  
   test "should get causes fist page" do
     #    causes = Cause.make(100)
     #    first_20 = Cause.all[0...20]
@@ -25,8 +26,22 @@ class CauseControllerTest < ActionController::TestCase
     #    assert_not_nil assigns(:causes)
   end
   
-  test "should fail on vote if already voted without (ajax)" do
+  
+  
+  
+  test "should get voting causes first page sorted by popularity" do
+   (1..100).each { |i| Cause.make_with_votes :votes_count => i, :status => :active }
     
+    first_20 = Cause.where()
+    
+    get :index
+    
+    assert_not_nil assigns(:causes)
+    assert_not_nil assigns(:causes)
+  end
+  
+  
+  test "should fail on vote if already voted without (ajax)" do
   end
   
   test "should fail on vote if not authenticated user (no ajax)" do
@@ -58,10 +73,7 @@ class CauseControllerTest < ActionController::TestCase
     sign_in user
     cause = Cause.make
     cause_counter = cause.votes.length
-    
-    
-    
-    
+    #TODO: terminar    
   end
   
   test "votes of the cause should be incremented by one if everthing worked (no ajax)" do
@@ -77,7 +89,6 @@ class CauseControllerTest < ActionController::TestCase
     assert_equal cause_counter+1,cause.votes.length
     
   end    
-  
 end
 
 

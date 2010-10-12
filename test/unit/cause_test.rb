@@ -12,4 +12,13 @@ class CauseTest < ActiveSupport::TestCase
     assert_equal cause.status, :inactive
   end
 
+  test "should increase vote counter" do
+    cause = Cause.make :status => :active
+    assert_equal 0, cause.votes_count
+    
+    cause.votes.make
+    cause.reload
+    assert_equal 1, cause.votes_count
+  end
+
 end

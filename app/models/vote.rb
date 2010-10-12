@@ -1,4 +1,4 @@
 class Vote < ActiveRecord::Base
   belongs_to :user
-  belongs_to :cause
+  belongs_to :cause, :counter_cache => true
 end
