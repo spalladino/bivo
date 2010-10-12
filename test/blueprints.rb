@@ -41,6 +41,11 @@ PersonalUser.blueprint do
   password
 end
 
+Vote.blueprint do
+  user         {PersonalUser.make}
+  cause        {Cause.make}
+end
+
 class << Cause
   def make_with_votes(attributes = {})
     votes_count = attributes[:votes_count] || rand(10)
