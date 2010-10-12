@@ -39,6 +39,8 @@ GEM
     devise_rpx_connectable (0.2.2)
       devise (>= 1.1.2)
       rpx_now (>= 0.6.23)
+    enumerated_attribute (0.2.16)
+      meta_programming (>= 0.2.1)
     erubis (2.6.6)
       abstract (>= 1.0.0)
     fast_gettext (0.5.10)
@@ -56,6 +58,7 @@ GEM
       activesupport (>= 2.3.6)
       mime-types
       treetop (>= 1.4.5)
+    meta_programming (0.2.2)
     mime-types (1.16)
     mongrel (1.2.0.pre2)
       daemons (~> 1.0.10)
@@ -97,6 +100,7 @@ PLATFORMS
 DEPENDENCIES
   devise
   devise_rpx_connectable
+  enumerated_attribute
   ffaker
   gettext (>= 1.9.3)
   gettext_i18n_rails

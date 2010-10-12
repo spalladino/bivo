@@ -40,3 +40,14 @@ PersonalUser.blueprint do
   email
   password
 end
+
+Charity.blueprint do
+  charity_name     {Sham.simple_name}
+  email
+  password
+  charity_website  {Sham.url}
+  short_url        {Sham.simple_name}
+  charity_type     {Sham.simple_name}
+  tax_reg_number   {Sham.simple_name}
+  city
+end

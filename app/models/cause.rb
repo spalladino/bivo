@@ -3,6 +3,8 @@ class Cause < ActiveRecord::Base
   belongs_to :category, :class_name => "CauseCategory"
   belongs_to :country
   
+  has_many :votes
+  
   validates_presence_of :name
   validates_length_of :name, :maximum => 255
   validates_uniqueness_of :name, :case_sensitive => false
