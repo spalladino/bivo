@@ -13,7 +13,7 @@ class CauseController < ApplicationController
     @vote = Vote.new(params[:causeId])
     if request.xhr?
       
-      #si es ajax..  json succes:bool message:string
+      #si es ajax..  json succes:bool message:string votesCount:int
       # respond to Ajax request
       
     else

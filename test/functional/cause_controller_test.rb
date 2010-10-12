@@ -2,6 +2,9 @@ require 'test_helper'
 
 class CauseControllerTest < ActionController::TestCase
   
+  
+  
+  
   test "should get details" do
     cause = Cause.make :url => "foobar"
     
@@ -13,17 +16,69 @@ class CauseControllerTest < ActionController::TestCase
   end
   
   test "should get causes fist page" do
-#    causes = Cause.make(100)
-#    first_20 = Cause.all[0...20]
-#    
-#    get :index
-#    
-#    assert_not_nil assigns(:causes)
-#    assert_not_nil assigns(:causes)
+    #    causes = Cause.make(100)
+    #    first_20 = Cause.all[0...20]
+    #    
+    #    get :index
+    #    
+    #    assert_not_nil assigns(:causes)
+    #    assert_not_nil assigns(:causes)
   end
   
+  test "should fail on vote if already voted without (ajax)" do
+    
+  end
+  
+  test "should fail on vote if not authenticated user (no ajax)" do
+    
+  end 
+  
+  test "should fail on vote if cause status doesnt support voting (ajax)" do
+    
+  end
+  
+  test "votes should persist in database if everything is ok (ajax)" do
+    user = create_user
+    user.confirm!
+    sign_in user
+    cause = Cause.make
+    
+    xhr :post, :vote, :cause_id => cause.id
+    
+    cause.reload
+    
+    assert_not_equal cause.find_by_cause_id_and_user_id(cause.id, user.id), nil
+    
+    
+  end
+  
+  test "votes should persist in database if everithing is ok (no ajax) " do
+    user = create_user
+    user.confirm!
+    sign_in user
+    cause = Cause.make
+    cause_counter = cause.votes.length
+    
+    
+    
+    
+  end
+  
+  test "votes of the cause should be incremented by one if everthing worked (no ajax)" do
+    user = create_user
+    user.confirm!
+    sign_in user
+    cause = Cause.make
+    cause_counter = cause.votes.length
+    
+    post :vote, {'cause_id' => cause.id.to_s} 
+    cause.reload
+    
+    assert_equal cause_counter+1,cause.votes.length
+    
+  end    
+  
 end
-
 
 
 
