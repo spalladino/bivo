@@ -12,14 +12,15 @@ class CauseControllerTest < ActionController::TestCase
     assert_response :success
   end
   
-  test "should get causes fist page" do
-#    causes = Cause.make(100)
-#    first_20 = Cause.all[0...20]
-#    
-#    get :index
-#    
-#    assert_not_nil assigns(:causes)
-#    assert_not_nil assigns(:causes)
+  test "should get voting causes first page sorted by popularity" do
+    (1..100).each { |i| Cause.make_with_votes :votes_count => i, :status => :active }
+    
+    first_20 = Cause.where()
+    
+    get :index
+    
+    assert_not_nil assigns(:causes)
+    assert_not_nil assigns(:causes)
   end
   
 end
