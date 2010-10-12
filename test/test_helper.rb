@@ -5,4 +5,9 @@ require 'blueprints'
 
 class ActiveSupport::TestCase
   setup { Sham.reset }
+
+  def assert_save(obj)
+    assert obj.save, "Could not save #{obj.class.name} because: #{obj.errors.to_s}"
+  end
+
 end

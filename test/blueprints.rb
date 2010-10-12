@@ -34,6 +34,13 @@ Cause.blueprint do
   status        {%w(pending_approval approved raising_funds completed)[rand(4)]}
 end
 
+PersonalUser.blueprint do
+  first_name   {Sham.simple_name}
+  last_name    {Sham.simple_name}
+  email
+  password
+end
+
 class << Cause
   def make_with_votes(attributes = {})
     votes_count = attributes[:votes_count] || rand(10)
@@ -44,3 +51,4 @@ class << Cause
     end
   end
 end
+

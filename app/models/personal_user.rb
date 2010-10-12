@@ -10,6 +10,6 @@ class PersonalUser < User
   
   validates_length_of :about_me, :maximum => 255
   
-  validates_uniqueness_of :nickname, :case_sensitive => false
+  validates_uniqueness_of :nickname, :case_sensitive => false, :allow_blank => true
   
 end
