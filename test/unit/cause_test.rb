@@ -7,4 +7,9 @@ class CauseTest < ActiveSupport::TestCase
     assert_equal cause.votes.count, 5
   end
 
+  test "new category has inactive status" do
+    cause = Cause.make
+    assert_equal cause.status, :inactive
+  end
+
 end
