@@ -9,10 +9,12 @@ gem 'gettext_i18n_rails'
 gem 'will_paginate'
 gem 'enumerated_attribute'
 gem 'omniauth'
+gem "jquery-rails"
 
 group :test do
   gem 'machinist'
   gem 'ffaker'
+  gem 'single_test'
 end
 
 group :development do
