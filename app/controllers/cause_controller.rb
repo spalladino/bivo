@@ -19,9 +19,6 @@ class CauseController < ApplicationController
       custom_response @vote.errors.on(:user_id) ,false
     end
   end 
- 
-  
-  
   
   def custom_response(message,success)
     if request.xhr? 
@@ -33,6 +30,5 @@ class CauseController < ApplicationController
       redirect_to request.referer
     end
   end  
-  
     
 end

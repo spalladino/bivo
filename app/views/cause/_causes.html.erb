@@ -1,8 +1,13 @@
 <%= will_paginate @causes %>
 
+<div id="causes-list">
 <% for cause in @causes %>
   <div class="cause">
+	<h3><%= cause.name %></h3>
+	<p><%= cause.country.name %></p>
+	<p><%= _("Organized by")%>: [CharityName]</p>
+	<p><%= _("Funds needed")%>: [FundsNeeded]</p>
+	<p><%= cause.description %></p>
   </div>
 <% end %>
-
-<%= will_paginate @causes %>
+</div>
