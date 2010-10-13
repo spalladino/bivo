@@ -51,6 +51,8 @@ GEM
     gettext_i18n_rails (0.2.6)
       fast_gettext
     i18n (0.4.1)
+    jquery-rails (0.2.2)
+      rails (~> 3.0)
     json_pure (1.4.6)
     locale (2.0.5)
     machinist (1.0.6)
@@ -111,6 +113,7 @@ DEPENDENCIES
   ffaker
   gettext (>= 1.9.3)
   gettext_i18n_rails
+  jquery-rails
   machinist
   mongrel
   pg

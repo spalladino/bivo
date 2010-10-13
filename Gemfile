@@ -8,6 +8,7 @@ gem 'mongrel'
 gem 'gettext_i18n_rails'
 gem 'will_paginate'
 gem 'enumerated_attribute'
+gem "jquery-rails"
 
 group :test do
   gem 'machinist'
