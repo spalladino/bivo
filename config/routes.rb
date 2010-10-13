@@ -1,4 +1,6 @@
 Bivo::Application.routes.draw do
+  get "authentication/from_facebook"
+
   devise_for :users
 
   get "/home/index/"

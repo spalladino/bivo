@@ -139,6 +139,4 @@ Devise.setup do |config|
   #   end
   #   manager.default_strategies(:scope => :user).unshift :twitter_oauth
   # end
-  config.rpx_application_name = "bivo"
-  RPXNow.api_key = "e2e240f08d408ec32a9921040121de3af6ae3908"
 end

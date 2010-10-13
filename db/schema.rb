@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101012133548) do
+ActiveRecord::Schema.define(:version => 20101012194844) do
 
   create_table "cause_categories", :force => true do |t|
     t.string   "name"
@@ -84,6 +84,7 @@ ActiveRecord::Schema.define(:version => 20101012133548) do
     t.boolean  "notice_comment_added"
     t.boolean  "send_me_news"
     t.boolean  "auto_approve_comments"
+    t.boolean  "from_facebook"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
