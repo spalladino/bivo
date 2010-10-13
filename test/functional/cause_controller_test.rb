@@ -17,7 +17,7 @@ class CauseControllerTest < ActionController::TestCase
     assert_response :success
   end
   
-  test "should get voting causes first page sorted by popularity" do
+  test "should get voting causes list first page sorted by popularity" do
     # Create 20 causes with votes and 40 unvoted
     (1..20).each { |i| Cause.make_with_votes :votes_count => i, :status => :active }
     40.times { Cause.make :status => :active}

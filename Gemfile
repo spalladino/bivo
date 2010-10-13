@@ -12,6 +12,7 @@ gem 'enumerated_attribute'
 group :test do
   gem 'machinist'
   gem 'ffaker'
+  gem 'single_test'
 end
 
 group :development do
