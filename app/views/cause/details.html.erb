@@ -11,7 +11,7 @@
     <%= @cause.description %>
 </p>
 <p>
-    <b>City:</b>
+    <b><%=s_('Cause|City') %></b>
     <%= @cause.city %>
 </p>
 <p>
@@ -23,7 +23,10 @@
     ( <%= @cause.funds_raised/@cause.funds_needed %>% Complete)
 </p>
 <div id="vote_div">
-    <% form_remote_tag :url => {:action => 'vote'}, :update => "vote_div", :position => :bottom do %>
-    	<%= submit_tag 'VOTE!' %>
+    <% form_tag :remote => true,:url => 'vote',:loading => "Element.show('status')",:success => "Element.hide('status')" do %>
+    <%= hidden_field_tag "cause_id", @cause.id %>
+    <%= submit_tag 'Vote' %>
+	<%=flash[:notice] %>
     <% end %>
 </div>
+<!--# :update => "vote_div" -->
