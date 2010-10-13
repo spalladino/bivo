@@ -16,11 +16,14 @@
 </p>
 <p>
     <b>Founds Needed:</b>
-    <%= @cause.funds_needed %> 
+    <%= @cause.funds_needed %>
 </p>
-
 <p>
     <b><%=_("Status") %>:</b>
-    ( <%= @cause.funds_raised/@cause.funds_needed %> % Complete)
+    ( <%= @cause.funds_raised/@cause.funds_needed %>% Complete)
 </p>
-
+<div id="vote_div">
+    <% form_remote_tag :url => {:action => 'vote'}, :update => "vote_div", :position => :bottom , :html => {:cause_id => @cause.id} do %>
+    <%= submit_tag 'VOTE!' %>
+    <%= end %>
+</div>

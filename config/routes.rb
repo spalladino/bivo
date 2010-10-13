@@ -2,14 +2,18 @@ Bivo::Application.routes.draw do
   devise_for :users
 
   get "/home/index/"
-  root :to => "home#index"
+  
   get "cause/:url", :to => 'cause#details'
   
-  get "cause/new", :to => 'cause#new'
+  get "cause/new"
   get "cause/edit/:id", :to => 'cause#edit'
   
   post "cause/add", :to => 'cause#add'
   post "cause/update", :to => 'cause#update'
+
+  get "cause", :to => 'cause#index'
+  
+  root :to => "home#index"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
