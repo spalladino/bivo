@@ -4,15 +4,20 @@ Bivo::Application.routes.draw do
   get "/home/index/"
   
   get "cause/:url", :to => 'cause#details'
+  
+  get "cause/new"
+  get "cause/edit/:id", :to => 'cause#edit'
+  
+  post "cause/add", :to => 'cause#add'
+  post "cause/update", :to => 'cause#update'
+
   get "cause", :to => 'cause#index'
   
   
   post "cause/vote", :to => 'cause#vote'
   
   root :to => "home#index"
-  
-  
-  
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
