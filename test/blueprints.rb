@@ -22,16 +22,15 @@ CauseCategory.blueprint do
 end
 
 Cause.blueprint do
-  country
   city
   description
-  category      {CauseCategory.make}
+  country       {Country.first || Country.make}
+  category      {CauseCategory.make_or_get(5)}
   
   name          {Sham.bs}
   url           {Sham.simple_name}
   funds_needed  {Sham.funds}
   funds_raised  {Sham.funds}
-  status        {%w(pending_approval approved raising_funds completed)[rand(4)]}
 end
 
 PersonalUser.blueprint do
@@ -51,3 +50,31 @@ Charity.blueprint do
   tax_reg_number   {Sham.simple_name}
   city
 end
+
+Vote.blueprint do
+  user         {PersonalUser.make}
+  cause        {Cause.make}
+end
+
+Vote.blueprint(:singleuser) do
+  user         {PersonalUser.first || PersonalUser.make}
+  cause        {Cause.make}
+end
+
+class << Cause
+  def make_with_votes(attributes = {})
+    votes_count = attributes[:votes_count] || rand(10)
+    attributes.delete(:votes_count)
+    
+    Cause.make(attributes) do |cause|
+      votes_count.to_i.times { cause.votes.make(:singleuser) }
+    end
+  end
+end
+
+class << CauseCategory
+  def make_or_get(max = 5, attributes = {})
+    if CauseCategory.count < max then CauseCategory.make(attributes) else CauseCategory.all[rand(max)] end
+  end
+end
+

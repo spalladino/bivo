@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101012194844) do
+ActiveRecord::Schema.define(:version => 20101012190747) do
 
   create_table "cause_categories", :force => true do |t|
     t.string   "name"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(:version => 20101012194844) do
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "votes_count",       :default => 0
   end
 
   create_table "charity_categories", :force => true do |t|
