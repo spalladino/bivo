@@ -6,10 +6,10 @@ Bivo::Application.routes.draw do
   get "cause/:url", :to => 'cause#details'
   
   get "cause/new"
-  get "cause/edit/:id", :to => 'cause#edit'
+  get "cause/:id/edit", :to => 'cause#edit'
   
-  post "cause/add", :to => 'cause#add'
-  post "cause/update", :to => 'cause#update'
+  post "cause/create_cause", :to => 'cause#create', :as => 'create_cause'
+  post "cause/:id/update", :to => 'cause#update'
 
   get "cause", :to => 'cause#index'
   

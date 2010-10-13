@@ -33,5 +33,12 @@ class CauseController < ApplicationController
     end
   end  
   
+  def new  
+    @cause = Cause.new
+  end
+  
+  def edit
+    @cause = Cause.find_by_id(params[:id])
+  end
     
 end

@@ -122,4 +122,25 @@ class CauseControllerTest < ActionController::TestCase
     assert_response :success
     
   end
+  
+  test "can go to new cause" do
+    user = create_user
+    user.confirm!
+    sign_in user
+    
+    get :new
+    assert_response :success
+  end
+  
+  test "can go to edit cause" do
+    user = create_user
+    user.confirm!
+    sign_in user
+    
+    cause = Cause.make :id => 1
+    get :edit, {'id' => 1}
+    assert_not_nil assigns(:cause)
+    assert_equal assigns(:cause), cause
+    assert_response :success
+  end
 end
