@@ -17,12 +17,11 @@ class CauseControllerTest < ActionController::TestCase
     assert_response :success
   end
   
-  test "should get voting causes first page sorted by popularity" do
-    # Create 20 causes with votes and 40 unvoted
-    (1..20).each { |i| Cause.make_with_votes :votes_count => i, :status => :active }
-    40.times { Cause.make :status => :active}
+  test "should get voting causes list first page sorted by popularity" do
+    # Create 60 causes with votes
+    (1..60).each { |i| Cause.make_with_votes :votes_count => i, :status => :active }
     
-    # Fetch the voted ones, sorted by vote count
+    # Fetch the voted ones sorted by vote count
     causes_with_votes_ids = Cause.where("votes_count > ?", 0).map(&:id).reverse
     
     get :index
@@ -30,6 +29,20 @@ class CauseControllerTest < ActionController::TestCase
     assert_not_nil assigns(:causes)
     assert_equal 20, assigns(:causes).size
     assert_equal causes_with_votes_ids, assigns(:causes).map(&:id)
+  end
+  
+  test "should get voting causes list first different page and count sorted by popularity" do
+    # Create 60 causes with votes
+    (1..60).each { |i| Cause.make_with_votes :votes_count => i, :status => :active }
+    
+    # Fetch the voted ones sorted by vote count
+    causes_with_votes_ids = Cause.where("votes_count > ?", 0).map(&:id).reverse
+    
+    get :index, :page => 2, :per_page => 5
+    
+    assert_not_nil assigns(:causes)
+    assert_equal 5, assigns(:causes).size
+    assert_equal causes_with_votes_ids[5...10], assigns(:causes).map(&:id)
   end
   
   

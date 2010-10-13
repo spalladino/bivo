@@ -51,6 +51,8 @@ GEM
     gettext_i18n_rails (0.2.6)
       fast_gettext
     i18n (0.4.1)
+    jquery-rails (0.2.2)
+      rails (~> 3.0)
     json_pure (1.4.6)
     locale (2.0.5)
     machinist (1.0.6)
@@ -91,6 +93,7 @@ GEM
     rake (0.8.7)
     rpx_now (0.6.23)
       json_pure
+    single_test (0.3.7)
     thor (0.14.3)
     treetop (1.4.8)
       polyglot (>= 0.3.1)
@@ -110,9 +113,11 @@ DEPENDENCIES
   ffaker
   gettext (>= 1.9.3)
   gettext_i18n_rails
+  jquery-rails
   machinist
   mongrel
   pg
   rails (= 3.0.0)
   rails3-generators
+  single_test
   will_paginate
