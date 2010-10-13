@@ -1,7 +1,6 @@
 class CauseController < ApplicationController
   
-  before_filter :authenticate_user!, :except => :details
-  
+  before_filter :authenticate_user!, :except => [ :details, :index ]
   
   def details 
     @cause = Cause.find_by_url(params[:url])
