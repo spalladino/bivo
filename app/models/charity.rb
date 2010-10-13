@@ -3,6 +3,8 @@ class Charity < User
   belongs_to :category, :class_name => "CharityCategory"
   belongs_to :country
   
+  has_many :causes
+  
   validates_presence_of :charity_name
   validates_length_of :charity_name, :maximum => 255
   
