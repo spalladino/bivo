@@ -23,10 +23,20 @@
     ( <%= @cause.funds_raised/@cause.funds_needed %>% Complete)
 </p>
 <div id="vote_div">
-    <% form_tag :remote => true,:url => 'vote',:loading => "Element.show('status')",:success => "Element.hide('status')" do %>
+    <% form_tag 'vote', :remote => true,:success => 'return displaymessage();' do %>
     <%= hidden_field_tag "cause_id", @cause.id %>
     <%= submit_tag 'Vote' %>
-	<%=flash[:notice] %>
-    <% end %>
+	    <% end %>
 </div>
 <!--# :update => "vote_div" -->
+
+<% content_for(:js) do%>
+
+  function displaymessage()
+  {
+    alert("Hello World!");
+    return false;
+  }
+
+<%end%>
+
