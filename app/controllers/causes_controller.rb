@@ -10,16 +10,21 @@ class CausesController < ApplicationController
     @causes = Cause.order('votes_count DESC').includes(:country).includes(:charity)
 
     # Filter by region
-    if not params[:filter_region].blank?
-      @causes = @causes.where('country_id = ?', params[:filter_region].to_i)
+    if not params[:region].blank?
+      @causes = @causes.where('country_id = ?', params[:region].to_i)
     end
 
     # Filter by status
-    filter_status = params[:filter_status] || :active
-    @causes = @causes.where('status = ?', filter_status)
+    status = params[:status] || :active
+    @causes = @causes.where('status = ?', status)
 
-    # Categories
-    @filter_categories = []#CauseCategory.find(:all, :select => 'count(*) as count, cause_category')
+    # Filter by category
+    if not params[:category].blank?
+      @causes = @causes.where('category_id = ?', params[:category].to_i)
+    end
+
+    # Cap maximum to show to 50
+    @causes = @causes[0...50]
 
     # Set pagination
     @causes = @causes.paginate(:per_page => params[:per_page] || 20, :page => params[:page])
@@ -27,11 +32,13 @@ class CausesController < ApplicationController
     # Fill filters fields
     if not request.xhr?
       @regions = Country.all
-      @filter_region = params[:filter_region]
+      @region = params[:region]
 
       @statuses = Cause.enumerated_attributes[:status]
-      @filter_status = filter_status
-
+      @status = status
+      
+      @categories = CauseCategory.sorted_by_cause_count[0...6]
+      @category = params[:category]
     end
   end
 
