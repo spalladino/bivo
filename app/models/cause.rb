@@ -2,7 +2,7 @@ require 'enumerated_attribute'
 
 class Cause < ActiveRecord::Base
   
-  belongs_to :category, :class_name => "CauseCategory"
+  belongs_to :cause_category
   belongs_to :country
   belongs_to :charity
   

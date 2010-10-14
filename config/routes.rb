@@ -9,7 +9,7 @@ Bivo::Application.routes.draw do
   post "cause/create_cause", :to => 'cause#create', :as => 'create_cause'
   post "cause/:id/update", :to => 'cause#update'
 
-  get "cause", :to => 'cause#index'
+  get "cause", :to => 'causes#index'
 
   post "cause/vote", :to => 'cause#vote'
   post "cause/follow", :to => 'cause#follow'
