@@ -1,8 +1,10 @@
+<%= render "shared/error_messages", :target => @cause %>
+
 <%= f.label "Cause Name"%><br/>
 <%= f.text_field :name %><br/>
 
 <%= f.label "Short Url"%><br/>
-http://www.bivo.org/prj/<%= f.text_field :url %><br/>
+http://www.bivo.org/cause/<%= f.text_field :url %><br/>
 
 <%= f.label 'Category'%><br/>
 <%= collection_select('cause', 'cause_category_id', CauseCategory.all, :id, :name) %><br/>
