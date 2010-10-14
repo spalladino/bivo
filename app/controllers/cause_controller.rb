@@ -1,11 +1,11 @@
 class CauseController < ApplicationController
-  
+
   before_filter :authenticate_user!, :except => [ :details, :index ]
-  
-  def details 
+
+  def details
     @cause = Cause.find_by_url(params[:url])
   end
-  
+
   def index
     @causes = Cause.order('votes_count DESC').includes(:country).includes(:charity)
     
@@ -34,34 +34,43 @@ class CauseController < ApplicationController
     
     end
   end
-  
+
   def vote
     @cause = Cause.find_by_id(params[:cause_id])
     @vote = Vote.new(params[:cause_id])
-    if @vote.save 
+    if @vote.save
       custom_response "Ok",true
     else
       custom_response @vote.errors.on(:user_id) ,false
     end
   end 
   
+  def follow
+    redirect_to request.referer
+  end
+
   def custom_response(message,success)
-    if request.xhr? 
-      #AJAX 
-      render :json =>  {:message => message, :success=> success}
-    else 
+    if request.xhr?
+      #AJAX
+      flash[:notice] = message
+      @message =  message
+      @success = success
+    else
       #NO AJAX
       flash[:notice] = message
       redirect_to request.referer
     end
-  end  
-  
-  def new  
+
+  end
+
+
+  def new
     @cause = Cause.new
   end
-  
+
   def edit
     @cause = Cause.find_by_id(params[:id])
   end
-    
+
 end
+
