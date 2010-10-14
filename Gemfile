@@ -2,12 +2,13 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.0.0'
 gem 'devise'
-gem 'devise_rpx_connectable'
+gem 'omniauth'
 gem 'pg'
 gem 'mongrel'
 gem 'gettext_i18n_rails'
 gem 'will_paginate'
 gem 'enumerated_attribute'
+gem 'omniauth'
 gem "jquery-rails"
 
 group :test do

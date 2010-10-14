@@ -1,4 +1,4 @@
-class CauseController < ApplicationController
+class CausesController < ApplicationController
 
   before_filter :authenticate_user!, :except => [ :details, :index ]
 
