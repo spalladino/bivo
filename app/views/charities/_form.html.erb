@@ -1,0 +1,69 @@
+<%= form_for(@charity) do |f| %>
+  <% if @charity.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@charity.errors.count, "error") %> prohibited this charity from being saved:</h2>
+
+      <ul>
+      <% @charity.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :charity_name %><br />
+    <%= f.text_field :charity_name %>
+  </div>
+  <div class="field">
+    <%= f.label :charity_website %><br />
+    <%= f.text_field :charity_website %>
+  </div>
+  <div class="field">
+    <%= f.label :password %><br />
+    <%= f.text_field :password %>
+  </div>
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+  </div>
+  <div class="field">
+    <%= f.label :country %><br />
+    <%= f.text_field :country %>
+  </div>
+  <div class="field">
+    <%= f.label :city %><br />
+    <%= f.text_field :city %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_area :description %>
+  </div>
+  <div class="field">
+    <%= f.label :notice_all_funds_raised %><br />
+    <%= f.check_box :notice_all_funds_raised %>
+  </div>
+  <div class="field">
+    <%= f.label :notice_status_change %><br />
+    <%= f.check_box :notice_status_change %>
+  </div>
+  <div class="field">
+    <%= f.label :notice_status_update_published %><br />
+    <%= f.check_box :notice_status_update_published %>
+  </div>
+  <div class="field">
+    <%= f.label :notice_comment_added %><br />
+    <%= f.check_box :notice_comment_added %>
+  </div>
+  <div class="field">
+    <%= f.label :auto_approve_comments %><br />
+    <%= f.check_box :auto_approve_comments %>
+  </div>
+  <div class="field">
+    <%= f.label :send_me_news %><br />
+    <%= f.check_box :send_me_news %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
