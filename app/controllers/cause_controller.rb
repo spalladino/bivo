@@ -18,8 +18,11 @@ class CauseController < ApplicationController
     else
       custom_response @vote.errors.on(:user_id) ,false
     end
-  end
+   end
 
+   def follow
+     redirect_to request.referer
+   end
 
 
 
@@ -27,7 +30,8 @@ class CauseController < ApplicationController
     if request.xhr?
       #AJAX
       flash[:notice] = message
-      render :json =>  {:message => message, :success=> success}
+      @message =  message
+      @success = success
     else
       #NO AJAX
       flash[:notice] = message
@@ -36,8 +40,6 @@ class CauseController < ApplicationController
 
   end
 
-
-  end
 
   def new
     @cause = Cause.new
