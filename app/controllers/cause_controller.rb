@@ -39,7 +39,15 @@ class CauseController < ApplicationController
   end
   
   def edit
-    @cause = Cause.find_by_id(params[:id])
+    @cause = Cause.new
+  end
+  
+  def create
+    if !(Cause.new params[:cause]).save
+      render 'new'
+    else
+      redirect_to root_url
+    end
   end
     
 end
