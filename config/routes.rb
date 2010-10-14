@@ -2,7 +2,6 @@ Bivo::Application.routes.draw do
   devise_for :users
 
   get "/home/index/"
-<<<<<<< HEAD
   
   get "cause/new", :to => 'cause#new'
   
