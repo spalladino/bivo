@@ -40,3 +40,4 @@ class CharitiesController < ApplicationController
     redirect_to charities_url
   end
 end
+

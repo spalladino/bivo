@@ -2,17 +2,18 @@ Bivo::Application.routes.draw do
   devise_for :users
 
   get "/home/index/"
-  
+
   resources :causes
   resources :charities
 
   post "cause/create_cause", :to => 'cause#create', :as => 'create_cause'
   post "cause/:id/update", :to => 'cause#update'
 
-  get "cause", :to => 'cause#index'
+  get "cause", :to => 'causes#index'
+  get "cause/:url" => 'causes#details'
 
-  post "cause/vote", :to => 'cause#vote'
-  post "cause/follow", :to => 'cause#follow'
+  post "cause/vote", :to => 'causes#vote'
+  post "cause/follow", :to => 'causes#follow'
   root :to => "home#index"
 
 
