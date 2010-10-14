@@ -25,7 +25,6 @@
 
 <%= form_tag 'vote', :remote => true  do %>
   <%= hidden_field_tag "cause_id", @cause.id %>
-  <div><%= submit_tag "VOTE", :onclick => '$(this).val("Voting...");$(this).attr("disabled", "true");'%></div>
-  <p id = "status_vote_label"> </p>
+  <div><%= submit_tag "VOTE", :id => "submit_btn", :onclick => '$(this).val("Voting...");$(this).attr("disabled", "true");return true;'%></div>
 <% end %>
 
