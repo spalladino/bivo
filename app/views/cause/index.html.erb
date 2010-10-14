@@ -4,6 +4,23 @@
 
 <% title "Causes" %>
 
+<div id="filters">
+	
+	<% form_tag '/cause', :method => :get do %>
+		<div>
+			<%= _('Filter by region') %>
+			<%= select_tag :filter_region, options_from_collection_for_select(@regions, 'id', 'name', @filter_region), {:include_blank => _('All countries')}%>
+		</div>
+		<div>
+			<%= _('Showing') %>
+			<%= select_tag :filter_status, options_from_collection_for_select(@statuses, 'to_s', 'to_s', @filter_status) %>
+		</div>
+		<div>
+			<%= submit_tag _('Search'), :disable_with => _('Searching...') %>
+		</div>
+	<% end %>
+</div>
+
 <div id="causes">
   <%= render 'causes' %>
 </div>
