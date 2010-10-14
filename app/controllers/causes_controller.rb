@@ -74,6 +74,7 @@ class CausesController < ApplicationController
 
   def create
     @cause = Cause.new params[:cause]
+    @cause.funds_raised = 0
     if !@cause.save
       render 'new'
     else

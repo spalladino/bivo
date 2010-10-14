@@ -3,13 +3,13 @@ Bivo::Application.routes.draw do
 
   get "/home/index/"
 
-  resources :causes
   resources :charities
 
-  post "cause/create_cause", :to => 'causes#create', :as => 'create_cause'
+  post "cause/create", :to => 'causes#create', :as => 'create'
   post "cause/:id/update", :to => 'causes#update'
 
   get "cause", :to => 'causes#index'
+  get "cause/new", :to => 'causes#new'
   get "cause/:url" => 'causes#details'
 
   post "cause/vote", :to => 'causes#vote'
