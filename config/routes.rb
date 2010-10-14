@@ -2,21 +2,22 @@ Bivo::Application.routes.draw do
   devise_for :users
 
   get "/home/index/"
+<<<<<<< HEAD
   
   get "cause/new", :to => 'cause#new'
   
   get "cause/:url", :to => 'cause#details'
   
   get "cause/:id/edit", :to => 'cause#edit'
-  
+
   post "cause/create_cause", :to => 'cause#create', :as => 'create_cause'
   post "cause/:id/update", :to => 'cause#update'
 
   get "cause", :to => 'cause#index'
-  
-  
+
+
   post "cause/vote", :to => 'cause#vote'
-  
+  post "cause/follow", :to => 'cause#follow'
   root :to => "home#index"
 
 
@@ -77,3 +78,4 @@ Bivo::Application.routes.draw do
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id(.:format)))'
 end
+

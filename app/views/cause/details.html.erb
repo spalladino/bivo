@@ -22,11 +22,10 @@
     <b><%=_("Status") %>:</b>
     ( <%= @cause.funds_raised/@cause.funds_needed %>% Complete)
 </p>
-<div id="vote_div">
-    <% form_tag :remote => true,:url => 'vote',:loading => "Element.show('status')",:success => "Element.hide('status')" do %>
-    <%= hidden_field_tag "cause_id", @cause.id %>
-    <%= submit_tag 'Vote' %>
-	<%=flash[:notice] %>
-    <% end %>
-</div>
-<!--# :update => "vote_div" -->
+
+<%= form_tag 'vote', :remote => true  do %>
+  <%= hidden_field_tag "cause_id", @cause.id %>
+  <div><%= submit_tag "VOTE", :onclick => '$(this).val("Voting...");$(this).attr("disabled", "true");'%></div>
+  <p id = "status_vote_label"> </p>
+<% end %>
+
