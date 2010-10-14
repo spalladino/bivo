@@ -6,13 +6,13 @@ Bivo::Application.routes.draw do
   resources :causes
   resources :charities
 
-  post "cause/create_cause", :to => 'cause#create', :as => 'create_cause'
-  post "cause/:id/update", :to => 'cause#update'
+  post "causes/create_cause", :to => 'causes#create', :as => 'create_cause'
+  post "causes/:id/update", :to => 'causes#update'
 
-  get "cause", :to => 'cause#index'
+  get "causes", :to => 'cause#index'
 
-  post "cause/vote", :to => 'cause#vote'
-  post "cause/follow", :to => 'cause#follow'
+  post "causes/vote", :to => 'causes#vote'
+  post "causes/follow", :to => 'causes#follow'
   root :to => "home#index"
 
 

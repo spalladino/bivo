@@ -73,7 +73,8 @@ class CausesController < ApplicationController
   end
   
   def create
-    if !(Cause.new params[:cause]).save
+    @cause = Cause.new params[:cause]
+    if !@cause.save
       render 'new'
     else
       redirect_to root_url
