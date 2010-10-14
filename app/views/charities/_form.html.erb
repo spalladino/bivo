@@ -21,14 +21,15 @@
   </div>
   <div class="field">
     <%= f.label :password %><br />
-    <%= f.text_field :password %>
+    <%= f.password_field :encrypted_password %>
   </div>
   <div class="field">
     <%= f.label :email %><br />
     <%= f.text_field :email %>
   </div>
   <div class="field">
-    <%= f.label :country %><br />
+    <%= collection_select :cause, :country_id, @countries, :id, :name, :include_blank => true %>
+    <br />
     <%= f.text_field :country %>
   </div>
   <div class="field">
