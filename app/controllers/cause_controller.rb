@@ -15,9 +15,8 @@ class CauseController < ApplicationController
     end
     
     # Filter by status
-    if not params[:filter_status].blank?
-      @causes = @causes.where('status = ?', params[:filter_status].to_i)
-    end
+    filter_status = params[:filter_status] || :active
+    @causes = @causes.where('status = ?', filter_status)
     
     # Set pagination
     @causes = @causes.paginate(:per_page => params[:per_page] || 20, :page => params[:page])
@@ -26,8 +25,10 @@ class CauseController < ApplicationController
     if not request.xhr?
       @regions = Country.all
       @filter_region = params[:filter_region]
-      @statuses = []
-      @filter_status = params[:filter_status]
+      
+      @statuses = Cause.enumerated_attributes[:status]
+      @filter_status = filter_status
+    
     end
   end
   
