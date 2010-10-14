@@ -7,7 +7,7 @@ class CauseController < ApplicationController
   end
   
   def index
-    @causes = Cause.order('votes_count DESC').includes(:country)
+    @causes = Cause.order('votes_count DESC').includes(:country).includes(:charity)
     
     # Filter by region
     if not params[:filter_region].blank?
@@ -17,6 +17,9 @@ class CauseController < ApplicationController
     # Filter by status
     filter_status = params[:filter_status] || :active
     @causes = @causes.where('status = ?', filter_status)
+    
+    # Categories
+    @filter_categories = []#CauseCategory.find(:all, :select => 'count(*) as count, cause_category')
     
     # Set pagination
     @causes = @causes.paginate(:per_page => params[:per_page] || 20, :page => params[:page])
