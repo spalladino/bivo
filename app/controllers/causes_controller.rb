@@ -4,6 +4,35 @@ class CausesController < ApplicationController
 
   def details
     @cause = Cause.find_by_url(params[:url])
+
+    #VOTES:
+    @voting_allowed = true
+    @voting_error = "Can Vote"
+    if !current_user
+      @voting_allowed = false
+      @voting_error = "Unknown user"
+    else
+      vote = Vote.new(:cause_id => @cause.id ,:user_id=> current_user.id)
+      if !vote.valid?
+        @voting_allowed = false
+        @voting_error = vote.errors.on(:cause_id)
+      end
+    end
+
+    #FOLLOWS:
+    @follow_allowed = true
+    @follow_error = "Can follow"
+    if !current_user
+      @follow_allowed = false
+      @follow_error = "Unknown user"
+    else
+      follow = Follow.new(:cause_id => @cause.id ,:user_id=> current_user.id)
+      if !follow.valid?
+        @follow_allowed = false
+        @follow_error = follow.errors.on(:cause_id)
+      end
+    end
+
   end
 
   def index
@@ -44,7 +73,8 @@ class CausesController < ApplicationController
 
   def vote
     @cause = Cause.find_by_id(params[:cause_id])
-    @vote = Vote.new(params[:cause_id])
+
+    @vote = Vote.new(:cause_id => params[:cause_id],:user_id=> current_user.id)
     if @vote.save
       custom_response "Ok",true
     else
@@ -53,7 +83,14 @@ class CausesController < ApplicationController
   end
 
   def follow
-    redirect_to request.referer
+    @cause = Cause.find_by_id(params[:cause_id])
+
+    @follow = Follow.new(:cause_id => params[:cause_id],:user_id=> current_user.id)
+    if @follow.save
+      custom_response "Ok",true
+    else
+      custom_response @follow.errors.on(:cause_id) ,false
+    end
   end
 
   def custom_response(message,success)
@@ -62,7 +99,7 @@ class CausesController < ApplicationController
       flash[:notice] = message
       @message =  message
       @success = success
-    else
+  else
       #NO AJAX
       flash[:notice] = message
       redirect_to request.referer
