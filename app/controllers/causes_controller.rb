@@ -69,14 +69,25 @@ class CausesController < ApplicationController
   end
 
   def edit
-    @cause = Cause.new
+    @cause = Cause.find_by_id(params[:id])
   end
 
   def create
     @cause = Cause.new params[:cause]
     @cause.funds_raised = 0
+    @cause.charity_id = current_user.id
     if !@cause.save
       render 'new'
+    else
+      redirect_to root_url
+    end
+  end
+  
+  def update
+    @cause = Cause.find_by_id(params[:id])
+    @cause.attributes = params[:cause]
+    if !@cause.save
+      render 'edit'
     else
       redirect_to root_url
     end
