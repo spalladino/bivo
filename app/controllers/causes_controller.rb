@@ -37,15 +37,18 @@ class CausesController < ApplicationController
 
   def index
     @causes = Cause.order('votes_count DESC').includes(:country).includes(:charity)
+    @categories = CauseCategory.sorted_by_cause_count
 
     # Filter by region
     if not params[:region].blank?
       @causes = @causes.where('country_id = ?', params[:region].to_i)
+      @categories = @categories.where('causes.country_id = ?', params[:region].to_i)
     end
 
     # Filter by status
     status = params[:status] || :active
     @causes = @causes.where('status = ?', status)
+    @categories = @categories.where('causes.status = ?', status)
 
     # Filter by category
     if not params[:category].blank?
@@ -53,22 +56,21 @@ class CausesController < ApplicationController
     end
 
     # Cap maximum to show to 50
+    causes_real_count = @causes.size 
     @causes = @causes[0...50]
 
     # Set pagination
     @causes = @causes.paginate(:per_page => params[:per_page] || 20, :page => params[:page])
 
     # Fill filters fields
-    if not request.xhr?
-      @regions = Country.all
-      @region = params[:region]
+    @regions = Country.all
+    @region = params[:region]
 
-      @statuses = Cause.enumerated_attributes[:status]
-      @status = status
-      
-      @categories = CauseCategory.sorted_by_cause_count[0...6]
-      @category = params[:category]
-    end
+    @statuses = Cause.enumerated_attributes[:status]
+    @status = status
+    
+    @categories = @categories[0...6].insert(0, all_category(causes_real_count))
+    @category = params[:category]
   end
 
   def vote
@@ -135,6 +137,15 @@ class CausesController < ApplicationController
     else
       redirect_to root_url
     end
+  end
+
+  private
+  
+  def all_category(count)
+    c = CauseCategory.new :name => _("All")
+    c.class_eval { attr_accessor :cause_count }
+    c.cause_count = count
+    return c
   end
 
 end
