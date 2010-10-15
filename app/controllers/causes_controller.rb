@@ -4,22 +4,56 @@ class CausesController < ApplicationController
 
   def details
     @cause = Cause.find_by_url(params[:url])
+
+    #VOTES:
+    @voting_allowed = true
+    @voting_error = "Can Vote"
+    if !current_user
+      @voting_allowed = false
+      @voting_error = "Unknown user"
+    else
+      vote = Vote.new(:cause_id => @cause.id ,:user_id=> current_user.id)
+      if !vote.valid?
+        @voting_allowed = false
+        @voting_error = vote.errors.on(:cause_id)
+      end
+    end
+
+    #FOLLOWS:
+    @follow_allowed = true
+    @follow_error = "Can follow"
+    if !current_user
+      @follow_allowed = false
+      @follow_error = "Unknown user"
+    else
+      follow = Follow.new(:cause_id => @cause.id ,:user_id=> current_user.id)
+      if !follow.valid?
+        @follow_allowed = false
+        @follow_error = follow.errors.on(:cause_id)
+      end
+    end
+
   end
 
   def index
     @causes = Cause.order('votes_count DESC').includes(:country).includes(:charity)
 
     # Filter by region
-    if not params[:filter_region].blank?
-      @causes = @causes.where('country_id = ?', params[:filter_region].to_i)
+    if not params[:region].blank?
+      @causes = @causes.where('country_id = ?', params[:region].to_i)
     end
 
     # Filter by status
-    filter_status = params[:filter_status] || :active
-    @causes = @causes.where('status = ?', filter_status)
+    status = params[:status] || :active
+    @causes = @causes.where('status = ?', status)
 
-    # Categories
-    @filter_categories = []#CauseCategory.find(:all, :select => 'count(*) as count, cause_category')
+    # Filter by category
+    if not params[:category].blank?
+      @causes = @causes.where('category_id = ?', params[:category].to_i)
+    end
+
+    # Cap maximum to show to 50
+    @causes = @causes[0...50]
 
     # Set pagination
     @causes = @causes.paginate(:per_page => params[:per_page] || 20, :page => params[:page])
@@ -27,17 +61,20 @@ class CausesController < ApplicationController
     # Fill filters fields
     if not request.xhr?
       @regions = Country.all
-      @filter_region = params[:filter_region]
+      @region = params[:region]
 
       @statuses = Cause.enumerated_attributes[:status]
-      @filter_status = filter_status
-
+      @status = status
+      
+      @categories = CauseCategory.sorted_by_cause_count[0...6]
+      @category = params[:category]
     end
   end
 
   def vote
     @cause = Cause.find_by_id(params[:cause_id])
-    @vote = Vote.new(params[:cause_id])
+
+    @vote = Vote.new(:cause_id => params[:cause_id],:user_id=> current_user.id)
     if @vote.save
       custom_response "Ok",true
     else
@@ -46,7 +83,14 @@ class CausesController < ApplicationController
   end
 
   def follow
-    redirect_to request.referer
+    @cause = Cause.find_by_id(params[:cause_id])
+
+    @follow = Follow.new(:cause_id => params[:cause_id],:user_id=> current_user.id)
+    if @follow.save
+      custom_response "Ok",true
+    else
+      custom_response @follow.errors.on(:cause_id) ,false
+    end
   end
 
   def custom_response(message,success)
@@ -55,7 +99,7 @@ class CausesController < ApplicationController
       flash[:notice] = message
       @message =  message
       @success = success
-    else
+  else
       #NO AJAX
       flash[:notice] = message
       redirect_to request.referer

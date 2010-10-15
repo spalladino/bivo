@@ -4,6 +4,7 @@ class CharitiesController < ApplicationController
   end
 
   def new
+    @countries = Country.all
     @charity = Charity.new
   end
 
@@ -15,21 +16,21 @@ class CharitiesController < ApplicationController
     @charity = Charity.new(params[:charity])
 
     if @charity.save
-      redirect_to @charity, :notice => 'Charity was successfully created.'
+      render :text => "exito"      
+      #redirect_to @charity, :notice => 'Charity was successfully created.'
     else
-      render :action => "new"
+      render :text => @charity.errors.to_s
+      #render :action => "new"
     end
   end
 
   def update
     @charity = Charity.find(params[:id])
 
-    respond_to do |format|
-      if @charity.update_attributes(params[:charity])
-        redirect_to @charity, :notice => 'Charity was successfully updated.'
-      else
-        render :action => "edit"
-      end
+    if @charity.update_attributes(params[:charity])
+      redirect_to @charity, :notice => 'Charity was successfully updated.'
+    else
+      render :action => "edit"
     end
   end
 
