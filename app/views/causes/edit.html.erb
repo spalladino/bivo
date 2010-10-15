@@ -1,3 +1,6 @@
 <%= form_for :cause, @cause, :url =>{:action => "update"} do |f|%>
 	<%= render :partial => 'form', :locals => {:cause => @cause, :f => f} %>
 <%end%>
+
+<%= button_to _("Delete"), { :action => "delete", :id => @cause.id },
+            :confirm => _("Are you sure?") %>
