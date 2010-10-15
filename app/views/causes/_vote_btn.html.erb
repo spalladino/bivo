@@ -7,7 +7,7 @@
   <div>
   <%end%>
 
-    <%= button_to(@vote_label, 'vote/'+@cause.id.to_s, :remote => true,:method => 'vote',:id => "submit_vote_btn",:disabled => @vote_disabled ,:onclick => '$(this).val("Submitting...");$(this).attr("disabled", "true");return true;' ) %>
+    <%= button_to(@vote_label, @cause.id.to_s+'/vote', :remote => true,:method => 'vote',:id => "submit_vote_btn",:disabled => @vote_disabled ,:onclick => '$(this).val("Submitting...");$(this).attr("disabled", "true");return true;' ) %>
 
 </div>
 

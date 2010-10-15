@@ -48,26 +48,22 @@ class CausesController < ApplicationController
 
 
   def vote
-    @cause = Cause.find_by_id(params[:cause_id])
-    @vote = Vote.new(:cause_id => params[:cause_id],:user_id=> current_user.id)
+    @cause = Cause.find params[:id]
+    @vote = Vote.new(:cause_id => params[:id],:user_id=> current_user.id)
     if @vote.save
       flash[:notice] = "Vote submitted"
-      if not request.xhr? #Not Ajax?
-        redirect_to request.referer
-      end
+      redirect_to request.referer unless request.xhr? #Not Ajax
     else
       flash[:notice] = @vote.errors.on(:cause_id)
-      if !request.xhr?
-        redirect_to request.referer
-      end
+      redirect_to request.referer unless request.xhr? #Not Ajax
     end
     set_vote_btn_variables @cause
   end
 
   def follow
-    @cause = Cause.find_by_id(params[:cause_id])
+    @cause = Cause.find params[:id]
 
-    @follow = Follow.new(:cause_id => params[:cause_id],:user_id=> current_user.id)
+    @follow = Follow.new(:cause_id => params[:id],:user_id=> current_user.id)
     if @follow.save
       flash[:notice] = "Follow submitted"
       if not request.xhr? #Not Ajax?
@@ -75,7 +71,7 @@ class CausesController < ApplicationController
       end
     else
       flash[:notice] = "Error, try again"
-      if !request.xhr?
+      if not request.xhr?
         redirect_to request.referer
       end
     end
@@ -83,8 +79,8 @@ class CausesController < ApplicationController
   end
 
   def unfollow
-    @cause = Cause.find_by_id(params[:cause_id])
-    follow = Follow.find_by_cause_id_and_user_id(params[:cause_id],current_user.id)
+    @cause = Cause.find params[:id]
+    follow = Follow.find_by_cause_id_and_user_id(params[:id],current_user.id)
     follow.destroy
     if follow.destroyed?
       flash[:notice] = "Unfollow submitted"
@@ -108,7 +104,7 @@ class CausesController < ApplicationController
   end
 
   def edit
-    @cause = Cause.find_by_id(params[:id])
+    @cause = Cause.find params[:id]
   end
 
   def create
@@ -143,7 +139,7 @@ class CausesController < ApplicationController
       render 'edit'
     end
   end
-  
+
   def checkUrl
     @cause = Cause.find_by_url(params[:shortUrl])
     @result = 'available'
@@ -152,22 +148,22 @@ class CausesController < ApplicationController
     end
     render :text => @result
   end
-  
+
   def activate
     @cause = Cause.find_by_id(params[:id])
     @cause.status = :active
     @cause.save
     render 'edit'
   end
-  
+
   def deactivate
     @cause = Cause.find_by_id(params[:id])
     @cause.status = :inactive
     @cause.save
     render 'edit'
   end
-  
-    def mark_paid
+
+  def mark_paid
     @cause = Cause.find_by_id(params[:id])
     @cause.status = :paid
     @cause.save
@@ -200,9 +196,6 @@ class CausesController < ApplicationController
     end
   end
 
-
-
-
   def set_follow_btn_variables(cause)
     if !current_user
       @follow_label = "Follow (you must login first)"
@@ -214,10 +207,6 @@ class CausesController < ApplicationController
     end
 
   end
-
-
-
-
 
 end
 
