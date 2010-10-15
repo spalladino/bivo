@@ -3,37 +3,20 @@ class CausesController < ApplicationController
   before_filter :authenticate_user!, :except => [ :details, :index ]
 
   def details
+
     @cause = Cause.find_by_url(params[:url])
-
-    #VOTES:
-    @voting_allowed = true
-    @voting_error = "Can Vote"
-    if !current_user
-      @voting_allowed = false
-      @voting_error = "Unknown user"
-    else
-      vote = Vote.new(:cause_id => @cause.id ,:user_id=> current_user.id)
-      if !vote.valid?
-        @voting_allowed = false
-        @voting_error = vote.errors.on(:cause_id)
-      end
-    end
-
-    #FOLLOWS:
-    @follow_allowed = true
-    @follow_error = "Can follow"
-    if !current_user
-      @follow_allowed = false
-      @follow_error = "Unknown user"
-    else
-      follow = Follow.new(:cause_id => @cause.id ,:user_id=> current_user.id)
-      if !follow.valid?
-        @follow_allowed = false
-        @follow_error = follow.errors.on(:cause_id)
-      end
-    end
+    set_vote_btn_variables @cause #VOTE
+    set_follow_btn_variables @cause #FOLLOW
 
   end
+
+
+
+
+  def set_follow_btn_variables(cause)
+
+  end
+
 
   def index
     @causes = Cause.order('votes_count DESC').includes(:country).includes(:charity)
@@ -65,21 +48,55 @@ class CausesController < ApplicationController
 
       @statuses = Cause.enumerated_attributes[:status]
       @status = status
-      
+
       @categories = CauseCategory.sorted_by_cause_count[0...6]
       @category = params[:category]
+    end
+  end
+
+ def set_vote_btn_variables(cause)
+    if !current_user
+      @vote_label = "Vote (you must loggin first)"
+      @vote_disabled = false
+      @vote_visible = true
+    else
+      vote = Vote.new(:cause_id => cause.id ,:user_id=> current_user.id)
+      if vote.valid?
+        @vote_label = "Vote"
+        @vote_disabled = false
+        @vote_visible = true
+      else
+        error = vote.errors.on(:cause_id)
+        @vote_label = error
+        @vote_errors = error
+        @vote_disabled = true
+        if error == "Already voted"
+          @vote_visible = true
+        else
+          @vote_visible = false
+        end
+
+      end
     end
   end
 
   def vote
     @cause = Cause.find_by_id(params[:cause_id])
 
+
     @vote = Vote.new(:cause_id => params[:cause_id],:user_id=> current_user.id)
     if @vote.save
-      custom_response "Ok",true
+      flash[:notice] = "Vote submitted"
+      if !request.xhr?
+        redirect_to request.referer
+      end
     else
-      custom_response @vote.errors.on(:cause_id) ,false
+      flash[:notice] = @vote.errors.on(:cause_id)
+      if !request.xhr?
+        redirect_to request.referer
+      end
     end
+    set_vote_btn_variables @cause
   end
 
   def follow
@@ -87,25 +104,12 @@ class CausesController < ApplicationController
 
     @follow = Follow.new(:cause_id => params[:cause_id],:user_id=> current_user.id)
     if @follow.save
-      custom_response "Ok",true
+      custom_response "Follow submitted"
     else
-      custom_response @follow.errors.on(:cause_id) ,false
+      custom_response @follow.errors.on(:cause_id)
     end
   end
 
-  def custom_response(message,success)
-    if request.xhr?
-      #AJAX
-      flash[:notice] = message
-      @message =  message
-      @success = success
-  else
-      #NO AJAX
-      flash[:notice] = message
-      redirect_to request.referer
-    end
-
-  end
 
 
   def new
@@ -126,7 +130,7 @@ class CausesController < ApplicationController
       redirect_to root_url
     end
   end
-  
+
   def update
     @cause = Cause.find_by_id(params[:id])
     @cause.attributes = params[:cause]

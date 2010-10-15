@@ -1,7 +1,7 @@
 require 'enumerated_attribute'
 
 class Cause < ActiveRecord::Base
-  
+
   belongs_to :cause_category
   belongs_to :country
   belongs_to :charity
@@ -28,6 +28,8 @@ class Cause < ActiveRecord::Base
   validates_numericality_of :funds_raised, :greater_than_or_equal_to => 0
 
   enum_attr :status, %w(^inactive active raising_funds completed paid deleted)
+
+  #NAME SCOPE (causas no borradas)
 
 end
 
