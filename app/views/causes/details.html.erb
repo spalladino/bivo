@@ -23,25 +23,14 @@
     ( <%= @cause.funds_raised/@cause.funds_needed*100 %>% Complete)
 </p>
 
-
-
-
-
-
 <div id="vote_btn">
   <%= render 'vote_btn' %>
 </div>
 
-<p> Votes Count: <%=@cause.votes_count%></p>
+<p>Votes Count:</p>
+<p id = "vote_counter"> <%=@cause.votes_count%> </p>
 
-<!-- Follow button:
-<p> status (follows): <%=@follow_error %></p>
-<%if @follow_allowed %>
-  <%= form_tag 'follow', :remote => true  do %>
-    <%= hidden_field_tag "cause_id", @cause.id %>
-    <div><%= submit_tag "FOLLOW", :id => "submit_follow_btn", :onclick => '$(this).val("Loading...");return true;'%></div>
-  <%end%>
-
-<%end%>
--->
+<div id="follow_btn">
+  <%= render 'follow_btn' %>
+</div>
 

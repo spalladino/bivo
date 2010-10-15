@@ -10,14 +10,6 @@ class CausesController < ApplicationController
 
   end
 
-
-
-
-  def set_follow_btn_variables(cause)
-
-  end
-
-
   def index
     @causes = Cause.order('votes_count DESC').includes(:country).includes(:charity)
 
@@ -54,40 +46,13 @@ class CausesController < ApplicationController
     end
   end
 
- def set_vote_btn_variables(cause)
-    if !current_user
-      @vote_label = "Vote (you must loggin first)"
-      @vote_disabled = false
-      @vote_visible = true
-    else
-      vote = Vote.new(:cause_id => cause.id ,:user_id=> current_user.id)
-      if vote.valid?
-        @vote_label = "Vote"
-        @vote_disabled = false
-        @vote_visible = true
-      else
-        error = vote.errors.on(:cause_id)
-        @vote_label = error
-        @vote_errors = error
-        @vote_disabled = true
-        if error == "Already voted"
-          @vote_visible = true
-        else
-          @vote_visible = false
-        end
-
-      end
-    end
-  end
 
   def vote
     @cause = Cause.find_by_id(params[:cause_id])
-
-
     @vote = Vote.new(:cause_id => params[:cause_id],:user_id=> current_user.id)
     if @vote.save
       flash[:notice] = "Vote submitted"
-      if !request.xhr?
+      if not request.xhr? #Not Ajax?
         redirect_to request.referer
       end
     else
@@ -104,12 +69,38 @@ class CausesController < ApplicationController
 
     @follow = Follow.new(:cause_id => params[:cause_id],:user_id=> current_user.id)
     if @follow.save
-      custom_response "Follow submitted"
+      flash[:notice] = "Follow submitted"
+      if not request.xhr? #Not Ajax?
+        redirect_to request.referer
+      end
     else
-      custom_response @follow.errors.on(:cause_id)
+      flash[:notice] = "Error, try again"
+      if !request.xhr?
+        redirect_to request.referer
+      end
     end
+    set_follow_btn_variables @cause
   end
 
+  def unfollow
+    @cause = Cause.find_by_id(params[:cause_id])
+    follow = Follow.find_by_cause_id_and_user_id(params[:cause_id],current_user.id)
+    follow.destroy
+    if follow.destroyed?
+      flash[:notice] = "Unfollow submitted"
+      if not request.xhr? #Not Ajax?
+        redirect_to request.referer
+      end
+    else
+      flash[:notice] = "Error, try again"
+      if !request.xhr?
+        redirect_to request.referer
+      end
+    end
+
+
+  set_follow_btn_variables @cause
+  end
 
 
   def new
@@ -140,7 +131,7 @@ class CausesController < ApplicationController
       redirect_to root_url
     end
   end
-  
+
   def delete
     @cause = Cause.find_by_id(params[:id])
     @cause.destroy
@@ -148,6 +139,51 @@ class CausesController < ApplicationController
       redirect_to root_url
     end
   end
+
+  def set_vote_btn_variables(cause)
+    if !current_user
+      @vote_label = "Vote (you must login first)"
+      @vote_disabled = false
+      @vote_visible = true
+    else
+      vote = Vote.new(:cause_id => cause.id ,:user_id=> current_user.id)
+      if vote.valid?
+        @vote_label = "Vote"
+        @vote_disabled = false
+        @vote_visible = true
+      else
+        error = vote.errors.on(:cause_id)
+        @vote_label = error
+        @vote_errors = error
+        @vote_disabled = true
+        if vote.already_exists
+          @vote_visible = true
+        else
+          @vote_visible = false
+        end
+
+      end
+    end
+  end
+
+
+
+
+  def set_follow_btn_variables(cause)
+    if !current_user
+      @follow_label = "Follow (you must login first)"
+      @follow_route = 'follow'
+    else
+      follow = Follow.find_by_cause_id_and_user_id(cause.id,current_user.id)
+      @follow_label = if follow then "Unfollow" else "Follow" end
+      @follow_route = if follow then 'unfollow' else 'follow' end
+    end
+
+  end
+
+
+
+
 
 end
 

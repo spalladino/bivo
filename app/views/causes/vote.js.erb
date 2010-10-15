@@ -1,5 +1,6 @@
 
 $("#vote_btn").html("<%= escape_javascript(render("vote_btn")) %>");
+$("#vote_counter").html(<%=@cause.votes_count%>);
 
 <% if flash[:notice]%>
 	$.jGrowl("<%= flash[:notice] %>", <%= options_for_javascript(flash[:notice_options] || {}) %>);

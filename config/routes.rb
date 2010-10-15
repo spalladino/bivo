@@ -16,9 +16,9 @@ Bivo::Application.routes.draw do
 
   get "cause", :to => 'causes#index'
 
-  post "cause/vote", :to => 'causes#vote'
-  post "cause/follow", :to => 'causes#follow'
-
+  post "cause/vote/:cause_id", :to => 'causes#vote'
+  post "cause/follow/:cause_id", :to => 'causes#follow'
+  post "cause/unfollow/:cause_id", :to => 'causes#unfollow'
   root :to => "home#index"
 
 
