@@ -55,14 +55,10 @@ class CausesController < ApplicationController
     @vote = Vote.new(:cause_id => params[:id],:user_id=> current_user.id)
     if @vote.save
       flash[:notice] = "Vote submitted"
-      if not request.xhr? #Not Ajax?
-        redirect_to request.referer
-      end
+      redirect_to request.referer unless request.xhr? #Not Ajax
     else
       flash[:notice] = @vote.errors.on(:cause_id)
-      if !request.xhr?
-        redirect_to request.referer
-      end
+      redirect_to request.referer unless request.xhr? #Not Ajax
     end
     set_vote_btn_variables @cause
   end
@@ -76,7 +72,7 @@ class CausesController < ApplicationController
       end
     else
       flash[:notice] = "Error, try again"
-      if !request.xhr?
+      if not request.xhr?
         redirect_to request.referer
       end
     end
@@ -139,7 +135,7 @@ class CausesController < ApplicationController
       render 'edit'
     end
   end
-  
+
   def checkUrl
     @cause = Cause.find_by_url(params[:shortUrl])
     @result = 'available'
@@ -148,19 +144,19 @@ class CausesController < ApplicationController
     end
     render :text => @result
   end
-  
+
   def activate
     @cause.status = :active
     @cause.save
     render 'edit'
   end
-  
+
   def deactivate
     @cause.status = :inactive
     @cause.save
     render 'edit'
   end
-  
+
   def mark_paid
     @cause.status = :paid
     @cause.save
