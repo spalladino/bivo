@@ -133,11 +133,45 @@ class CausesController < ApplicationController
   end
 
   def delete
+    # TODO: chequeo para ver si se puede borrar en base al estado, y si el user es admin
+    # (si se hace borrado logico, se borra permanentemente o no se puede borrar)
     @cause = Cause.find_by_id(params[:id])
     @cause.destroy
     if @cause.destroyed?
       redirect_to root_url
+    else
+      render 'edit'
     end
+  end
+  
+  def checkUrl
+    @cause = Cause.find_by_url(params[:shortUrl])
+    @result = 'available'
+    if @cause
+      @result = 'not_available'
+    end
+    render :text => @result
+  end
+  
+  def activate
+    @cause = Cause.find_by_id(params[:id])
+    @cause.status = :active
+    @cause.save
+    render 'edit'
+  end
+  
+  def deactivate
+    @cause = Cause.find_by_id(params[:id])
+    @cause.status = :inactive
+    @cause.save
+    render 'edit'
+  end
+  
+    def mark_paid
+    @cause = Cause.find_by_id(params[:id])
+    @cause.status = :paid
+    @cause.save
+    render 'edit'
   end
 
   def set_vote_btn_variables(cause)

@@ -4,7 +4,11 @@
 <%= f.text_field :name %><br/>
 
 <%= f.label _("Short Url")%><br/>
-http://www.bivo.org/cause/<%= f.text_field :url %><br/>
+http://www.bivo.org/cause/<%= f.text_field :url, :id => 'short_url', :onfocus => "jacascript:$('#available').html('');"%>
+<%= tag 'input', {:type => 'button', :value => _('Check Url'), :onclick => "javascript:checkUrl();"} %>
+&nbsp;
+<span id="available"></span>
+<br/>
 
 <%= f.label _('Category')%><br/>
 <%= collection_select('cause', 'cause_category_id', CauseCategory.all, :id, :name) %><br/>
@@ -38,3 +42,36 @@ http://www.bivo.org/cause/<%= f.text_field :url %><br/>
 
 <%= f.submit 'Save' %> &nbsp;
 <%= tag 'input', {:type => 'button', :value => _('Cancel'), :onclick => "javascript:window.location = '#{root_path}';"} %>
+
+<% content_for :js do %> <!-- javascript code to run, for this view only -->
+	function checkUrl() {
+		<% if @cause.id? %>
+			if('<%= @cause.url_was %>' == $("#short_url").val()) {
+				showAvailable(true);
+				return;
+			}
+		<% end %>
+		var query = "shortUrl="+$("#short_url").val();
+		$("#available").html('checking...');
+		$("#checkBtn").attr('disabled','disabled');
+		$.ajax({
+			url: "/cause/checkUrl",
+			data: query,
+			success: function(status) {
+				$("#checkBtn").attr('disabled','');
+				if(status == 'available')				
+					showAvailable(true);
+				else
+					showAvailable(false);
+			}
+		});
+	}
+	
+	function showAvailable(available) {
+		if(available) {
+			$("#available").html('<%=_("Available")%>');
+		} else {
+			$("#available").html('<%=_("Unavailable")%>');
+		}
+	}
+<% end %>
