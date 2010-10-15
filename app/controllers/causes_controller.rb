@@ -92,6 +92,14 @@ class CausesController < ApplicationController
       redirect_to root_url
     end
   end
+  
+  def delete
+    @cause = Cause.find_by_id(params[:id])
+    @cause.destroy
+    if @cause.destroyed?
+      redirect_to root_url
+    end
+  end
 
 end
 
