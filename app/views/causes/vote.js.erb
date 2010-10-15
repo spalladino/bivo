@@ -1,7 +1,6 @@
 
-$("#vote_btn").html("<%= escape_javascript(render("vote_btn")) %>");
+$("#vote_btn").html("<%= escape_javascript(render(:partial => "vote_btn", :object => @vote_presenter)) %>");
 $("#vote_counter").text('<%=@cause.reload.votes_count%>');
-<!---->
 
 <% if flash[:notice]%>
 	$.jGrowl("<%= flash[:notice] %>", <%= options_for_javascript(flash[:notice_options] || {}) %>);

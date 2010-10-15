@@ -170,41 +170,11 @@ class CausesController < ApplicationController
   end
 
   def set_vote_btn_variables(cause)
-    if !current_user
-      @vote_label = "Vote (you must login first)"
-      @vote_disabled = false
-      @vote_visible = true
-    else
-      vote = Vote.new(:cause_id => cause.id ,:user_id=> current_user.id)
-      if vote.valid?
-        @vote_label = "Vote"
-        @vote_disabled = false
-        @vote_visible = true
-      else
-        error = vote.errors.on(:cause_id)
-        @vote_label = error
-        @vote_errors = error
-        @vote_disabled = true
-        if vote.already_exists
-          @vote_visible = true
-        else
-          @vote_visible = false
-        end
-
-      end
-    end
+    @vote_presenter = VoteButtonPresenter.new(cause, current_user)
   end
 
   def set_follow_btn_variables(cause)
-    if !current_user
-      @follow_label = "Follow (you must login first)"
-      @follow_route = 'follow'
-    else
-      follow = Follow.find_by_cause_id_and_user_id(cause.id,current_user.id)
-      @follow_label = if follow then "Unfollow" else "Follow" end
-      @follow_route = if follow then 'unfollow' else 'follow' end
-    end
-
+    @follow_presenter = FollowButtonPresenter.new(cause, current_user)
   end
   
   def all_category(count)

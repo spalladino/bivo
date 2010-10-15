@@ -1,13 +1,18 @@
 <!-- Vote button: -->
-<p><%=@vote_errors%></p>
+<p><%=vote_btn.errors%></p>
 
-  <%if !@vote_visible%>
-  <div style="visibility:hidden">
+  <%if !vote_btn.visible%>
+  	<div style="visibility:hidden">
   <%else%>
-  <div>
+  	<div>
   <%end%>
 
-    <%= button_to(@vote_label, @cause.id.to_s+'/vote', :remote => true,:method => 'vote',:id => "submit_vote_btn",:disabled => @vote_disabled ,:onclick => '$(this).val("Submitting...");$(this).attr("disabled", "true");return true;' ) %>
+	<%= button_to(vote_btn.label, vote_btn.route, 
+		:remote => true,
+		:method => 'vote',
+		:id => "submit_vote_btn",
+		:disabled => vote_btn.disabled ,
+		:onclick => '$(this).val("Submitting...");$(this).attr("disabled", "true");return true;' ) %>
 
 </div>
 
