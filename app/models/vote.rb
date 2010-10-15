@@ -6,8 +6,11 @@ class Vote < ActiveRecord::Base
   validates_presence_of :user,:message => "inexistent user"
   validates_presence_of :cause,:message => "inexistent cause"
 
-  validate :didnt_voted
+  validate :didnt_vote
   validate :status_of_cause
+
+  attr_accessor :already_exists
+
 
   def status_of_cause
     if (cause && !cause.status) || (cause && cause.status != :active)
@@ -15,12 +18,11 @@ class Vote < ActiveRecord::Base
     end
   end
 
-  def didnt_voted
+  def didnt_vote
     if cause && user && Vote.find_by_cause_id_and_user_id(cause.id,user.id)
-      errors.add(:cause_id, "Already voted")
+      self.already_exists = true
+      errors.add(:cause_id, "Voted")
     end
-
-
   end
 
 

@@ -7,17 +7,22 @@ Bivo::Application.routes.draw do
 
   post "cause/create", :to => 'causes#create', :as => 'create'
   post "cause/:id/update", :to => 'causes#update'
+  post "cause/:id/delete", :to => 'causes#delete'
+  post "cause/:id/activate", :to => 'causes#activate'
+  post "cause/:id/deactivate", :to => 'causes#deactivate'
+  post "cause/:id/mark_paid", :to => 'causes#mark_paid'
 
   get "cause", :to => 'causes#index'
   get "cause/new", :to => 'causes#new'
+  get "cause/checkUrl", :to => 'causes#checkUrl'
   get "cause/:url" => 'causes#details'
   get "cause/:id/edit" => 'causes#edit'
 
   get "cause", :to => 'causes#index'
 
-  post "cause/vote", :to => 'causes#vote'
-  post "cause/follow", :to => 'causes#follow'
-
+  post "cause/vote/:cause_id", :to => 'causes#vote'
+  post "cause/follow/:cause_id", :to => 'causes#follow'
+  post "cause/unfollow/:cause_id", :to => 'causes#unfollow'
   root :to => "home#index"
 
 

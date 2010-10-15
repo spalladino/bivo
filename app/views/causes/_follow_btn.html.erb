@@ -1,0 +1,7 @@
+
+<div>
+
+    <%= button_to(@follow_label, @follow_route + '/'+@cause.id.to_s, :remote => true,:method => 'follow',:id => "submit_follow_btn",:onclick => '$(this).val("Submitting...");$(this).attr("disabled", "true");return true;' ) %>
+
+</div>
+

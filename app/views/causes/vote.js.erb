@@ -1,3 +1,12 @@
 
-$('#submit_vote_btn').attr("value","<%=@message%>");
+$("#vote_btn").html("<%= escape_javascript(render("vote_btn")) %>");
+$("#vote_counter").html(<%=@cause.votes_count%>);
+
+<% if flash[:notice]%>
+	$.jGrowl("<%= flash[:notice] %>", <%= options_for_javascript(flash[:notice_options] || {}) %>);
+<% end %>
+
+<% if flash[:alert]%>
+	$.jGrowl("<%= flash[:alert] %>", <%= options_for_javascript(flash[:alert_options] || {}) %>);
+<% end %>
 
