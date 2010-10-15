@@ -144,6 +144,15 @@ class CausesController < ApplicationController
       redirect_to root_url
     end
   end
+  
+  def checkUrl
+    @cause = Cause.find_by_url(params[:shortUrl])
+    @result = 'available'
+    if @cause
+      @result = 'not_available'
+    end
+    render :text => @result
+  end
 
 end
 
