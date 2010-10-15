@@ -46,7 +46,7 @@ http://www.bivo.org/cause/<%= f.text_field :url, :id => 'short_url', :onfocus =>
 <% content_for :js do %> <!-- javascript code to run, for this view only -->
 	function checkUrl() {
 		<% if @cause.id? %>
-			if('<%= @cause.url %>' == $("#short_url").val()) {
+			if('<%= @cause.url_was %>' == $("#short_url").val()) {
 				showAvailable(true);
 				return;
 			}
