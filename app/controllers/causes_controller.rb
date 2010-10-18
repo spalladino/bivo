@@ -1,12 +1,12 @@
 class CausesController < ApplicationController
 
-  before_filter :only_owner_or_creator, :only => [:delete, :edit, :activate, :deactivate]
+
 
   before_filter :authenticate_user!, :except => [ :show, :details, :index ]
 
   before_filter :load_cause, :except => [ :details, :index, :new, :checkUrl, :create ]
 
-
+  before_filter :only_owner_or_creator, :only => [:delete, :edit, :activate, :deactivate]
 
   def show
     render 'details'
@@ -150,13 +150,19 @@ class CausesController < ApplicationController
   def activate
     @cause.status = :active
     @cause.save
-    redirect_to request.referer
+    flash[:notice] = "Activated"
+    if not request.xhr? #Not Ajax?
+        redirect_to request.referer
+    end
   end
 
   def deactivate
     @cause.status = :inactive
     @cause.save
-    redirect_to request.referer
+    flash[:notice] = "Desactivated"
+    if not request.xhr? #Not Ajax?
+        redirect_to request.referer
+    end
   end
 
   def mark_paid

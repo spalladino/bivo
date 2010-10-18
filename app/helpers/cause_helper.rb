@@ -59,14 +59,12 @@ module CauseHelper
   def active_deactive_button(cause)
 
     if current_user.is_admin_user
-      if cause.status_inactive?
-        return content_tag :div, button_to("Activate", "#{cause.id}/activate")
-      else
-        return content_tag :div, button_to("Deactivate", "#{cause.id}/deactivate")
-      end
-    else
-       return content_tag :div
+      label = if cause.status_inactive? then _("Activate") else _("Deactivate") end
+      action = if cause.status_inactive? then "activate" else "deactivate" end
+      return content_tag :div, button_to(label,  { :action => action, :id => cause.id },:remote => true,:onclick => '$(this).val("Submitting...");$(this).attr("disabled", "true");return true;',:id => "submit_active_btn")
     end
+
+
 
   end
 
