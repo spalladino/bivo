@@ -1,11 +1,9 @@
 class CausesController < ApplicationController
 
-
-
   before_filter :authenticate_user!, :except => [ :show, :details, :index ]
 
-  before_filter :load_cause, :except => [ :details, :index, :new, :checkUrl, :create ]
-
+  before_filter :load_cause, :except => [ :details, :index, :new, :check_url, :create ]
+  
   before_filter :only_owner_or_creator, :only => [:delete, :edit, :activate, :deactivate]
 
   def show
@@ -33,7 +31,7 @@ class CausesController < ApplicationController
 
     # Filter by category
     if not params[:category].blank?
-      @causes = @causes.where('category_id = ?', params[:category].to_i)
+      @causes = @causes.where('causes.cause_category_id = ?', params[:category].to_i)
     end
 
     # Cap maximum to show to 50
@@ -138,8 +136,8 @@ class CausesController < ApplicationController
     end
   end
 
-  def checkUrl
-    @cause = Cause.find_by_url(params[:shortUrl])
+  def check_url
+    @cause = Cause.find_by_url(params[:url])
     @result = 'available'
     if @cause
       @result = 'not_available'
