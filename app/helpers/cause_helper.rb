@@ -11,16 +11,15 @@ module CauseHelper
 
     if current_user.nil?
         label = _("Follow (you must login first)")
-        route = "#{cause.id}/follow"
+        action = "follow"
     else
       follow = Follow.find_by_cause_id_and_user_id(cause.id, current_user.id)
       label = if follow then _("Unfollow") else _("Follow") end
-      route = if follow then "#{cause.id}/unfollow" else "#{cause.id}/follow" end
+      action = if follow then "unfollow" else "follow" end
     end
 
-    return content_tag :div, button_to(label, route,
+    return content_tag :div, button_to(label,  { :action => action, :id => cause.id },
       :remote => true,
-      :method => 'follow',
       :id => "submit_follow_btn",
       :onclick => '$(this).val("Submitting...");$(this).attr("disabled", "true");return true;')
 
@@ -47,9 +46,8 @@ module CauseHelper
       end
     end
 
-    return content_tag :div, button_to(label, "#{cause.id}/vote",
+    return content_tag :div, button_to(label, { :action => "vote", :id => cause.id },
       :remote => true,
-      :method => 'vote',
       :id => "submit_vote_btn",
       :disabled => disabled ,
       :onclick => '$(this).val("Submitting...");$(this).attr("disabled", "true");return true;'),
@@ -73,15 +71,13 @@ module CauseHelper
 
   def mark_as_paid_button(cause)
     if cause.funds_raised >= cause.funds_needed
-	    return content_tag :div, button_to("Mark as paid", "#{cause.id}/mark_paid")
-    else
-      return content_tag :div
+	    return content_tag :div, button_to("Mark as paid", { :action => "mark_paidde", :id => cause.id })
     end
   end
 
 
   def delete_button(cause)
-    return content_tag :div, button_to("Delete", "#{cause.id}/delete",:confirm => "Are you sure?")
+    return content_tag :div, button_to("Delete", { :action => "destroy", :id => cause.id },:confirm => "Are you sure?")
   end
 
 end
