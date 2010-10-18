@@ -79,7 +79,7 @@ module CauseHelper
 
   def mark_as_paid_button(cause)
     if cause.funds_raised >= cause.funds_needed
-	    return content_tag :div, button_to("Mark as paid", { :action => "mark_paidde", :id => cause.id })
+	    return content_tag :div, button_to("Mark as paid", { :action => "mark_paid", :id => cause.id })
     end
   end
 
