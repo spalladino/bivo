@@ -85,7 +85,7 @@ module CauseHelper
 
 
   def delete_button(cause)
-    return content_tag :div, button_to("Delete", { :action => "destroy", :id => cause.id },:confirm => "Are you sure?")
+    return content_tag :div, button_to("Delete", cause_path(cause.id), :method => :delete, :confirm => "Are you sure?")
   end
 
 end
