@@ -2,15 +2,15 @@
 	<%= render :partial => 'form', :locals => {:cause => @cause, :f => f} %>
 <%end%>
 
-<%= button_to _("Delete"), { :action => "delete", :id => @cause.id },
-            :confirm => _("Are you sure?") %>
-			
-<%if @cause.status_inactive? #TODO:check also if is admin %>
-	<%= button_to _("Activate"), { :action => "activate", :id => @cause.id } %>
-<% else %>
-	<%= button_to _("Deactivate"), { :action => "deactivate", :id => @cause.id } %>
-<% end %>
+<div id="delete_button">
+  <%= delete_button @cause %>
+</div>
 
-<%if @cause.funds_raised >= @cause.funds_needed #TODO:check also is admin %>
-	<%= button_to _("Mark as paid"), { :action => "mark_paid", :id => @cause.id } %>
-<%end%>
+<div id="active_deactive_button">
+  <%= active_deactive_button @cause %>
+</div>
+
+<div id="mark_as_paid_button">
+  <%= mark_as_paid_button @cause %>
+</div>
+

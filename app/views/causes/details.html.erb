@@ -34,3 +34,20 @@
   <%= follow_button @cause %>
 </div>
 
+<%if current_user && (@cause.charity.id == current_user.id || current_user.is_admin_user) %>
+
+  <div id="delete_button">
+    <%= delete_button @cause %>
+  </div>
+
+  <div id="active_deactive_button">
+    <%= active_deactive_button @cause %>
+  </div>
+
+  <div id="mark_as_paid_button">
+    <%= mark_as_paid_button @cause %>
+  </div>
+
+
+<%end%>
+

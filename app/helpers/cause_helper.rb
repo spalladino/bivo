@@ -1,7 +1,7 @@
 module CauseHelper
 
   def follow_button(cause)
-    
+
     if current_user.nil?
         label = _("Follow (you must login first)")
         route = "#{cause.id}/follow"
@@ -10,18 +10,18 @@ module CauseHelper
       label = if follow then _("Unfollow") else _("Follow") end
       route = if follow then "#{cause.id}/unfollow" else "#{cause.id}/follow" end
     end
-    
-    return content_tag :div, button_to(label, route, 
+
+    return content_tag :div, button_to(label, route,
       :remote => true,
       :method => 'follow',
       :id => "submit_follow_btn",
       :onclick => '$(this).val("Submitting...");$(this).attr("disabled", "true");return true;')
-    
+
   end
-  
-  
+
+
   def vote_button(cause)
-  
+
     if current_user.nil?
       label = _("Vote (you must login first)")
       disabled = false
@@ -39,15 +39,45 @@ module CauseHelper
         visible = vote.already_exists
       end
     end
-    
-    return content_tag :div, button_to(label, "#{cause.id}/vote", 
+
+    return content_tag :div, button_to(label, "#{cause.id}/vote",
       :remote => true,
       :method => 'vote',
       :id => "submit_vote_btn",
       :disabled => disabled ,
       :onclick => '$(this).val("Submitting...");$(this).attr("disabled", "true");return true;'),
       :class => (if not visible then 'hidden' end)
-    
+
+  end
+
+
+  def active_deactive_button(cause)
+
+    if current_user.is_admin_user
+      if cause.status_inactive?
+        return content_tag :div, button_to("Activate", "#{cause.id}/activate")
+      else
+        return content_tag :div, button_to("Deactivate", "#{cause.id}/deactivate")
+      end
+    else
+       return content_tag :div
+    end
+
+  end
+
+
+  def mark_as_paid_button(cause)
+    if cause.funds_raised >= cause.funds_needed
+	    return content_tag :div, button_to("Mark as paid", "#{cause.id}/mark_paid")
+    else
+      return content_tag :div
+    end
+  end
+
+
+  def delete_button(cause)
+    return content_tag :div, button_to("Delete", "#{cause.id}/delete",:confirm => "Are you sure?")
   end
 
 end
+

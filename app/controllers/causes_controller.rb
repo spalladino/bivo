@@ -178,9 +178,8 @@ class CausesController < ApplicationController
 
   def only_owner_or_creator
     if not (@cause.charity.id == current_user.id || current_user.is_admin_user)
-      headers["Status"] = "403 Forbidden"
-      redirect_to root_url
-end
+      render :nothing => true, :status => :forbidden
+    end
   end
 
 
