@@ -2,6 +2,8 @@ require 'enumerated_attribute'
 
 class Cause < ActiveRecord::Base
 
+  UrlFormat = /[a-zA-Z\-_][a-zA-Z0-9\-_]*/
+
   belongs_to :cause_category
   belongs_to :country
   belongs_to :charity
@@ -15,6 +17,7 @@ class Cause < ActiveRecord::Base
   validates_presence_of :url
   validates_length_of :url, :maximum => 255
   validates_uniqueness_of :url, :case_sensitive => false
+  validates_format_of :url, :with => UrlFormat  
 
   validates_presence_of :funds_needed
   validates_numericality_of :funds_needed, :greater_than => 0

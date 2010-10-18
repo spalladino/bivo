@@ -1,5 +1,10 @@
 module CauseHelper
 
+  def cause_category_filter_url(category)
+    query = CGI.parse(request.query_string)
+    query['category'] = category.id
+  end
+
   def follow_button(cause)
 
     if current_user.nil?

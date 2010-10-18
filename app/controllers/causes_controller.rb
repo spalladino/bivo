@@ -1,13 +1,19 @@
 class CausesController < ApplicationController
 
-  before_filter :authenticate_user!, :except => [ :details, :index ]
-
-  before_filter :load_cause, :except => [:details, :index, :new, :checkUrl, :create]
-
   before_filter :only_owner_or_creator, :only => [:delete, :edit, :activate, :deactivate]
 
+  before_filter :authenticate_user!, :except => [ :show, :details, :index ]
+
+  before_filter :load_cause, :except => [ :details, :index, :new, :checkUrl, :create ]
+
+
+
+  def show
+    render 'details'
+  end
+
   def details
-    @cause = Cause.find_by_url(params[:url])
+    @cause = Cause.find_by_url! params[:url]
   end
 
   def index
@@ -16,13 +22,13 @@ class CausesController < ApplicationController
 
     # Filter by region
     if not params[:region].blank?
-      @causes = @causes.where('country_id = ?', params[:region].to_i)
+      @causes = @causes.where('causes.country_id = ?', params[:region].to_i)
       @categories = @categories.where('causes.country_id = ?', params[:region].to_i)
     end
 
     # Filter by status
     status = params[:status] || :active
-    @causes = @causes.where('status = ?', status)
+    @causes = @causes.where('causes.status = ?', status)
     @categories = @categories.where('causes.status = ?', status)
 
     # Filter by category
@@ -36,6 +42,8 @@ class CausesController < ApplicationController
 
     # Set pagination
     @causes = @causes.paginate(:per_page => params[:per_page] || 20, :page => params[:page])
+
+    @request = request
 
     # Fill filters fields
     @regions = Country.all
@@ -97,8 +105,6 @@ class CausesController < ApplicationController
   end
 
   def edit
-    @cause = Cause.find(params[:id])
-
   end
 
   def create
@@ -113,7 +119,6 @@ class CausesController < ApplicationController
   end
 
   def update
-    @cause = Cause.find(params[:id])
     @cause.attributes = params[:cause]
     if !@cause.save
       redirect_to request.referer
@@ -125,7 +130,6 @@ class CausesController < ApplicationController
   def delete
     # TODO: chequeo para ver si se puede borrar en base al estado, y si el user es admin
     # (si se hace borrado logico, se borra permanentemente o no se puede borrar)
-    @cause = Cause.find(params[:id])
     @cause.destroy
     if @cause.destroyed?
       redirect_to root_url
@@ -144,21 +148,18 @@ class CausesController < ApplicationController
   end
 
   def activate
-    @cause = Cause.find(params[:id])
     @cause.status = :active
     @cause.save
     redirect_to request.referer
   end
 
   def deactivate
-    @cause = Cause.find(params[:id])
     @cause.status = :inactive
     @cause.save
     redirect_to request.referer
   end
 
   def mark_paid
-    @cause = Cause.find(params[:id])
     @cause.status = :paid
     @cause.save
     redirect_to request.referer
