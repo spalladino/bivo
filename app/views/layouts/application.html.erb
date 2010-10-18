@@ -8,8 +8,9 @@
   <%= csrf_meta_tag %>
   
   <%= yield(:head) %>
+  
   <script type="text/javascript" language="JavaScript">
-  	<%= render :partial => 'layouts/notifications.js' %>
+  	<%= on_document_ready { render(:partial => 'shared/notifications.js') } %>
 	<%= yield(:js) %>  	
   </script>
   
