@@ -1,5 +1,5 @@
 
-$("#vote_btn").html("<%= escape_javascript(render(:partial => "vote_btn", :object => @vote_presenter)) %>");
+$("#vote_btn").html("<%= escape_javascript(vote_button(@cause)) %>");
 $("#vote_counter").text('<%=@cause.reload.votes_count%>');
 
 <% if flash[:notice]%>
