@@ -4,7 +4,7 @@
 <%= f.text_field :name %><br/>
 
 <%= f.label _("Short Url")%><br/>
-http://www.bivo.org/cause/<%= f.text_field :url, :id => 'short_url', :onfocus => "jacascript:$('#available').html('');"%>
+http://www.bivo.org/cause/<%= f.text_field :url, :id => 'short_url', :onfocus => "javascript:$('#available').html('');"%>
 <%= tag 'input', {:type => 'button', :value => _('Check Url'), :onclick => "javascript:checkUrl();"} %>
 &nbsp;
 <span id="available"></span>
@@ -45,20 +45,19 @@ http://www.bivo.org/cause/<%= f.text_field :url, :id => 'short_url', :onfocus =>
 
 <% content_for :js do %> <!-- javascript code to run, for this view only -->
 	function checkUrl() {
-		<% if @cause.id? %>
+		<% if !@cause.new_record? %>
 			if('<%= @cause.url_was %>' == $("#short_url").val()) {
 				showAvailable(true);
 				return;
 			}
 		<% end %>
-		var query = "shortUrl="+$("#short_url").val();
-		$("#available").html('checking...');
+		$("#available").html('<%=_("checking...")%>');
 		$("#checkBtn").attr('disabled','disabled');
 		$.ajax({
 			url: "/cause/checkUrl",
-			data: query,
+			data: {shortUrl : $("#short_url").val()},
 			success: function(status) {
-				$("#checkBtn").attr('disabled','');
+				$("#checkBtn").removeAttr('disabled');
 				if(status == 'available')				
 					showAvailable(true);
 				else

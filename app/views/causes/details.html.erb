@@ -24,13 +24,13 @@
 </p>
 
 <div id="vote_btn">
-  <%= render :partial => 'vote_btn', :object => @vote_presenter %>
+  <%= vote_button @cause %>
 </div>
 
 <p>Votes Count:</p>
 <p id = "vote_counter"> <%=@cause.votes_count%> </p>
 
 <div id="follow_btn">
-  <%= render :partial => 'follow_btn', :object => @follow_presenter %>
+  <%= follow_button @cause %>
 </div>
 
