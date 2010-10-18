@@ -29,19 +29,19 @@ class CausesController < ApplicationController
     @causes = @causes.where('causes.status = ?', status)
     @categories = @categories.where('causes.status = ?', status)
 
+    # Count for all causes
+    all_causes_count = @causes.size
+
     # Filter by category
     if not params[:category].blank?
       @causes = @causes.where('causes.cause_category_id = ?', params[:category].to_i)
     end
 
     # Cap maximum to show to 50
-    causes_real_count = @causes.size
     @causes = @causes[0...50]
 
     # Set pagination
     @causes = @causes.paginate(:per_page => params[:per_page] || 20, :page => params[:page])
-
-    @request = request
 
     # Fill filters fields
     @regions = Country.all
@@ -50,7 +50,7 @@ class CausesController < ApplicationController
     @statuses = Cause.enumerated_attributes[:status]
     @status = status
 
-    @categories = @categories[0...6].insert(0, all_category(causes_real_count))
+    @categories = @categories[0...6].insert(0, all_category(all_causes_count))
     @category = params[:category]
   end
 
