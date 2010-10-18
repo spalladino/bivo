@@ -1,8 +1,10 @@
 module CauseHelper
 
-  def cause_category_filter_url(category)
-    query = CGI.parse(request.query_string)
-    query['category'] = category.id
+  def category_filter_url(category)
+    query = CGI.parse(request.query_string).symbolize_keys
+    query.each {|k,v| query[k] = v.first}
+    query[:category] = category.id
+    url_for({:action => 'index', :controller => 'causes'}.merge(query))
   end
 
   def follow_button(cause)

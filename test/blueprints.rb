@@ -24,8 +24,8 @@ end
 Cause.blueprint do
   city
   description
-  country       {Country.first || Country.make}
-  category      {CauseCategory.make_or_get(5)}
+  country         {Country.first || Country.make}
+  cause_category  {CauseCategory.make_or_get(5)}
   
   name          {Sham.bs}
   url           {Sham.simple_name}

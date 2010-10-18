@@ -56,8 +56,8 @@
 		  $("#available").html('<%=_("checking...")%>');
 		  $("#checkBtn").attr('disabled','disabled');
 		  $.ajax({
-			  url: "/cause/checkUrl",
-			  data: {shortUrl : $("#short_url").val()},
+			  url: "/cause/check_url",
+			  data: {url : $("#short_url").val()},
 			  success: function(status) {
 				  $("#checkBtn").removeAttr('disabled');
 				  if(status == 'available')

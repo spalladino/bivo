@@ -1,11 +1,9 @@
 class CausesController < ApplicationController
 
-
-
   before_filter :authenticate_user!, :except => [ :show, :details, :index ]
 
-  before_filter :load_cause, :except => [ :details, :index, :new, :checkUrl, :create ]
-
+  before_filter :load_cause, :except => [ :details, :index, :new, :check_url, :create ]
+  
   before_filter :only_owner_or_creator, :only => [:delete, :edit, :activate, :deactivate]
 
   def show
@@ -31,19 +29,19 @@ class CausesController < ApplicationController
     @causes = @causes.where('causes.status = ?', status)
     @categories = @categories.where('causes.status = ?', status)
 
+    # Count for all causes
+    all_causes_count = @causes.size
+
     # Filter by category
     if not params[:category].blank?
-      @causes = @causes.where('category_id = ?', params[:category].to_i)
+      @causes = @causes.where('causes.cause_category_id = ?', params[:category].to_i)
     end
 
     # Cap maximum to show to 50
-    causes_real_count = @causes.size
     @causes = @causes[0...50]
 
     # Set pagination
     @causes = @causes.paginate(:per_page => params[:per_page] || 20, :page => params[:page])
-
-    @request = request
 
     # Fill filters fields
     @regions = Country.all
@@ -52,7 +50,7 @@ class CausesController < ApplicationController
     @statuses = Cause.enumerated_attributes[:status]
     @status = status
 
-    @categories = @categories[0...6].insert(0, all_category(causes_real_count))
+    @categories = @categories[0...6].insert(0, all_category(all_causes_count))
     @category = params[:category]
   end
 
@@ -138,8 +136,8 @@ class CausesController < ApplicationController
     end
   end
 
-  def checkUrl
-    @cause = Cause.find_by_url(params[:shortUrl])
+  def check_url
+    @cause = Cause.find_by_url(params[:url])
     @result = 'available'
     if @cause
       @result = 'not_available'
