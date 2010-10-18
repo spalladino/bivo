@@ -2,8 +2,8 @@ Bivo::Application.routes.draw do
   devise_for :users, :controllers => {:registrations => 'registrations' }
 
   resources :charities
-  
-  get "cause/:url", :controller => "causes", :action => "details", :constraints => { :url => Cause::UrlFormat }
+
+  get "cause/c/:url", :controller => "causes", :action => "details", :constraints => { :url => Cause::UrlFormat }
   resources :causes, :path => 'cause' do
     member do
       get :details, :path => 'cause/:url', :constraints => { :url => Cause::UrlFormat }
@@ -21,7 +21,7 @@ Bivo::Application.routes.draw do
   #post "cause/create", :to => 'causes#create', :as => 'create'
   #post "cause/:id/update", :to => 'causes#update'
   #post "cause/:id/delete", :to => 'causes#delete'
-  
+
 #  post "cause/:id/activate", :to => 'causes#activate'
 #  post "cause/:id/deactivate", :to => 'causes#deactivate'
 #  post "cause/:id/mark_paid", :to => 'causes#mark_paid'
@@ -33,7 +33,7 @@ Bivo::Application.routes.draw do
   #get "cause", :to => 'causes#index'
   #get "cause/new", :to => 'causes#new'
   #get "cause/checkUrl", :to => 'causes#checkUrl'
-  
+
   #get "cause/:id/edit", :to => 'causes#edit'
 
 

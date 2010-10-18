@@ -1,12 +1,15 @@
 class CausesController < ApplicationController
- 
+
+
+
   before_filter :authenticate_user!, :except => [ :show, :details, :index ]
 
   before_filter :load_cause, :except => [ :details, :index, :new, :checkUrl, :create ]
-  
+
+  before_filter :only_owner_or_creator, :only => [:delete, :edit, :activate, :deactivate]
 
   def show
-    render 'details'  
+    render 'details'
   end
 
   def details
@@ -34,7 +37,7 @@ class CausesController < ApplicationController
     end
 
     # Cap maximum to show to 50
-    causes_real_count = @causes.size 
+    causes_real_count = @causes.size
     @causes = @causes[0...50]
 
     # Set pagination
@@ -48,7 +51,7 @@ class CausesController < ApplicationController
 
     @statuses = Cause.enumerated_attributes[:status]
     @status = status
-    
+
     @categories = @categories[0...6].insert(0, all_category(causes_real_count))
     @category = params[:category]
   end
@@ -111,14 +114,14 @@ class CausesController < ApplicationController
     if !@cause.save
       render 'new'
     else
-      redirect_to root_url
+      redirect_to request.referer
     end
   end
 
   def update
     @cause.attributes = params[:cause]
     if !@cause.save
-      render 'edit'
+      redirect_to request.referer
     else
       redirect_to root_url
     end
@@ -131,7 +134,7 @@ class CausesController < ApplicationController
     if @cause.destroyed?
       redirect_to root_url
     else
-      render 'edit'
+      redirect_to request.referer
     end
   end
 
@@ -147,33 +150,46 @@ class CausesController < ApplicationController
   def activate
     @cause.status = :active
     @cause.save
-    render 'edit'
+    flash[:notice] = "Activated"
+    if not request.xhr? #Not Ajax?
+        redirect_to request.referer
+    end
   end
 
   def deactivate
     @cause.status = :inactive
     @cause.save
-    render 'edit'
+    flash[:notice] = "Desactivated"
+    if not request.xhr? #Not Ajax?
+        redirect_to request.referer
+    end
   end
-  
+
   def mark_paid
     @cause.status = :paid
     @cause.save
-    render 'edit'
+    redirect_to request.referer
   end
 
   private
-  
+
   def load_cause
     @cause = Cause.find params[:id]
   end
-  
+
   def all_category(count)
     c = CauseCategory.new :name => _("All")
     c.class_eval { attr_accessor :cause_count }
     c.cause_count = count
     return c
   end
+
+  def only_owner_or_creator
+    if not (@cause.charity.id == current_user.id || current_user.is_admin_user)
+      render :nothing => true, :status => :forbidden
+    end
+  end
+
 
 end
 
