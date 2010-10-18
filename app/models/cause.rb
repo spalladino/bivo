@@ -29,7 +29,6 @@ class Cause < ActiveRecord::Base
 
   enum_attr :status, %w(^inactive active raising_funds completed paid deleted)
 
-  #NAME SCOPE (causas no borradas)
 
 end
 

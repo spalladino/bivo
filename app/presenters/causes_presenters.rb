@@ -1,7 +1,7 @@
 module CausesPresenters
-  
+
   class FollowButtonPresenter
-    
+
     def initialize(cause, user)
       if user.nil?
         self.label = _("Follow (you must login first)")
@@ -12,14 +12,14 @@ module CausesPresenters
         self.route = if follow then "#{cause.id}/unfollow" else "#{cause.id}/follow" end
       end
     end
-    
+
     attr_accessor :label
     attr_accessor :route
-    
+
   end
-  
+
   class VoteButtonPresenter
-    
+
     def initialize(cause, current_user)
       self.route = "#{cause.id}/vote"
       if current_user.nil?
@@ -41,12 +41,13 @@ module CausesPresenters
         end
       end
     end
-    
+
     attr_accessor :label
     attr_accessor :disabled
     attr_accessor :visible
     attr_accessor :route
     attr_accessor :errors
   end
-  
+
 end
+
