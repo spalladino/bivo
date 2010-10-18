@@ -39,8 +39,6 @@ module Bivo
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
     
-    config.load_paths += %W(#{Rails.root}/app/presenters)
-    
     # Configure generator options
     config.generators do |g|
       g.fixture :false

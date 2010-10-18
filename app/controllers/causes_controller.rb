@@ -1,6 +1,5 @@
 class CausesController < ApplicationController
-  include CausesPresenters
-
+ 
   before_filter :authenticate_user!, :except => [ :details, :index ]
 
   before_filter :load_cause, :except => [:details, :index, :new, :checkUrl, :create]
@@ -8,8 +7,6 @@ class CausesController < ApplicationController
 
   def details
     @cause = Cause.find_by_url(params[:url])
-    set_vote_btn_variables @cause #VOTE
-    set_follow_btn_variables @cause #FOLLOW
   end
 
   def index
@@ -60,7 +57,6 @@ class CausesController < ApplicationController
       flash[:notice] = @vote.errors.on(:cause_id)
       redirect_to request.referer unless request.xhr? #Not Ajax
     end
-    set_vote_btn_variables @cause
   end
 
   def follow
@@ -76,7 +72,6 @@ class CausesController < ApplicationController
         redirect_to request.referer
       end
     end
-    set_follow_btn_variables @cause
   end
 
   def unfollow
@@ -93,8 +88,6 @@ class CausesController < ApplicationController
         redirect_to request.referer
       end
     end
-
-    set_follow_btn_variables @cause
   end
 
 
@@ -167,14 +160,6 @@ class CausesController < ApplicationController
   
   def load_cause
     @cause = Cause.find params[:id]
-  end
-
-  def set_vote_btn_variables(cause)
-    @vote_presenter = VoteButtonPresenter.new(cause, current_user)
-  end
-
-  def set_follow_btn_variables(cause)
-    @follow_presenter = FollowButtonPresenter.new(cause, current_user)
   end
   
   def all_category(count)

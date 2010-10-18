@@ -1,5 +1,5 @@
 
-$("#follow_btn").html("<%= escape_javascript(render("follow_btn")) %>");
+$("#follow_btn").html("<%= escape_javascript(follow_button(@cause)) %>");
 
 <% if flash[:notice]%>
 	$.jGrowl("<%= flash[:notice] %>", <%= options_for_javascript(flash[:notice_options] || {}) %>);
