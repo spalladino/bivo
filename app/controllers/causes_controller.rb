@@ -127,7 +127,7 @@ class CausesController < ApplicationController
     end
   end
 
-  def delete
+  def destroy
     # TODO: chequeo para ver si se puede borrar en base al estado, y si el user es admin
     # (si se hace borrado logico, se borra permanentemente o no se puede borrar)
     @cause.destroy
