@@ -5,12 +5,11 @@
 <% title "Causes" %>
 
 <div id="filters">
-	<% form_tag '/cause', :method => :get do %>
+	<% form_tag causes_path, :method => :get do %>
 		<p>
 			<%= _("Categories: ") %>
 			<% @categories.each do |category| %>
-				<%= category.name %>
-				<%= category.cause_count %>
+				<%= link_to "#{category.name} (#{category.cause_count})", category_filter_url(category)%>
 			<% end%>
 		</p>
 		<p>
