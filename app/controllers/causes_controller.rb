@@ -1,34 +1,31 @@
 class CausesController < ApplicationController
+  include CausesPresenters
 
   before_filter :authenticate_user!, :except => [ :details, :index ]
 
-  def details
+  before_filter :load_cause, :except => [:details, :index, :new, :checkUrl, :create]
+  
 
+  def details
     @cause = Cause.find_by_url(params[:url])
     set_vote_btn_variables @cause #VOTE
     set_follow_btn_variables @cause #FOLLOW
-
   end
-
-
-
-
-  def set_follow_btn_variables(cause)
-
-  end
-
 
   def index
     @causes = Cause.order('votes_count DESC').includes(:country).includes(:charity)
+    @categories = CauseCategory.sorted_by_cause_count
 
     # Filter by region
     if not params[:region].blank?
       @causes = @causes.where('country_id = ?', params[:region].to_i)
+      @categories = @categories.where('causes.country_id = ?', params[:region].to_i)
     end
 
     # Filter by status
     status = params[:status] || :active
     @causes = @causes.where('status = ?', status)
+    @categories = @categories.where('causes.status = ?', status)
 
     # Filter by category
     if not params[:category].blank?
@@ -36,80 +33,69 @@ class CausesController < ApplicationController
     end
 
     # Cap maximum to show to 50
+    causes_real_count = @causes.size 
     @causes = @causes[0...50]
 
     # Set pagination
     @causes = @causes.paginate(:per_page => params[:per_page] || 20, :page => params[:page])
 
     # Fill filters fields
-    if not request.xhr?
-      @regions = Country.all
-      @region = params[:region]
+    @regions = Country.all
+    @region = params[:region]
 
-      @statuses = Cause.enumerated_attributes[:status]
-      @status = status
-
-      @categories = CauseCategory.sorted_by_cause_count[0...6]
-      @category = params[:category]
-    end
+    @statuses = Cause.enumerated_attributes[:status]
+    @status = status
+    
+    @categories = @categories[0...6].insert(0, all_category(causes_real_count))
+    @category = params[:category]
   end
 
- def set_vote_btn_variables(cause)
-    if !current_user
-      @vote_label = "Vote (you must loggin first)"
-      @vote_disabled = false
-      @vote_visible = true
-    else
-      vote = Vote.new(:cause_id => cause.id ,:user_id=> current_user.id)
-      if vote.valid?
-        @vote_label = "Vote"
-        @vote_disabled = false
-        @vote_visible = true
-      else
-        error = vote.errors.on(:cause_id)
-        @vote_label = error
-        @vote_errors = error
-        @vote_disabled = true
-        if error == "Already voted"
-          @vote_visible = true
-        else
-          @vote_visible = false
-        end
-
-      end
-    end
-  end
 
   def vote
-    @cause = Cause.find_by_id(params[:cause_id])
-
-
-    @vote = Vote.new(:cause_id => params[:cause_id],:user_id=> current_user.id)
+    @vote = Vote.new(:cause_id => params[:id],:user_id=> current_user.id)
     if @vote.save
       flash[:notice] = "Vote submitted"
-      if !request.xhr?
-        redirect_to request.referer
-      end
+      redirect_to request.referer unless request.xhr? #Not Ajax
     else
       flash[:notice] = @vote.errors.on(:cause_id)
-      if !request.xhr?
-        redirect_to request.referer
-      end
+      redirect_to request.referer unless request.xhr? #Not Ajax
     end
     set_vote_btn_variables @cause
   end
 
   def follow
-    @cause = Cause.find_by_id(params[:cause_id])
-
-    @follow = Follow.new(:cause_id => params[:cause_id],:user_id=> current_user.id)
+    @follow = Follow.new(:cause_id => params[:id],:user_id=> current_user.id)
     if @follow.save
-      custom_response "Follow submitted"
+      flash[:notice] = "Follow submitted"
+      if not request.xhr? #Not Ajax?
+        redirect_to request.referer
+      end
     else
-      custom_response @follow.errors.on(:cause_id)
+      flash[:notice] = "Error, try again"
+      if not request.xhr?
+        redirect_to request.referer
+      end
     end
+    set_follow_btn_variables @cause
   end
 
+  def unfollow
+    follow = Follow.find_by_cause_id_and_user_id(params[:id], current_user.id)
+    follow.destroy
+    if follow.destroyed?
+      flash[:notice] = "Unfollow submitted"
+      if not request.xhr? #Not Ajax?
+        redirect_to request.referer
+      end
+    else
+      flash[:notice] = "Error, try again"
+      if !request.xhr?
+        redirect_to request.referer
+      end
+    end
+
+    set_follow_btn_variables @cause
+  end
 
 
   def new
@@ -140,7 +126,7 @@ class CausesController < ApplicationController
       redirect_to root_url
     end
   end
-  
+
   def delete
     # TODO: chequeo para ver si se puede borrar en base al estado, y si el user es admin
     # (si se hace borrado logico, se borra permanentemente o no se puede borrar)
@@ -152,7 +138,7 @@ class CausesController < ApplicationController
       render 'edit'
     end
   end
-  
+
   def checkUrl
     @cause = Cause.find_by_url(params[:shortUrl])
     @result = 'available'
@@ -161,14 +147,14 @@ class CausesController < ApplicationController
     end
     render :text => @result
   end
-  
+
   def activate
     @cause = Cause.find(params[:id])
     @cause.status = :active
     @cause.save
     render 'edit'
   end
-  
+
   def deactivate
     @cause = Cause.find(params[:id])
     @cause.status = :inactive
@@ -181,6 +167,27 @@ class CausesController < ApplicationController
     @cause.status = :paid
     @cause.save
     render 'edit'
+  end
+
+  private
+  
+  def load_cause
+    @cause = Cause.find params[:id]
+  end
+
+  def set_vote_btn_variables(cause)
+    @vote_presenter = VoteButtonPresenter.new(cause, current_user)
+  end
+
+  def set_follow_btn_variables(cause)
+    @follow_presenter = FollowButtonPresenter.new(cause, current_user)
+  end
+  
+  def all_category(count)
+    c = CauseCategory.new :name => _("All")
+    c.class_eval { attr_accessor :cause_count }
+    c.cause_count = count
+    return c
   end
 
 end
