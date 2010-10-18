@@ -1,5 +1,13 @@
 module CauseHelper
 
+  def cause_funds_percentage_completed(cause)
+    number_to_percentage cause.funds_raised/cause.funds_needed*100, :precision => 0
+  end
+  
+  def cause_funds_completed(cause)
+    "#{cause.funds_raised} (#{cause_funds_percentage_completed(cause)} #{_('complete')})"
+  end
+  
   def category_filter_url(category)
     query = CGI.parse(request.query_string).symbolize_keys
     query.each {|k,v| query[k] = v.first}

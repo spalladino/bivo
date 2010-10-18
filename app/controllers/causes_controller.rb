@@ -15,7 +15,7 @@ class CausesController < ApplicationController
   end
 
   def index
-    @causes = Cause.order('votes_count DESC').includes(:country).includes(:charity)
+    @causes = Cause.order('votes_count DESC').includes(:country).includes(:charity).limit(50)
     @categories = CauseCategory.sorted_by_cause_count
 
     # Filter by region
@@ -41,17 +41,20 @@ class CausesController < ApplicationController
     @causes = @causes[0...50]
 
     # Set pagination
-    @causes = @causes.paginate(:per_page => params[:per_page] || 20, :page => params[:page])
+    @per_page = (params[:per_page] || 5).to_i
+    @causes = @causes.paginate(:per_page => @per_page, :page => params[:page])
 
     # Fill filters fields
     @regions = Country.all
     @region = params[:region]
 
-    @statuses = Cause.enumerated_attributes[:status]
+    @statuses = [:active, :raising_funds, :completed]
     @status = status
 
     @categories = @categories[0...6].insert(0, all_category(all_causes_count))
     @category = params[:category]
+    
+    @page_sizes = [5,10,20,50] 
   end
 
 

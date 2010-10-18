@@ -17,6 +17,10 @@
 			<%= select_tag :region, options_from_collection_for_select(@regions, 'id', 'name', @region), {:include_blank => _('All countries')}%>
 		</p>
 		<p>
+			<%= _("Show per page")%>
+			<%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page)%>
+		</p>
+		<p>
 			<%= _('Showing') %>
 			<%= select_tag :status, options_from_collection_for_select(@statuses, 'to_s', 'to_s', @status) %>
 		</p>
@@ -31,3 +35,4 @@
 <div id="causes">
   <%= render 'causes' %>
 </div>
+	

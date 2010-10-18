@@ -3,11 +3,22 @@
 <div id="causes-list">
 <% for cause in @causes %>
   <div class="cause">
-	<h3><%= cause.name %></h3>
+	
+	<h3><%= link_to cause.name, cause_path(cause.id) %></h3>
 	<p><%= cause.country.name %></p>
 	<p><%= _("Organized by")%>: <%=cause.charity.name%></p>
-	<p><%= _("Funds needed")%>: [FundsNeeded]</p>
-	<p><%= cause.description %></p>
+	<p><%= link_to _("Funds needed"), cause_path(cause.id) %>: <%= cause.funds_needed %></p>
+	<p><%= read_more(cause.description, cause_path(cause.id), 20) %></p>
+	
+	<% case @status.to_sym %>
+		<% when :active%>
+			<p><%= _('Votes')%>: <%= cause.votes_count %></p>
+		<% when :raising_funds%>
+			<p><%= _('Funds raised')%>: <%= cause_funds_completed(cause) %></p>	
+		<% when :completed%>
+			<p><%= _('Funds raised')%>: <%= cause.funds_raised %></p>
+	<% end %>
+	
   </div>
 <% end %>
 </div>

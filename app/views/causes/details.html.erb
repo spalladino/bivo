@@ -24,7 +24,7 @@
     <p> if voting: (Displays the number of votes) </p>
     <p id = "vote_counter"> <%=@cause.votes_count%> </p>
     <p> if raising: (Displays the funds raised and the fundraising progress percentage) </p>
-    <p> <%= @cause.funds_raised%> ( <%= @cause.funds_raised/@cause.funds_needed*100 %> % Complete) </p>
+    <p> <%= cause_funds_completed @cause %></p>
     <p> if completed: (Displays the funds raised) </p>
     <p> <%= @cause.funds_raised%> </p>
 
