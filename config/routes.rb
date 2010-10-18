@@ -3,7 +3,7 @@ Bivo::Application.routes.draw do
 
   resources :charities
 
-  get "cause/:url", :controller => "causes", :action => "details", :constraints => { :url => Cause::UrlFormat }
+  get "cause/c/:url", :controller => "causes", :action => "details", :constraints => { :url => Cause::UrlFormat }
   resources :causes, :path => 'cause' do
     member do
       get :details, :path => 'cause/:url', :constraints => { :url => Cause::UrlFormat }
