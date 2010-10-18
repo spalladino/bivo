@@ -98,6 +98,7 @@ class CausesController < ApplicationController
 
   def edit
     @cause = Cause.find(params[:id])
+
   end
 
   def create
@@ -107,7 +108,7 @@ class CausesController < ApplicationController
     if !@cause.save
       render 'new'
     else
-      redirect_to root_url
+      redirect_to request.referer
     end
   end
 
@@ -115,7 +116,7 @@ class CausesController < ApplicationController
     @cause = Cause.find(params[:id])
     @cause.attributes = params[:cause]
     if !@cause.save
-      render 'edit'
+      redirect_to request.referer
     else
       redirect_to root_url
     end
@@ -129,7 +130,7 @@ class CausesController < ApplicationController
     if @cause.destroyed?
       redirect_to root_url
     else
-      render 'edit'
+      redirect_to request.referer
     end
   end
 
@@ -146,21 +147,21 @@ class CausesController < ApplicationController
     @cause = Cause.find(params[:id])
     @cause.status = :active
     @cause.save
-    render 'edit'
+    redirect_to request.referer
   end
 
   def deactivate
     @cause = Cause.find(params[:id])
     @cause.status = :inactive
     @cause.save
-    render 'edit'
+    redirect_to request.referer
   end
 
   def mark_paid
     @cause = Cause.find(params[:id])
     @cause.status = :paid
     @cause.save
-    render 'edit'
+    redirect_to request.referer
   end
 
   private

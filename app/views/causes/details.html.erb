@@ -18,17 +18,25 @@
     <b>Founds Needed:</b>
     <%= @cause.funds_needed %>
 </p>
+
 <p>
     <b><%=_("Status") %>:</b>
-    ( <%= @cause.funds_raised/@cause.funds_needed*100 %> % Complete)
+    <p> if voting: (Displays the number of votes) </p>
+    <p id = "vote_counter"> <%=@cause.votes_count%> </p>
+    <p> if raising: (Displays the funds raised and the fundraising progress percentage) </p>
+    <p> <%= @cause.funds_raised%> ( <%= @cause.funds_raised/@cause.funds_needed*100 %> % Complete) </p>
+    <p> if completed: (Displays the funds raised) </p>
+    <p> <%= @cause.funds_raised%> </p>
+
+
 </p>
 
 <div id="vote_btn">
   <%= vote_button @cause %>
 </div>
 
-<p>Votes Count:</p>
-<p id = "vote_counter"> <%=@cause.votes_count%> </p>
+
+
 
 <div id="follow_btn">
   <%= follow_button @cause %>
