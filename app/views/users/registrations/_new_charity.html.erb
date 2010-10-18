@@ -1,0 +1,33 @@
+  <p><%= f.label :charity_name, "Charity Name" %><br />
+  <%= f.text_field :charity_name %></p>
+
+  <p><%= f.label :charity_website, "Charity Website" %><br />
+  <%= f.text_field :charity_website %></p>
+
+  <p><%= f.label :short_url, "Short URL" %>
+  <%= f.label :short_url_desc, "http://www.bivo.org/ngo/" %>
+  <%= f.text_field :nickname %></p>
+
+  <p><%= f.label :email, "E-Mail" %><br />
+  <%= f.text_field :email %></p>
+
+  <p><%= f.label :category, "Category" %>
+  <%= f.select :gender, @categories.collect{ |c| [c.name, c.id] }, :include_blank => true %></p>
+
+  <p><%= f.label :password %><br />
+  <%= f.password_field :password %></p>
+
+  <p><%= f.label :password_confirmation %><br />
+  <%= f.password_field :password_confirmation %></p>
+
+  <p><%= f.label :charity_type, "Charity Type" %><br />
+  <%= f.text_field :charity_type %></p>
+
+  <p><%= f.label :tax_reg_number, "Tax Registration Number" %><br />
+  <%= f.text_field :tax_reg_number %></p>
+
+  <p><%= f.label :country, "Country" %>
+  <%= f.select :country_id, @countries.collect{ |c| [c.name, c.id] }, :include_blank => true %></p>
+
+  <p><%= f.label :city, "City" %><br />
+  <%= f.text_field :city %></p>
