@@ -1,15 +1,22 @@
 Bivo::Application.routes.draw do
-  devise_for :users
-
-  get "/home/index/"
+  #devise_for :users
 
   resources :charities
-  resources :causes, :path => 'cause', :except => [ :show ]
+  
+  get "cause/:url", :controller => "causes", :action => "details", :constraints => { :url => Cause::UrlFormat }
+  resources :causes, :path => 'cause' do
+    member do
+      get :details, :path => 'cause/:url', :constraints => { :url => Cause::UrlFormat }
+      post :activate
+      post :deactivate
+      post :mark_paid
+      post :vote
+      post :follow
+      post :unfollow
+    end
+  end
 
-  get "cause/:url", :to => 'causes#details'
-  get "cause/:id/:action", :controller => "causes", :action => /edit/
-  post "cause/:id/:action", :controller => "causes", :action => /activate|deactivate|mark_paid|vote|follow|unfollow/
-
+  root :to => "home#index"
 
   #post "cause/create", :to => 'causes#create', :as => 'create'
   #post "cause/:id/update", :to => 'causes#update'
@@ -28,8 +35,6 @@ Bivo::Application.routes.draw do
   #get "cause/checkUrl", :to => 'causes#checkUrl'
   
   #get "cause/:id/edit", :to => 'causes#edit'
-
-  root :to => "home#index"
 
 
   # The priority is based upon order of creation:

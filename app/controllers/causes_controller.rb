@@ -1,12 +1,16 @@
 class CausesController < ApplicationController
  
-  before_filter :authenticate_user!, :except => [ :details, :index ]
+  before_filter :authenticate_user!, :except => [ :show, :details, :index ]
 
-  before_filter :load_cause, :except => [:details, :index, :new, :checkUrl, :create]
+  before_filter :load_cause, :except => [ :details, :index, :new, :checkUrl, :create ]
   
 
+  def show
+    render 'details'  
+  end
+
   def details
-    @cause = Cause.find_by_url(params[:url])
+    @cause = Cause.find_by_url! params[:url]
   end
 
   def index
@@ -15,13 +19,13 @@ class CausesController < ApplicationController
 
     # Filter by region
     if not params[:region].blank?
-      @causes = @causes.where('country_id = ?', params[:region].to_i)
+      @causes = @causes.where('causes.country_id = ?', params[:region].to_i)
       @categories = @categories.where('causes.country_id = ?', params[:region].to_i)
     end
 
     # Filter by status
     status = params[:status] || :active
-    @causes = @causes.where('status = ?', status)
+    @causes = @causes.where('causes.status = ?', status)
     @categories = @categories.where('causes.status = ?', status)
 
     # Filter by category
@@ -35,6 +39,8 @@ class CausesController < ApplicationController
 
     # Set pagination
     @causes = @causes.paginate(:per_page => params[:per_page] || 20, :page => params[:page])
+
+    @request = request
 
     # Fill filters fields
     @regions = Country.all
