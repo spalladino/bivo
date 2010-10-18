@@ -4,25 +4,31 @@ Bivo::Application.routes.draw do
   get "/home/index/"
 
   resources :charities
+  resources :causes, :path => 'cause', :except => [ :show ]
 
-  post "cause/create", :to => 'causes#create', :as => 'create'
-  post "cause/:id/update", :to => 'causes#update'
-  post "cause/:id/delete", :to => 'causes#delete'
-  post "cause/:id/activate", :to => 'causes#activate'
-  post "cause/:id/deactivate", :to => 'causes#deactivate'
-  post "cause/:id/mark_paid", :to => 'causes#mark_paid'
+  get "cause/:url", :to => 'causes#details'
+  get "cause/:id/:action", :controller => "causes", :action => /edit/
+  post "cause/:id/:action", :controller => "causes", :action => /activate|deactivate|mark_paid|vote|follow|unfollow/
 
-  get "cause", :to => 'causes#index'
-  get "cause/new", :to => 'causes#new'
-  get "cause/checkUrl", :to => 'causes#checkUrl'
-  get "cause/:url" => 'causes#details'
-  get "cause/:id/edit" => 'causes#edit'
 
-  get "cause", :to => 'causes#index'
+  #post "cause/create", :to => 'causes#create', :as => 'create'
+  #post "cause/:id/update", :to => 'causes#update'
+  #post "cause/:id/delete", :to => 'causes#delete'
+  
+#  post "cause/:id/activate", :to => 'causes#activate'
+#  post "cause/:id/deactivate", :to => 'causes#deactivate'
+#  post "cause/:id/mark_paid", :to => 'causes#mark_paid'
+#  post "cause/:id/vote", :to => 'causes#vote'
+#  post "cause/:id/follow", :to => 'causes#follow'
+#  post "cause/:id/unfollow", :to => 'causes#unfollow'
 
-  post "cause/:id/vote", :to => 'causes#vote'
-  post "cause/:id/follow", :to => 'causes#follow'
-  post "cause/:id/unfollow", :to => 'causes#unfollow'
+
+  #get "cause", :to => 'causes#index'
+  #get "cause/new", :to => 'causes#new'
+  #get "cause/checkUrl", :to => 'causes#checkUrl'
+  
+  #get "cause/:id/edit", :to => 'causes#edit'
+
   root :to => "home#index"
 
 
