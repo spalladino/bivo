@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
   end
 
   def is_admin_user
-    return true
+    return false
   end
 
 end
