@@ -4,7 +4,7 @@ class CausesController < ApplicationController
 
   before_filter :load_cause, :except => [:details, :index, :new, :checkUrl, :create]
 
-  before_filter :only_owner_or_creator!, :only => [:delete, :edit, :activate, :deactivate]
+  before_filter :only_owner_or_creator, :only => [:delete, :edit, :activate, :deactivate]
 
   def details
     @cause = Cause.find_by_url(params[:url])
@@ -169,8 +169,6 @@ class CausesController < ApplicationController
     @cause = Cause.find params[:id]
   end
 
-
-
   def all_category(count)
     c = CauseCategory.new :name => _("All")
     c.class_eval { attr_accessor :cause_count }
@@ -180,8 +178,9 @@ class CausesController < ApplicationController
 
   def only_owner_or_creator
     if not (@cause.charity.id == current_user.id || current_user.is_admin_user)
-      redirect_to 403
-    end
+      headers["Status"] = "403 Forbidden"
+      redirect_to root_url
+end
   end
 
 
