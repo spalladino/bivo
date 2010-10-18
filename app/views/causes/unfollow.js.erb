@@ -1,11 +1,5 @@
 
 $("#follow_btn").html("<%= escape_javascript(follow_button(@cause)) %>");
 
-<% if flash[:notice]%>
-	$.jGrowl("<%= flash[:notice] %>", <%= options_for_javascript(flash[:notice_options] || {}) %>);
-<% end %>
-
-<% if flash[:alert]%>
-	$.jGrowl("<%= flash[:alert] %>", <%= options_for_javascript(flash[:alert_options] || {}) %>);
-<% end %>
+<%= render(:partial => 'shared/notifications.js') %>
 
