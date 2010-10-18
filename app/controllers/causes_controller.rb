@@ -1,66 +1,99 @@
 class CausesController < ApplicationController
+ 
+  before_filter :authenticate_user!, :except => [ :show, :details, :index ]
 
-  before_filter :authenticate_user!, :except => [ :details, :index ]
+  before_filter :load_cause, :except => [ :details, :index, :new, :checkUrl, :create ]
+  
+
+  def show
+    render 'details'  
+  end
 
   def details
-    @cause = Cause.find_by_url(params[:url])
+    @cause = Cause.find_by_url! params[:url]
   end
 
   def index
     @causes = Cause.order('votes_count DESC').includes(:country).includes(:charity)
+    @categories = CauseCategory.sorted_by_cause_count
 
     # Filter by region
-    if not params[:filter_region].blank?
-      @causes = @causes.where('country_id = ?', params[:filter_region].to_i)
+    if not params[:region].blank?
+      @causes = @causes.where('causes.country_id = ?', params[:region].to_i)
+      @categories = @categories.where('causes.country_id = ?', params[:region].to_i)
     end
 
     # Filter by status
-    filter_status = params[:filter_status] || :active
-    @causes = @causes.where('status = ?', filter_status)
+    status = params[:status] || :active
+    @causes = @causes.where('causes.status = ?', status)
+    @categories = @categories.where('causes.status = ?', status)
 
-    # Categories
-    @filter_categories = []#CauseCategory.find(:all, :select => 'count(*) as count, cause_category')
+    # Filter by category
+    if not params[:category].blank?
+      @causes = @causes.where('category_id = ?', params[:category].to_i)
+    end
+
+    # Cap maximum to show to 50
+    causes_real_count = @causes.size 
+    @causes = @causes[0...50]
 
     # Set pagination
     @causes = @causes.paginate(:per_page => params[:per_page] || 20, :page => params[:page])
 
+    @request = request
+
     # Fill filters fields
-    if not request.xhr?
-      @regions = Country.all
-      @filter_region = params[:filter_region]
+    @regions = Country.all
+    @region = params[:region]
 
-      @statuses = Cause.enumerated_attributes[:status]
-      @filter_status = filter_status
-
-    end
+    @statuses = Cause.enumerated_attributes[:status]
+    @status = status
+    
+    @categories = @categories[0...6].insert(0, all_category(causes_real_count))
+    @category = params[:category]
   end
 
+
   def vote
-    @cause = Cause.find_by_id(params[:cause_id])
-    @vote = Vote.new(params[:cause_id])
+    @vote = Vote.new(:cause_id => params[:id],:user_id=> current_user.id)
     if @vote.save
-      custom_response "Ok",true
+      flash[:notice] = "Vote submitted"
+      redirect_to request.referer unless request.xhr? #Not Ajax
     else
-      custom_response @vote.errors.on(:cause_id) ,false
+      flash[:notice] = @vote.errors.on(:cause_id)
+      redirect_to request.referer unless request.xhr? #Not Ajax
     end
   end
 
   def follow
-    redirect_to request.referer
+    @follow = Follow.new(:cause_id => params[:id],:user_id=> current_user.id)
+    if @follow.save
+      flash[:notice] = "Follow submitted"
+      if not request.xhr? #Not Ajax?
+        redirect_to request.referer
+      end
+    else
+      flash[:notice] = "Error, try again"
+      if not request.xhr?
+        redirect_to request.referer
+      end
+    end
   end
 
-  def custom_response(message,success)
-    if request.xhr?
-      #AJAX
-      flash[:notice] = message
-      @message =  message
-      @success = success
+  def unfollow
+    follow = Follow.find_by_cause_id_and_user_id(params[:id], current_user.id)
+    follow.destroy
+    if follow.destroyed?
+      flash[:notice] = "Unfollow submitted"
+      if not request.xhr? #Not Ajax?
+        redirect_to request.referer
+      end
     else
-      #NO AJAX
-      flash[:notice] = message
-      redirect_to request.referer
+      flash[:notice] = "Error, try again"
+      if !request.xhr?
+        redirect_to request.referer
+      end
     end
-
   end
 
 
@@ -69,7 +102,6 @@ class CausesController < ApplicationController
   end
 
   def edit
-    @cause = Cause.find_by_id(params[:id])
   end
 
   def create
@@ -82,15 +114,65 @@ class CausesController < ApplicationController
       redirect_to root_url
     end
   end
-  
+
   def update
-    @cause = Cause.find_by_id(params[:id])
     @cause.attributes = params[:cause]
     if !@cause.save
       render 'edit'
     else
       redirect_to root_url
     end
+  end
+
+  def delete
+    # TODO: chequeo para ver si se puede borrar en base al estado, y si el user es admin
+    # (si se hace borrado logico, se borra permanentemente o no se puede borrar)
+    @cause.destroy
+    if @cause.destroyed?
+      redirect_to root_url
+    else
+      render 'edit'
+    end
+  end
+
+  def checkUrl
+    @cause = Cause.find_by_url(params[:shortUrl])
+    @result = 'available'
+    if @cause
+      @result = 'not_available'
+    end
+    render :text => @result
+  end
+
+  def activate
+    @cause.status = :active
+    @cause.save
+    render 'edit'
+  end
+
+  def deactivate
+    @cause.status = :inactive
+    @cause.save
+    render 'edit'
+  end
+  
+  def mark_paid
+    @cause.status = :paid
+    @cause.save
+    render 'edit'
+  end
+
+  private
+  
+  def load_cause
+    @cause = Cause.find params[:id]
+  end
+  
+  def all_category(count)
+    c = CauseCategory.new :name => _("All")
+    c.class_eval { attr_accessor :cause_count }
+    c.cause_count = count
+    return c
   end
 
 end

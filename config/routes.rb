@@ -1,22 +1,40 @@
 Bivo::Application.routes.draw do
   devise_for :users, :controllers => {:registrations => 'registrations' }
 
-  get "/home/index/"
-
   resources :charities
-
-  post "cause/create", :to => 'causes#create', :as => 'create'
-  post "cause/:id/update", :to => 'causes#update'
-
-  get "cause", :to => 'causes#index'
-  get "cause/new", :to => 'causes#new'
-  get "cause/:url" => 'causes#details'
-  get "cause/:id/edit" => 'causes#edit'
-
-  post "cause/vote", :to => 'causes#vote'
-  post "cause/follow", :to => 'causes#follow'
+  
+  get "cause/:url", :controller => "causes", :action => "details", :constraints => { :url => Cause::UrlFormat }
+  resources :causes, :path => 'cause' do
+    member do
+      get :details, :path => 'cause/:url', :constraints => { :url => Cause::UrlFormat }
+      post :activate
+      post :deactivate
+      post :mark_paid
+      post :vote
+      post :follow
+      post :unfollow
+    end
+  end
 
   root :to => "home#index"
+
+  #post "cause/create", :to => 'causes#create', :as => 'create'
+  #post "cause/:id/update", :to => 'causes#update'
+  #post "cause/:id/delete", :to => 'causes#delete'
+  
+#  post "cause/:id/activate", :to => 'causes#activate'
+#  post "cause/:id/deactivate", :to => 'causes#deactivate'
+#  post "cause/:id/mark_paid", :to => 'causes#mark_paid'
+#  post "cause/:id/vote", :to => 'causes#vote'
+#  post "cause/:id/follow", :to => 'causes#follow'
+#  post "cause/:id/unfollow", :to => 'causes#unfollow'
+
+
+  #get "cause", :to => 'causes#index'
+  #get "cause/new", :to => 'causes#new'
+  #get "cause/checkUrl", :to => 'causes#checkUrl'
+  
+  #get "cause/:id/edit", :to => 'causes#edit'
 
 
   # The priority is based upon order of creation:

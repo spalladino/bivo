@@ -5,21 +5,29 @@
 <% title "Causes" %>
 
 <div id="filters">
-	
 	<% form_tag '/cause', :method => :get do %>
-		<div>
+		<p>
+			<%= _("Categories: ") %>
+			<% @categories.each do |category| %>
+				<%= category.name %>
+				<%= category.cause_count %>
+			<% end%>
+		</p>
+		<p>
 			<%= _('Filter by region') %>
-			<%= select_tag :filter_region, options_from_collection_for_select(@regions, 'id', 'name', @filter_region), {:include_blank => _('All countries')}%>
-		</div>
-		<div>
+			<%= select_tag :region, options_from_collection_for_select(@regions, 'id', 'name', @region), {:include_blank => _('All countries')}%>
+		</p>
+		<p>
 			<%= _('Showing') %>
-			<%= select_tag :filter_status, options_from_collection_for_select(@statuses, 'to_s', 'to_s', @filter_status) %>
-		</div>
-		<div>
+			<%= select_tag :status, options_from_collection_for_select(@statuses, 'to_s', 'to_s', @status) %>
+		</p>
+		<p>
 			<%= submit_tag _('Search'), :disable_with => _('Searching...') %>
-		</div>
+		</p>
 	<% end %>
 </div>
+
+<br/>
 
 <div id="causes">
   <%= render 'causes' %>

@@ -1,0 +1,5 @@
+
+$("#vote_btn").html("<%= escape_javascript(vote_button(@cause)) %>");
+$("#vote_counter").text('<%=@cause.reload.votes_count%>');
+
+<%= render(:partial => 'shared/notifications.js') %>
