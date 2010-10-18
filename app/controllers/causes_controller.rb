@@ -117,7 +117,7 @@ class CausesController < ApplicationController
   end
 
   def edit
-    @cause = Cause.find_by_id(params[:id])
+    @cause = Cause.find(params[:id])
   end
 
   def create
@@ -132,7 +132,7 @@ class CausesController < ApplicationController
   end
 
   def update
-    @cause = Cause.find_by_id(params[:id])
+    @cause = Cause.find(params[:id])
     @cause.attributes = params[:cause]
     if !@cause.save
       render 'edit'
@@ -144,7 +144,7 @@ class CausesController < ApplicationController
   def delete
     # TODO: chequeo para ver si se puede borrar en base al estado, y si el user es admin
     # (si se hace borrado logico, se borra permanentemente o no se puede borrar)
-    @cause = Cause.find_by_id(params[:id])
+    @cause = Cause.find(params[:id])
     @cause.destroy
     if @cause.destroyed?
       redirect_to root_url
@@ -163,21 +163,21 @@ class CausesController < ApplicationController
   end
   
   def activate
-    @cause = Cause.find_by_id(params[:id])
+    @cause = Cause.find(params[:id])
     @cause.status = :active
     @cause.save
     render 'edit'
   end
   
   def deactivate
-    @cause = Cause.find_by_id(params[:id])
+    @cause = Cause.find(params[:id])
     @cause.status = :inactive
     @cause.save
     render 'edit'
   end
   
-    def mark_paid
-    @cause = Cause.find_by_id(params[:id])
+  def mark_paid
+    @cause = Cause.find(params[:id])
     @cause.status = :paid
     @cause.save
     render 'edit'
