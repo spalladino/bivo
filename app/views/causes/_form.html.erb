@@ -1,76 +1,80 @@
-<%= render "shared/error_messages", :target => @cause %>
+<%= form_for @cause do |f|%>
 
-<%= f.label _("Cause Name")%><br/>
-<%= f.text_field :name %><br/>
+  <%= render "shared/error_messages", :target => @cause %>
 
-<%= f.label _("Short Url")%><br/>
-http://www.bivo.org/cause/<%= f.text_field :url, :id => 'short_url', :onfocus => "javascript:$('#available').html('');"%>
-<%= tag 'input', {:type => 'button', :value => _('Check Url'), :onclick => "javascript:checkUrl();"} %>
-&nbsp;
-<span id="available"></span>
-<br/>
+  <%= f.label _("Cause Name")%><br/>
+  <%= f.text_field :name %><br/>
 
-<%= f.label _('Category')%><br/>
-<%= collection_select('cause', 'cause_category_id', CauseCategory.all, :id, :name) %><br/>
+  <%= f.label _("Short Url")%><br/>
+  http://www.bivo.org/cause/<%= f.text_field :url, :id => 'short_url', :onfocus => "javascript:$('#available').html('');"%>
+  <%= tag 'input', {:type => 'button', :value => _('Check Url'), :onclick => "javascript:checkUrl();"} %>
+  &nbsp;
+  <span id="available"></span>
+  <br/>
 
-<%= f.label _('Funds needed')%><br/>
-<%= f.text_field :funds_needed %><br/>
+  <%= f.label _('Category')%><br/>
+  <%= collection_select('cause', 'cause_category_id', CauseCategory.all, :id, :name) %><br/>
 
-<table>
-	<tr>
-		<td>
-			<%= f.label _('Country')%>
-		</td>
-		<td>
-			<%= f.label _('City')%>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<%= collection_select('cause', 'country_id', Country.all, :id, :name) %>
-		</td>
-		<td>
-			<%= f.text_field :city %>
-		</td>
-	</tr>
-</table>
+  <%= f.label _('Funds needed')%><br/>
+  <%= f.text_field :funds_needed %><br/>
 
-<%= f.label _('Description') %><br/>
-<%= f.text_area :description %>
+  <table>
+	  <tr>
+		  <td>
+			  <%= f.label _('Country')%>
+		  </td>
+		  <td>
+			  <%= f.label _('City')%>
+		  </td>
+	  </tr>
+	  <tr>
+		  <td>
+			  <%= collection_select('cause', 'country_id', Country.all, :id, :name) %>
+		  </td>
+		  <td>
+			  <%= f.text_field :city %>
+		  </td>
+	  </tr>
+  </table>
 
-<br/>
+  <%= f.label _('Description') %><br/>
+  <%= f.text_area :description %>
 
-<%= f.submit 'Save' %> &nbsp;
-<%= tag 'input', {:type => 'button', :value => _('Cancel'), :onclick => "javascript:window.location = '#{root_path}';"} %>
+  <br/>
 
-<% content_for :js do %> <!-- javascript code to run, for this view only -->
-	function checkUrl() {
-		<% if !@cause.new_record? %>
-			if('<%= @cause.url_was %>' == $("#short_url").val()) {
-				showAvailable(true);
-				return;
-			}
-		<% end %>
-		$("#available").html('<%=_("checking...")%>');
-		$("#checkBtn").attr('disabled','disabled');
-		$.ajax({
-			url: "/cause/checkUrl",
-			data: {shortUrl : $("#short_url").val()},
-			success: function(status) {
-				$("#checkBtn").removeAttr('disabled');
-				if(status == 'available')				
-					showAvailable(true);
-				else
-					showAvailable(false);
-			}
-		});
-	}
-	
-	function showAvailable(available) {
-		if(available) {
-			$("#available").html('<%=_("Available")%>');
-		} else {
-			$("#available").html('<%=_("Unavailable")%>');
-		}
-	}
-<% end %>
+  <%= f.submit 'Save' %> &nbsp;
+  <%= tag 'input', {:type => 'button', :value => _('Cancel'), :onclick => "javascript:window.location = '#{root_path}';"} %>
+  <% end %>
+  <% content_for :js do %> <!-- javascript code to run, for this view only -->
+	  function checkUrl() {
+		  <% if !@cause.new_record? %>
+			  if('<%= @cause.url_was %>' == $("#short_url").val()) {
+				  showAvailable(true);
+				  return;
+			  }
+		  <% end %>
+		  $("#available").html('<%=_("checking...")%>');
+		  $("#checkBtn").attr('disabled','disabled');
+		  $.ajax({
+			  url: "/cause/checkUrl",
+			  data: {shortUrl : $("#short_url").val()},
+			  success: function(status) {
+				  $("#checkBtn").removeAttr('disabled');
+				  if(status == 'available')
+					  showAvailable(true);
+				  else
+					  showAvailable(false);
+			  }
+		  });
+	  }
+
+	  function showAvailable(available) {
+		  if(available) {
+			  $("#available").html('<%=_("Available")%>');
+		  } else {
+			  $("#available").html('<%=_("Unavailable")%>');
+		  }
+	  }
+
+<%end%>
+

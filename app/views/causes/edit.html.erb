@@ -1,6 +1,4 @@
-<%= form_for :cause, @cause do |f|%>
-	<%= render :partial => 'form', :locals => {:cause => @cause, :f => f} %>
-<%end%>
+<%= render :partial => 'form', :locals => {:cause => @cause} %>
 
 <div id="delete_button">
   <%= delete_button @cause %>

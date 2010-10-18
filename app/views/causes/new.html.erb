@@ -1,3 +1,2 @@
-<%= form_for :cause, @cause, :url =>{:action => 'create'} do |f|%>
-	<%= render :partial => 'form', :locals => {:cause => @cause, :f => f} %>
-<%end%>
+<%= render :partial => 'form', :locals => {:cause => @cause} %>
+
