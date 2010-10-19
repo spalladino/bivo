@@ -19,6 +19,12 @@
 			<p><%= _('Funds raised')%>: <%= cause.funds_raised %></p>
 	<% end %>
 	
+	<% if current_user && @status.to_sym == :active && cause_voted(cause) %>
+		<p><%= vote_button(cause)%></p>
+	<% else %>
+		<p><%= view_cause_button(cause)%></p>
+	<% end %>
+	
   </div>
 <% end %>
 </div>
