@@ -3,7 +3,6 @@ class CausesController < ApplicationController
   before_filter :authenticate_user!, :except => [ :show, :details, :index ]
   before_filter :load_cause, :except => [ :details, :index, :new, :check_url, :create ]
 
-
   before_filter :only_owner_or_admin, :only => [:delete, :edit, :update]
   before_filter :only_charity, :only => [:create]
   before_filter :only_admin, :only => [:activate, :deactivate, :mark_paid, :mark_unpaid ]
