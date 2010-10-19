@@ -32,12 +32,16 @@ class Cause < ActiveRecord::Base
 
   enum_attr :status, %w(^inactive active raising_funds completed paid deleted)
 
-  def can_edit
-    return true
+  def can_edit?
+    [:inactive, :active, :raising_funds].include? self.status
   end
 
-  def can_delete
-    return true
+  def can_delete?
+    [:inactive, :active].include? self.status
+  end
+  
+  def can_vote?
+    self.status == :active
   end
 
 end
