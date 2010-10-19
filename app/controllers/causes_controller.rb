@@ -53,8 +53,8 @@ class CausesController < ApplicationController
 
     @categories = @categories[0...6].insert(0, all_category(all_causes_count))
     @category = params[:category]
-    
-    @page_sizes = [5,10,20,50] 
+
+    @page_sizes = [5,10,20,50]
   end
 
 
@@ -80,16 +80,12 @@ class CausesController < ApplicationController
     follow = Follow.find_by_cause_id_and_user_id(params[:id], current_user.id)
     follow.destroy
     if follow.destroyed?
-      flash[:notice] = "Unfollow submitted"
-      if not request.xhr? #Not Ajax?
-        redirect_to request.referer
-      end
+      ajax_flash[:notice] = "Unfollow submitted"
     else
-      flash[:notice] = "Error, try again"
-      if !request.xhr?
-        redirect_to request.referer
-      end
+      ajax_flash[:notice] = "Error, try again"
     end
+    
+    redirect_to request.referer unless request.xhr?
   end
 
 
@@ -143,19 +139,23 @@ class CausesController < ApplicationController
   def activate
     @cause.status = :active
     @cause.save
-    flash[:notice] = "Activated"
-    if not request.xhr? #Not Ajax?
-        redirect_to request.referer
+    if @cause.save then
+      ajax_flash[:notice] = "Activated"
+    else
+      ajax_flash[:notice] = "Error activating cause"
     end
+    redirect_to request.referer unless request.xhr?
   end
 
   def deactivate
     @cause.status = :inactive
     @cause.save
-    flash[:notice] = "Desactivated"
-    if not request.xhr? #Not Ajax?
-        redirect_to request.referer
+    if @cause.save then
+      ajax_flash[:notice] = "Deactivated"
+    else
+      ajax_flash[:notice] = "Error deactivating cause"
     end
+    redirect_to request.referer unless request.xhr?
   end
 
   def mark_paid
