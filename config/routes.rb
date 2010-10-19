@@ -2,9 +2,9 @@ Bivo::Application.routes.draw do
   devise_for :users
 
   resources :charities
-  
+
   get "cause/c/:url", :controller => "causes", :action => "details", :constraints => { :url => Cause::UrlFormat }
-  get "cause/check_url", :controller => "causes", :action => "check_url", :as => 'check_cause_url' 
+  get "cause/check_url", :controller => "causes", :action => "check_url", :as => 'check_cause_url'
 
   resources :causes, :path => 'cause' do
     member do
