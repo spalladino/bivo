@@ -17,7 +17,7 @@ class Cause < ActiveRecord::Base
   validates_presence_of :url
   validates_length_of :url, :maximum => 255
   validates_uniqueness_of :url, :case_sensitive => false
-  validates_format_of :url, :with => UrlFormat  
+  validates_format_of :url, :with => UrlFormat
 
   validates_presence_of :funds_needed
   validates_numericality_of :funds_needed, :greater_than => 0
@@ -31,6 +31,14 @@ class Cause < ActiveRecord::Base
   validates_numericality_of :funds_raised, :greater_than_or_equal_to => 0
 
   enum_attr :status, %w(^inactive active raising_funds completed paid deleted)
-  
+
+  def can_edit
+    return true
+  end
+
+  def can_delete
+    return true
+  end
+
 end
 
