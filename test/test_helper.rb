@@ -14,4 +14,13 @@ end
 
 class ActionController::TestCase
   include Devise::TestHelpers
+
+  def create_and_sign_in
+    user = create_user
+    user.confirm!
+    sign_in user
+    return user
+  end
+
 end
+

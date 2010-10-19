@@ -1,9 +1,9 @@
 require 'test_helper'
 
-class CauseControllerTest < ActionController::TestCase
+class CausesControllerTest < ActionController::TestCase
 
   MESSAGE_OK = "Ok"
-  MESSAGE_FAIL_ALREADY_VOTE = "Already voted"
+  MESSAGE_FAIL_ALREADY_VOTE = "Voted"
   MESSAGE_FAIL_STATUS_PROBLEM = "The cause status doesnt allow voting"
   MESSAGE_FAIL_AUTH_PROBLEM = "The user should be authenticated"
 
@@ -47,9 +47,7 @@ class CauseControllerTest < ActionController::TestCase
 
 
   test "should fail on vote if already voted (ajax) and response is correct" do
-    user = create_user
-    user.confirm!
-    sign_in user
+    user = create_and_sign_in
 
     existing_vote = Vote.create :user_id => user.id, :cause_id => 0
 
@@ -84,9 +82,7 @@ class CauseControllerTest < ActionController::TestCase
 
 
   test "should fail on vote if cause status doesnt support voting (ajax)" do
-    user = create_user
-    user.confirm!
-    sign_in user
+    user = create_and_sign_in
     cause = Cause.make(:status => "raising_funds")
 
     xhr :post, :vote, :cause_id => cause.id
@@ -102,9 +98,7 @@ class CauseControllerTest < ActionController::TestCase
 
 
   test "votes should persist in database if everything is ok and response is ok(ajax)" do
-    user = create_user
-    user.confirm!
-    sign_in user
+    user = create_and_sign_in
     cause = Cause.make
 
     xhr :post, :vote, :cause_id => cause.id
@@ -120,9 +114,7 @@ class CauseControllerTest < ActionController::TestCase
 
 
   test "votes should persist in database if everything is ok (no ajax) " do
-    user = create_user
-    user.confirm!
-    sign_in user
+    user = create_and_sign_in
     cause = Cause.make
     votes_count = Vote.length
 
@@ -137,18 +129,13 @@ class CauseControllerTest < ActionController::TestCase
   end
 
   test "can go to new cause" do
-    user = create_user
-    user.confirm!
-    sign_in user
-
+    user = create_and_sign_in
     get :new
     assert_response :success
   end
 
   test "can go to edit cause" do
-    user = create_user
-    user.confirm!
-    sign_in user
+    user = create_and_sign_in
 
     cause = Cause.make :id => 1
     get :edit, {'id' => 1}

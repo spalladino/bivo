@@ -7,5 +7,13 @@ class ApplicationController < ActionController::Base
     #session[:locale] = 'es' # Uncomment this line to test setting an alternative locale for gettext testing 
     super
   end
+  
+  def ajax_flash
+    if request.xhr?
+      flash.now
+    else
+      flash
+    end
+  end
 
 end
