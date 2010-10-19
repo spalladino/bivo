@@ -201,13 +201,13 @@ class CausesController < ApplicationController
   end
 
   def status_allow_edit
-    if !@cause.can_edit
+    if !@cause.can_edit?
        render :nothing => true, :status => :forbidden
     end
   end
 
   def status_allow_delete
-    if !current_user.is_admin_user && !@cause.can_delete
+    if !current_user.is_admin_user && !@cause.can_delete?
        render :nothing => true, :status => :forbidden
     end
   end

@@ -30,14 +30,9 @@ class Cause < ActiveRecord::Base
 
   validates_numericality_of :funds_raised, :greater_than_or_equal_to => 0
 
-  enum_attr :status, %w(^inactive active raising_funds completed paid deleted)
-
-  def can_edit
-    return true
-  end
-
-  def can_delete
-    return true
+  enum_attr :status, %w(^inactive active raising_funds completed paid deleted) do
+    can_edit? [:inactive, :active, :raising_funds]
+    can_delete? [:inactive, :active]
   end
 
 end
