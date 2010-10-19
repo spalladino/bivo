@@ -169,6 +169,12 @@ class CausesController < ApplicationController
     redirect_to request.referer
   end
 
+  def mark_unpaid
+    @cause.status = :completed
+    @cause.save
+    redirect_to request.referer
+  end
+
   private
 
   def load_cause

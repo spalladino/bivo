@@ -26,7 +26,7 @@ module CauseHelper
       action = if follow then "unfollow" else "follow" end
     end
 
-    return content_tag :div, 
+    return content_tag :div,
       button_to(label, { :action => action, :id => cause.id },
         :remote => true,
         :onclick => '$(this).val("Submitting...");$(this).attr("disabled", "true");return true;'),
@@ -35,13 +35,13 @@ module CauseHelper
   end
 
   def vote_counter(cause)
-    content_tag :span, cause.votes_count, :id => "vote_counter_#{cause.id}" 
+    content_tag :span, cause.votes_count, :id => "vote_counter_#{cause.id}"
   end
 
   def vote_button(cause)
     visible = true
     disabled = nil
-    
+
     if current_user.nil?
       label = _("Vote (you must login first)")
     else
@@ -56,14 +56,14 @@ module CauseHelper
       end
     end
 
-    return content_tag :div, 
+    return content_tag :div,
       button_to(label, { :action => "vote", :id => cause.id },
         :remote => true,
         :disabled => disabled ,
         :onclick => '$(this).val("Submitting...");$(this).attr("disabled","true");return true;'),
       :class => (if not visible then 'hidden' end),
       :id => "vote_btn_#{cause.id}"
-      
+
 
   end
 
@@ -91,6 +91,10 @@ module CauseHelper
     if cause.funds_raised >= cause.funds_needed_was
 	    return content_tag :div, button_to("Mark as paid", { :action => "mark_paid", :id => cause.id })
     end
+  end
+
+  def mark_as_unpaid_button(cause)
+    return content_tag :div, button_to("Mark as unpaid", { :action => "mark_unpaid", :id => cause.id })
   end
 
   def delete_button(cause)
