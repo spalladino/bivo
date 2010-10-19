@@ -64,45 +64,33 @@ class CausesController < ApplicationController
 
 
   def vote
-    @vote = Vote.new(:cause_id => params[:id],:user_id=> current_user.id)
-    if @vote.save
-      flash[:notice] = "Vote submitted"
-      redirect_to request.referer unless request.xhr? #Not Ajax
-    else
-      flash[:notice] = @vote.errors.on(:cause_id)
-      redirect_to request.referer unless request.xhr? #Not Ajax
-    end
+    @vote = Vote.new :cause_id => params[:id], :user_id=> current_user.id
+    ajax_flash[:notice] = @vote.save ? "Vote submitted" : @vote.errors.on(:cause_id)
+    
+    redirect_to request.referer unless request.xhr?
   end
 
   def follow
-    @follow = Follow.new(:cause_id => params[:id],:user_id=> current_user.id)
+    @follow = Follow.new :cause_id => params[:id],:user_id=> current_user.id
     if @follow.save
-      flash[:notice] = "Follow submitted"
-      if not request.xhr? #Not Ajax?
-        redirect_to request.referer
-      end
+      ajax_flash[:notice] = "Follow submitted"
     else
-      flash[:notice] = "Error, try again"
-      if not request.xhr?
-        redirect_to request.referer
-      end
+      ajax_flash[:notice] = "Error, try again"
     end
+    
+    redirect_to request.referer unless request.xhr?
   end
 
   def unfollow
     follow = Follow.find_by_cause_id_and_user_id(params[:id], current_user.id)
     follow.destroy
     if follow.destroyed?
-      flash[:notice] = "Unfollow submitted"
-      if not request.xhr? #Not Ajax?
-        redirect_to request.referer
-      end
+      ajax_flash[:notice] = "Unfollow submitted"
     else
-      flash[:notice] = "Error, try again"
-      if !request.xhr?
-        redirect_to request.referer
-      end
+      ajax_flash[:notice] = "Error, try again"
     end
+    
+    redirect_to request.referer unless request.xhr?
   end
 
 
@@ -156,19 +144,23 @@ class CausesController < ApplicationController
   def activate
     @cause.status = :active
     @cause.save
-    flash[:notice] = "Activated"
-    if not request.xhr? #Not Ajax?
-        redirect_to request.referer
+    if @cause.save then
+      ajax_flash[:notice] = "Activated"
+    else
+      ajax_flash[:notice] = "Error activating cause"
     end
+    redirect_to request.referer unless request.xhr?
   end
 
   def deactivate
     @cause.status = :inactive
     @cause.save
-    flash[:notice] = "Desactivated"
-    if not request.xhr? #Not Ajax?
-        redirect_to request.referer
+    if @cause.save then
+      ajax_flash[:notice] = "Deactivated"
+    else
+      ajax_flash[:notice] = "Error deactivating cause"
     end
+    redirect_to request.referer unless request.xhr?
   end
 
   def mark_paid

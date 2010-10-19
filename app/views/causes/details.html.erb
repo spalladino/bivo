@@ -22,7 +22,7 @@
 <p>
     <b><%=_("Status") %>:</b>
     <p> if voting: (Displays the number of votes) </p>
-    <p id = "vote_counter"> <%=@cause.votes_count%> </p>
+    <p><%= vote_counter @cause %></p>
     <p> if raising: (Displays the funds raised and the fundraising progress percentage) </p>
     <p> <%= cause_funds_completed @cause %></p>
     <p> if completed: (Displays the funds raised) </p>
@@ -31,16 +31,9 @@
 
 </p>
 
-<div id="vote_btn">
-  <%= vote_button @cause %>
-</div>
+<%= vote_button @cause %>
 
-
-
-
-<div id="follow_btn">
-  <%= follow_button @cause %>
-</div>
+<%= follow_button @cause %>
 
 <%if current_user && (@cause.charity.id == current_user.id || current_user.is_admin_user) %>
 
