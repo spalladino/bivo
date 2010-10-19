@@ -3,11 +3,11 @@ module CauseHelper
   def cause_funds_percentage_completed(cause)
     number_to_percentage cause.funds_raised/cause.funds_needed*100, :precision => 0
   end
-  
+
   def cause_funds_completed(cause)
     "#{cause.funds_raised} (#{cause_funds_percentage_completed(cause)} #{_('complete')})"
   end
-  
+
   def category_filter_url(category)
     query = CGI.parse(request.query_string).symbolize_keys
     query.each {|k,v| query[k] = v.first}
@@ -76,6 +76,9 @@ module CauseHelper
 
   end
 
+  def facebook_like
+    content_tag :iframe, nil, :src => "http://www.facebook.com/plugins/like.php?href=#{CGI::escape(request.url)}&layout=standard&show_faces=true&width=450&action=like&font=arial&colorscheme=light&height=80", :scrolling => 'no', :frameborder => '0', :allowtransparency => true, :id => :facebook_like
+  end
 
   def mark_as_paid_button(cause)
     if cause.funds_raised >= cause.funds_needed

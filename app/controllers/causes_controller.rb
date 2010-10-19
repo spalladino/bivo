@@ -53,8 +53,8 @@ class CausesController < ApplicationController
 
     @categories = @categories[0...6].insert(0, all_category(all_causes_count))
     @category = params[:category]
-    
-    @page_sizes = [5,10,20,50] 
+
+    @page_sizes = [5,10,20,50]
   end
 
 
