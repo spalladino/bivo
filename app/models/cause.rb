@@ -36,6 +36,10 @@ class Cause < ActiveRecord::Base
     return true
   end
 
+  def can_mark_as_paid
+    return self.funds_raised >= self.funds_needed_was
+  end
+
   def can_delete
     return true
   end
