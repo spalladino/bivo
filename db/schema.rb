@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101019192958) do
+ActiveRecord::Schema.define(:version => 20101020142444) do
 
   create_table "cause_categories", :force => true do |t|
     t.string   "name"
@@ -40,7 +40,20 @@ ActiveRecord::Schema.define(:version => 20101019192958) do
     t.datetime "updated_at"
   end
 
+  create_table "charity_follows", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "charity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "countries", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "expense_categories", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -51,6 +64,25 @@ ActiveRecord::Schema.define(:version => 20101019192958) do
     t.integer  "cause_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "income_categories", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "transactions", :force => true do |t|
+    t.integer  "user_id"
+    t.date     "transaction_date"
+    t.float    "amount"
+    t.string   "description"
+    t.integer  "income_category_id"
+    t.integer  "expense_category_id"
+    t.string   "paid_to"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "type"
   end
 
   create_table "users", :force => true do |t|

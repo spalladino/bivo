@@ -5,7 +5,7 @@
 <% title "Causes" %>
 
 <div id="filters">
-	<% form_tag causes_path, :method => :get do %>
+	<%= form_tag causes_path, :method => :get do %>
 		<p>
 			<%= _("Categories: ") %>
 			<% @categories.each do |category| %>
@@ -15,6 +15,10 @@
 		<p>
 			<%= _('Filter by region') %>
 			<%= select_tag :region, options_from_collection_for_select(@regions, 'id', 'name', @region), {:include_blank => _('All countries')}%>
+		</p>
+		<p>
+			<%= _("Show per page")%>
+			<%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page)%>
 		</p>
 		<p>
 			<%= _('Showing') %>
@@ -31,3 +35,4 @@
 <div id="causes">
   <%= render 'causes' %>
 </div>
+

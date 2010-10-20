@@ -1,14 +1,16 @@
 require 'machinist/active_record'
 require 'sham'
 require 'ffaker'
+require "./test/blueprints_helper"
 
-Sham.name         { Faker::Name.name }
-Sham.simple_name  { Faker::Name.last_name }
+
+Sham.name         { "#{Faker::Name.name} #{rand(100)}" }
+Sham.simple_name  { "#{Faker::Name.last_name} #{rand(100)}" }
 Sham.bs           { Faker::Company.bs.capitalize }
 Sham.description  { Faker::Company.catch_phrase }
 Sham.email        { Faker::Internet.email }
 Sham.url          { Faker::Internet.domain_name}
-Sham.country      { Faker::Address.uk_country }
+Sham.country      { Faker::Address.uk_county }
 Sham.city         { Faker::Address.city }
 Sham.password     { rand(36**8).to_s(36) }
 Sham.funds        { rand(1000) }
@@ -18,15 +20,16 @@ Country.blueprint do
 end
 
 CauseCategory.blueprint do
-  name {Sham.simple_name} 
+  name {Sham.simple_name}
 end
 
 Cause.blueprint do
   city
   description
-  country       {Country.first || Country.make}
-  category      {CauseCategory.make_or_get(5)}
-  
+  charity         {Charity.make_or_get(5)}
+  country         {Country.make_or_get(5)}
+  cause_category  {CauseCategory.make_or_get(5)}
+
   name          {Sham.bs}
   url           {Sham.simple_name}
   funds_needed  {Sham.funds}
@@ -59,22 +62,5 @@ end
 Vote.blueprint(:singleuser) do
   user         {PersonalUser.first || PersonalUser.make}
   cause        {Cause.make}
-end
-
-class << Cause
-  def make_with_votes(attributes = {})
-    votes_count = attributes[:votes_count] || rand(10)
-    attributes.delete(:votes_count)
-    
-    Cause.make(attributes) do |cause|
-      votes_count.to_i.times { cause.votes.make(:singleuser) }
-    end
-  end
-end
-
-class << CauseCategory
-  def make_or_get(max = 5, attributes = {})
-    if CauseCategory.count < max then CauseCategory.make(attributes) else CauseCategory.all[rand(max)] end
-  end
 end
 

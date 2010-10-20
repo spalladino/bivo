@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
   end
 
   def is_admin_user
-    true
+    return false
   end
 
   protected

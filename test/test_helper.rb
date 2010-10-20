@@ -14,4 +14,14 @@ end
 
 class ActionController::TestCase
   include Devise::TestHelpers
+
+  setup { Sham.reset }
+
+  def create_and_sign_in
+    user = PersonalUser.make
+    sign_in user
+    return user
+  end
+
 end
+

@@ -1,16 +1,16 @@
 require 'test_helper'
 
-class CauseControllerTest < ActionController::TestCase
+class CausesControllerTest < ActionController::TestCase
 
   MESSAGE_OK = "Ok"
-  MESSAGE_FAIL_ALREADY_VOTE = "Already voted"
+  MESSAGE_FAIL_ALREADY_VOTE = "Voted"
   MESSAGE_FAIL_STATUS_PROBLEM = "The cause status doesnt allow voting"
   MESSAGE_FAIL_AUTH_PROBLEM = "The user should be authenticated"
 
   test "should get details" do
     cause = Cause.make :url => "foobar"
 
-    get :details, {'url' => "foobar"}
+    get :details, :url => "foobar"
 
     assert_not_nil assigns(:cause)
     assert_equal assigns(:cause), cause
@@ -18,25 +18,25 @@ class CauseControllerTest < ActionController::TestCase
   end
 
   test "should get voting causes list first page sorted by popularity" do
-    # Create 60 causes with votes
-    (1..60).each { |i| Cause.make_with_votes :votes_count => i, :status => :active }
+    # Create causes with votes
+    (1..20).each { |i| Cause.make_with_votes :votes_count => i, :status => :active }
 
     # Fetch the voted ones sorted by vote count
-    causes_with_votes_ids = Cause.where("votes_count > ?", 0).map(&:id).reverse
+    causes_with_votes_ids = Cause.all.map(&:id).sort.reverse
 
     get :index
 
     assert_not_nil assigns(:causes)
-    assert_equal 20, assigns(:causes).size
-    assert_equal causes_with_votes_ids, assigns(:causes).map(&:id)
+    assert_equal 5, assigns(:causes).size
+    assert_equal causes_with_votes_ids[0...5], assigns(:causes).map(&:id)
   end
 
   test "should get voting causes list first different page and count sorted by popularity" do
     # Create 60 causes with votes
-    (1..60).each { |i| Cause.make_with_votes :votes_count => i, :status => :active }
+    (1..20).each { |i| Cause.make_with_votes :votes_count => i, :status => :active }
 
     # Fetch the voted ones sorted by vote count
-    causes_with_votes_ids = Cause.where("votes_count > ?", 0).map(&:id).reverse
+    causes_with_votes_ids = Cause.all.map(&:id).sort.reverse
 
     get :index, :page => 2, :per_page => 5
 
@@ -46,19 +46,21 @@ class CauseControllerTest < ActionController::TestCase
   end
 
 
-  test "should fail on vote if already voted (ajax) and response is correct" do
-    user = create_user
-    user.confirm!
-    sign_in user
+  test "should fail on vote if already voted with ajax and response is correct" do
+    user = create_and_sign_in
 
-    existing_vote = Vote.create :user_id => user.id, :cause_id => 0
+    cause = Cause.make :status => :active
 
-    votes_count = Vote.length
+    existing_vote = Vote.make :user => user,:cause_id => cause.id
 
-    xhr :post, :vote, :cause_id => existing_vote.cause_id
+
+
+    votes_count = Vote.count
+
+    xhr :post, :vote, :id => existing_vote.cause_id
 
     #no votes added:
-    assert_equal votes_count,Vote.length
+    assert_equal votes_count, Vote.count
 
     #response ok:
     vote_result = JSON.parse(@request.body)
@@ -67,29 +69,27 @@ class CauseControllerTest < ActionController::TestCase
   end
 
 
-  test "should fail on vote if not authenticated user and error is correct (no ajax)" do
+  test "should fail on vote if not authenticated user and error is correct no ajax" do
     cause = Cause.make
-    cause_counter = cause.votes.length
+    cause_counter = cause.votes.count
 
-    post :vote, {'cause_id' => cause.id.to_s}
+    post :vote, :id => cause.id
     cause.reload
 
     #no votes added:
-    assert_equal cause_counter,cause.votes.length
+    assert_equal cause_counter,cause.votes.count
 
     #error is correct:
-    assert_equal flash[:notice], MESSAGE_FAIL_AUTH_PROBLEM
+    assert_equal flash[:notice], "The user should be authenticated"
     assert_response :error
   end
 
 
-  test "should fail on vote if cause status doesnt support voting (ajax)" do
-    user = create_user
-    user.confirm!
-    sign_in user
+  test "should fail on vote if cause status doesnt support voting with ajax" do
+    user = create_and_sign_in
     cause = Cause.make(:status => "raising_funds")
 
-    xhr :post, :vote, :cause_id => cause.id
+    xhr :post, :vote, :id => cause.id
 
     #response correct:
     vote_result = JSON.parse(@request.body)
@@ -101,13 +101,12 @@ class CauseControllerTest < ActionController::TestCase
   end
 
 
-  test "votes should persist in database if everything is ok and response is ok(ajax)" do
-    user = create_user
-    user.confirm!
-    sign_in user
+  test "votes should persist in database with ajax" do
+    user = create_and_sign_in
     cause = Cause.make
+    cause.save
 
-    xhr :post, :vote, :cause_id => cause.id
+    xhr :post, :vote, :id => cause.id
 
     #changes persisted:
     assert_not_nil Vote.find_by_cause_id_and_user_id cause.id, user.id
@@ -119,17 +118,15 @@ class CauseControllerTest < ActionController::TestCase
   end
 
 
-  test "votes should persist in database if everything is ok (no ajax) " do
-    user = create_user
-    user.confirm!
-    sign_in user
-    cause = Cause.make
-    votes_count = Vote.length
+  test "votes should persist in database no ajax" do
+    user = create_and_sign_in
+    cause = Cause.make :status => :active
+    votes_count = Vote.count
 
-    post :vote, {'cause_id' => cause.id.to_s}
+    post :vote, :id => cause.id
 
     #vote persisted:
-    assert_equal votes_count+1,Vote.length
+    assert_equal votes_count+1, Vote.count
 
     #response ok
     assert_response :success
@@ -137,21 +134,16 @@ class CauseControllerTest < ActionController::TestCase
   end
 
   test "can go to new cause" do
-    user = create_user
-    user.confirm!
-    sign_in user
-
+    user = create_and_sign_in
     get :new
     assert_response :success
   end
 
   test "can go to edit cause" do
-    user = create_user
-    user.confirm!
-    sign_in user
+    user = create_and_sign_in
 
-    cause = Cause.make :id => 1
-    get :edit, {'id' => 1}
+    cause = Cause.make
+    get :edit, :id => cause.id
     assert_not_nil assigns(:cause)
     assert_equal assigns(:cause), cause
     assert_response :success

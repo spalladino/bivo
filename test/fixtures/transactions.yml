@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  user: 
+  transaction_date: 2010-10-18
+  income_category: 
+  expense_category: 
+  paid_to: MyString
+  amount: 1.5
+  description: MyString
+
+two:
+  user: 
+  transaction_date: 2010-10-18
+  income_category: 
+  expense_category: 
+  paid_to: MyString
+  amount: 1.5
+  description: MyString
