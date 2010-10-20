@@ -27,6 +27,11 @@ class CharitiesController < ApplicationController
 
   def deactivate
     @charity.status = :inactive
+    @charity.causes.each do |cause|
+      cause.status = :inactive
+      cause.save
+    end
+
     @charity.save
     if @charity.save then
       ajax_flash[:notice] = "Deactivated"
