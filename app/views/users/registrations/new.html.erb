@@ -8,7 +8,7 @@
     $("#user_type_charity").click(function () {
       $("#charity_form").css("display", "block");
       $("#personal_form").css("display", "none");
-    });  
+    });
   });
 <% end %>
 
@@ -37,8 +37,8 @@
     <%= render :partial => 'users/registrations/new_personal', :locals => {:f => f} %>
   </div>
 
-  <p><%= check_box_tag :eula_accepted %>
-  <%= label_tag :eula_accepted, "I agree to the terms and conditions" %></p>
+  <p><%= f.check_box :eula_accepted %>
+  <%= f.label :eula_accepted, "I agree to the " %><%= link_to 'terms and conditions', eula_path, :target => :_new %></p>
 
   <p><%= f.check_box :send_me_news %>
   <%= f.label :send_me_news, "Sign me up to the newsletter" %></p>

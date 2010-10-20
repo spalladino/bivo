@@ -1,7 +1,7 @@
 class CharitiesController < ApplicationController
 
-  before_filter :authenticate_user!, :except => [ :show, :details, :index ]
-  before_filter :load_charity, :except => [ :details, :index, :new, :create ]
+  before_filter :authenticate_user!, :except => [ :show, :details, :index, :check_url]
+  before_filter :load_charity, :except => [ :details, :index, :new, :create, :check_url]
 
   before_filter :only_owner_or_admin, :only => [ :edit, :update]
   before_filter :only_admin, :only => [:activate, :deactivate, :mark_paid, :mark_unpaid, :create,:delete]
@@ -14,6 +14,8 @@ class CharitiesController < ApplicationController
   def check_url
     if Charity.find_by_short_url(params[:url])
       render :text => 'not_available'
+    else 
+      render :text => 'available'
     end
   end
  
