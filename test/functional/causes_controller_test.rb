@@ -187,7 +187,6 @@ class CausesControllerTest < ActionController::TestCase
     assert_equal cause_counter,cause.votes.count
 
     #error is correct:
-    assert_equal flash[:notice], "The user should be authenticated"
     assert_response :error
   end
 
@@ -236,7 +235,7 @@ class CausesControllerTest < ActionController::TestCase
     assert_equal votes_count+1, Vote.count
 
     #response ok
-    assert_response :success
+    assert_response 302
 
   end
 

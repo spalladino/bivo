@@ -16,7 +16,7 @@ class CharitiesController < ApplicationController
       render :text => 'not_available'
     end
   end
- 
+
   def show
     render 'details'
   end
@@ -76,13 +76,8 @@ class CharitiesController < ApplicationController
     redirect_to request.referer unless request.xhr?
   end
 
-  protected
-    def destroy
-      @charity = Charity.find(params[:id])
-      @charity.destroy
 
-      redirect_to charities_url
-    end
+ protected
 
     def load_charity
       @charity = Charity.find(params[:id])
@@ -94,10 +89,6 @@ class CharitiesController < ApplicationController
       end
     end
 
-    def only_admin
-      if not current_user.is_admin_user
-        render :nothing => true, :status => :forbidden
-      end
-    end
+
 end
 
