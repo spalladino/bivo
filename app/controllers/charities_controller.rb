@@ -14,6 +14,7 @@ class CharitiesController < ApplicationController
   def check_url
     if Charity.find_by_short_url(params[:url])
       render :text => 'not_available'
+    end
   end
  
   def show
@@ -21,7 +22,7 @@ class CharitiesController < ApplicationController
   end
 
   def details
-   @charity = Charity.find_by_short_url! params[:url]
+    @charity = Charity.find_by_short_url! params[:url]
   end
 
   def activate
@@ -83,11 +84,9 @@ class CharitiesController < ApplicationController
       redirect_to charities_url
     end
 
-
     def load_charity
       @charity = Charity.find(params[:id])
     end
-
 
     def only_owner_or_admin
       if not (@charity.id == current_user.id || current_user.is_admin_user)
