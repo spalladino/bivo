@@ -26,6 +26,7 @@ end
 Cause.blueprint do
   city
   description
+  status          {:active}
   charity         {Charity.make_or_get(5)}
   country         {Country.make_or_get(5)}
   cause_category  {CauseCategory.make_or_get(5)}

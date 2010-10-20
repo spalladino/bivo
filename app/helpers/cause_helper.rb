@@ -107,6 +107,9 @@ module CauseHelper
     end
   end
 
+  def vote_counter(cause)
+    content_tag :span, cause.votes_count, :id => "vote_counter_#{cause.id}"
+  end
 
   # Displays info on the cause depending on its status
   # * In “voting” mode: Displays the number of votes.
@@ -114,7 +117,7 @@ module CauseHelper
   # * In “completed” mode: Displays the funds raised.
   def progress_box(cause)
     if cause.status == :active
-      return content_tag :span, cause.votes_count, :id => "vote_counter_#{cause.id}"
+      return vote_counter cause
     elsif cause.status = :raising_funds
       return content_tag :span, cause_funds_completed(cause)
     elsif cause.status = :completed
