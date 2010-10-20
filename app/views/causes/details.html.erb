@@ -21,42 +21,52 @@
 </p>
 
 
-
-
-<div id="vote_counter">
-  <%= vote_counter @cause %>
+<div id="funds_raised">
+  <%= @cause.funds_raised %>
 </div>
 
-<div id="cause_funds_completed">
-  <%= cause_funds_completed @cause %>
-</div>
-
-
-<div id="@cause.funds_raised">
-  <%= @cause.funds_raised @cause %>
-</div>
+<br/>
 
 <div id="vote_button">
   <%= vote_button @cause %>
 </div>
 
+<br/>
+
 <div id="follow_button">
   <%= follow_button @cause %>
 </div>
+
+<br/>
+
 
 <div id="delete_button">
   <%= delete_button @cause %>
 </div>
 
+<br/>
+
 <div id="edit_button">
   <%= edit_button @cause %>
 </div>
+
+<br/>
 
 <div id="activate_deactivate_btn">
   <%= active_deactive_button @cause %>
 </div>
 
+<br/>
+
 <div id="facebook_like">
 <%=facebook_like%>
 </div>
+
+<br/>
+
+<div id="progress_box">
+<%=progress_box @cause%>
+</div>
+
+<div>
 

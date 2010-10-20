@@ -8,7 +8,9 @@ module CauseHelper
     visible = true
     disabled = nil
 
-    if current_user.nil? and cause.can_vote?
+    if current_user.nil?
+      visible = false
+    elsif current_user.nil? and cause.can_vote?
       label = _("Login to vote")
       disabled = true
     else
@@ -89,7 +91,7 @@ module CauseHelper
   #“Activate” button: Displayed only when the cause is deactivated.
   #ADMIN ONLY
   def active_deactive_button(cause)
-    if current_user.is_admin_user
+    if current_user && current_user.is_admin_user
       label = if cause.status_inactive? then _("Activate") else _("Deactivate") end
       action = if cause.status_inactive? then "activate" else "deactivate" end
       return content_tag :div, button_to(label, { :action => action, :id => cause.id },:remote => true,:onclick => '$(this).val("Submitting...");$(this).attr("disabled", "true");return true;',:id => "submit_active_btn")
@@ -104,15 +106,15 @@ module CauseHelper
   end
 
   def mark_as_paid_button(cause)
-    if current_user.is_admin_user
-      if cause.can_mark_as_paid
+    if current_user &&  current_user.is_admin_user
+      if cause.can_mark_as_paid?
 	      return content_tag :div, button_to("Mark as paid", { :action => "mark_paid", :id => cause.id })
       end
     end
   end
 
   def mark_as_unpaid_button(cause)
-    if current_user.is_admin_user
+    if current_user && current_user.is_admin_user
       return content_tag :div, button_to("Mark as unpaid", { :action => "mark_unpaid", :id => cause.id })
     end
   end
@@ -125,9 +127,9 @@ module CauseHelper
   def progress_box(cause)
     if cause.status == :active
       return content_tag :span, cause.votes_count, :id => "vote_counter_#{cause.id}"
-    else if cause.status = :raising_funds
+    elsif cause.status = :raising_funds
       return content_tag :span, cause_funds_completed(cause)
-    else if cause.status = :completed
+    elsif cause.status = :completed
       return content_tag :span, cause.founds_raised
     end
   end
@@ -137,7 +139,8 @@ module CauseHelper
   #Redirects to the “Cause Add/Edit” page. Causes with a “completed” status cannot be edited by the charity. (Owner)
   def edit_button(cause)
     if current_user && (current_user.is_admin_user ||  (current_user.is_charity_user && cause.charity.id == current_user.id && cause.can_edit?))
-      return content_tag :div, button_to("Edit", cause_path(cause.id), :method => :edit)
+
+      return content_tag :div, link_to("Edit", :controller => "causes", :action => "edit", :id => cause.id)
     end
   end
 
@@ -149,6 +152,8 @@ module CauseHelper
       return content_tag :div, button_to("Delete", cause_path(cause.id), :method => :delete, :confirm => "Are you sure?")
     end
   end
+
+
 
 end
 

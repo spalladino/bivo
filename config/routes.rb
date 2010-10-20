@@ -11,6 +11,7 @@ Bivo::Application.routes.draw do
       post :activate
       post :deactivate
       post :mark_paid
+      post :mark_unpaid
       post :vote
       post :follow
       post :unfollow
