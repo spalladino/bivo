@@ -1,7 +1,8 @@
 require 'machinist/active_record'
 require 'sham'
 require 'ffaker'
-require 'blueprints_helper'
+require "./test/blueprints_helper"
+
 
 Sham.name         { "#{Faker::Name.name} #{rand(100)}" }
 Sham.simple_name  { "#{Faker::Name.last_name} #{rand(100)}" }
@@ -19,7 +20,7 @@ Country.blueprint do
 end
 
 CauseCategory.blueprint do
-  name {Sham.simple_name} 
+  name {Sham.simple_name}
 end
 
 Cause.blueprint do
@@ -28,7 +29,7 @@ Cause.blueprint do
   charity         {Charity.make_or_get(5)}
   country         {Country.make_or_get(5)}
   cause_category  {CauseCategory.make_or_get(5)}
-  
+
   name          {Sham.bs}
   url           {Sham.simple_name}
   funds_needed  {Sham.funds}
@@ -62,6 +63,4 @@ Vote.blueprint(:singleuser) do
   user         {PersonalUser.first || PersonalUser.make}
   cause        {Cause.make}
 end
-
-
 

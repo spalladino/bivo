@@ -32,6 +32,8 @@ class Charity < User
 
   validates_length_of :description, :maximum => 255
 
+  enum_attr :status, %w(^inactive active deleted)
+
   def name
     charity_name
   end

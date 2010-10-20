@@ -4,7 +4,16 @@ Bivo::Application.routes.draw do
 
 
   get "charity/c/:url", :controller => "charities", :action => "details", :constraints => { :url => Charity::UrlFormat }
-  resources :charities
+
+  resources :charities, :path => 'charity' do
+    member do
+      post :activate
+      post :deactivate
+      post :follow
+      post :unfollow
+    end
+  end
+
 
   get "cause/c/:url", :controller => "causes", :action => "details", :constraints => { :url => Cause::UrlFormat }
   get "cause/check_url", :controller => "causes", :action => "check_url", :as => 'check_cause_url'

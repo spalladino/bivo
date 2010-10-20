@@ -1,4 +1,7 @@
 class CharitiesController < ApplicationController
+
+  before_filter :load_charity, :except => [ :details, :index, :new, :create ]
+
   def index
     @charities = Charity.all
   end
@@ -11,6 +14,27 @@ class CharitiesController < ApplicationController
    @charity = Charity.find_by_short_url! params[:url]
   end
 
+  def activate
+    @charity.status = :active
+    @charity.save
+    if @charity.save then
+      ajax_flash[:notice] = "Activated"
+    else
+      ajax_flash[:notice] = "Error activating cause"
+    end
+    redirect_to request.referer unless request.xhr?
+  end
+
+  def deactivate
+    @charity.status = :inactive
+    @charity.save
+    if @charity.save then
+      ajax_flash[:notice] = "Deactivated"
+    else
+      ajax_flash[:notice] = "Error deactivating cause"
+    end
+    redirect_to request.referer unless request.xhr?
+  end
 
 
   def new
@@ -44,11 +68,41 @@ class CharitiesController < ApplicationController
     end
   end
 
+
+  def follow
+    @follow = CharityFollow.new :charity_id => params[:id],:user_id=> current_user.id
+    if @follow.save
+      ajax_flash[:notice] = "Follow submitted"
+    else
+      ajax_flash[:notice] = "Error, try again"
+    end
+
+    redirect_to request.referer unless request.xhr?
+  end
+
+
+  def unfollow
+    follow = CharityFollow.find_by_charity_id_and_user_id(params[:id], current_user.id)
+    follow.destroy
+    if follow.destroyed?
+      ajax_flash[:notice] = "Unfollow submitted"
+    else
+      ajax_flash[:notice] = "Error, try again"
+    end
+
+    redirect_to request.referer unless request.xhr?
+  end
+
   def destroy
     @charity = Charity.find(params[:id])
     @charity.destroy
 
     redirect_to charities_url
+  end
+
+
+  def load_charity
+    @charity = Charity.find(params[:id])
   end
 end
 
