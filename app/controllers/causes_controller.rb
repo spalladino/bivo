@@ -191,11 +191,7 @@ class CausesController < ApplicationController
     end
   end
 
-  def only_admin
-    if not current_user.is_admin_user
-      render :nothing => true, :status => :forbidden
-    end
-  end
+
 
   def only_charity
     if not current_user.is_charity_user
