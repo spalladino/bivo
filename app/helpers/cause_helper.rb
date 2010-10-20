@@ -1,5 +1,27 @@
 module CauseHelper
 
+  def cause_funds_percentage_completed(cause)
+    number_to_percentage cause.funds_raised/cause.funds_needed*100, :precision => 0
+  end
+
+  def cause_funds_completed(cause)
+    "#{cause.funds_raised} (#{cause_funds_percentage_completed(cause)} #{_('complete')})"
+  end
+
+  def category_filter_url(category)
+    query = CGI.parse(request.query_string).symbolize_keys
+    query.each {|k,v| query[k] = v.first}
+    query[:category] = category.id
+    url_for({:action => 'index', :controller => 'causes'}.merge(query))
+  end
+
+  def cause_voted(cause)
+    return current_user && !Vote.find_by_cause_id_and_user_id(cause.id,current_user.id)
+  end
+
+  def view_cause_button(cause)
+    return link_to _("View"), cause_path(cause.id)
+  end
 
   #VOTE BUTTON
   #Displayed when the cause is in “voting” mode or when the user did not vote for the cause.
@@ -34,8 +56,6 @@ module CauseHelper
       :id => "vote_btn_#{cause.id}"
   end
 
-
-
   #FOLLOW, UNFOLLOW BUTTON
   #“Follow” is displayed when the user is not following the cause, otherwise “Unfollow” is displayed.
   #If the user is logged off, redirects to the Login page.
@@ -58,33 +78,6 @@ module CauseHelper
       :id => "follow_btn"
 
   end
-
-
-
-  def cause_funds_percentage_completed(cause)
-    number_to_percentage cause.funds_raised/cause.funds_needed*100, :precision => 0
-  end
-
-  def cause_funds_completed(cause)
-    "#{cause.funds_raised} (#{cause_funds_percentage_completed(cause)} #{_('complete')})"
-  end
-
-  def category_filter_url(category)
-    query = CGI.parse(request.query_string).symbolize_keys
-    query.each {|k,v| query[k] = v.first}
-    query[:category] = category.id
-    url_for({:action => 'index', :controller => 'causes'}.merge(query))
-  end
-
-
-  def cause_voted(cause)
-    return current_user && !Vote.find_by_cause_id_and_user_id(cause.id,current_user.id)
-  end
-
-  def view_cause_button(cause)
-    return link_to _("View"), cause_path(cause.id)
-  end
-
 
   #ACTIVATE / DEACTIVATE BUTTON
   #“Deactivate” button: Deactivates the current cause,

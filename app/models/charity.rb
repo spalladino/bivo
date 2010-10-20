@@ -1,5 +1,7 @@
 class Charity < User
 
+  UrlFormat = /[a-zA-Z\-_][a-zA-Z0-9\-_]*/
+
   belongs_to :category, :class_name => "CharityCategory"
   belongs_to :country
 

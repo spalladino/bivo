@@ -1,6 +1,9 @@
 Bivo::Application.routes.draw do
   devise_for :users
 
+
+
+  get "charity/c/:url", :controller => "charities", :action => "details", :constraints => { :url => Charity::UrlFormat }
   resources :charities
 
   get "cause/c/:url", :controller => "causes", :action => "details", :constraints => { :url => Cause::UrlFormat }

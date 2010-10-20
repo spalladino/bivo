@@ -3,6 +3,16 @@ class CharitiesController < ApplicationController
     @charities = Charity.all
   end
 
+  def show
+    render 'details'
+  end
+
+  def details
+   @charity = Charity.find_by_short_url! params[:url]
+  end
+
+
+
   def new
     @countries = Country.all
     @charity = Charity.new
@@ -16,7 +26,7 @@ class CharitiesController < ApplicationController
     @charity = Charity.new(params[:charity])
 
     if @charity.save
-      render :text => "exito"      
+      render :text => "exito"
       #redirect_to @charity, :notice => 'Charity was successfully created.'
     else
       render :text => @charity.errors.to_s
