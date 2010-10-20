@@ -20,11 +20,20 @@
   <%= f.radio_button :type, "PersonalUser", :checked => true %> <%= f.label :personal, "Personal",  %> <br />
   <%= f.radio_button :type, "Charity" %>  <%= f.label :charity, "Charity"  %>	
 
-  <div id="charity_form" style="display:none;">
+  <p><%= f.label :email, "E-Mail" %><br />
+  <%= f.text_field :email %></p>
+
+  <p><%= f.label :password %><br />
+  <%= f.password_field :password %></p>
+
+  <p><%= f.label :password_confirmation %><br />
+  <%= f.password_field :password_confirmation %></p>
+
+  <div id="charity_form" style="<%= get_display_of :Charity, @user %>">
     <%= render :partial => 'users/registrations/new_charity', :locals => {:countries => @countries, :categories => @categories, :f => f} %>
   </div>
 
-  <div id="personal_form" style="display:block;">
+  <div id="personal_form" style="<%= get_display_of :PersonalUser, @user %>">
     <%= render :partial => 'users/registrations/new_personal', :locals => {:f => f} %>
   </div>
 
@@ -37,4 +46,4 @@
   <p><%= f.submit "Create Account" %></p>
 <% end %>
 
-<%= render :partial => "devise/shared/links" %>
+<%#= render :partial => "devise/shared/links" %>

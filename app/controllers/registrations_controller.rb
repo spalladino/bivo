@@ -2,7 +2,7 @@ class RegistrationsController < Devise::RegistrationsController
 
   def new
     @countries = Country.all
-    @categories = CharityCategory.all
+    @categories = CharityCategory.all    
 
     super
   end
@@ -10,9 +10,37 @@ class RegistrationsController < Devise::RegistrationsController
   def create
     @countries = Country.all
     @categories = CharityCategory.all
+    
+    super
+  end
+
+  def edit
+    if (resource.type == "PersonalUser")
+      @type = :personal
+    elsif (resource.type == "Charity")
+      @type = :charity
+      @countries = Country.all      
+    end
+    render_with_scope :edit
+  end
+
+  def update
+    if (resource.type == "PersonalUser")
+      @type = :personal
+    elsif (resource.type == "Charity")
+      @type = :charity
+      @countries = Country.all
+    end
 
     super
-    session[:omniauth] = nil unless @user.new_record?
+  end
+
+  def check_url
+    if Charity.find_by_short_url(params[:url])
+      render :text => 'not_available'
+    else
+      render :text => 'available'
+    end
   end
 
   def build_resource(*args)
@@ -20,15 +48,9 @@ class RegistrationsController < Devise::RegistrationsController
 
     if (params[:user])
       if (params["user"]["type"] == "PersonalUser")
-        session[:test_type] = "user"
         self.resource = PersonalUser.new(params["user"])   
       elsif (params["user"]["type"] == "Charity")
         self.resource = Charity.new(params["user"])
-      end
-
-      if session[:omniauth]
-        @user.apply_omniauth(session[:omniauth])
-        @user.valid?
       end
     end
   end
