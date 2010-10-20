@@ -46,35 +46,8 @@
   <%= tag 'input', {:type => 'button', :value => _('Cancel'), :onclick => "javascript:window.location = '#{root_path}';"} %>
   <% end %>
   <% content_for :js do %> <!-- javascript code to run, for this view only -->
-	  function checkUrl() {
-		  <% if !@cause.new_record? %>
-			  if('<%= @cause.url_was %>' == $("#short_url").val()) {
-				  showAvailable(true);
-				  return;
-			  }
-		  <% end %>
-		  $("#available").html('<%=_("checking...")%>');
-		  $("#checkBtn").attr('disabled','disabled');
-		  $.ajax({
-			  url: "/cause/check_url",
-			  data: {url : $("#short_url").val()},
-			  success: function(status) {
-				  $("#checkBtn").removeAttr('disabled');
-				  if(status == 'available')
-					  showAvailable(true);
-				  else
-					  showAvailable(false);
-			  }
-		  });
-	  }
-
-	  function showAvailable(available) {
-		  if(available) {
-			  $("#available").html('<%=_("Available")%>');
-		  } else {
-			  $("#available").html('<%=_("Unavailable")%>');
-		  }
-	  }
-
-<%end%>
+    <%= render :partial => 'shared/check_url', :locals => {
+      :is_new => @cause.new_record?, :url_was => @cause.url_was, :url_check => '/cause/check_url'
+    } %>
+  <%end%>
 

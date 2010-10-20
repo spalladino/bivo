@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.0'
+gem 'rails', '>=3.0.0'
 gem 'devise'
 gem 'omniauth'
 gem 'pg'
@@ -10,6 +10,7 @@ gem 'will_paginate'
 gem 'enumerated_attribute'
 gem 'omniauth'
 gem "jquery-rails"
+gem 'rmagick'
 
 group :test do
   gem 'machinist'

@@ -14,41 +14,49 @@
     <b><%=s_('Cause|City') %></b>
     <%= @cause.city %>
 </p>
+
 <p>
-    <b>Founds Needed:</b>
+<b>Founds Needed:</b>
     <%= @cause.funds_needed %>
 </p>
 
-<p>
-    <b><%=_("Status") %>:</b>
-    <p> if voting: (Displays the number of votes) </p>
-    <p><%= vote_counter @cause %></p>
-    <p> if raising: (Displays the funds raised and the fundraising progress percentage) </p>
-    <p> <%= cause_funds_completed @cause %></p>
-    <p> if completed: (Displays the funds raised) </p>
-    <p> <%= @cause.funds_raised%> </p>
 
+<div id="funds_raised">
+  <%= @cause.funds_raised %>
+</div>
 
-</p>
+<br/>
+<div id="vote_button">
+  <%= vote_button @cause %>
+</div>
 
-<%= vote_button @cause %>
+<br/>
+<div id="follow_button">
+  <%= follow_button @cause %>
+</div>
 
-<%= follow_button @cause %>
+<br/>
+<div id="delete_button">
+  <%= delete_button @cause %>
+</div>
 
-<%if current_user && (@cause.charity.id == current_user.id || current_user.is_admin_user) %>
+<br/>
+<div id="edit_button">
+  <%= edit_button @cause %>
+</div>
 
-  <div id="delete_button">
-    <%= delete_button @cause %>
-  </div>
+<br/>
+<div id="activate_deactivate_btn">
+  <%= active_deactive_button @cause %>
+</div>
 
-  <div id="activate_deactivate_btn">
-    <%= active_deactive_button @cause %>
-  </div>
-
-e
-
-
-<%end%>
-
+<br/>
+<div id="facebook_like">
 <%=facebook_like%>
+</div>
+
+<br/>
+<div id="progress_box">
+<%=progress_box @cause%>
+</div>
 

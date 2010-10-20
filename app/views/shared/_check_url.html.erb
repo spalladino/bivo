@@ -1,0 +1,23 @@
+function checkUrl() {
+  <% unless is_new %>
+	  if('<%= url_was %>' == $("#short_url").val()) {
+		  showAvailable(true);
+		  return;
+	  }
+  <% end %>
+  $("#available").html('<%=_("checking...")%>');
+  $("#checkBtn").attr('disabled','disabled');
+  $.ajax({
+	  url: "<%= url_check %>",
+	  data: {url : $("#short_url").val()},
+	  success: function(status) {
+		  $("#checkBtn").removeAttr('disabled');
+		  showAvailable(status == 'available');
+	  }
+  });
+}
+
+function showAvailable(isAvailable) {
+  var result = isAvailable ? '<%=_("Available")%>' : '<%=_("Unavailable")%>';
+  $("#available").html(result);
+}

@@ -5,6 +5,8 @@
     Signed in as <%= current_user.email %>. Not you?
     <%= link_to "Sign out", destroy_user_session_path %>
   <% else %>
-    <%= link_to "Sign up", new_user_registration_path %> or <%= link_to "sign in", new_user_session_path %>
+    <%= link_to "Sign up", new_user_registration_path %> <br />
+    <%= link_to "sign in via bivo", new_user_session_path %> <br />
+    <%= link_to "sign in via facebook", "/auth/facebook", :confirm => "If you are a charity, please use bivo registration and cancel the sign in. Otherwise, click ok." %> <br />
   <% end %>
 </div>

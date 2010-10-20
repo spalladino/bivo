@@ -1,0 +1,91 @@
+
+
+<p> <b>id</b>: <%= @charity.id%> </p>
+<p> <b>email</b>: <%= @charity.email%> </p>
+<p> <b>encrypted_password</b>: <%= @charity.encrypted_password%> </p>
+<p> <b>password_salt</b>: <%= @charity.password_salt%> </p>
+<p> <b>reset_password_token</b>: <%= @charity.reset_password_token%> </p>
+<p> <b>remember_token</b>: <%= @charity.remember_token%> </p>
+<p> <b>remember_created_at</b>: <%= @charity.remember_created_at%> </p>
+<p> <b>sign_in_count</b>: <%= @charity.sign_in_count%> </p>
+<p> <b>current_sign_in_at</b>: <%= @charity.current_sign_in_at%> </p>
+<p> <b>last_sign_in_at</b>: <%= @charity.last_sign_in_at%> </p>
+<p> <b>current_sign_in_ip</b>: <%= @charity.current_sign_in_ip%> </p>
+<p> <b>last_sign_in_ip</b>: <%= @charity.last_sign_in_ip%> </p>
+<p> <b>created_at</b>: <%= @charity.created_at%> </p>
+<p> <b>updated_at</b>: <%= @charity.updated_at%> </p>
+<p> <b>rpx_identifier</b>: <%= @charity.rpx_identifier%> </p>
+<p> <b>type</b>: <%= @charity.type%> </p>
+<p> <b>first_name</b>: <%= @charity.first_name%> </p>
+<p> <b>last_name</b>: <%= @charity.last_name%> </p>
+<p> <b>nickname</b>: <%= @charity.nickname%> </p>
+<p> <b>birthday</b>: <%= @charity.birthday%> </p>
+<p> <b>gender</b>: <%= @charity.gender%> </p>
+<p> <b>about_me</b>: <%= @charity.about_me%> </p>
+<p> <b>charity_name</b>: <%= @charity.charity_name%> </p>
+<p> <b>charity_website</b>: <%= @charity.charity_website%> </p>
+<p> <b>short_url</b>: <%= @charity.short_url%> </p>
+<p> <b>charity_category_id</b>: <%= @charity.charity_category_id%> </p>
+<p> <b>charity_type</b>: <%= @charity.charity_type%> </p>
+<p> <b>tax_reg_number</b>: <%= @charity.tax_reg_number%> </p>
+<p> <b>rating</b>: <%= @charity.rating%> </p>
+<p> <b>rating_url</b>: <%= @charity.rating_url%> </p>
+<p> <b>country_id</b>: <%= @charity.country_id%> </p>
+<p> <b>city</b>: <%= @charity.city%> </p>
+<p> <b>description</b>: <%= @charity.description%> </p>
+<p> <b>active</b>: <%= @charity.active%> </p>
+<p> <b>notice_all_funds_raised</b>: <%= @charity.notice_all_funds_raised%> </p>
+<p> <b>notice_status_change</b>: <%= @charity.notice_status_change%> </p>
+<p> <b>notice_status_update_published</b>: <%= @charity.notice_status_update_published%> </p>
+<p> <b>notice_comment_added</b>: <%= @charity.notice_comment_added%> </p>
+<p> <b>send_me_news</b>: <%= @charity.send_me_news%> </p>
+<p> <b>auto_approve_comments</b>: <%= @charity.auto_approve_comments%> </p>
+<p> <b>from_facebook</b>: <%= @charity.from_facebook%> </p>
+
+<br/>
+<div id="facebook_like">
+<%=facebook_like%>
+</div>
+
+<br/>
+<div id="follow_button">
+  <%= follow_button @charity %>
+</div>
+
+<br/>
+<div id="delete_button">
+  <%= delete_button @charity %>
+</div>
+
+<br/>
+<div id="add_cause_button">
+  <%= add_cause_button @charity %>
+</div>
+
+<br/>
+<div id="activate_deactivate_btn">
+  <%= active_deactive_button @charity %>
+</div>
+
+
+<div id="cause_list">
+
+
+<TABLE BORDER="1">
+<TR>
+   <TH>Name</TH>
+   <TH>Status</TH>
+   <TH>Progress</TH>
+</TR>
+<% @charity.causes.each do |cause|%>
+<TR>
+   <TD><%=cause_link cause%></TD>
+   <TD><%=cause.status%></TD>
+   <TD><%=progress_box cause%></TD>
+</TR>
+<%end%>
+
+</TABLE>
+
+</div>
+

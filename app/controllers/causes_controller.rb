@@ -3,7 +3,6 @@ class CausesController < ApplicationController
   before_filter :authenticate_user!, :except => [ :show, :details, :index ]
   before_filter :load_cause, :except => [ :details, :index, :new, :check_url, :create ]
 
-
   before_filter :only_owner_or_admin, :only => [:delete, :edit, :update]
   before_filter :only_charity, :only => [:create]
   before_filter :only_admin, :only => [:activate, :deactivate, :mark_paid, :mark_unpaid ]
@@ -65,7 +64,7 @@ class CausesController < ApplicationController
 
   def vote
     @vote = Vote.new :cause_id => params[:id], :user_id=> current_user.id
-    ajax_flash[:notice] = @vote.save ? "Vote submitted" : @vote.errors.on(:cause_id)
+    ajax_flash[:notice] = @vote.save ? "Vote submitted" : @vote.errors[:cause_id]
 
     redirect_to request.referer unless request.xhr?
   end
@@ -122,8 +121,6 @@ class CausesController < ApplicationController
   end
 
   def destroy
-    # TODO: chequeo para ver si se puede borrar en base al estado, y si el user es admin
-    # (si se hace borrado logico, se borra permanentemente o no se puede borrar)
     @cause.destroy
     if @cause.destroyed?
       redirect_to root_url

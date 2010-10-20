@@ -36,10 +36,16 @@ class Cause < ActiveRecord::Base
     [:inactive, :active, :raising_funds].include? self.status
   end
 
+
+  def can_mark_as_paid?
+    self.status == :raising_funds && self.funds_raised >= self.funds_needed
+  end
+
+
   def can_delete?
     [:inactive, :active].include? self.status
   end
-  
+
   def can_vote?
     self.status == :active
   end

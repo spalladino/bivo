@@ -1,0 +1,33 @@
+  <p><%= f.label :charity_name, "Charity Name" %><br />
+  <%= f.text_field :charity_name %></p>
+
+  <p><%= f.label :charity_website, "Charity Website" %><br />
+  <%= f.text_field :charity_website %></p>
+
+  <%= f.label _("Short Url")%><br/>
+  http://www.bivo.org/ng/<%= f.text_field :short_url, :id => 'short_url', :onfocus => "javascript:$('#available').html('');"%>
+  <%= tag 'input', {:type => 'button', :value => _('Check Url'), :onclick => "javascript:checkUrl();"} %>
+  &nbsp;
+  <span id="available"></span>
+  <br/>
+
+  <p><%= f.label :category, "Category" %>
+  <%= f.select :gender, @categories.collect{ |c| [c.name, c.id] }, :include_blank => true %></p>
+
+  <p><%= f.label :charity_type, "Charity Type" %><br />
+  <%= f.text_field :charity_type %></p>
+
+  <p><%= f.label :tax_reg_number, "Tax Registration Number" %><br />
+  <%= f.text_field :tax_reg_number %></p>
+
+  <p><%= f.label :country, "Country" %>
+  <%= f.select :country_id, @countries.collect{ |c| [c.name, c.id] }, :include_blank => true %></p>
+
+  <p><%= f.label :city, "City" %><br />
+  <%= f.text_field :city %></p>
+
+  <% content_for :js do %> <!-- javascript code to run, for this view only -->
+    <%= render :partial => 'shared/check_url', :locals => {
+      :is_new => true, :url_was => nil, :url_check => '/charity/check_url'
+    } %>
+  <%end%>

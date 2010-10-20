@@ -1,7 +1,19 @@
 Bivo::Application.routes.draw do
-  devise_for :users
+  devise_for :users, :controllers => {:registrations => 'registrations' }
 
-  resources :charities
+  match '/auth/facebook/callback' => 'facebook_authentications#create'
+
+  get "charity/check_url", :to => "charities#check_url"
+  get "charity/c/:url", :controller => "charities", :action => "details", :constraints => { :url => Charity::UrlFormat }
+
+  resources :charities, :path => 'charity' do
+    member do
+      post :activate
+      post :deactivate
+      post :follow
+      post :unfollow
+    end
+  end
 
   get "cause/c/:url", :controller => "causes", :action => "details", :constraints => { :url => Cause::UrlFormat }
   get "cause/check_url", :controller => "causes", :action => "check_url", :as => 'check_cause_url'
@@ -11,6 +23,7 @@ Bivo::Application.routes.draw do
       post :activate
       post :deactivate
       post :mark_paid
+      post :mark_unpaid
       post :vote
       post :follow
       post :unfollow
@@ -27,7 +40,7 @@ Bivo::Application.routes.draw do
 #  post "cause/:id/deactivate", :to => 'causes#deactivate'
 #  post "cause/:id/mark_paid", :to => 'causes#mark_paid'
 #  post "cause/:id/vote", :to => 'causes#vote'
-#  post "cause/:id/follow", :to => 'causes#follow'
+#  post "cause/:id/follow", :to => 'causes#follow'a
 #  post "cause/:id/unfollow", :to => 'causes#unfollow'
 
 

@@ -1,5 +1,7 @@
 class Charity < User
 
+  UrlFormat = /[a-zA-Z\-_][a-zA-Z0-9\-_]*/
+
   belongs_to :category, :class_name => "CharityCategory"
   belongs_to :country
 
@@ -29,6 +31,8 @@ class Charity < User
   validates_length_of :city, :maximum => 255
 
   validates_length_of :description, :maximum => 255
+
+  enum_attr :status, %w(^inactive active deleted)
 
   def name
     charity_name
