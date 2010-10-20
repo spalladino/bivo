@@ -5,7 +5,7 @@
 <% title "Causes" %>
 
 <div id="filters">
-	<% form_tag causes_path, :method => :get do %>
+	<%= form_tag causes_path, :method => :get do %>
 		<p>
 			<%= _("Categories: ") %>
 			<% @categories.each do |category| %>
@@ -35,4 +35,4 @@
 <div id="causes">
   <%= render 'causes' %>
 </div>
-	
+

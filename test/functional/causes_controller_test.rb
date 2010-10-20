@@ -49,7 +49,12 @@ class CausesControllerTest < ActionController::TestCase
   test "should fail on vote if already voted with ajax and response is correct" do
     user = create_and_sign_in
 
-    existing_vote = Vote.make :user => user
+    cause = Cause.make :status => :active
+
+    existing_vote = Vote.make :user => user,:cause_id => cause.id
+
+
+
     votes_count = Vote.count
 
     xhr :post, :vote, :id => existing_vote.cause_id
@@ -75,7 +80,7 @@ class CausesControllerTest < ActionController::TestCase
     assert_equal cause_counter,cause.votes.count
 
     #error is correct:
-    assert_equal flash[:notice], MESSAGE_FAIL_AUTH_PROBLEM
+    assert_equal flash[:notice], "The user should be authenticated"
     assert_response :error
   end
 
@@ -99,6 +104,7 @@ class CausesControllerTest < ActionController::TestCase
   test "votes should persist in database with ajax" do
     user = create_and_sign_in
     cause = Cause.make
+    cause.save
 
     xhr :post, :vote, :id => cause.id
 
@@ -114,7 +120,7 @@ class CausesControllerTest < ActionController::TestCase
 
   test "votes should persist in database no ajax" do
     user = create_and_sign_in
-    cause = Cause.make
+    cause = Cause.make :status => :active
     votes_count = Vote.count
 
     post :vote, :id => cause.id
