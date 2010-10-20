@@ -67,3 +67,25 @@
   <%= active_deactive_button @charity %>
 </div>
 
+
+<div id="cause_list">
+
+
+<TABLE BORDER="1">
+<TR>
+   <TH>Name</TH>
+   <TH>Status</TH>
+   <TH>Progress</TH>
+</TR>
+<% @charity.causes.each do |cause|%>
+<TR>
+   <TD><%=cause_link cause%></TD>
+   <TD><%=cause.status%></TD>
+   <TD><%=progress_box cause%></TD>
+</TR>
+<%end%>
+
+</TABLE>
+
+</div>
+

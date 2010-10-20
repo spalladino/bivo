@@ -137,6 +137,14 @@ module CauseHelper
     end
   end
 
+
+  #CAUSE LINK:
+  #Redirects to the cause page.  charity. (Owner)
+  def cause_link(cause)
+          return content_tag :div,link_to(cause.name,cause_path(cause.id))
+
+  end
+
   #DELETE BUTTON:
   #Deletes the cause only if the status is “pending approval” or “voting”.(Charity owner action)
   #Deletes the current cause. If the cause has a history of raised funds the deletion is logical.(Admin action.)
