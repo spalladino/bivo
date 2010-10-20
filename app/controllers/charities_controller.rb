@@ -1,6 +1,11 @@
 class CharitiesController < ApplicationController
 
+  before_filter :authenticate_user!, :except => [ :show, :details, :index ]
   before_filter :load_charity, :except => [ :details, :index, :new, :create ]
+
+  before_filter :only_owner_or_admin, :only => [ :edit, :update]
+  before_filter :only_admin, :only => [:activate, :deactivate, :mark_paid, :mark_unpaid, :create,:delete]
+
 
   def index
     @charities = Charity.all
@@ -109,5 +114,20 @@ class CharitiesController < ApplicationController
   def load_charity
     @charity = Charity.find(params[:id])
   end
+
+
+  def only_owner_or_admin
+    if not (@charity.id == current_user.id || current_user.is_admin_user)
+      render :nothing => true, :status => :forbidden
+    end
+  end
+
+  def only_admin
+    if not current_user.is_admin_user
+      render :nothing => true, :status => :forbidden
+    end
+  end
+
+
 end
 
