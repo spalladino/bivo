@@ -263,8 +263,9 @@ class CausesControllerTest < ActionController::TestCase
 
   #SHOW
   test "show" do
+    cause = Cause.make
     get :show, :id => cause.id
-    assert_response :found
+    assert_response :ok
   end
 
   #FOLLOW
@@ -298,7 +299,7 @@ class CausesControllerTest < ActionController::TestCase
     assert_response :found
     xhr :post, :unfollow, :id => cause.id
     assert_equal Follow.count,0
-    assert_response :found
+    assert_response :ok
   end
 
   #UNFOLLOW
@@ -310,22 +311,20 @@ class CausesControllerTest < ActionController::TestCase
     assert_response :method_not_allowed
   end
 
-  #NEW
-  test "can_do_new" do
-    #TODO completar
-    assert_response :ok
+  #CREATE
+  test "should create cause" do
+    user = create_charity_and_sign_in
+    post :create, :cause => {:name => 'Hi',:description=>"ss",:city => "cba",:status =>:active,:charity_id =>user.id,:country_id =>Country.make.id,:cause_category_id=>CauseCategory.make.id,:url=> "url",:funds_needed=>100,:funds_raised=>0}
+    assert_equal 1,Cause.count
+    assert_response :found
   end
 
   #CREATE
-  test "can create" do
-    #TODO completar
-    assert_response :ok
-  end
-
-  #CREATE
-  test "shouldnt create" do
-    #TODO completar
-    assert_response :ok
+  test "shouldnt create cause" do
+    user = create_charity_and_sign_in
+    post :create, :cause => {:name => 'Hi',:city => "cba",:status =>:active,:charity_id =>user.id,:country_id =>Country.make.id,:cause_category_id=>CauseCategory.make.id,:url=> "url",:funds_needed=>100,:funds_raised=>0}
+    assert_equal 0,Cause.count
+    assert_response :found
   end
 
   #UPDATE

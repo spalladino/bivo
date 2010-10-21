@@ -9,6 +9,7 @@ class CausesController < ApplicationController
 
   before_filter :status_allow_edit , :only => [:edit, :update]
   before_filter :status_allow_delete, :only => [:delete]
+  before_filter :follows_exist, :only => [:unfollow]
 
   def show
     render 'details'
@@ -88,19 +89,16 @@ class CausesController < ApplicationController
     else
       ajax_flash[:notice] = "Error, try again"
     end
-
     redirect_to request.referer unless request.xhr?
   end
 
   def unfollow
-    follow = Follow.find_by_cause_id_and_user_id(params[:id], current_user.id)
-    follow.destroy
-    if follow.destroyed?
+    @follow.destroy
+    if @follow.destroyed?
       ajax_flash[:notice] = "Unfollow submitted"
     else
       ajax_flash[:notice] = "Error, try again"
     end
-
     redirect_to request.referer unless request.xhr?
   end
 
@@ -117,6 +115,8 @@ class CausesController < ApplicationController
     @cause.funds_raised = 0
     @cause.charity_id = current_user.id
     if !@cause.save
+      puts "Can not save"
+      puts @cause.errors
       render 'new'
     else
       redirect_to request.referer
@@ -223,25 +223,33 @@ class CausesController < ApplicationController
     end
   end
 
+
+  def follows_exist
+    @follow = Follow.find_by_cause_id_and_user_id(params[:id], current_user.id)
+    if not @follow
+      render :nothing => true, :status => :method_not_allowed
+    end
+  end
+
   def causes_list_sortings_for(status)
     sortings = [
-      [_('alphabetically'), :alphabetical], 
-      [_('geographically'), :geographical], 
+      [_('alphabetically'), :alphabetical],
+      [_('geographically'), :geographical],
       [_('charity rating'), :rating],
       [_('funds needed'),   :funds_needed]
-    ] 
-    
+    ]
+
     case status
-      when :active then 
+      when :active then
         sortings << [_('popularity'), :votes]
-      when :raising_funds then 
+      when :raising_funds then
         sortings << [_('funds raised'), :funds_raised] << [_('% of completion'), :completion]
-      when :completed then 
+      when :completed then
         sortings << [_('funds raised'), :funds_raised]
     end
-    
+
     return sortings
-    
+
   end
 
 end
