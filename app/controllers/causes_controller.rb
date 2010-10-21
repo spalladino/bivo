@@ -115,8 +115,6 @@ class CausesController < ApplicationController
     @cause.funds_raised = 0
     @cause.charity_id = current_user.id
     if !@cause.save
-      puts "Can not save"
-      puts @cause.errors
       render 'new'
     else
       redirect_to request.referer

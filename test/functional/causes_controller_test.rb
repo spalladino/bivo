@@ -324,7 +324,7 @@ class CausesControllerTest < ActionController::TestCase
     user = create_charity_and_sign_in
     post :create, :cause => {:name => 'Hi',:city => "cba",:status =>:active,:charity_id =>user.id,:country_id =>Country.make.id,:cause_category_id=>CauseCategory.make.id,:url=> "url",:funds_needed=>100,:funds_raised=>0}
     assert_equal 0,Cause.count
-    assert_response :found
+    assert_response :ok
   end
 
   #UPDATE
