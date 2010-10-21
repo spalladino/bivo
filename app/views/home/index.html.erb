@@ -1,12 +1,3 @@
-<h1>Bivo Home Page</h1>
+<%= render :partial => "user_nav" %>
 
-<div id="user_nav">
-  <% if user_signed_in? %>
-    Signed in as <%= current_user.email %>. Not you?
-    <%= link_to "Sign out", destroy_user_session_path %>
-  <% else %>
-    <%= link_to "Sign up", new_user_registration_path %> <br />
-    <%= link_to "sign in via bivo", new_user_session_path %> <br />
-    <%= link_to "sign in via facebook", "/auth/facebook", :confirm => "If you are a charity, please use bivo registration and cancel the sign in. Otherwise, click ok." %> <br />
-  <% end %>
-</div>
+<h1><%= _("Bivo Home Page")%></h1>

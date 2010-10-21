@@ -127,6 +127,7 @@ ActiveRecord::Schema.define(:version => 20101021182549) do
     t.boolean  "auto_approve_comments"
     t.boolean  "from_facebook"
     t.float    "funds_raised",                                  :default => 0.0, :null => false
+    t.boolean  "eula_accepted"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
