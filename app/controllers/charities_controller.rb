@@ -8,7 +8,48 @@ class CharitiesController < ApplicationController
 
 
   def index
-    @charities = Charity.all
+    @charities = Charity.includes(:country)
+    @categories = CharityCategory.sorted_by_charities_count
+    
+    def apply_filters(only_charities=false, &block)
+      @charities = block.call(@charities)
+      @categories = block.call(@categories) unless only_charities
+    end
+    
+    # Filter by region
+    @region = params[:region]
+    apply_filters {|c| c.where("#{Charity.table_name}.country_id = ?", @region.to_i)} unless @region.blank?
+    
+    # Filter by name
+    # TODO: Use full text search
+    @name = params[:name]
+    apply_filters {|c| c.where("#{Charity.table_name}.charity_name = ? OR #{Charity.table_name}.description = ?", @name, @name)} unless @name.blank?
+    
+    # Set categories to show
+    all_categ = all_category(@charities.count)
+    @categories = @categories[0...6].insert(0, all_categ)
+    
+    # Filter by category
+    @category = params[:category]
+    apply_filters(true) {|c| c.where("#{Charity.table_name}.charity_category_id = ?", @category.to_i)} unless @category.blank?
+    
+    # Sorting
+    @sorting = (params[:sorting] || :alphabetically).to_sym
+    @charities = @charities.voted if @sorting == :votes
+    @charities = @charities.order case @sorting
+      when :votes         then "votes_count DESC"
+      when :funds_raised  then "#{Charity.table_name}.funds_raised DESC"
+      when :rating        then "#{Charity.table_name}.rating DESC"
+      when :geographical  then "#{Country.table_name}.name ASC, #{Charity.table_name}.city ASC"
+                          else "#{Charity.table_name}.charity_name ASC, #{Charity.table_name}.description ASC"
+    end
+    
+    # Set pagination
+    @per_page = (params[:per_page] || 10).to_i
+    @charities = @charities.paginate(:per_page => @per_page, :page => params[:page])
+    
+    # 
+    
   end
 
   def check_url
@@ -75,6 +116,13 @@ class CharitiesController < ApplicationController
     if not (@charity.id == current_user.id || current_user.is_admin_user)
       render :nothing => true, :status => :forbidden
     end
+  end
+  
+   def all_category(count)
+    c = CharityCategory.new :name => _("All")
+    c.class_eval { attr_accessor :charities_count }
+    c.charities_count = count
+    return c
   end
 
 

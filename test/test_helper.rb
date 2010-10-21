@@ -10,8 +10,8 @@ class ActiveSupport::TestCase
     assert obj.save, "Could not save #{obj.class.name} because: #{obj.errors.to_s}"
   end
   
-  def assert_equal_unordered(list1, list2)
-    assert_equal list1.sort, list2.sort
+  def assert_equal_unordered(list1, list2, msg=nil)
+    assert_equal list1.sort, list2.sort, msg
   end
 
 end
