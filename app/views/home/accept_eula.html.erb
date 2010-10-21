@@ -1,0 +1,15 @@
+<div>
+<%= _("As you login from facebook the first time, you should accept the terms and conditions of Bivo") %>
+</div>
+<div>
+  <h3>Eula: </h3>  
+  <%= render :partial => _("eula") %>
+</div>
+<div>
+<%= form_tag confirm_eula_path do %>
+  <p><%= check_box_tag :eula_accepted %>
+  <%= label_tag :eula_accepted, _("I agree to the terms and conditions") %></p>
+  <%= submit_tag _("Accept") %>
+<% end %>
+</div>
+

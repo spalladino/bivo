@@ -31,7 +31,7 @@ class RegistrationsController < Devise::RegistrationsController
       @type = :charity
       @countries = Country.all
     end
-
+    
     super
   end
 

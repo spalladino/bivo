@@ -2,63 +2,52 @@
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
   <%= devise_error_messages! %>
 
-  <p><%= f.label :email %><br />
+  <p><%= f.label :email, _("E-Mail") %><br />
   <%= f.text_field :email %></p>
 
-  <% unless resource.from_facebook %>
-    <p><%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password %></p>
-
-    <p><%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation %></p>
-
-    <p><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password %></p>
-  <% end %>
-
   <% if (@type == :charity) %>
-    <p><%= f.label :charity_name, "Charity Name" %><br />
+    <p><%= f.label :charity_name, _("Charity Name") %><br />
     <%= f.text_field :charity_name %></p>
 
-    <p><%= f.label :charity_website, "Charity Website" %><br />
+    <p><%= f.label :charity_website, _("Charity Website") %><br />
     <%= f.text_field :charity_website %></p>
 
-    <p><%= f.label :country, "Country" %>
+    <p><%= f.label :country, _("Country") %>
     <%= f.select :country_id, @countries.collect{ |c| [c.name, c.id] }, :include_blank => true %></p>
 
-    <p><%= f.label :city, "City" %><br />
+    <p><%= f.label _("City") %><br />
     <%= f.text_field :city %></p>
 
-    <p><%= f.label "Description" %><br />
+    <p><%= f.label _("Description") %><br />
     <%= f.text_area :description %></p>
 
   <% elsif (@type == :personal) %>
     <%= render :partial => 'users/registrations/new_personal', :locals => {:f => f} %>
 
-    <p><%= f.label "About me" %><br />
+    <p><%= f.label _("About me") %><br />
     <%= f.text_area :about_me %></p>
   <% end %>
 
   Email me updates of projects or charities I follow when: <br />
     <p><%= f.check_box :notice_all_funds_raised %>
-    <%= f.label "All founds are raised" %></p>
+    <%= f.label _("All founds are raised") %></p>
 
     <p><%= f.check_box :notice_status_change %>
-    <%= f.label "The status changes" %></p>
+    <%= f.label _("The status changes") %></p>
 
     <p><%= f.check_box :notice_status_update_published %>
-    <%= f.label "New status updates are published" %></p>
+    <%= f.label _("New status updates are published") %></p>
 
     <p><%= f.check_box :notice_comment_added %>
-    <%= f.label "Comments are added" %></p>
+    <%= f.label _("Comments are added") %></p>
 
     <% if (@type == :charity) %>
       <p><%= f.check_box :auto_approve_comments %>
-      <%= f.label "Auto-approve comments of my charity of projects" %></p>
+      <%= f.label _("Auto-approve comments of my charity of projects") %></p>
     <% end%>
 
     <p><%= f.check_box :send_me_news %>
-    <%= f.label "Send me bivo.org news" %></p>
+    <%= f.label _("Send me bivo.org news") %></p>
 
-  <p><%= f.submit "Update" %></p>
+  <p><%= f.submit _("Update") %></p>
 <% end %>

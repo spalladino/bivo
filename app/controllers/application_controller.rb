@@ -2,9 +2,10 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   before_filter :set_gettext_locale
+  before_filter :check_eula_accepted
 
   def set_gettext_locale
-    #session[:locale] = 'es' # Uncomment this line to test setting an alternative locale for gettext testing
+    #session[:locale] = 'es' # Uncomment this line to test setting an alternative locale for gettext testingzzzzz
     super
   end
 
@@ -22,5 +23,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  protected
+    def check_eula_accepted
+      if (user_signed_in? && !current_user.eula_accepted)
+        redirect_to accept_eula_path
+      end
+    end
 end
 

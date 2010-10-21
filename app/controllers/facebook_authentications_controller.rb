@@ -16,19 +16,19 @@ class FacebookAuthenticationsController < ApplicationController
 
     if (user)
       if (user.from_facebook)
-        flash[:notice] = "Signed in succesfully"
+        flash[:notice] = _("Signed in succesfully")
         sign_in_and_redirect :user, user
       else
-        flash[:notice] = "You already have an account in bivo. Please use it instead."
+        flash[:notice] = _("You already have an account in bivo. Please use it instead.")
         redirect_to root_path
       end
     else
       user = PersonalUser.new(user_info)
       if (user.save)
-        flash[:notice] = "Signed in succesfully"
+        flash[:notice] = _("Signed in succesfully")
         sign_in_and_redirect :user, user 
       else
-        flash[:notice] = "There was an error creating the user"
+        flash[:notice] = _("There was an error creating the user")
         redirect_to root_path
       end
     end
