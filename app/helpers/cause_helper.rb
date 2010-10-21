@@ -23,9 +23,8 @@ module CauseHelper
     return link_to _("View"), cause_path(cause.id)
   end
 
-  #VOTE BUTTON
-  #Displayed when the cause is in “voting” mode or when the user did not vote for the cause.
-  #Users have to be logged in to vote. A cause can only be voted once.
+  # Displayed when the cause is in “voting” mode or when the user did not vote for the cause.
+  # Users have to be logged in to vote. A cause can only be voted once.
   def vote_button(cause)
     visible = true
     disabled = nil
@@ -56,10 +55,9 @@ module CauseHelper
       :id => "vote_btn_#{cause.id}"
   end
 
-  #FOLLOW, UNFOLLOW BUTTON
-  #“Follow” is displayed when the user is not following the cause, otherwise “Unfollow” is displayed.
-  #If the user is logged off, redirects to the Login page.
-  #When a cause is being followed the user gets e-mail alerts when the status of the cause changes.
+  # *Follow* is displayed when the user is not following the cause, otherwise *Unfollow* is displayed.
+  # If the user is logged off, redirects to the Login page.
+  # When a cause is being followed the user gets e-mail alerts when the status of the cause changes.
   def follow_button(cause)
     if current_user.nil?
         label = _("Login to follow")
@@ -79,10 +77,8 @@ module CauseHelper
 
   end
 
-  #ACTIVATE / DEACTIVATE BUTTON
-  #“Deactivate” button: Deactivates the current cause,
-  #“Activate” button: Displayed only when the cause is deactivated.
-  #ADMIN ONLY
+  # *Deactivate* button: Deactivates the current cause,
+  # *Activate* button: Displayed only when the cause is deactivated.
   def active_deactive_button(cause)
     if current_user && current_user.is_admin_user
       label = if cause.status_inactive? then _("Activate") else _("Deactivate") end
@@ -92,8 +88,7 @@ module CauseHelper
   end
 
 
-  #LIKE BUTTON:
-  #Uses the Like functionality of Facebook.
+  # Uses the Like functionality of Facebook.
   def facebook_like
     content_tag :iframe, nil, :src => "http://www.facebook.com/plugins/like.php?href=#{CGI::escape(request.url)}&layout=standard&show_faces=true&width=450&action=like&font=arial&colorscheme=light&height=80", :scrolling => 'no', :frameborder => '0', :allowtransparency => true, :id => :facebook_like
   end
@@ -112,14 +107,17 @@ module CauseHelper
     end
   end
 
+  def vote_counter(cause)
+    content_tag :span, cause.votes_count, :id => "vote_counter_#{cause.id}"
+  end
 
-  #CAUSE PROGRESS BOX:
-  #In “voting” mode: Displays the number of votes.
-  #In “raising funds” mode: Displays the funds raised and the fundraising progress percentage.
-  #In “completed” mode: Displays the funds raised.
+  # Displays info on the cause depending on its status
+  # * In “voting” mode: Displays the number of votes.
+  # * In “raising funds” mode: Displays the funds raised and the fundraising progress percentage.
+  # * In “completed” mode: Displays the funds raised.
   def progress_box(cause)
     if cause.status == :active
-      return content_tag :span, cause.votes_count, :id => "vote_counter_#{cause.id}"
+      return vote_counter cause
     elsif cause.status = :raising_funds
       return content_tag :span, cause_funds_completed(cause)
     elsif cause.status = :completed
@@ -127,27 +125,24 @@ module CauseHelper
     end
   end
 
-  #EDIT BUTTON:
-  #Redirects to the “Cause Add/Edit” page. (Admin)
-  #Redirects to the “Cause Add/Edit” page. Causes with a “completed” status cannot be edited by the charity. (Owner)
+  # Button redirecting to cause edition page
+  # * Admin: Redirects to the “Cause Add/Edit” page. 
+  # * Owner: Redirects to the “Cause Add/Edit” page. Causes with a “completed” status cannot be edited by the charity.
   def edit_button(cause)
     if current_user && (current_user.is_admin_user ||  (current_user.is_charity_user && cause.charity.id == current_user.id && cause.can_edit?))
-
       return content_tag :div, link_to("Edit", :controller => "causes", :action => "edit", :id => cause.id)
     end
   end
 
 
-  #CAUSE LINK:
-  #Redirects to the cause page.  charity. (Owner)
+  # Redirects to the cause page. Charity. (Owner)
   def cause_link(cause)
-          return content_tag :div,link_to(cause.name,cause_path(cause.id))
-
+    return content_tag :div,link_to(cause.name,cause_path(cause.id))
   end
 
-  #DELETE BUTTON:
-  #Deletes the cause only if the status is “pending approval” or “voting”.(Charity owner action)
-  #Deletes the current cause. If the cause has a history of raised funds the deletion is logical.(Admin action.)
+  # Deletes cause
+  # * Charity owner: Deletes the cause only if the status is “pending approval” or “voting”.
+  # * Admin: Deletes the current cause. If the cause has a history of raised funds the deletion is logical.
   def delete_button(cause)
     if current_user && (current_user.is_admin_user || (current_user.is_charity_user && cause.charity.id == current_user.id && cause.can_delete?))
       return content_tag :div, button_to("Delete", cause_path(cause.id), :method => :delete, :confirm => "Are you sure?")

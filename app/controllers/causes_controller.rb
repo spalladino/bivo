@@ -9,6 +9,7 @@ class CausesController < ApplicationController
 
   before_filter :status_allow_edit , :only => [:edit, :update]
   before_filter :status_allow_delete, :only => [:delete]
+  before_filter :follows_exist, :only => [:unfollow]
 
   def show
     render 'details'
@@ -19,27 +20,44 @@ class CausesController < ApplicationController
   end
 
   def index
-    @causes = Cause.order('votes_count DESC').includes(:country).includes(:charity).limit(50)
+    @causes = Cause.includes(:country).includes(:charity).limit(50)
     @categories = CauseCategory.sorted_by_cause_count
 
-    # Filter by region
-    if not params[:region].blank?
-      @causes = @causes.where('causes.country_id = ?', params[:region].to_i)
-      @categories = @categories.where('causes.country_id = ?', params[:region].to_i)
+    def apply_filters(&block)
+      @causes = block.call(@causes)
+      @categories = block.call(@categories)
     end
 
+    # Handle sorting options
+    @sorting = (params[:sorting] || :alphabetically).to_sym
+    @causes = @causes.order case @sorting
+      when :votes then 'votes_count DESC'
+      when :funds_raised then 'funds_raised DESC'
+      when :funds_needed then 'funds_needed DESC'
+      when :completion then 'funds_raised / funds_needed DESC'
+      when :rating then 'users.rating DESC'
+      when :geographical then 'countries.name ASC, causes.city ASC'
+      else 'name ASC, description ASC'
+    end
+
+    # Filter by region
+    @region = params[:region]
+    apply_filters { |c| c.where('causes.country_id = ?', params[:region].to_i) } unless @region.blank?
+
     # Filter by status
-    status = params[:status] || :active
-    @causes = @causes.where('causes.status = ?', status)
-    @categories = @categories.where('causes.status = ?', status)
+    @status = params[:status] || :active
+    apply_filters { |c| c.where('causes.status = ?', @status) }
+
+    # Filter by text
+    @name = params[:name]
+    apply_filters { |c| c.where('causes.name = ? OR causes.description = ?', @name, @name) } unless @name.blank?
 
     # Count for all causes
     all_causes_count = @causes.size
 
     # Filter by category
-    if not params[:category].blank?
-      @causes = @causes.where('causes.cause_category_id = ?', params[:category].to_i)
-    end
+    @category = params[:category]
+    @causes = @causes.where('causes.cause_category_id = ?', @category.to_i) unless @category.blank?
 
     # Cap maximum to show to 50
     @causes = @causes[0...50]
@@ -50,15 +68,10 @@ class CausesController < ApplicationController
 
     # Fill filters fields
     @regions = Country.all
-    @region = params[:region]
-
     @statuses = [:active, :raising_funds, :completed]
-    @status = status
-
     @categories = @categories[0...6].insert(0, all_category(all_causes_count))
-    @category = params[:category]
-
     @page_sizes = [5,10,20,50]
+    @sortings = causes_list_sortings_for(@status)
   end
 
 
@@ -76,19 +89,16 @@ class CausesController < ApplicationController
     else
       ajax_flash[:notice] = "Error, try again"
     end
-
     redirect_to request.referer unless request.xhr?
   end
 
   def unfollow
-    follow = Follow.find_by_cause_id_and_user_id(params[:id], current_user.id)
-    follow.destroy
-    if follow.destroyed?
+    @follow.destroy
+    if @follow.destroyed?
       ajax_flash[:notice] = "Unfollow submitted"
     else
       ajax_flash[:notice] = "Error, try again"
     end
-
     redirect_to request.referer unless request.xhr?
   end
 
@@ -209,6 +219,35 @@ class CausesController < ApplicationController
     if !current_user.is_admin_user && !@cause.can_delete?
        render :nothing => true, :status => :forbidden
     end
+  end
+
+
+  def follows_exist
+    @follow = Follow.find_by_cause_id_and_user_id(params[:id], current_user.id)
+    if not @follow
+      render :nothing => true, :status => :method_not_allowed
+    end
+  end
+
+  def causes_list_sortings_for(status)
+    sortings = [
+      [_('alphabetically'), :alphabetical],
+      [_('geographically'), :geographical],
+      [_('charity rating'), :rating],
+      [_('funds needed'),   :funds_needed]
+    ]
+
+    case status
+      when :active then
+        sortings << [_('popularity'), :votes]
+      when :raising_funds then
+        sortings << [_('funds raised'), :funds_raised] << [_('% of completion'), :completion]
+      when :completed then
+        sortings << [_('funds raised'), :funds_raised]
+    end
+
+    return sortings
+
   end
 
 end

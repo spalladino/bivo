@@ -29,38 +29,26 @@ class CharitiesController < ApplicationController
 
   def activate
     @charity.status = :active
-    @charity.save
-    if @charity.save then
-      ajax_flash[:notice] = "Activated"
-    else
-      ajax_flash[:notice] = "Error activating cause"
-    end
+    ajax_flash[:notice] = if @charity.save then "Activated" else "Error activating cause" end 
     redirect_to request.referer unless request.xhr?
   end
 
   def deactivate
     @charity.status = :inactive
+    
+    # TODO: Use cascade update so charity save fails if any cause save fails as well
     @charity.causes.each do |cause|
       cause.status = :inactive
       cause.save
     end
-
-    @charity.save
-    if @charity.save then
-      ajax_flash[:notice] = "Deactivated"
-    else
-      ajax_flash[:notice] = "Error deactivating cause"
-    end
+    
+    ajax_flash[:notice] = if @charity.save then "Deactivated" else "Error deactivating cause" end  
     redirect_to request.referer unless request.xhr?
   end
 
   def follow
     @follow = CharityFollow.new :charity_id => params[:id],:user_id=> current_user.id
-    if @follow.save
-      ajax_flash[:notice] = "Follow submitted"
-    else
-      ajax_flash[:notice] = "Error, try again"
-    end
+    ajax_flash[:notice] = if @follow.save then "Follow submitted" else "Error, try again" end 
 
     redirect_to request.referer unless request.xhr?
   end
@@ -81,15 +69,15 @@ class CharitiesController < ApplicationController
 
  protected
 
-    def load_charity
-      @charity = Charity.find(params[:id])
-    end
+  def load_charity
+    @charity = Charity.find(params[:id])
+  end
 
-    def only_owner_or_admin
-      if not (@charity.id == current_user.id || current_user.is_admin_user)
-        render :nothing => true, :status => :forbidden
-      end
+  def only_owner_or_admin
+    if not (@charity.id == current_user.id || current_user.is_admin_user)
+      render :nothing => true, :status => :forbidden
     end
+  end
 
 
 end

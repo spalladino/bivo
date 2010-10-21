@@ -9,14 +9,18 @@
 
 require 'open-uri'
 
-puts "Loading Countries"
-Country.delete_all
-  open("http://openconcept.ca/sites/openconcept.ca/files/country_code_drupal_0.txt") do |countries|
+puts "Creating countries from openconcept"
+open("http://openconcept.ca/sites/openconcept.ca/files/country_code_drupal_0.txt") do |countries|
   countries.read.each_line do |country|
   code, name = country.chomp.split("|")
-  Country.create!(:name => name) #can use code too.
+  Country.find_or_create_by_name name
   end
 end
 
-puts "Done, Countries count:" + Country.count.to_s
+puts "Creating categories"
+['Human Aid', 'Animal Welfare', 'Environment'].each do |category|
+  CauseCategory.find_or_create_by_name category
+  CharityCategory.find_or_create_by_name category
+end
+
 
