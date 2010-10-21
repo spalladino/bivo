@@ -1,0 +1,14 @@
+<div id="user_nav">
+  <% if user_signed_in? %>
+    <%= _("Signed in as") %> <%= current_user.email %>. <%= link_to _("Not you?"), destroy_user_session_path %> |
+        <% if (current_user.type == "Charity") %>
+          <%= link_to _("Charity Settings"), edit_user_registration_path %>
+        <% elsif (current_user.type == "PersonalUser") %>
+          <%= link_to _("User Settings"), edit_user_registration_path %>
+        <% end %>
+  <% else %>
+    <%= link_to _("Sign up"), new_user_registration_path %>  (<%= link_to _("Forgot your password?"), new_user_password_path %>) |
+    <%= link_to _("Sign in via bivo"), new_user_session_path %> |
+    <%= link_to _("Sign in via facebook"), "/auth/facebook", :confirm => _("If you are a charity, please use bivo registration and cancel the sign in. Otherwise, click ok.") %>
+  <% end %>
+</div>
