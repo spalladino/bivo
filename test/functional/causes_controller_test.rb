@@ -314,7 +314,20 @@ class CausesControllerTest < ActionController::TestCase
   #CREATE
   test "should create cause" do
     user = create_charity_and_sign_in
-    post :create, :cause => {:name => 'Hi',:description=>"ss",:city => "cba",:status =>:active,:charity_id =>user.id,:country_id =>Country.make.id,:cause_category_id=>CauseCategory.make.id,:url=> "url",:funds_needed=>100,:funds_raised=>0}
+    post :create,
+    :cause =>
+      {
+        :name => 'Hi',
+        :description=>"ss",
+        :city => "cba",
+        :status =>:active,
+        :charity_id =>user.id,
+        :country_id =>Country.make.id,
+        :cause_category_id=>CauseCategory.make.id,
+        :url=> "url",
+        :funds_needed=>100,
+        :funds_raised=>0
+      }
     assert_equal 1,Cause.count
     assert_response :found
   end
@@ -322,21 +335,72 @@ class CausesControllerTest < ActionController::TestCase
   #CREATE
   test "shouldnt create cause" do
     user = create_charity_and_sign_in
-    post :create, :cause => {:name => 'Hi',:city => "cba",:status =>:active,:charity_id =>user.id,:country_id =>Country.make.id,:cause_category_id=>CauseCategory.make.id,:url=> "url",:funds_needed=>100,:funds_raised=>0}
+    post :create,
+      :cause =>
+      {
+        :name => 'Hi',
+        :city => "cba",
+        :status =>:active,
+        :charity_id =>user.id,
+        :country_id =>Country.make.id,
+        :cause_category_id=>CauseCategory.make.id,
+        :url=> "url",
+        :funds_needed=>100,
+        :funds_raised=>0
+      }
     assert_equal 0,Cause.count
     assert_response :ok
   end
 
   #UPDATE
   test "should update" do
-    #TODO completar
-    assert_response :ok
+    user = create_charity_and_sign_in
+    cause_old = Cause.make :charity_id => user.id
+    post :update,
+      :id=>cause_old.id,
+      :cause =>
+      {
+        :name => 'Hi',
+        :description=>"ss",
+        :city => "cba",
+        :status =>:active,
+        :charity_id =>user.id,
+        :country_id =>Country.make.id,
+        :cause_category_id=>CauseCategory.make.id,
+        :url=> "url",
+        :funds_needed=>100,
+        :funds_raised=>0
+      }
+    cause = Cause.find(cause_old.id)
+    assert_equal cause_old.id,cause.id
+    assert_not_equal cause_old.name,cause.name
+    assert_equal "Hi",cause.name
+    assert_response :found
   end
 
   #UPDATE
   test "shouldnt update" do
-    #TODO completar
-    assert_response :ok
+    user = create_charity_and_sign_in
+    cause_old = Cause.make :charity_id => user.id
+    post :update,
+      :id=>cause_old.id,
+      :cause =>
+      {
+        :name => 'Hi',
+        :description => nil,
+        :city => "cba",
+        :status =>:active,
+        :charity_id =>user.id,
+        :country_id =>Country.make.id,
+        :cause_category_id=>CauseCategory.make.id,
+        :url=> "url",
+        :funds_needed=>100,
+        :funds_raised=>0
+      }
+    cause = Cause.find(cause_old.id)
+    assert_equal cause_old,cause
+    assert_not_equal "Hi",cause.name
+    assert_response :found
   end
 
   #DESTROY
@@ -360,14 +424,15 @@ class CausesControllerTest < ActionController::TestCase
 
   #CHECK_URL
   test "should check url and return ok" do
-    #TODO completar
-    assert_response :ok
+    get :check_url, :url=>"url"
+    assert_equal 'available',response.body
   end
 
   #CHECK_URL
   test "should reject url" do
-    #TODO completar
-    assert_response :ok
+    url = Cause.make.url
+    get :check_url, :url=>url
+    assert_equal 'not available',response.body
   end
 
   #ACTIVATE
