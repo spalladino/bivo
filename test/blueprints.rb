@@ -51,6 +51,7 @@ PersonalUser.blueprint do
 end
 
 Charity.blueprint do
+  country          {Country.make_or_get(5)}
   charity_name     {Sham.simple_name}
   email
   password
