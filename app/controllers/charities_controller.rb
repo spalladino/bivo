@@ -8,7 +8,7 @@ class CharitiesController < ApplicationController
 
 
   def index
-    @charities = Charity.voted.includes(:country)
+    @charities = Charity.with_cause_data.includes(:country)
     @categories = CharityCategory.sorted_by_charities_count
     
     def apply_filters(only_charities=false, &block)

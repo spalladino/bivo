@@ -2,9 +2,9 @@ class Charity < User
 
   UrlFormat = /[a-zA-Z\-_][a-zA-Z0-9\-_]*/
 
-  scope :voted, joins(:causes)\
+  scope :with_cause_data, joins(:causes)\
       .group(self.column_names.map{|c| "#{Charity.table_name}.#{c}"})\
-      .select("#{Charity.table_name}.*, SUM(#{Cause.table_name}.votes_count) AS votes_count, COUNT(#{Cause.table_name}.id) AS causes_count")
+      .select("#{Charity.table_name}.*, SUM(#{Cause.table_name}.votes_count) AS votes_count, COUNT(#{Cause.table_name}.id) AS causes_count, SUM(#{Cause.table_name}.funds_raised) AS total_funds_raised")
 
   belongs_to :charity_category
   belongs_to :country

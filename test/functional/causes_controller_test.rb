@@ -90,7 +90,7 @@ class CausesControllerTest < ActionController::TestCase
     assert_causes_returned_order_reverse
   end
 
-    #LIST-sorted
+  #LIST-sorted
   test "should get causes list sorted alphabetically" do
     Cause.make :name => "C Cause"
     Cause.make :name => "B Cause"
