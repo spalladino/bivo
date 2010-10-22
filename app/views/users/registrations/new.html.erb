@@ -17,7 +17,7 @@
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
   
-  <%= f.radio_button :type, _("PersonalUser"), :checked => true %> <%= f.label :personal, _("Personal"),  %> <br />
+  <%= f.radio_button :type, _("PersonalUser"), :checked => true %> <%= f.label :personal, _("Personal") %> <br />
   <%= f.radio_button :type, _("Charity") %>  <%= f.label :charity, _("Charity")  %>	
 
   <p><%= f.label :email, _("E-Mail") %><br />

@@ -10,7 +10,7 @@ gem 'will_paginate'
 gem 'enumerated_attribute'
 gem 'omniauth'
 gem "jquery-rails"
-gem 'rmagick'
+gem 'RMagick'
 
 group :test do
   gem 'machinist'
