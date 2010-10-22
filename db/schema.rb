@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101020142444) do
+ActiveRecord::Schema.define(:version => 20101021182549) do
 
   create_table "cause_categories", :force => true do |t|
     t.string   "name"
@@ -72,6 +72,15 @@ ActiveRecord::Schema.define(:version => 20101020142444) do
     t.datetime "updated_at"
   end
 
+  create_table "simple_captcha_data", :force => true do |t|
+    t.string   "key",        :limit => 40
+    t.string   "value",      :limit => 6
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "simple_captcha_data", ["key"], :name => "idx_key"
+
   create_table "transactions", :force => true do |t|
     t.integer  "user_id"
     t.date     "transaction_date"
@@ -86,9 +95,9 @@ ActiveRecord::Schema.define(:version => 20101020142444) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "email",                                         :default => "", :null => false
-    t.string   "encrypted_password",             :limit => 128, :default => "", :null => false
-    t.string   "password_salt",                                 :default => "", :null => false
+    t.string   "email",                                         :default => "",  :null => false
+    t.string   "encrypted_password",             :limit => 128, :default => "",  :null => false
+    t.string   "password_salt",                                 :default => "",  :null => false
     t.string   "reset_password_token"
     t.string   "remember_token"
     t.datetime "remember_created_at"
@@ -126,6 +135,8 @@ ActiveRecord::Schema.define(:version => 20101020142444) do
     t.boolean  "send_me_news"
     t.boolean  "auto_approve_comments"
     t.boolean  "from_facebook"
+    t.boolean  "eula_accepted"
+    t.float    "funds_raised",                                  :default => 0.0, :null => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

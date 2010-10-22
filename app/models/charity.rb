@@ -2,10 +2,17 @@ class Charity < User
 
   UrlFormat = /[a-zA-Z\-_][a-zA-Z0-9\-_]*/
 
-  belongs_to :category, :class_name => "CharityCategory"
+  scope :voted, joins(:causes)\
+      .group(self.column_names.map{|c| "#{self.table_name}.#{c}"})\
+      .select("#{self.table_name}.*, SUM(#{Cause.table_name}.votes_count) AS votes_count")
+
+  belongs_to :charity_category
   belongs_to :country
 
   has_many :causes
+  has_many :votes, :through => :causes
+  
+  attr_protected :funds_raised
 
   validates_presence_of :charity_name
   validates_length_of :charity_name, :maximum => 255
@@ -48,6 +55,14 @@ class Charity < User
 
   def website=(value)
     charity_website=value
+  end
+
+  def category
+    charity_category
+  end
+
+  def category=(value)
+    charity_category=value
   end
 
   def is_charity_user

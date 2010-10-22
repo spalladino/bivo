@@ -12,14 +12,14 @@
 	
 	<% case @status.to_sym %>
 		<% when :active%>
-			<p><%= _('Votes')%>: <%= cause.votes_count %></p>
+			<p><%= _('Votes')%>: <%= vote_counter cause %></p>
 		<% when :raising_funds%>
-			<p><%= _('Funds raised')%>: <%= cause_funds_completed(cause) %></p>	
+			<p><%= _('Funds raised')%>: <%= cause_funds_completed cause %></p>	
 		<% when :completed%>
 			<p><%= _('Funds raised')%>: <%= cause.funds_raised %></p>
 	<% end %>
 	
-	<% if current_user && @status.to_sym == :active && cause_voted(cause) %>
+	<% if current_user && @status.to_sym == :active && !cause_voted(cause) %>
 		<p><%= vote_button(cause)%></p>
 	<% else %>
 		<p><%= view_cause_button(cause)%></p>

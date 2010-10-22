@@ -23,9 +23,14 @@ CauseCategory.blueprint do
   name {Sham.simple_name}
 end
 
+CharityCategory.blueprint do
+  name {Sham.simple_name}
+end
+
 Cause.blueprint do
   city
   description
+  status          {:active}
   charity         {Charity.make_or_get(5)}
   country         {Country.make_or_get(5)}
   cause_category  {CauseCategory.make_or_get(5)}
@@ -52,6 +57,8 @@ Charity.blueprint do
   charity_type     {Sham.simple_name}
   tax_reg_number   {Sham.simple_name}
   city
+  charity_category {CharityCategory.make_or_get(5)}
+  funds_raised     {Sham.funds}
 end
 
 Vote.blueprint do

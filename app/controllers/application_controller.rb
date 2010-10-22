@@ -1,13 +1,14 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  
+
   before_filter :set_gettext_locale
-  
+  before_filter :check_eula_accepted
+
   def set_gettext_locale
-    #session[:locale] = 'es' # Uncomment this line to test setting an alternative locale for gettext testing 
+    #session[:locale] = 'es' # Uncomment this line to test setting an alternative locale for gettext testingzzzzz
     super
   end
-  
+
   def ajax_flash
     if request.xhr?
       flash.now
@@ -16,4 +17,17 @@ class ApplicationController < ActionController::Base
     end
   end
 
+ def only_admin
+    if not current_user.is_admin_user
+      render :nothing => true, :status => :forbidden
+    end
+  end
+
+  protected
+    def check_eula_accepted
+      if (user_signed_in? && !current_user.eula_accepted)
+        redirect_to accept_eula_path
+      end
+    end
 end
+

@@ -8,7 +8,7 @@
     $("#user_type_charity").click(function () {
       $("#charity_form").css("display", "block");
       $("#personal_form").css("display", "none");
-    });  
+    });
   });
 <% end %>
 
@@ -17,10 +17,10 @@
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
   
-  <%= f.radio_button :type, "PersonalUser", :checked => true %> <%= f.label :personal, "Personal",  %> <br />
-  <%= f.radio_button :type, "Charity" %>  <%= f.label :charity, "Charity"  %>	
+  <%= f.radio_button :type, _("PersonalUser"), :checked => true %> <%= f.label :personal, _("Personal"),  %> <br />
+  <%= f.radio_button :type, _("Charity") %>  <%= f.label :charity, _("Charity")  %>	
 
-  <p><%= f.label :email, "E-Mail" %><br />
+  <p><%= f.label :email, _("E-Mail") %><br />
   <%= f.text_field :email %></p>
 
   <p><%= f.label :password %><br />
@@ -37,13 +37,13 @@
     <%= render :partial => 'users/registrations/new_personal', :locals => {:f => f} %>
   </div>
 
-  <p><%= check_box_tag :eula_accepted %>
-  <%= label_tag :eula_accepted, "I agree to the terms and conditions" %></p>
+  <%= f.simple_captcha :label => _("Enter the characters above..") %>
+
+  <p><%= f.check_box :eula_accepted %>
+  <%= f.label :eula_accepted, _("I agree to the ") %><%= link_to _("terms and conditions"), eula_path, :target => :_new %></p>
 
   <p><%= f.check_box :send_me_news %>
-  <%= f.label :send_me_news, "Sign me up to the newsletter" %></p>
+  <%= f.label :send_me_news, _("Sign me up to the newsletter") %></p>
 
-  <p><%= f.submit "Create Account" %></p>
+  <p><%= f.submit _("Create Account") %></p>
 <% end %>
-
-<%#= render :partial => "devise/shared/links" %>
