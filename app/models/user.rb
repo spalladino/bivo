@@ -4,10 +4,11 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  apply_simple_captcha
   validates_presence_of :eula_accepted, :on => :create, :unless => :from_facebook, :message => "eula must be accepted"
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :from_facebook
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :from_facebook, :captcha, :captcha_key
   attr_accessible :first_name, :last_name, :nickname, :birthday, :gender, :about_me
   attr_accessible :charity_name, :charity_website, :short_url, :short_url_desc
   attr_accessible :notice_all_funds_raised, :notice_status_change, :notice_status_update_published
@@ -37,6 +38,10 @@ class User < ActiveRecord::Base
     result = update_attributes(params)
     clean_up_passwords
     result
+  end
+
+  def save(*)
+    valid_with_captcha? && super(:validate => false)
   end
 
   protected
