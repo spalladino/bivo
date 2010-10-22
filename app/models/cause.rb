@@ -10,9 +10,6 @@ class Cause < ActiveRecord::Base
 
   has_many :votes
 
-  before_destroy :decrease_charity_funds_raised
-  before_save    :update_charity_funds_raised
-
   validates_presence_of :name
   validates_length_of :name, :maximum => 255
   validates_uniqueness_of :name, :case_sensitive => false
@@ -68,23 +65,5 @@ class Cause < ActiveRecord::Base
     @result
   end
   
-  def update_charity_funds_raised
-    if charity
-      charity.funds_raised += (funds_raised - (funds_raised_was || 0))
-      charity.save
-    else
-      true
-    end
-  end
-  
-  def decrease_charity_funds_raised
-    if charity
-      charity.funds_raised -= funds_raised
-      charity.save
-    else
-      true
-    end
-  end  
-
 end
 

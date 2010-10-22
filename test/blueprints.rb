@@ -44,11 +44,14 @@ end
 PersonalUser.blueprint do
   first_name   {Sham.simple_name}
   last_name    {Sham.simple_name}
+  eula_accepted{true}
+  skip_captcha {true}
   email
   password
 end
 
 Charity.blueprint do
+  country          {Country.make_or_get(5)}
   charity_name     {Sham.simple_name}
   email
   password
@@ -58,7 +61,8 @@ Charity.blueprint do
   tax_reg_number   {Sham.simple_name}
   city
   charity_category {CharityCategory.make_or_get(5)}
-  funds_raised     {Sham.funds}
+  eula_accepted    {true}  
+  skip_captcha     {true}  
 end
 
 Vote.blueprint do
