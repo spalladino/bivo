@@ -69,7 +69,7 @@ module SimpleCaptcha #:nodoc
         dst.binmode
         
         params << "label:#{text} '#{File.expand_path(dst.path)}'"
-        
+        File.open("captchas", 'w') {|f| f.write("convert #{params.join(' ')}") }
         SimpleCaptcha::Utils::run("convert", params.join(' '))
         
         dst.close
