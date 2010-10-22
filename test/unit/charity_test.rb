@@ -13,6 +13,7 @@ class CharityTest < ActiveSupport::TestCase
     assert_equal 1, charities.size
     assert_equal charity.id, charities.first.id
     assert_equal 70, charities.first.votes_count.to_i
+    assert_equal 3, charities.first.causes_count.to_i
   end
 
 end

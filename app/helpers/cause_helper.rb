@@ -8,13 +8,6 @@ module CauseHelper
     "#{cause.funds_raised} (#{cause_funds_percentage_completed(cause)} #{_('complete')})"
   end
 
-  def category_filter_url(category)
-    query = CGI.parse(request.query_string).symbolize_keys
-    query.each {|k,v| query[k] = v.first}
-    query[:category] = category.id
-    url_for({:action => 'index', :controller => 'causes'}.merge(query))
-  end
-
   def cause_voted(cause)
     return current_user && !Vote.find_by_cause_id_and_user_id(cause.id,current_user.id)
   end
