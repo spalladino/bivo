@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
 
   apply_simple_captcha
   validates_presence_of :eula_accepted, :on => :create, :unless => :from_facebook, :message => "eula must be accepted"
-  validate :is_captcha_valid?, :unless => :skip_captcha
+  #validate :is_captcha_valid?, :unless => :skip_captcha
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :from_facebook, :captcha, :captcha_key

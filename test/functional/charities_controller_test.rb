@@ -127,8 +127,6 @@ class CharitiesControllerTest < ActionController::TestCase
   
   def assert_charities(causes_or_ids, check_sort=true, field=nil)
     ids = causes_or_ids.map {|c| c.respond_to?(:id) ? c.id : c}
-    puts "Charities: "
-    puts assigns(:charities).to_s
     assert_not_nil assigns(:charities), "Must assign charities object"
     assert_equal ids.size, assigns(:charities).size, "Incorrect number of charities returned"
     assert_equal_unordered ids, assigns(:charities).map(&:id), "Ids do not match"
