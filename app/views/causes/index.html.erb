@@ -25,7 +25,7 @@
 				<td><%= _("Categories: ") %></td>
 				<td>
 					<% @categories.each do |category| %>
-						<%= link_to "#{category.name} (#{category.cause_count})", category_filter_url(category)%>
+						<%= link_to "#{category.name} (#{category.causes_count})", category_filter_url(category)%>
 					<% end%>
 				</td>
 			<tr>

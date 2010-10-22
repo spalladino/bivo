@@ -21,7 +21,7 @@ class CausesController < ApplicationController
 
   def index
     @causes = Cause.includes(:country).includes(:charity).limit(50)
-    @categories = CauseCategory.sorted_by_cause_count
+    @categories = CauseCategory.sorted_by_causes_count
 
     def apply_filters(&block)
       @causes = block.call(@causes)
@@ -190,8 +190,8 @@ class CausesController < ApplicationController
 
   def all_category(count)
     c = CauseCategory.new :name => _("All")
-    c.class_eval { attr_accessor :cause_count }
-    c.cause_count = count
+    c.class_eval { attr_accessor :causes_count }
+    c.causes_count = count
     return c
   end
 
@@ -200,8 +200,6 @@ class CausesController < ApplicationController
       render :nothing => true, :status => :forbidden
     end
   end
-
-
 
   def only_charity
     if not current_user.is_charity_user

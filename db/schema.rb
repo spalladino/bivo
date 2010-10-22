@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101021165432) do
+ActiveRecord::Schema.define(:version => 20101021182549) do
 
   create_table "cause_categories", :force => true do |t|
     t.string   "name"
@@ -95,9 +95,9 @@ ActiveRecord::Schema.define(:version => 20101021165432) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "email",                                         :default => "", :null => false
-    t.string   "encrypted_password",             :limit => 128, :default => "", :null => false
-    t.string   "password_salt",                                 :default => "", :null => false
+    t.string   "email",                                         :default => "",  :null => false
+    t.string   "encrypted_password",             :limit => 128, :default => "",  :null => false
+    t.string   "password_salt",                                 :default => "",  :null => false
     t.string   "reset_password_token"
     t.string   "remember_token"
     t.datetime "remember_created_at"
@@ -135,6 +135,7 @@ ActiveRecord::Schema.define(:version => 20101021165432) do
     t.boolean  "send_me_news"
     t.boolean  "auto_approve_comments"
     t.boolean  "from_facebook"
+    t.float    "funds_raised",                                  :default => 0.0, :null => false
     t.boolean  "eula_accepted"
   end
 
