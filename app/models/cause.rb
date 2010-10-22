@@ -10,9 +10,6 @@ class Cause < ActiveRecord::Base
 
   has_many :votes
 
-  before_destroy :decrease_charity_funds_raised
-  before_save    :update_charity_funds_raised
-
   validates_presence_of :name
   validates_length_of :name, :maximum => 255
   validates_uniqueness_of :name, :case_sensitive => false
@@ -51,25 +48,22 @@ class Cause < ActiveRecord::Base
     self.status == :active
   end
   
-  private
-  
-  def update_charity_funds_raised
-    if charity
-      charity.funds_raised += (funds_raised - (funds_raised_was || 0))
-      charity.save
-    else
-      true
+  def can_change_status(to_status, from_status = self.status)
+    @result = false
+    case from_status
+      when :inactive
+        @result = to_status == :active
+      when :active
+        @result = [:inactive, :raising_funds].include? to_status
+      when :raising_funds
+        @result = [:completed, :deleted].include? to_status
+      when :completed
+        @result = [:paid, :deleted].include? to_status
+      when :paid
+        @result = [:completed, :deleted].include? to_status
     end
+    @result
   end
-  
-  def decrease_charity_funds_raised
-    if charity
-      charity.funds_raised -= funds_raised
-      charity.save
-    else
-      true
-    end
-  end  
   
 end
 

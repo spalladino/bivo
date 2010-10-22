@@ -8,7 +8,7 @@ class CharitiesController < ApplicationController
 
 
   def index
-    @charities = Charity.includes(:country)
+    @charities = Charity.with_cause_data.includes(:country)
     @categories = CharityCategory.sorted_by_charities_count
     
     def apply_filters(only_charities=false, &block)
@@ -23,19 +23,22 @@ class CharitiesController < ApplicationController
     # Filter by name
     # TODO: Use full text search
     @name = params[:name]
-    apply_filters {|c| c.where("#{Charity.table_name}.charity_name = ? OR #{Charity.table_name}.description = ?", @name, @name)} unless @name.blank?
+    apply_filters do |c| 
+      c.where("#{Charity.table_name}.charity_name = ? OR #{Charity.table_name}.description = ?", @name, @name)
+    end unless @name.blank?
     
     # Set categories to show
-    all_categ = all_category(@charities.count)
-    @categories = @categories[0...6].insert(0, all_categ)
+    all_categ = all_category(@charities.count.size)
+    @categories = @categories.first(6).to_a.insert(0, all_categ)
     
     # Filter by category
     @category = params[:category]
-    apply_filters(true) {|c| c.where("#{Charity.table_name}.charity_category_id = ?", @category.to_i)} unless @category.blank?
+    apply_filters(true) do |c| 
+      c.where("#{Charity.table_name}.charity_category_id = ?", @category.to_i)
+    end unless @category.blank?
     
     # Sorting
     @sorting = (params[:sorting] || :alphabetically).to_sym
-    @charities = @charities.voted if @sorting == :votes
     @charities = @charities.order case @sorting
       when :votes         then "votes_count DESC"
       when :funds_raised  then "#{Charity.table_name}.funds_raised DESC"
@@ -46,9 +49,17 @@ class CharitiesController < ApplicationController
     
     # Set pagination
     @per_page = (params[:per_page] || 10).to_i
-    @charities = @charities.paginate(:per_page => @per_page, :page => params[:page])
+    @charities = @charities.first(50).paginate(:per_page => @per_page, :page => params[:page])
     
-    # 
+    # Fill filters fields
+    @regions = Country.all
+    @page_sizes = [5,10,20,50]
+    @sortings = [
+      [_('alphabetically'), :alphabetical],
+      [_('geographically'), :geographical],
+      [_('rating'),         :rating      ],
+      [_('funds raised'),   :funds_raised],
+    ]
     
   end
 

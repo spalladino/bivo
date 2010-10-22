@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :set_gettext_locale
   before_filter :check_eula_accepted
+  before_filter :instantiate_controller_and_action_names
 
   def set_gettext_locale
     #session[:locale] = 'es' # Uncomment this line to test setting an alternative locale for gettext testingzzzzz
@@ -24,10 +25,17 @@ class ApplicationController < ActionController::Base
   end
 
   protected
-    def check_eula_accepted
-      if (user_signed_in? && !current_user.eula_accepted)
-        redirect_to accept_eula_path
-      end
+  
+  def check_eula_accepted
+    if (user_signed_in? && !current_user.eula_accepted)
+      redirect_to accept_eula_path
     end
+  end
+ 
+  def instantiate_controller_and_action_names
+    @action_name = action_name
+    @controller_name = controller_name
+  end
+    
 end
 

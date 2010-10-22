@@ -1,2 +1,57 @@
-<h1>Charity#index</h1>
-<p>Find me in app/views/charity/index.html.erb</p>
+<% content_for(:head) do %>
+	<%= javascript_include_tag "pagination" %>
+<% end %>
+
+<% content_for(:js) do %>
+	$(function() {
+		$('#filters select').add('#filters input').change(function() {
+			$('#filter_form').submit();
+		});
+	});
+<% end %>
+
+<% title "Charities" %>
+
+<h2>Filters</h2>
+
+<div id="filters">
+	<%= form_tag charities_path, :method => :get, :id => "filter_form" do %>
+		<table cellspacing="5">
+			<tr>
+				<td><%= _("Categories: ") %></td>
+				<td>
+					<% @categories.each do |category| %>
+						<%= link_to "#{category.name} (#{category.charities_count})", category_filter_url(category)%>
+					<% end%>
+				</td>
+			<tr>
+				<td><%= _('Filter by region') %></td>
+				<td><%= select_tag :region, options_from_collection_for_select(@regions, 'id', 'name', @region), {:include_blank => _('All countries')}%></td>
+			</tr>
+			<tr>
+				<td><%= _("Show per page")%></td>
+				<td><%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page)%></td>
+			</tr>
+			<tr>
+				<td><%= _('Sort by') %></td>
+				<td><%= select_tag :sorting, options_for_select(@sortings, @sorting) %></td>
+			</tr>
+			<tr>
+				<td><%= _('Filter by') %></td>
+				<td><%= text_field_tag :name, @name, :id => 'name_filter' %> <%= link_to_function(_('clear'), "$('#name_filter').val('').change();") if @name %></td>
+			</tr>
+		</table>
+		<p>
+			<%= submit_tag _('Search'), :disable_with => _('Searching...') %>
+		</p>
+	<% end %>
+</div>
+
+<br/>
+
+<h2>Charities</h2>
+
+<div id="charities">
+  <%= render 'charities' %>
+</div>
+
