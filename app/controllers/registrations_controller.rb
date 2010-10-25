@@ -10,8 +10,25 @@ class RegistrationsController < Devise::RegistrationsController
   def create
     @countries = Country.all
     @categories = CharityCategory.all
-    
-    super
+
+    build_resource
+
+    unless verify_recaptcha
+      resource.set_captcha_invalid
+    end
+
+    if resource.save
+      if resource.active?
+        set_flash_message :notice, :signed_up
+        sign_in_and_redirect(resource_name, resource)
+      else
+        set_flash_message :notice, :inactive_signed_up, :reason => resource.inactive_message.to_s
+        redirect_to after_inactive_sign_up_path_for(resource)
+      end
+    else
+      clean_up_passwords(resource)
+      render_with_scope :new
+    end
   end
 
   def edit
@@ -31,7 +48,11 @@ class RegistrationsController < Devise::RegistrationsController
       @type = :charity
       @countries = Country.all
     end
-    
+
+    unless verify_recaptcha
+      resource.set_captcha_invalid
+    end    
+
     super
   end
 
