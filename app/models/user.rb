@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
   def is_admin_user
     false
   end
-  
+
   # Had to overwrite it from devise because if not it asks for password every time you want to update and it's very annoying.
   def update_with_password(params={})
     if params[:password].blank?
