@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101025153113) do
+ActiveRecord::Schema.define(:version => 20101025212917) do
 
   create_table "cause_categories", :force => true do |t|
     t.string   "name"
@@ -72,6 +72,18 @@ ActiveRecord::Schema.define(:version => 20101025153113) do
     t.datetime "updated_at"
   end
 
+  create_table "shops", :force => true do |t|
+    t.string   "name"
+    t.string   "short_url"
+    t.string   "url"
+    t.string   "redirection"
+    t.string   "description"
+    t.boolean  "worldwide"
+    t.string   "affiliate_code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "transactions", :force => true do |t|
     t.integer  "user_id"
     t.date     "transaction_date"
@@ -83,6 +95,7 @@ ActiveRecord::Schema.define(:version => 20101025153113) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "type"
+    t.integer  "shop_id"
   end
 
   create_table "users", :force => true do |t|
