@@ -36,11 +36,7 @@ class Cause < ActiveRecord::Base
   enum_attr :status, %w(^inactive active raising_funds completed paid deleted)
 
   def self.find_deleted(id)
-    self.with_deleted {find(id)}
-  end
-
-  def self.with_deleted(&block)
-    self.with_exclusive_scope block
+    self.with_exclusive_scope {find(id)}
   end
 
   def can_edit?

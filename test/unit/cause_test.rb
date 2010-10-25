@@ -27,18 +27,21 @@ class CauseTest < ActiveSupport::TestCase
     id = cause.id
     cause.destroy
     
-    assert_nil Cause.find_deleted(id), "Cause not deleted from db"
+    assert_raise ActiveRecord::RecordNotFound do 
+      Cause.find_deleted(id)
+    end
   end
   
   test "should not retrieve deleted causes on default scope" do
     causes = Cause.make_many 2, :status => :raising_funds
-    id = causes.last.id
+    id1 = causes.first.id
+    id2 = causes.last.id
 
     causes.first.destroy
     assert_equal 1, Cause.count, "Deleted cause is retrieved"
-    assert_equal id, Cause.first.id, "Cause id does not match"
+    assert_equal id2, Cause.first.id, "Cause id does not match"
     
-    assert_equal 2, Cause.with_deleted {count}, "Deleted cause is not retrieved with exclusive scope"
+    assert_not_nil Cause.find_deleted(id1), "Deleted cause is not retrieved with exclusive scope"
   end
 
 end
