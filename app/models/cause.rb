@@ -4,6 +4,9 @@ class Cause < ActiveRecord::Base
 
   UrlFormat = /[a-zA-Z\-_][a-zA-Z0-9\-_]*/
 
+  # Default scope excludes deleted causes
+  default_scope where('status != ?', :deleted)
+
   belongs_to :cause_category
   belongs_to :country
   belongs_to :charity
@@ -32,12 +35,20 @@ class Cause < ActiveRecord::Base
 
   enum_attr :status, %w(^inactive active raising_funds completed paid deleted)
 
+  def self.find_deleted(id)
+    self.with_deleted {find(id)}
+  end
+
+  def self.with_deleted(&block)
+    self.with_exclusive_scope block
+  end
+
   def can_edit?
     [:inactive, :active, :raising_funds].include? self.status
   end
 
   def can_mark_as_paid?
-    self.status == :raising_funds && self.funds_raised >= self.funds_needed
+    self.status == :completed && self.funds_raised >= self.funds_needed
   end
 
   def can_delete?
@@ -63,6 +74,14 @@ class Cause < ActiveRecord::Base
         @result = [:completed, :deleted].include? to_status
     end
     @result
+  end
+  
+  def destroy
+    if can_delete? 
+      super
+    else
+      update_attribute :status, :deleted 
+    end
   end
   
 end
