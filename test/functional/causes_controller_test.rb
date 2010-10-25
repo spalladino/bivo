@@ -424,15 +424,17 @@ class CausesControllerTest < ActionController::TestCase
 
   #CHECK_URL
   test "should check url and return ok" do
+    user = create_and_sign_in
     get :check_url, :url=>"url"
-    assert_equal 'available',response.body
+    assert_equal 'available',@response.body.to_s
   end
 
   #CHECK_URL
   test "should reject url" do
+    user = create_and_sign_in
     url = Cause.make.url
     get :check_url, :url=>url
-    assert_equal 'not available',response.body
+    assert_equal 'not_available',@response.body.to_s
   end
 
   #ACTIVATE
