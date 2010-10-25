@@ -37,7 +37,7 @@ class Cause < ActiveRecord::Base
   end
 
   def can_mark_as_paid?
-    self.status == :raising_funds && self.funds_raised >= self.funds_needed
+    self.status == :completed && self.funds_raised >= self.funds_needed
   end
 
   def can_delete?
@@ -47,7 +47,7 @@ class Cause < ActiveRecord::Base
   def can_vote?
     self.status == :active
   end
-  
+
   def can_change_status(to_status, from_status = self.status)
     @result = false
     case from_status
@@ -64,6 +64,6 @@ class Cause < ActiveRecord::Base
     end
     @result
   end
-  
+
 end
 
