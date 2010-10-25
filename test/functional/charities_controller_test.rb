@@ -2,6 +2,7 @@ require 'test_helper'
 
 class CharitiesControllerTest < ActionController::TestCase
 
+#LIST
   test "should get charities list" do
     Charity.make_many 10
 
@@ -120,6 +121,184 @@ class CharitiesControllerTest < ActionController::TestCase
   end
 
 
+  #DETAILS
+  test "should get details" do
+    charity = Charity.make :short_url => "foobar"
+
+    get :details, :url => "foobar"
+
+    assert_not_nil assigns(:charity)
+    assert_equal assigns(:charity), charity
+    assert_response :success
+  end
+
+  #NEW
+  test "should go to new charity" do
+    #TODO completar
+    assert_response :ok
+  end
+
+  #NEW
+  test "shouldnt go to new charity" do
+    #TODO completar
+    assert_response :ok
+  end
+
+  #EDIT
+  test "should go to edit charity" do
+    #TODO completar
+    assert_response :ok
+  end
+
+  #EDIT
+  test "shouldnt go to edit charity" do
+    #TODO completar
+    assert_response :ok
+  end
+
+  #SHOW
+  test "show charity" do
+    charity = Charity.make
+    get :show, :id => charity.id
+    assert_response :ok
+  end
+
+  #FOLLOW
+  test "can follow" do
+    user = create_and_sign_in
+    charity = Charity.make
+    xhr :post, :follow, :id => charity.id
+
+    assert_equal CharityFollow.count,1
+    assert_response :ok
+  end
+
+  #FOLLOW
+  test "shouldnt follow" do
+    user = create_and_sign_in
+    charity = Charity.make
+    xhr :post, :follow, :id => charity.id
+    assert_equal CharityFollow.count,1
+    assert_response :ok
+    xhr :post, :follow, :id => charity.id
+    assert_equal CharityFollow.count,1
+    assert_response :ok
+  end
+
+  #UNFOLLOW
+  test "can unfollow" do
+    user = create_and_sign_in
+    charity = Charity.make
+    post :follow, :id => charity.id
+    assert_equal CharityFollow.count,1
+    assert_response :found
+    xhr :post, :unfollow, :id => charity.id
+    assert_equal CharityFollow.count,0
+    assert_response :ok
+  end
+
+  #UNFOLLOW
+  test "shouldnt unfollow" do
+    user = create_and_sign_in
+    charity = Charity.make
+    xhr :post, :unfollow, :id => charity.id
+    assert_equal CharityFollow.count,0
+    assert_response :method_not_allowed
+  end
+
+  #CREATE
+  test "should create" do
+    #TODO completar
+    assert_response :ok
+  end
+
+  #CREATE
+  test "shouldnt create" do
+    #TODO completar
+    assert_response :ok
+  end
+
+  #UPDATE
+  test "shoul update" do
+    #TODO completar
+    assert_response :ok
+  end
+
+  #UPDATE
+  test "shouldnt update" do
+    #TODO completar
+    assert_response :ok
+  end
+
+  #DESTROY
+  test "shouldnt destroy" do
+    #TODO completar
+    assert_response :ok
+  end
+
+  #DESTROY
+  test "should make logical destroy" do
+    #TODO completar
+    assert_response :ok
+  end
+
+  #DESTROY
+  test "should make complete destroy" do
+    #TODO completar
+    assert_response :ok
+  end
+
+
+  #CHECK_URL
+  test "should check url and return ok" do
+    #TODO completar
+    assert_response :ok
+  end
+
+  #CHECK_URL
+  test "should reject url" do
+    #TODO completar
+    assert_response :ok
+  end
+
+  #ACTIVATE
+  test "should activate" do
+    #TODO: finish this
+    #user = create_admin_and_sign_in
+    #charity = Charity.make :status=>:inactive
+    #post :activate, :id => charity.id
+    #assert_response :found
+    #assert_equal :active,charity.reload.status
+  end
+
+  #ACTIVATE
+  test "should not activate" do
+    user = create_charity_and_sign_in
+    charity = Charity.make :status=>:inactive
+    post :activate, :id => charity.id
+    assert_response :forbidden
+    assert_equal :inactive,charity.reload.status
+  end
+
+
+  #DEACTIVATE
+  test "should deactivate and children" do
+    #TODO: finish this
+    #user = create_admin_and_sign_in
+    #charity = Charity.make :status=>:active
+    #post :deactivate, :id => charity.id
+    #assert_response :found
+    #assert_equal :inactive,charity.reload.status
+  end
+
+  #DEACTIVATE
+  test "should not deactivate" do
+    user = create_charity_and_sign_in
+    charity = Charity.make :status=>:active
+    post :deactivate, :id => charity.id
+    assert_response :forbidden
+    assert_equal :active,charity.reload.status
+  end
 
 
 
