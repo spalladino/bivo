@@ -39,7 +39,7 @@ module CharitiesHelper
     content_tag :iframe, nil, :src => "http://www.facebook.com/plugins/like.php?href=#{CGI::escape(request.url)}&layout=standard&show_faces=true&width=450&action=like&font=arial&colorscheme=light&height=80", :scrolling => 'no', :frameborder => '0', :allowtransparency => true, :id => :facebook_like
   end
 
-  # Deletes the current charity. If the charity has a history of raised funds the deletion is logical. 
+  # Deletes the current charity. If the charity has a history of raised funds the deletion is logical.
   # Admin only action.
   def delete_button(charity)
     if current_user && (current_user.is_admin_user)
@@ -49,7 +49,7 @@ module CharitiesHelper
 
   # Redirects to the “Add Cause” page.
   def add_cause_button(charity)
-    if current_user && (current_user.is_admin_user ||  (current_user.is_charity_user && cause.charity.id == current_user.id))
+    if current_user && (current_user.is_admin_user ||  (current_user.is_charity_user && charity.id == current_user.id))
       return content_tag :div, link_to("Add", :controller => "causes", :action => "new", :id => charity.id)
     end
   end

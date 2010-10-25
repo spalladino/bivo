@@ -31,7 +31,7 @@
 
 <br/>
 <div id="add_cause_button">
-  <%= add_cause_button @charity %>
+  <%= add_cause_button(@charity) %>
 </div>
 
 <br/>
@@ -49,6 +49,7 @@
    <TH>Status</TH>
    <TH>Progress</TH>
 </TR>
+
 <% @charity.causes.each do |cause|%>
 <TR>
    <TD><%=cause_link cause%></TD>
