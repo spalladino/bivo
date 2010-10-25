@@ -45,7 +45,6 @@ PersonalUser.blueprint do
   first_name   {Sham.simple_name}
   last_name    {Sham.simple_name}
   eula_accepted{true}
-  skip_captcha {true}
   email
   password
 end
@@ -54,7 +53,6 @@ Admin.blueprint do
   first_name   {Sham.simple_name}
   last_name    {Sham.simple_name}
   eula_accepted{true}
-  skip_captcha {true}
   email
   password
 end
@@ -71,7 +69,6 @@ Charity.blueprint do
   city
   charity_category {CharityCategory.make_or_get(5)}
   eula_accepted    {true}
-  skip_captcha     {true}
 end
 
 Vote.blueprint do

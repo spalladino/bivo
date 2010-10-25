@@ -2,11 +2,11 @@ class Charity < User
 
   UrlFormat = /[a-zA-Z\-_][a-zA-Z0-9\-_]*/
 
-  scope :with_cause_data, joins("LEFT JOIN #{Cause.table_name} ON #{Cause.table_name}.charity_id = #{Charity.table_name}.id")\
-      .joins(:country)
+  scope :with_cause_data, proc { joins("LEFT JOIN #{Cause.table_name} ON #{Cause.table_name}.charity_id = #{Charity.table_name}.id")\
+      .joins(:country)\
       .group(self.column_names.map{|c| "#{Charity.table_name}.#{c}"})\
-      .group("#{Country.table_name}.name")
-      .select("#{Charity.table_name}.*, SUM(#{Cause.table_name}.votes_count) AS votes_count, COUNT(#{Cause.table_name}.id) AS causes_count, SUM(#{Cause.table_name}.funds_raised) AS total_funds_raised, #{Country.table_name}.name AS country_name")
+      .group("#{Country.table_name}.name")\
+      .select("#{Charity.table_name}.*, SUM(#{Cause.table_name}.votes_count) AS votes_count, COUNT(#{Cause.table_name}.id) AS causes_count, SUM(#{Cause.table_name}.funds_raised) AS total_funds_raised, #{Country.table_name}.name AS country_name") }
 
   belongs_to :charity_category
   belongs_to :country

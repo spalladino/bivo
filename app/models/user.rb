@@ -4,11 +4,12 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  apply_simple_captcha
   validates_presence_of :eula_accepted, :on => :create, :unless => :from_facebook, :message => "eula must be accepted"
-  #validate :is_captcha_valid?, :unless => :skip_captcha
+  validate :is_captcha_valid?, :unless => :captcha_valid
+
 
   # Setup accessible (or protected) attributes for your model
+  #attr_accessible *(self.column_names - [])
   attr_accessible :email, :password, :password_confirmation, :remember_me, :from_facebook, :captcha, :captcha_key
   attr_accessible :first_name, :last_name, :nickname, :birthday, :gender, :about_me
   attr_accessible :charity_name, :charity_website, :short_url, :short_url_desc
@@ -16,7 +17,7 @@ class User < ActiveRecord::Base
   attr_accessible :notice_comment_added, :send_me_news, :auto_approve_comments, :eula_accepted
   attr_accessible :charity_category_id, :charity_type, :tax_reg_number, :country_id, :city
 
-  attr_accessor :skip_captcha
+  attr_accessor_with_default :captcha_valid, true
 
   has_many :votes
 
@@ -42,6 +43,18 @@ class User < ActiveRecord::Base
     result = update_attributes(params)
     clean_up_passwords
     result
+  end
+
+  def is_captcha_valid?
+    unless self.captcha_valid
+      errors.add("captcha", "doesnt match value")
+    end
+
+    self.captcha_valid
+  end
+
+  def set_captcha_invalid
+    self.captcha_valid = false
   end
 
   protected

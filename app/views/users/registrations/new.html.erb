@@ -37,7 +37,8 @@
     <%= render :partial => 'users/registrations/new_personal', :locals => {:f => f} %>
   </div>
 
-  <%= f.simple_captcha :label => _("Enter the characters above..") %>
+  <p><%= f.label :captcha %><br />
+  <%= raw recaptcha_tags %></p>
 
   <p><%= f.check_box :eula_accepted %>
   <%= f.label :eula_accepted, _("I agree to the ") %><%= link_to _("terms and conditions"), eula_path, :target => :_new %></p>
