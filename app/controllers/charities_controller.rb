@@ -8,7 +8,7 @@ class CharitiesController < ApplicationController
 
 
   def index
-    @charities = Charity.with_cause_data.includes(:country)
+    @charities = Charity.with_cause_data
     @categories = CharityCategory.sorted_by_charities_count
     
     def apply_filters(only_charities=false, &block)
@@ -41,9 +41,9 @@ class CharitiesController < ApplicationController
     @sorting = (params[:sorting] || :alphabetically).to_sym
     @charities = @charities.order case @sorting
       when :votes         then "votes_count DESC"
-      when :funds_raised  then "#{Charity.table_name}.funds_raised DESC"
+      when :funds_raised  then "total_funds_raised DESC"
       when :rating        then "#{Charity.table_name}.rating DESC"
-      when :geographical  then "#{Country.table_name}.name ASC, #{Charity.table_name}.city ASC"
+      when :geographical  then "country_name ASC, #{Charity.table_name}.city ASC"
                           else "#{Charity.table_name}.charity_name ASC, #{Charity.table_name}.description ASC"
     end
     

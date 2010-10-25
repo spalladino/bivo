@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
   validates_presence_of :eula_accepted, :on => :create, :unless => :from_facebook, :message => "eula must be accepted"
   validate :is_captcha_valid?, :unless => :captcha_valid
 
+
   # Setup accessible (or protected) attributes for your model
   #attr_accessible *(self.column_names - [])
   attr_accessible :email, :password, :password_confirmation, :remember_me, :from_facebook, :captcha, :captcha_key
@@ -31,7 +32,7 @@ class User < ActiveRecord::Base
   def is_admin_user
     false
   end
-  
+
   # Had to overwrite it from devise because if not it asks for password every time you want to update and it's very annoying.
   def update_with_password(params={})
     if params[:password].blank?

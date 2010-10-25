@@ -65,12 +65,15 @@ GEM
     mongrel (1.2.0.pre2)
       daemons (~> 1.0.10)
       gem_plugin (~> 0.2.3)
+    mongrel (1.2.0.pre2-x86-mingw32)
+      gem_plugin (~> 0.2.3)
     mongrel_cluster (1.0.5)
       gem_plugin (>= 0.2.3)
       mongrel (>= 1.0.2)
     multi_json (0.0.4)
     net-ldap (0.1.1)
     nokogiri (1.4.3.1)
+    nokogiri (1.4.3.1-x86-mingw32)
     oa-basic (0.1.5)
       multi_json (~> 0.0.2)
       nokogiri (~> 1.4.2)
@@ -105,6 +108,7 @@ GEM
       oa-oauth (= 0.1.5)
       oa-openid (= 0.1.5)
     pg (0.9.0)
+    pg (0.9.0-x86-mingw32)
     polyglot (0.3.1)
     pyu-ruby-sasl (0.0.3.2)
     rack (1.2.1)
@@ -148,6 +152,7 @@ GEM
 
 PLATFORMS
   ruby
+  x86-mingw32
 
 DEPENDENCIES
   devise

@@ -33,6 +33,12 @@ class ActionController::TestCase
     return user
   end
 
+  def create_admin_and_sign_in
+    user = Admin.make
+    sign_in user
+    return user
+  end
+
   def create_incremental_voted_causes(count=25, attributes={})
     (1..count).each { |i| Cause.make_with_votes attributes.merge({:votes_count => i, :status => :active}) }
   end

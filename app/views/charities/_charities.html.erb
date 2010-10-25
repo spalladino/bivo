@@ -6,7 +6,7 @@
 	
 	  <h3><%= link_to charity.name, charity_path(charity.id) %></h3>
 	  <p><%= charity.charity_category.name rescue nil %></p>
-	  <p><%= charity.country.name rescue nil %></p>
+	  <p><%= charity.country_name rescue nil %></p>
 	  <p><%= read_more(charity.description, charity_path(charity.id), 20) %></p>
 	  <p><%= link_to (charity.total_funds_raised.to_s + _(' raised')), charity_path(charity.id) %></p>
 	  <p><%= link_to (charity.causes_count.to_s + _(' causes')), charity_path(charity.id) %></p>	
