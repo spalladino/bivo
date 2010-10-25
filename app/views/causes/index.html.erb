@@ -4,11 +4,7 @@
 
 <% content_for(:js) do %>
 	$(function() {
-		$('#filters select').change(function() {
-			$('#filter_form').submit();
-		});
-		
-		$('#filters input').change(function() {
+		$('#filters select').add('#filters input').change(function() {
 			$('#filter_form').submit();
 		});
 	});
@@ -22,10 +18,10 @@
 	<%= form_tag causes_path, :method => :get, :id => "filter_form" do %>
 		<table cellspacing="5">
 			<tr>
-				<td><%= _("Categories: ") %></td>
+				<td><%= _("Categories") %>: </td>
 				<td>
 					<% @categories.each do |category| %>
-						<%= link_to "#{category.name} (#{category.cause_count})", category_filter_url(category)%>
+						<%= link_to "#{category.name} (#{category.causes_count})", category_filter_url(category)%>
 					<% end%>
 				</td>
 			<tr>

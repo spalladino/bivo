@@ -26,5 +26,6 @@ class << Cause
   end
 end
 
+
 # Add helper blueprints methods to all model objects
 ActiveRecord::Base.extend BlueprintsClassMethods

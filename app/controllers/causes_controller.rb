@@ -21,7 +21,7 @@ class CausesController < ApplicationController
 
   def index
     @causes = Cause.includes(:country).includes(:charity).limit(50)
-    @categories = CauseCategory.sorted_by_cause_count
+    @categories = CauseCategory.sorted_by_causes_count
 
     def apply_filters(&block)
       @causes = block.call(@causes)
@@ -59,17 +59,14 @@ class CausesController < ApplicationController
     @category = params[:category]
     @causes = @causes.where('causes.cause_category_id = ?', @category.to_i) unless @category.blank?
 
-    # Cap maximum to show to 50
-    @causes = @causes[0...50]
-
     # Set pagination
     @per_page = (params[:per_page] || 5).to_i
-    @causes = @causes.paginate(:per_page => @per_page, :page => params[:page])
+    @causes = @causes.first(50).paginate(:per_page => @per_page, :page => params[:page])
 
     # Fill filters fields
     @regions = Country.all
     @statuses = [:active, :raising_funds, :completed]
-    @categories = @categories[0...6].insert(0, all_category(all_causes_count))
+    @categories = @categories.first(6).to_a.insert(0, all_category(all_causes_count))
     @page_sizes = [5,10,20,50]
     @sortings = causes_list_sortings_for(@status)
   end
@@ -190,8 +187,8 @@ class CausesController < ApplicationController
 
   def all_category(count)
     c = CauseCategory.new :name => _("All")
-    c.class_eval { attr_accessor :cause_count }
-    c.cause_count = count
+    c.class_eval { attr_accessor :causes_count }
+    c.causes_count = count
     return c
   end
 
@@ -200,8 +197,6 @@ class CausesController < ApplicationController
       render :nothing => true, :status => :forbidden
     end
   end
-
-
 
   def only_charity
     if not current_user.is_charity_user

@@ -21,6 +21,7 @@ end
 group :development do
   gem 'rails3-generators'
   gem 'gettext', '>=1.9.3', :require => false
+  gem 'mongrel_cluster'
 end
 
 
