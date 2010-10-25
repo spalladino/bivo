@@ -4,39 +4,39 @@ class CharitiesController < ApplicationController
   before_filter :load_charity, :except => [ :details, :index, :new, :create, :check_url]
 
   before_filter :only_owner_or_admin, :only => [ :edit, :update]
-  before_filter :only_admin, :only => [:activate, :deactivate, :mark_paid, :mark_unpaid, :create,:delete]
+  before_filter :only_admin, :only => [:activate, :deactivate, :create,:delete]
 
 
   def index
     @charities = Charity.with_cause_data
     @categories = CharityCategory.sorted_by_charities_count
-    
+
     def apply_filters(only_charities=false, &block)
       @charities = block.call(@charities)
       @categories = block.call(@categories) unless only_charities
     end
-    
+
     # Filter by region
     @region = params[:region]
     apply_filters {|c| c.where("#{Charity.table_name}.country_id = ?", @region.to_i)} unless @region.blank?
-    
+
     # Filter by name
     # TODO: Use full text search
     @name = params[:name]
-    apply_filters do |c| 
+    apply_filters do |c|
       c.where("#{Charity.table_name}.charity_name = ? OR #{Charity.table_name}.description = ?", @name, @name)
     end unless @name.blank?
-    
+
     # Set categories to show
     all_categ = all_category(@charities.count.size)
     @categories = @categories.first(6).to_a.insert(0, all_categ)
-    
+
     # Filter by category
     @category = params[:category]
-    apply_filters(true) do |c| 
+    apply_filters(true) do |c|
       c.where("#{Charity.table_name}.charity_category_id = ?", @category.to_i)
     end unless @category.blank?
-    
+
     # Sorting
     @sorting = (params[:sorting] || :alphabetically).to_sym
     @charities = @charities.order case @sorting
@@ -46,11 +46,11 @@ class CharitiesController < ApplicationController
       when :geographical  then "country_name ASC, #{Charity.table_name}.city ASC"
                           else "#{Charity.table_name}.charity_name ASC, #{Charity.table_name}.description ASC"
     end
-    
+
     # Set pagination
     @per_page = (params[:per_page] || 10).to_i
     @charities = @charities.first(50).paginate(:per_page => @per_page, :page => params[:page])
-    
+
     # Fill filters fields
     @regions = Country.all
     @page_sizes = [5,10,20,50]
@@ -60,13 +60,13 @@ class CharitiesController < ApplicationController
       [_('rating'),         :rating      ],
       [_('funds raised'),   :funds_raised],
     ]
-    
+
   end
 
   def check_url
     if Charity.find_by_short_url(params[:url])
       render :text => 'not_available'
-    else 
+    else
       render :text => 'available'
     end
   end
@@ -81,26 +81,26 @@ class CharitiesController < ApplicationController
 
   def activate
     @charity.status = :active
-    ajax_flash[:notice] = if @charity.save then "Activated" else "Error activating cause" end 
+    ajax_flash[:notice] = if @charity.save then "Activated" else "Error activating cause" end
     redirect_to request.referer unless request.xhr?
   end
 
   def deactivate
     @charity.status = :inactive
-    
+
     # TODO: Use cascade update so charity save fails if any cause save fails as well
     @charity.causes.each do |cause|
       cause.status = :inactive
       cause.save
     end
-    
-    ajax_flash[:notice] = if @charity.save then "Deactivated" else "Error deactivating cause" end  
+
+    ajax_flash[:notice] = if @charity.save then "Deactivated" else "Error deactivating cause" end
     redirect_to request.referer unless request.xhr?
   end
 
   def follow
     @follow = CharityFollow.new :charity_id => params[:id],:user_id=> current_user.id
-    ajax_flash[:notice] = if @follow.save then "Follow submitted" else "Error, try again" end 
+    ajax_flash[:notice] = if @follow.save then "Follow submitted" else "Error, try again" end
 
     redirect_to request.referer unless request.xhr?
   end
@@ -130,7 +130,7 @@ class CharitiesController < ApplicationController
       render :nothing => true, :status => :forbidden
     end
   end
-  
+
    def all_category(count)
     c = CharityCategory.new :name => _("All")
     c.class_eval { attr_accessor :charities_count }

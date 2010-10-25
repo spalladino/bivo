@@ -175,12 +175,21 @@ class CausesControllerTest < ActionController::TestCase
   #EDIT
   test "can go to edit cause" do
     user = create_charity_and_sign_in
-
     cause = Cause.make :charity_id => user.id
     get :edit, :id => cause.id
     assert_not_nil assigns(:cause)
     assert_equal assigns(:cause), cause
     assert_response :ok
+  end
+
+
+   #EDIT
+  test "cant go to edit cause because is completed" do
+    user = create_charity_and_sign_in
+   cause = Cause.make :charity_id => user.id, :status=>:completed
+    get :edit, :id => cause.id
+    assert_equal assigns(:cause), cause
+    assert_response :forbidden
   end
 
   #VOTE-already voted
@@ -439,52 +448,75 @@ class CausesControllerTest < ActionController::TestCase
 
   #ACTIVATE
   test "should activate" do
-    #TODO completar
-    assert_response :ok
+    user = create_admin_and_sign_in
+    cause = Cause.make :status=>:inactive
+    post :activate, :id => cause.id
+    assert_response :found
+    assert_equal :active,cause.reload.status
   end
 
   #ACTIVATE
   test "should not activate" do
-    #TODO completar
-    assert_response :ok
+    user = create_charity_and_sign_in
+    cause = Cause.make :status=>:inactive
+    post :activate, :id => cause.id
+    assert_response :forbidden
+    assert_equal :inactive,cause.reload.status
   end
 
 
   #DEACTIVATE
   test "should deactivate" do
-    #TODO completar
-    assert_response :ok
+    user = create_admin_and_sign_in
+    cause = Cause.make :status=>:active
+    post :deactivate, :id => cause.id
+    assert_response :found
+    assert_equal :inactive,cause.reload.status
   end
 
   #DEACTIVATE
   test "should not deactivate" do
-    #TODO completar
-    assert_response :ok
+    user = create_charity_and_sign_in
+    cause = Cause.make :status=>:active
+    post :deactivate, :id => cause.id
+    assert_response :forbidden
+    assert_equal :active,cause.reload.status
   end
-
 
   #MARK PAID
   test "should mark as paid" do
-    #TODO completar
-    assert_response :ok
+    user = create_admin_and_sign_in
+    cause = Cause.make :status=>:completed
+    post :mark_paid, :id => cause.id
+    assert_response :found
+    assert_equal :paid,cause.reload.status
   end
 
   #MARK PAID
   test "shouldnt mark as paid" do
-    #TODO completar
-    assert_response :ok
+    user = create_and_sign_in
+    cause = Cause.make :status=>:completed
+    post :mark_paid, :id => cause.id
+    assert_response :forbidden
+    assert_equal :completed,cause.reload.status
   end
 
   #MARK UNPAID
   test "should mark as unpaid" do
-    #TODO completar
-    assert_response :ok
+    user = create_admin_and_sign_in
+    cause = Cause.make :status=>:paid
+    post :mark_unpaid, :id => cause.id
+    assert_response :found
+    assert_equal :completed,cause.reload.status
   end
 
   #MARK UNPAID
   test "shouldnt mark as unpaid" do
-    #TODO completar
-    assert_response :ok
+    user = create_charity_and_sign_in
+    cause = Cause.make :status=>:paid
+    post :mark_unpaid, :id => cause.id
+    assert_response :forbidden
+    assert_equal :paid,cause.reload.status
   end
 
   private
