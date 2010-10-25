@@ -49,10 +49,6 @@ class RegistrationsController < Devise::RegistrationsController
       @countries = Country.all
     end
 
-    unless verify_recaptcha
-      resource.set_captcha_invalid
-    end    
-
     super
   end
 

@@ -12,7 +12,7 @@
   <br/>
 
   <p><%= f.label :category, "Category" %>
-  <%= f.select :gender, @categories.collect{ |c| [c.name, c.id] }, :include_blank => true %></p>
+  <%= f.select :charity_category_id, @categories.collect{ |c| [c.name, c.id] }, :include_blank => true %></p>
 
   <p><%= f.label :charity_type, "Charity Type" %><br />
   <%= f.text_field :charity_type %></p>
