@@ -5,7 +5,7 @@ class CharitiesController < ApplicationController
 
   before_filter :only_owner_or_admin, :only => [ :edit, :update]
   before_filter :only_admin, :only => [:activate, :deactivate, :create,:delete]
-
+  before_filter :follows_exist, :only => [:unfollow]
 
   def index
     @charities = Charity.with_cause_data
@@ -107,9 +107,8 @@ class CharitiesController < ApplicationController
 
 
   def unfollow
-    follow = CharityFollow.find_by_charity_id_and_user_id(params[:id], current_user.id)
-    follow.destroy
-    if follow.destroyed?
+    @follow.destroy
+    if @follow.destroyed?
       ajax_flash[:notice] = "Unfollow submitted"
     else
       ajax_flash[:notice] = "Error, try again"
@@ -136,6 +135,13 @@ class CharitiesController < ApplicationController
     c.class_eval { attr_accessor :charities_count }
     c.charities_count = count
     return c
+  end
+
+  def follows_exist
+    @follow = CharityFollow.find_by_charity_id_and_user_id(params[:id], current_user.id)
+    if not @follow
+      render :nothing => true, :status => :method_not_allowed
+    end
   end
 
 
