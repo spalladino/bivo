@@ -1,2 +1,8 @@
-ENV['RECAPTCHA_PUBLIC_KEY'] = '6LfMJb4SAAAAAPbPRo36iNHPs9J8Yf4OuQQa7EVz'
-ENV['RECAPTCHA_PRIVATE_KEY'] = '6LfMJb4SAAAAALvm4H6j4Lrd1q4AtTPFw01nSlKN'
+recaptcha_config_file = File.join(Rails.root,'config','recaptcha.yml')
+unless File.exists? recaptcha_config_file
+  raise "#{recaptcha_config_file} is missing!"
+end
+recaptcha_config = YAML.load_file(recaptcha_config_file)[Rails.env].symbolize_keys
+
+ENV['RECAPTCHA_PUBLIC_KEY']  = recaptcha_config[:PublicKey]
+ENV['RECAPTCHA_PRIVATE_KEY'] = recaptcha_config[:PrivateKey]
