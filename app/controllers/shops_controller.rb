@@ -1,8 +1,8 @@
 class ShopsController < ApplicationController
 
-  before_filter :only_admin, :only => [:new, :create, :edit, :update, :activate, :deactivate]
   before_filter :authenticate_user!, :except => [:details]
-  before_filter :load_shop, :except => [ :details]
+  before_filter :only_admin, :only => [:new, :create, :edit, :update, :activate, :deactivate]
+  before_filter :load_shop, :except => [ :details, :new, :create]
 
   def details
     @shop = Shop.find_by_short_url! params[:short_url]
