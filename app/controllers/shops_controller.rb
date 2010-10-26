@@ -7,6 +7,7 @@ class ShopsController < ApplicationController
   end
 
   def new
+    @shop = Shop.new
   end
   
   def edit
