@@ -9,5 +9,12 @@ class Shop < ActiveRecord::Base
 
   enum_attr :status, %w(^inactive active deleted)
 
+  has_attached_file :image, :styles => { :small => "150x150>" },
+                    :url  => "/system/data/shops/:id/:style/:basename.:extension",
+                    :path => ":rails_root/public/system/data/shops/:id/:style/:basename.:extension"
+
+  validates_attachment_size :image, :less_than => 1.megabytes
+  validates_attachment_content_type :image, :content_type => ['image/jpeg', 'image/png']
+
 end
 
