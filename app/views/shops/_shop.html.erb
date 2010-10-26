@@ -1,0 +1,10 @@
+<% form_for @shop do |f| %>
+  <p>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.submit 'Save' %>
+    <%= link_to _('Cancel'), '#' %>
+  </p>
+<% end %>

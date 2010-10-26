@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  value: 1.5
+  kind: MyString
+  details: MyString
+  recurrent: false
+  shop: 
+
+two:
+  value: 1.5
+  kind: MyString
+  details: MyString
+  recurrent: false
+  shop: 
