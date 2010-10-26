@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101025212917) do
+ActiveRecord::Schema.define(:version => 20101026145845) do
 
   create_table "cause_categories", :force => true do |t|
     t.string   "name"
@@ -47,8 +47,25 @@ ActiveRecord::Schema.define(:version => 20101025212917) do
     t.datetime "updated_at"
   end
 
+  create_table "comissions", :force => true do |t|
+    t.float    "value"
+    t.string   "kind"
+    t.string   "details"
+    t.boolean  "recurrent"
+    t.integer  "shop_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "countries", :force => true do |t|
     t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "country_shops", :force => true do |t|
+    t.integer  "country_id"
+    t.integer  "shop_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
