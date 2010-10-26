@@ -18,6 +18,8 @@ Bivo::Application.routes.draw do
     end
   end
 
+
+  get "shop/h/:short_url", :controller => "shops", :action => "home", :constraints => { :short_url => Shop::UrlFormat }
   get "shop/c/:short_url", :controller => "shops", :action => "details", :constraints => { :short_url => Shop::UrlFormat }
   resources :shops, :path => 'shop' do
     member do
