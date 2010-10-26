@@ -16,6 +16,8 @@ class Charity < User
 
   attr_protected :funds_raised
 
+  validates_presence_of :country_id
+
   validates_presence_of :charity_name
   validates_length_of :charity_name, :maximum => 255
 
