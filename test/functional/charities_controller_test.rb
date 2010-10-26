@@ -28,7 +28,7 @@ class CharitiesControllerTest < ActionController::TestCase
 
     get :index
 
-    assert_charities Charity.all[0...10]
+    assert_charities Charity.where('charity_name < ?', 'K')
   end
 
   test "should get charities list second page different size" do
@@ -36,7 +36,7 @@ class CharitiesControllerTest < ActionController::TestCase
 
     get :index, :page => 2, :per_page => 20
 
-    assert_charities Charity.all[20...40]
+    assert_charities Charity.where('charity_name > ?', 'T')
   end
 
   test "should get charities list filter by category" do
@@ -238,41 +238,43 @@ class CharitiesControllerTest < ActionController::TestCase
 
   #ACTIVATE
   test "should activate" do
-    #TODO: finish this
-    #user = create_admin_and_sign_in
-    #charity = Charity.make :status=>:inactive
-    #post :activate, :id => charity.id
-    #assert_response :found
-    #assert_equal :active,charity.reload.status
+    user = create_admin_and_sign_in
+    id = Charity.make(:status=>:inactive).id
+    post :activate, :id => id
+    assert_response :found
+    assert_equal :active,Charity.find(id).status
   end
 
   #ACTIVATE
   test "should not activate" do
     user = create_charity_and_sign_in
-    charity = Charity.make :status=>:inactive
-    post :activate, :id => charity.id
+    id = Charity.make(:status=>:inactive).id
+    post :activate, :id => id
     assert_response :forbidden
-    assert_equal :inactive,charity.reload.status
+    assert_equal :inactive,Charity.find(id).status
   end
 
 
   #DEACTIVATE
   test "should deactivate and children" do
-    #TODO: finish this
-    #user = create_admin_and_sign_in
-    #charity = Charity.make :status=>:active
-    #post :deactivate, :id => charity.id
-    #assert_response :found
-    #assert_equal :inactive,charity.reload.status
+    user = create_admin_and_sign_in
+    id = Charity.make(:status=>:active).id
+    cause = Cause.make :status =>:active,:charity_id => id
+    post :deactivate, :id => id
+    assert_response :found
+    assert_equal :inactive,Charity.find(id).status
+    assert_equal :inactive,cause.reload.status
   end
 
   #DEACTIVATE
   test "should not deactivate" do
     user = create_charity_and_sign_in
-    charity = Charity.make :status=>:active
-    post :deactivate, :id => charity.id
+    id = Charity.make(:status=>:active).id
+    cause = Cause.make :status =>:active,:charity_id => id
+    post :deactivate, :id => id
     assert_response :forbidden
-    assert_equal :active,charity.reload.status
+    assert_equal :active,Charity.find(id).status
+    assert_equal :active,Cause.find(cause.id).status
   end
 
 

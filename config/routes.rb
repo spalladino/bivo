@@ -6,9 +6,9 @@ Bivo::Application.routes.draw do
   get "eula", :to => "home#eula", :as => "eula"
   get "accept_eula",  :to => "home#accept_eula", :as => "accept_eula"
   post "confirm_eula", :to => "home#confirm_eula", :as => "confirm_eula"
+
   get "charity/check_url", :to => "charities#check_url"
   get "charity/c/:url", :controller => "charities", :action => "details", :constraints => { :url => Charity::UrlFormat }
-
   resources :charities, :path => 'charity' do
     member do
       post :activate
@@ -17,6 +17,17 @@ Bivo::Application.routes.draw do
       post :unfollow
     end
   end
+
+
+  get "shop/h/:short_url", :controller => "shops", :action => "home", :constraints => { :short_url => Shop::UrlFormat }
+  get "shop/c/:short_url", :controller => "shops", :action => "details", :constraints => { :short_url => Shop::UrlFormat }
+  resources :shops, :path => 'shop' do
+    member do
+      post :activate
+      post :deactivate
+    end
+  end
+
 
   get "cause/c/:url", :controller => "causes", :action => "details", :constraints => { :url => Cause::UrlFormat }
   get "cause/check_url", :controller => "causes", :action => "check_url", :as => 'check_cause_url'

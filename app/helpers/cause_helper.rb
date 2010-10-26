@@ -51,7 +51,7 @@ module CauseHelper
   # *Follow* is displayed when the user is not following the cause, otherwise *Unfollow* is displayed.
   # If the user is logged off, redirects to the Login page.
   # When a cause is being followed the user gets e-mail alerts when the status of the cause changes.
-  def follow_button(cause)
+  def follow_cause_button(cause)
     if current_user.nil?
         label = _("Login to follow")
         disabled = true
@@ -66,13 +66,13 @@ module CauseHelper
         :remote => true,
         :disabled => disabled ,
         :onclick => '$(this).val("Submitting...");$(this).attr("disabled", "true");return true;'),
-      :id => "follow_btn"
+      :id => "follow_cause_btn"
 
   end
 
   # *Deactivate* button: Deactivates the current cause,
   # *Activate* button: Displayed only when the cause is deactivated.
-  def active_deactive_button(cause)
+  def active_deactive_cause_button(cause)
     if current_user && current_user.is_admin_user
       label = if cause.status_inactive? then _("Activate") else _("Deactivate") end
       action = if cause.status_inactive? then "activate" else "deactivate" end
@@ -81,22 +81,18 @@ module CauseHelper
   end
 
 
-  # Uses the Like functionality of Facebook.
-  def facebook_like
-    content_tag :iframe, nil, :src => "http://www.facebook.com/plugins/like.php?href=#{CGI::escape(request.url)}&layout=standard&show_faces=true&width=450&action=like&font=arial&colorscheme=light&height=80", :scrolling => 'no', :frameborder => '0', :allowtransparency => true, :id => :facebook_like
-  end
 
   def mark_as_paid_button(cause)
     if current_user &&  current_user.is_admin_user
       if cause.can_mark_as_paid?
-	      return content_tag :div, button_to("Mark as paid", { :action => "mark_paid", :id => cause.id })
+	      return content_tag :div, button_to(_("Mark as paid"), { :action => "mark_paid", :id => cause.id })
       end
     end
   end
 
   def mark_as_unpaid_button(cause)
     if current_user && current_user.is_admin_user
-      return content_tag :div, button_to("Mark as unpaid", { :action => "mark_unpaid", :id => cause.id })
+      return content_tag :div, button_to(_("Mark as unpaid"), { :action => "mark_unpaid", :id => cause.id })
     end
   end
 
@@ -118,14 +114,7 @@ module CauseHelper
     end
   end
 
-  # Button redirecting to cause edition page
-  # * Admin: Redirects to the “Cause Add/Edit” page. 
-  # * Owner: Redirects to the “Cause Add/Edit” page. Causes with a “completed” status cannot be edited by the charity.
-  def edit_button(cause)
-    if current_user && (current_user.is_admin_user ||  (current_user.is_charity_user && cause.charity.id == current_user.id && cause.can_edit?))
-      return content_tag :div, link_to("Edit", :controller => "causes", :action => "edit", :id => cause.id)
-    end
-  end
+
 
 
   # Redirects to the cause page. Charity. (Owner)
@@ -133,12 +122,23 @@ module CauseHelper
     return content_tag :div,link_to(cause.name,cause_path(cause.id))
   end
 
+
+  # Button redirecting to cause edition page
+  # * Admin: Redirects to the “Cause Add/Edit” page.
+  # * Owner: Redirects to the “Cause Add/Edit” page. Causes with a “completed” status cannot be edited by the charity.
+  def edit_cause_button(cause)
+    if current_user && (current_user.is_admin_user ||  (current_user.is_charity_user && cause.charity.id == current_user.id && cause.can_edit?))
+      return content_tag :div, link_to(_("Edit"), :controller => "causes", :action => "edit", :id => cause.id)
+    end
+  end
+
+
   # Deletes cause
   # * Charity owner: Deletes the cause only if the status is “pending approval” or “voting”.
   # * Admin: Deletes the current cause. If the cause has a history of raised funds the deletion is logical.
-  def delete_button(cause)
+  def delete_cause_button(cause)
     if current_user && (current_user.is_admin_user || (current_user.is_charity_user && cause.charity.id == current_user.id && cause.can_delete?))
-      return content_tag :div, button_to("Delete", cause_path(cause.id), :method => :delete, :confirm => "Are you sure?")
+      return content_tag :div, button_to(_("Delete"), cause_path(cause.id), :method => :delete, :confirm => _("Are you sure?"))
     end
   end
 

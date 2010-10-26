@@ -74,7 +74,7 @@ class CausesController < ApplicationController
 
   def vote
     @vote = Vote.new :cause_id => params[:id], :user_id=> current_user.id
-    ajax_flash[:notice] = @vote.save ? "Vote submitted" : @vote.errors[:cause_id]
+    ajax_flash[:notice] = @vote.save ? _("Vote submitted") : @vote.errors[:cause_id]
 
     redirect_to request.referer unless request.xhr?
   end
@@ -82,9 +82,9 @@ class CausesController < ApplicationController
   def follow
     @follow = Follow.new :cause_id => params[:id],:user_id=> current_user.id
     if @follow.save
-      ajax_flash[:notice] = "Follow submitted"
+      ajax_flash[:notice] = _("Follow submitted")
     else
-      ajax_flash[:notice] = "Error, try again"
+      ajax_flash[:notice] = _("Error, try again")
     end
     redirect_to request.referer unless request.xhr?
   end
@@ -92,9 +92,9 @@ class CausesController < ApplicationController
   def unfollow
     @follow.destroy
     if @follow.destroyed?
-      ajax_flash[:notice] = "Unfollow submitted"
+      ajax_flash[:notice] = _("Unfollow submitted")
     else
-      ajax_flash[:notice] = "Error, try again"
+      ajax_flash[:notice] = _("Error, try again")
     end
     redirect_to request.referer unless request.xhr?
   end
@@ -138,31 +138,29 @@ class CausesController < ApplicationController
 
   def check_url
     @cause = Cause.find_by_url(params[:url])
-    @result = 'available'
+    @result = _('available')
     if @cause
-      @result = 'not_available'
+      @result = _('not_available')
     end
     render :text => @result
   end
 
   def activate
     @cause.status = :active
-    @cause.save
     if @cause.save then
-      ajax_flash[:notice] = "Activated"
+      ajax_flash[:notice] = _("Activated")
     else
-      ajax_flash[:notice] = "Error activating cause"
+      ajax_flash[:notice] = _("Error activating cause")
     end
     redirect_to request.referer unless request.xhr?
   end
 
   def deactivate
     @cause.status = :inactive
-    @cause.save
     if @cause.save then
-      ajax_flash[:notice] = "Deactivated"
+      ajax_flash[:notice] = _("Deactivated")
     else
-      ajax_flash[:notice] = "Error deactivating cause"
+      ajax_flash[:notice] = _("Error deactivating cause")
     end
     redirect_to request.referer unless request.xhr?
   end

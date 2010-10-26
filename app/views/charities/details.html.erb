@@ -1,32 +1,26 @@
 
 
-<p> <b>id</b>: <%= @charity.id%> </p>
-<p> <b>email</b>: <%= @charity.email%> </p>
-<p> <b>type</b>: <%= @charity.type%> </p>
-<p> <b>charity_name</b>: <%= @charity.charity_name%> </p>
-<p> <b>charity_website</b>: <%= @charity.charity_website%> </p>
-<p> <b>charity_category_id</b>: <%= @charity.charity_category_id%> </p>
-<p> <b>charity_type</b>: <%= @charity.charity_type%> </p>
-<p> <b>rating</b>: <%= @charity.rating%> </p>
-<p> <b>rating_url</b>: <%= @charity.rating_url%> </p>
-<p> <b>country_id</b>: <%= @charity.country_id%> </p>
-<p> <b>city</b>: <%= @charity.city%> </p>
-<p> <b>description</b>: <%= @charity.description%> </p>
+<p> <b><%=_('id')%></b>: <%= @charity.id%> </p>
+<p> <b><%=_('email')%></b>: <%= @charity.email%> </p>
+<p> <b><%=_('type')%></b>: <%= @charity.type%> </p>
+<p> <b><%=_('charity_name')%></b>: <%= @charity.charity_name%> </p>
+<p> <b><%=_('charity_website')%></b>: <%= @charity.charity_website%> </p>
+<p> <b><%=_('charity_category_id')%></b>: <%= @charity.charity_category_id%> </p>
+<p> <b><%=_('charity_type')%></b>: <%= @charity.charity_type%> </p>
+<p> <b><%=_('rating')%></b>: <%= @charity.rating%> </p>
+<p> <b><%=_('rating_url')%></b>: <%= @charity.rating_url%> </p>
+<p> <b><%=_('country_id')%></b>: <%= @charity.country_id%> </p>
+<p> <b><%=_('city')%></b>: <%= @charity.city%> </p>
+<p> <b><%=_('description')%></b>: <%= @charity.description%> </p>
 
 
-<br/>
-<div id="facebook_like">
-<%=facebook_like%>
-</div>
-
-
-<div id="follow_button">
-  <%= follow_button @charity %>
+<div id="follow_charity_button">
+  <%= follow_charity_button @charity %>
 </div>
 
 <br/>
-<div id="delete_button">
-  <%= delete_button @charity %>
+<div id="delete_charity_button">
+  <%= delete_charity_button @charity %>
 </div>
 
 <br/>
@@ -35,30 +29,34 @@
 </div>
 
 <br/>
-<div id="activate_deactivate_btn">
-  <%= active_deactive_button @charity %>
+<div id="activate_deactivate_charity_btn">
+  <%= active_deactive_charity_button @charity %>
 </div>
 
 
 <div id="cause_list">
+  <TABLE BORDER="1">
+  <TR>
+    <TH>Name</TH>
+    <TH>Status</TH>
+    <TH>Progress</TH>
+  </TR>
+
+  <% @charity.causes.each do |cause|%>
+  <TR>
+    <TD><%=cause_link cause%></TD>
+    <TD><%=cause.status%></TD>
+    <TD><%=progress_box cause%></TD>
+  </TR>
+  <%end%>
+
+  </TABLE>
+
+</div>
 
 
-<TABLE BORDER="1">
-<TR>
-   <TH>Name</TH>
-   <TH>Status</TH>
-   <TH>Progress</TH>
-</TR>
-
-<% @charity.causes.each do |cause|%>
-<TR>
-   <TD><%=cause_link cause%></TD>
-   <TD><%=cause.status%></TD>
-   <TD><%=progress_box cause%></TD>
-</TR>
-<%end%>
-
-</TABLE>
-
+<br/>
+<div id="facebook_like">
+  <%=facebook_like%>
 </div>
 

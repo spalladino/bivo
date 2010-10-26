@@ -1,62 +1,42 @@
 <p>
-    <b>Name:</b>
+    <b><%=_('Name:')%></b>
     <%= @shop.name %>
 </p>
 <p>
-    <b>Title:</b>
+    <b><%=_('Short_Url')%>:</b>
     <%= @shop.short_url %>
 </p>
 <p>
-    <b>Content:</b>
+    <b><%=_('Shop at:')%></b> <a href= "<%=@shop.url %>"> <%=@shop.url %></a>
+</p>
+<p>
+    <b><%=_('Description:')%></b>
     <%= @shop.description %>
 </p>
+
 <p>
-    <b><%=s_('shop|City') %></b>
-    <%= @shop.city %>
+    <b><%=_('Worldwide?:')%></b>
+    <%= @shop.worldwide %>
 </p>
 
 <p>
-<b>Founds Needed:</b>
-    <%= @shop.funds_needed %>
+    <b><%=_('affiliate code')%>:</b>
+    <%= @shop.affiliate_code%>
 </p>
 
 
-<div id="funds_raised">
-  <%= @shop.funds_raised %>
+<br/>
+<div id="delete_shop_button">
+  <%= delete_shop_button @shop %>
 </div>
 
 <br/>
-<div id="vote_button">
-  <%= vote_button @shop %>
+<div id="edit_shop_button">
+  <%= edit_shop_button @shop %>
 </div>
 
 <br/>
-<div id="follow_button">
-  <%= follow_button @shop %>
-</div>
-
-<br/>
-<div id="delete_button">
-  <%= delete_button @shop %>
-</div>
-
-<br/>
-<div id="edit_button">
-  <%= edit_button @shop %>
-</div>
-
-<br/>
-<div id="activate_deactivate_btn">
-  <%= active_deactive_button @shop %>
-</div>
-
-<br/>
-<div id="facebook_like">
-<%=facebook_like%>
-</div>
-
-<br/>
-<div id="progress_box">
-<%=progress_box @shop%>
+<div id="activate_deactivate_shop_btn">
+  <%= active_deactive_shop_button @shop %>
 </div>
 
