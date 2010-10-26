@@ -20,13 +20,8 @@ class Shop < ActiveRecord::Base
   validates_presence_of :name
   validates_length_of :name, :maximum => 255
   
-  validates_presence_of :short_url
-  validates_length_of :short_url, :maximum => 255
-  
   validates_presence_of :url
   validates_length_of :url, :maximum => 255
-  
-  validates_length_of :description, :maximum => 255
   
   enum_attr :redirection, %w(^search_box purchase_button custom_widget custom_html) do
     labels :search_box => _("Use a search box"),

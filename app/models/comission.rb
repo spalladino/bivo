@@ -13,7 +13,7 @@ class Comission < ActiveRecord::Base
   
   validate :percentage_less_than_100
   
-  enum_attr :kind, %(percentage fixed_amount) do
+  enum_attr :kind, %w(percentage fixed_amount) do
     labels :percentage => _("percentage"), :fixed_amount => _("fixed amount")
   end
   

@@ -39,7 +39,10 @@ class ShopsControllerTest < ActionController::TestCase
       post :create, :shop => {
         :name => "Shopname",
         :description => "Testing shop",
-        :short_url => "shop"} 
+        :short_url => "shop",
+        :url => "www.example.com",
+        :redirection => "purchase_button"
+      } 
     end
     
     assert_response :found
