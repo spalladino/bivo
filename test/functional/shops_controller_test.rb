@@ -81,6 +81,17 @@ class ShopsControllerTest < ActionController::TestCase
     assert_equal "Shopname", shop.reload.name
     assert_response :success
   end
+  
+  test "should delete shop" do
+    create_admin_and_sign_in
+    shop = Shop.make
+    
+    assert_difference('Shop.count', -1) do
+      post :destroy, :id => shop.id
+    end
+    
+    assert_response :found
+  end
 
   #DETAILS
   test "should get details" do
