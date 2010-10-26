@@ -1,8 +1,9 @@
 require 'test_helper'
 
 class ShopTest < ActiveSupport::TestCase
-  # Replace this with your real tests.
-  test "the truth" do
-    assert true
+
+  test "should make shop" do
+    Shop.make
   end
+  
 end
