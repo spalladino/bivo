@@ -147,7 +147,6 @@ class CausesController < ApplicationController
 
   def activate
     @cause.status = :active
-    @cause.save
     if @cause.save then
       ajax_flash[:notice] = _("Activated")
     else
@@ -158,7 +157,6 @@ class CausesController < ApplicationController
 
   def deactivate
     @cause.status = :inactive
-    @cause.save
     if @cause.save then
       ajax_flash[:notice] = _("Deactivated")
     else
