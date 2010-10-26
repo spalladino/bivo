@@ -71,6 +71,16 @@ Charity.blueprint do
   eula_accepted    {true}
 end
 
+Shop.blueprint do
+  name             {Sham.simple_name}
+  short_url        {Sham.simple_name}
+  url              {Sham.url}
+  redirection      {Sham.simple_name}
+  description      {Sham.simple_name}
+  worldwide        {[true,false][rand(2)]}
+  affiliate_code   {Sham.simple_name}
+end
+
 Vote.blueprint do
   user         {PersonalUser.make}
   cause        {Cause.make}
