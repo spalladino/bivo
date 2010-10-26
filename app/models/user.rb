@@ -30,7 +30,7 @@ class User < ActiveRecord::Base
   end
 
   def is_admin_user
-    true
+    false
   end
 
   # Had to overwrite it from devise because if not it asks for password every time you want to update and it's very annoying.

@@ -6,10 +6,9 @@ Bivo::Application.routes.draw do
   get "eula", :to => "home#eula", :as => "eula"
   get "accept_eula",  :to => "home#accept_eula", :as => "accept_eula"
   post "confirm_eula", :to => "home#confirm_eula", :as => "confirm_eula"
+
   get "charity/check_url", :to => "charities#check_url"
   get "charity/c/:url", :controller => "charities", :action => "details", :constraints => { :url => Charity::UrlFormat }
-
-
   resources :charities, :path => 'charity' do
     member do
       post :activate
