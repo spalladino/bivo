@@ -19,3 +19,7 @@
     <%= @shop.affiliate_code%>
 </p>
 
+<p>
+  <%= image_tag @shop.image.url(:small) if @shop.image_file_name %>
+</p>
+
