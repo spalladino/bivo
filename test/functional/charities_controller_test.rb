@@ -28,7 +28,7 @@ class CharitiesControllerTest < ActionController::TestCase
 
     get :index
 
-    assert_charities Charity.all[0...10]
+    assert_charities Charity.where('charity_name < ?', 'K')
   end
 
   test "should get charities list second page different size" do
@@ -36,7 +36,7 @@ class CharitiesControllerTest < ActionController::TestCase
 
     get :index, :page => 2, :per_page => 20
 
-    assert_charities Charity.all[20...40]
+    assert_charities Charity.where('charity_name > ?', 'T')
   end
 
   test "should get charities list filter by category" do
