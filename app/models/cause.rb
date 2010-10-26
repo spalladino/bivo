@@ -37,7 +37,18 @@ class Cause < ActiveRecord::Base
 
   validates_numericality_of :funds_raised, :greater_than_or_equal_to => 0
 
+  validate :inactive_if_charity_is_inactive
+
+
+  def inactive_if_charity_is_inactive
+    errors.add(:status, "must be inactive when charity is inactive") if
+      self.charity.status == :inactive and self.status != :inactive
+  end
+
+
   enum_attr :status, %w(^inactive active raising_funds completed paid deleted)
+
+
 
   def self.find_deleted(id)
     self.with_exclusive_scope {find(id)}
