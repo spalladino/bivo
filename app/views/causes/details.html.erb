@@ -1,13 +1,13 @@
 <p>
-    <b>Name:</b>
+    <b><%=_('Name:')%></b>
     <%= @cause.name %>
 </p>
 <p>
-    <b>Title:</b>
+    <b><%=_('Title:')%></b>
     <%= @cause.url %>
 </p>
 <p>
-    <b>Content:</b>
+    <b><%=_('Content:')%></b>
     <%= @cause.description %>
 </p>
 <p>
@@ -16,7 +16,7 @@
 </p>
 
 <p>
-<b>Founds Needed:</b>
+<b><%=_('Founds Needed:')%></b>
     <%= @cause.funds_needed %>
 </p>
 
@@ -31,32 +31,33 @@
 </div>
 
 <br/>
-<div id="follow_button">
-  <%= follow_button @cause %>
+<div id="follow_cause_button">
+  <%= follow_cause_button @cause %>
 </div>
 
 <br/>
-<div id="delete_button">
-  <%= delete_button @cause %>
+<div id="delete_cause_button">
+  <%= delete_cause_button @cause %>
 </div>
 
 <br/>
-<div id="edit_button">
-  <%= edit_button @cause %>
+<div id="edit_cause_button">
+  <%= edit_cause_button @cause %>
 </div>
 
 <br/>
-<div id="activate_deactivate_btn">
-  <%= active_deactive_button @cause %>
+<div id="activate_deactivate_cause_btn">
+  <%= active_deactive_cause_button @cause %>
+</div>
+
+
+<br/>
+<div id="progress_box">
+<%=progress_box @cause%>
 </div>
 
 <br/>
 <div id="facebook_like">
 <%=facebook_like%>
-</div>
-
-<br/>
-<div id="progress_box">
-<%=progress_box @cause%>
 </div>
 

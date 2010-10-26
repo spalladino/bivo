@@ -13,7 +13,7 @@ class Charity < User
 
   has_many :causes
   has_many :votes, :through => :causes
-  
+
   attr_protected :funds_raised
 
   validates_presence_of :charity_name
