@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
   attr_accessor_with_default :captcha_valid, true
 
   has_many :votes
+  has_many :follows
 
   def is_charity_user
     false
