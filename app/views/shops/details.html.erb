@@ -1,0 +1,62 @@
+<p>
+    <b>Name:</b>
+    <%= @shop.name %>
+</p>
+<p>
+    <b>Title:</b>
+    <%= @shop.short_url %>
+</p>
+<p>
+    <b>Content:</b>
+    <%= @shop.description %>
+</p>
+<p>
+    <b><%=s_('shop|City') %></b>
+    <%= @shop.city %>
+</p>
+
+<p>
+<b>Founds Needed:</b>
+    <%= @shop.funds_needed %>
+</p>
+
+
+<div id="funds_raised">
+  <%= @shop.funds_raised %>
+</div>
+
+<br/>
+<div id="vote_button">
+  <%= vote_button @shop %>
+</div>
+
+<br/>
+<div id="follow_button">
+  <%= follow_button @shop %>
+</div>
+
+<br/>
+<div id="delete_button">
+  <%= delete_button @shop %>
+</div>
+
+<br/>
+<div id="edit_button">
+  <%= edit_button @shop %>
+</div>
+
+<br/>
+<div id="activate_deactivate_btn">
+  <%= active_deactive_button @shop %>
+</div>
+
+<br/>
+<div id="facebook_like">
+<%=facebook_like%>
+</div>
+
+<br/>
+<div id="progress_box">
+<%=progress_box @shop%>
+</div>
+
