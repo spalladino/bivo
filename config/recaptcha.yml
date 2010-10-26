@@ -1,7 +1,7 @@
 production:
     PublicKey: 6LehKb4SAAAAAOEQ5vvHQS30e7LzMeq7XbyTKqGt
     PrivateKey: 6LehKb4SAAAAAPIFNYe6pM7jvJtx2RdexFjqKVGq
-testing:
+test:
     PublicKey: 6LehKb4SAAAAAOEQ5vvHQS30e7LzMeq7XbyTKqGt
     PrivateKey: 6LehKb4SAAAAAPIFNYe6pM7jvJtx2RdexFjqKVGq
 development:
