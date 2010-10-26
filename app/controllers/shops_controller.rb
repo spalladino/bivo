@@ -1,6 +1,6 @@
 class ShopsController < ApplicationController
 
-  before_filter :authenticate_user!, :except => [:details,:home]
+  before_filter :authenticate_user!, :except => [:details,:home,:show]
   before_filter :load_shop, :except => [ :details,:home]
   before_filter :only_admin, :only => [:activate, :deactivate]
 
@@ -12,6 +12,9 @@ class ShopsController < ApplicationController
     @shop = Shop.find_by_short_url! params[:short_url]
   end
 
+  def show
+    render 'details'
+  end
 
   def activate
     @shop.status = :active

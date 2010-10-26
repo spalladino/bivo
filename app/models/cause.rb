@@ -5,7 +5,7 @@ class Cause < ActiveRecord::Base
   UrlFormat = /[a-zA-Z\-_][a-zA-Z0-9\-_]*/
 
   # Default scope excludes deleted causes
-  default_scope where('status != ?', :deleted)
+  default_scope where('causes.status != ?', :deleted)
 
   belongs_to :cause_category
   belongs_to :country
@@ -75,14 +75,14 @@ class Cause < ActiveRecord::Base
     end
     @result
   end
-  
+
   def destroy
-    if can_delete? 
+    if can_delete?
       super
     else
-      update_attribute :status, :deleted 
+      update_attribute :status, :deleted
     end
   end
-  
+
 end
 
