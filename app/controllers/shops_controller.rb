@@ -16,9 +16,23 @@ class ShopsController < ApplicationController
   end
   
   def create
+    @shop = Shop.new params[:shop]
+    if @shop.save
+      flash[:notice] = _("Shop successfully created")
+      redirect_to root_url
+    else
+      render :new
+    end
   end
   
   def update
+    @shop.attributes= params[:shop]
+    if @shop.save
+      flash[:notice] = _("Shop successfully updated")
+      redirect_to root_url
+    else
+      render :edit
+    end
   end
 
   def activate

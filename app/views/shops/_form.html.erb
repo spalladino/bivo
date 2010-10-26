@@ -1,11 +1,16 @@
-<% form_for @shop do |f| %>
+<% form_for @shop, :html => { :multipart => true } do |f| %>
+  <%= render "shared/error_messages", :target => @shop %>
+
   <p>
     <%= f.label :name %>
     <%= f.text_field :name %>
   </p>
   <p>
     <%= f.label :image %>
-    
+    <%= f.file_field :image %>
+  </p>
+  <p>
+    <%= image_tag @shop.image.url(:small) if @shop.image_file_name %>
   </p>
   <p>
     <%= f.submit 'Save' %>
