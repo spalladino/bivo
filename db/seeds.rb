@@ -23,4 +23,7 @@ puts "Creating categories"
   CharityCategory.find_or_create_by_name category
 end
 
+puts "Creating shop income category"
+IncomeCategory.find_or_create_by_name IncomeCategory::ShopName
+
 

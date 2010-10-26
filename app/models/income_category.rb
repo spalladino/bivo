@@ -4,4 +4,6 @@ class IncomeCategory < ActiveRecord::Base
   
   has_many :incomes
   
+  ShopName = 'shop'
+  
 end
