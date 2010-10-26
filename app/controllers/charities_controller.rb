@@ -65,9 +65,9 @@ class CharitiesController < ApplicationController
 
   def check_url
     if Charity.find_by_short_url(params[:url])
-      render :text => 'not_available'
+      render :text => _('not_available')
     else
-      render :text => 'available'
+      render :text => _('available')
     end
   end
 
@@ -81,7 +81,8 @@ class CharitiesController < ApplicationController
 
   def activate
     @charity.status = :active
-    ajax_flash[:notice] = if @charity.save then "Activated" else "Error activating cause" end
+    ajax_flash[:notice] = if @charity.save then _("Activated") else _("Error activating cause")
+  end
     redirect_to request.referer unless request.xhr?
   end
 
@@ -94,13 +95,13 @@ class CharitiesController < ApplicationController
       cause.save
     end
 
-    ajax_flash[:notice] = if @charity.save then "Deactivated" else "Error deactivating cause" end
+    ajax_flash[:notice] = if @charity.save then _("Deactivated") else _("Error deactivating cause") end
     redirect_to request.referer unless request.xhr?
   end
 
   def follow
     @follow = CharityFollow.new :charity_id => params[:id],:user_id=> current_user.id
-    ajax_flash[:notice] = if @follow.save then "Follow submitted" else "Error, try again" end
+    ajax_flash[:notice] = if @follow.save then _("Follow submitted") else _("Error, try again") end
 
     redirect_to request.referer unless request.xhr?
   end
@@ -109,9 +110,9 @@ class CharitiesController < ApplicationController
   def unfollow
     @follow.destroy
     if @follow.destroyed?
-      ajax_flash[:notice] = "Unfollow submitted"
+      ajax_flash[:notice] = _("Unfollow submitted")
     else
-      ajax_flash[:notice] = "Error, try again"
+      ajax_flash[:notice] = _("Error, try again")
     end
 
     redirect_to request.referer unless request.xhr?
