@@ -16,7 +16,7 @@ class Charity < User
 
   attr_protected :funds_raised
 
-  validates_presence_of :country
+  validates_presence_of :country_id
   validates_presence_of :charity_category
 
   validates_presence_of :charity_name
