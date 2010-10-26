@@ -136,7 +136,6 @@ GEM
     rake (0.8.7)
     rest-client (1.6.1)
       mime-types (>= 1.16)
-    rmagick (2.13.1)
     ruby-openid (2.1.8)
     ruby-openid-apps-discovery (1.2.0)
       ruby-openid (>= 2.1.7)
@@ -168,6 +167,5 @@ DEPENDENCIES
   pg
   rails (>= 3.0.0)
   rails3-generators
-  rmagick
   single_test
   will_paginate
