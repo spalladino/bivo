@@ -2,6 +2,9 @@ class Charity < User
 
   UrlFormat = /[a-zA-Z\-_][a-zA-Z0-9\-_]*/
 
+  # Default scope excludes deleted charities
+  default_scope where('users.status != ?', :deleted)
+
   scope :with_cause_data, proc { joins("LEFT JOIN #{Cause.table_name} ON #{Cause.table_name}.charity_id = #{Charity.table_name}.id")\
       .joins(:country)\
       .group(self.column_names.map{|c| "#{Charity.table_name}.#{c}"})\
@@ -46,7 +49,11 @@ class Charity < User
 
   validates_length_of :description, :maximum => 255
 
-  enum_attr :status, %w(^inactive active deleted)
+  enum_attr :status, %w(^inactive active deleted),:nil => false
+
+  def self.find_deleted(id)
+    self.with_exclusive_scope {find(id)}
+  end
 
   def name
     charity_name
@@ -75,5 +82,28 @@ class Charity < User
   def is_charity_user
     return true
   end
+
+  def funds_raised
+    total_funds_raised
+  rescue
+    causes.sum(:funds_raised)
+  end
+
+  def can_delete?
+    funds_raised == 0
+  end
+
+  def destroyed?
+    super || self.status == :deleted
+  end
+
+  def destroy
+    if can_delete?
+      super
+    else
+      update_attribute :status, :deleted
+    end
+  end
+
 end
 
