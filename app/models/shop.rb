@@ -8,6 +8,8 @@ class Shop < ActiveRecord::Base
   has_many :countries, :through => :country_shops
   has_many :country_shops, :dependent => :destroy
 
+  accepts_nested_attributes_for :comissions
+
   UrlFormat = /[a-zA-Z\-_][a-zA-Z0-9\-_]*/
 
   enum_attr :status, %w(^inactive active deleted)
