@@ -74,8 +74,15 @@ class Charity < User
     return true
   end
 
-  def can_delete?
-    causes = self.causes.sum(:funds_raised) == 0
+  def funds_raised
+    total_funds_raised
+  rescue
+    causes.sum(:funds_raised)
   end
+
+  def can_delete?
+    funds_raised == 0
+  end
+
 end
 

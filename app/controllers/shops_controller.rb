@@ -3,6 +3,7 @@ class ShopsController < ApplicationController
   before_filter :authenticate_user!, :except => [:details,:home,:show]
   before_filter :only_admin, :only => [:new, :create, :edit, :update, :activate, :deactivate]
   before_filter :load_shop, :except => [ :details, :new, :create, :home]
+  before_filter :load_places, :only => [ :new, :edit, :create, :update ]
 
   def details
     @shop = Shop.find_by_short_url! params[:short_url]
@@ -16,8 +17,8 @@ class ShopsController < ApplicationController
   end
 
   def create
-    @shop = Shop.new params[:shop]
-    if @shop.save
+    @shop = Shop.new
+    if save_shop
       flash[:notice] = _("Shop successfully created")
       redirect_to root_url
     else
@@ -26,8 +27,7 @@ class ShopsController < ApplicationController
   end
 
   def update
-    @shop.attributes= params[:shop]
-    if @shop.save
+    if save_shop
       flash[:notice] = _("Shop successfully updated")
       redirect_to root_url
     else
@@ -75,6 +75,17 @@ class ShopsController < ApplicationController
   end
 
 private
+
+  def load_places
+    @countries = Country.all
+  end
+
+  def save_shop
+    params[:shop] ||= {}
+    params[:shop][:country_ids] ||= []
+    @shop.attributes= params[:shop]
+    @shop.save
+  end
 
   def load_shop
     @shop = Shop.find params[:id]
