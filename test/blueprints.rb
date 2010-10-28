@@ -80,6 +80,7 @@ Shop.blueprint do
   description      {Sham.simple_name}
   worldwide        {[true,false][rand(2)]}
   affiliate_code   {Sham.simple_name}
+  status           {:active}
 end
 
 Vote.blueprint do
