@@ -1,11 +1,11 @@
 require 'enumerated_attribute'
 
 class Shop < ActiveRecord::Base
-  
+
   has_many :comissions
   has_many :country_shops
   has_many :incomes
-  
+
   UrlFormat = /[a-zA-Z\-_][a-zA-Z0-9\-_]*/
 
   enum_attr :status, %w(^inactive active deleted)
@@ -16,13 +16,13 @@ class Shop < ActiveRecord::Base
 
   validates_attachment_size :image, :less_than => 1.megabytes
   validates_attachment_content_type :image, :content_type => ['image/jpeg', 'image/png']
-  
+
   validates_presence_of :name
   validates_length_of :name, :maximum => 255
-  
+
   validates_presence_of :url
   validates_length_of :url, :maximum => 255
-  
+
   enum_attr :redirection, %w(^search_box purchase_button custom_widget custom_html) do
     labels :search_box => _("Use a search box"),
            :purchase_button => _("Use a purchase button"),
@@ -32,10 +32,10 @@ class Shop < ActiveRecord::Base
 
   validates_presence_of   :name
   validates_length_of     :name, :maximum => 255
-  
+
   validates_presence_of :description
   validates_length_of   :description, :maximum => 255
-  
+
   validates_presence_of   :short_url
   validates_length_of     :short_url, :maximum => 255
   validates_uniqueness_of :short_url, :case_sensitive => false
