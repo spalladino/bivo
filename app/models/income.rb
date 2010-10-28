@@ -6,7 +6,6 @@ class Income < Transaction
   validates_presence_of :shop_id, :if => :category_is_shop?
   
   def category_is_shop?
-    @category = IncomeCategory.find_by_name IncomeCategory::ShopName
-    self.income_category_id == @category.id
+    self.income_category_id == IncomeCategory.get_shop_category.id
   end
 end
