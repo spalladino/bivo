@@ -137,12 +137,18 @@ class CausesController < ApplicationController
   end
 
   def check_url
-    @cause = Cause.find_by_url(params[:url])
-    @result = _('available')
-    if @cause
-      @result = _('not_available')
+    cause = Cause.new
+    cause.url = params[:url]
+
+    if (cause.valid? || cause.errors[:url].empty?)
+      if (Cause.find_by_url(params[:url]))
+        render :text => _('not_available')
+      else
+        render :text => _('available')
+      end
+    else
+      render :text => _('invalid')
     end
-    render :text => @result
   end
 
   def activate

@@ -1,10 +1,10 @@
 class CharitiesController < ApplicationController
 
-  before_filter :authenticate_user!, :except => [ :show, :details, :index, :check_url]
-  before_filter :load_charity, :except => [ :details, :index, :new, :create, :check_url]
+  before_filter :authenticate_user!, :except => [:show, :details, :index, :check_url, :destroy]
+  before_filter :load_charity, :except => [:details, :index, :new, :create, :check_url,:destroy]
 
-  before_filter :only_owner_or_admin, :only => [ :edit, :update]
-  before_filter :only_admin, :only => [:activate, :deactivate, :create,:delete]
+  before_filter :only_owner_or_admin, :only => [:edit, :update]
+  before_filter :only_admin, :only => [:activate, :deactivate, :create,:delete,:destroy]
   before_filter :follows_exist, :only => [:unfollow]
 
   def index
@@ -64,10 +64,17 @@ class CharitiesController < ApplicationController
   end
 
   def check_url
-    if Charity.find_by_short_url(params[:url])
-      render :text => _('not_available')
+    charity = Charity.new
+    charity.short_url = params[:url]
+
+    if (charity.valid? || charity.errors[:short_url].empty?)
+      if (Charity.find_by_short_url(params[:short_url]))
+        render :text => _('not_available')
+      else
+        render :text => _('available')
+      end
     else
-      render :text => _('available')
+      render :text => _('invalid')
     end
   end
 
@@ -109,6 +116,14 @@ class CharitiesController < ApplicationController
     redirect_to request.referer unless request.xhr?
   end
 
+  def destroy
+    @charity.destroy
+    if @charity.destroyed?
+      redirect_to root_url
+    else
+      redirect_to request.referer
+    end
+  end
 
   def unfollow
     @follow.destroy
