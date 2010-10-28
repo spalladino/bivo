@@ -6,11 +6,11 @@ require "./test/blueprints_helper"
 
 Sham.name         { "#{Faker::Name.name} #{rand(100)}" }
 Sham.simple_name  { "#{Faker::Name.last_name} #{rand(100)}" }
-Sham.short_name   { Faker::Name.last_name }
+Sham.short_name   { Faker::Name.last_name.gsub(/[^0-9a-z]+/i, '') }
 Sham.bs           { Faker::Company.bs.capitalize }
 Sham.description  { Faker::Company.catch_phrase }
 Sham.email        { Faker::Internet.email }
-Sham.url          { Faker::Internet.domain_name}
+Sham.url          { 'http://' + Faker::Internet.domain_name}
 Sham.country      { Faker::Address.uk_county }
 Sham.city         { Faker::Address.city }
 Sham.password     { rand(36**8).to_s(36) }
