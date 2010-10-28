@@ -48,6 +48,27 @@ class ShopsControllerTest < ActionController::TestCase
     assert_response :found
   end
   
+  test "should create new shop with places" do
+    create_admin_and_sign_in
+    countries = Country.make_many(2)
+    assert_difference('Shop.count') do
+      post :create, :shop => {
+        :name => "Shopname",
+        :description => "Testing shop",
+        :short_url => "shop",
+        :url => "www.example.com",
+        :redirection => "purchase_button",
+        :country_ids => countries.map(&:id)
+      } 
+    end
+    
+    assert_response :found
+    
+    shop = Shop.first
+    assert_not_nil shop
+    assert_equal countries.map(&:id).sort, shop.countries.map(&:id).sort
+  end
+  
   test "should not create new shop with no name" do
     create_admin_and_sign_in
     post :create, :shop => {
@@ -69,6 +90,45 @@ class ShopsControllerTest < ActionController::TestCase
       :short_url => shop.short_url } 
     
     assert_equal "Shopname", shop.reload.name
+    assert_response :found
+  end
+  
+  test "should update shop with places and worldwide" do
+    create_admin_and_sign_in
+    countries = Country.make_many(3)
+    shop = Shop.make :country_ids => [countries[0].id, countries[1].id]
+
+    post :update, :id => shop.id, :shop => {
+      :name => "Shopname",
+      :description => shop.description,
+      :short_url => shop.short_url,
+      :country_ids => [countries[1].id, countries[2].id],
+      :worldwide => true 
+    } 
+    
+    shop = shop.reload
+    
+    assert_equal "Shopname", shop.name
+    assert_equal [countries[1].id, countries[2].id].sort, shop.countries.map(&:id).sort, "Countries ids do not match"
+    assert_equal true, shop.worldwide
+    assert_response :found
+  end
+  
+  test "should update shop removing all places" do
+    create_admin_and_sign_in
+    countries = Country.make_many(3)
+    shop = Shop.make :country_ids => countries.map(&:id)
+
+    post :update, :id => shop.id, :shop => {
+      :name => "Shopname",
+      :description => shop.description,
+      :short_url => shop.short_url
+    } 
+    
+    shop = shop.reload
+    
+    assert_equal "Shopname", shop.name
+    assert_equal [], shop.countries.map(&:id), "Countries ids do not match"
     assert_response :found
   end
   

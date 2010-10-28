@@ -25,6 +25,21 @@
     <%= f.label :description %>
     <%= f.text_field :description %>
   </div>
+
+  <div class="field">
+    <%= _("Recommended for") %>
+    <div>
+      <%= f.check_box :worldwide%>
+      <%= _("Worldwide")%>
+
+    </div>
+    <% @countries.each do |country|%>
+      <div>
+        <%= check_box_tag :country_ids, country.id, @shop.countries.include?(country), :name => 'shop[country_ids][]' %>
+        <%= country.name %>
+      </div>
+    <% end%>
+  </div>
   
   <div class="field">
     <%= f.label :image %>

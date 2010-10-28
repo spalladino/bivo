@@ -73,5 +73,6 @@ class Charity < User
   def is_charity_user
     return true
   end
+  
 end
 
