@@ -69,6 +69,7 @@ Charity.blueprint do
   city
   charity_category {CharityCategory.make_or_get(5)}
   eula_accepted    {true}
+  status           {:active}
 end
 
 Shop.blueprint do
@@ -79,6 +80,7 @@ Shop.blueprint do
   description      {Sham.simple_name}
   worldwide        {[true,false][rand(2)]}
   affiliate_code   {Sham.simple_name}
+  status           {:active}
 end
 
 Vote.blueprint do
