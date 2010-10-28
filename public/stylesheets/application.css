@@ -13,3 +13,12 @@
 	margin: 20px;
 	padding: 10px;
 }
+
+.field {
+  margin: 10px;
+}
+
+.field label {
+  width: 200px;
+  float: left;
+}

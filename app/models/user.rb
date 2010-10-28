@@ -4,7 +4,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  validates_presence_of :eula_accepted, :on => :create, :unless => :from_facebook, :message => "eula must be accepted"
+  validates_presence_of :type
+  validates_presence_of :eula_accepted, :on => :create, :unless => :from_facebook, :message => "must be accepted"
   validate :is_captcha_valid?, :unless => :captcha_valid
 
 

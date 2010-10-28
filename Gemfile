@@ -15,6 +15,7 @@ group :test do
   gem 'machinist'
   gem 'ffaker'
   gem 'single_test'
+  gem 'mocha'
 end
 
 group :development do

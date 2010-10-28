@@ -206,38 +206,14 @@ class CharitiesControllerTest < ActionController::TestCase
     assert_response :method_not_allowed
   end
 
-  #CREATE
-  test "should create" do
-    #TODO completar
-    assert_response :ok
-  end
-
-  #CREATE
-  test "shouldnt create" do
-    #TODO completar
-    assert_response :ok
-  end
-
-  #UPDATE
-  test "shoul update" do
-    #TODO completar
-    assert_response :ok
-  end
-
-  #UPDATE
-  test "shouldnt update" do
+  #DESTROY
+  test "shouldnt destroy charity" do
     #TODO completar
     assert_response :ok
   end
 
   #DESTROY
-  test "shouldnt destroy" do
-    #TODO completar
-    assert_response :ok
-  end
-
-  #DESTROY
-  test "should make logical destroy" do
+  test "should make logical destroy " do
     #TODO completar
     assert_response :ok
   end
@@ -247,7 +223,6 @@ class CharitiesControllerTest < ActionController::TestCase
     #TODO completar
     assert_response :ok
   end
-
 
   #CHECK_URL
   test "should check url and return ok" do

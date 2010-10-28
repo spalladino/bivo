@@ -76,7 +76,7 @@ Shop.blueprint do
   name             {Sham.simple_name}
   short_url        {Sham.simple_name}
   url              {Sham.url}
-  redirection      {Sham.simple_name}
+  redirection      {%w(search_box purchase_button custom_widget custom_html)[rand(4)].to_sym}
   description      {Sham.simple_name}
   worldwide        {[true,false][rand(2)]}
   affiliate_code   {Sham.simple_name}

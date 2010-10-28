@@ -11,9 +11,14 @@ class RegistrationsController < Devise::RegistrationsController
     @countries = Country.all
     @categories = CharityCategory.all
 
+    if ((params["user"]["type"] != "PersonalUser") && 
+        (params["user"]["type"] != "Charity"))
+      params["user"]["type"] = "PersonalUser"
+    end  
+
     build_resource
 
-    unless verify_recaptcha
+    unless captcha_valid?
       resource.set_captcha_invalid
     end
 
@@ -56,12 +61,16 @@ class RegistrationsController < Devise::RegistrationsController
     def build_resource(*args)
       super
 
-      if (params[:user])
+      if (params["user"])
         if (params["user"]["type"] == "PersonalUser")
           self.resource = PersonalUser.new(params["user"])   
         elsif (params["user"]["type"] == "Charity")
           self.resource = Charity.new(params["user"])
         end
       end
-  end
+    end
+
+    def captcha_valid?
+      verify_recaptcha
+    end
 end
