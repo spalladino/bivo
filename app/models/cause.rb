@@ -24,7 +24,7 @@ class Cause < ActiveRecord::Base
   validates_presence_of :url
   validates_length_of :url, :maximum => 255
   validates_uniqueness_of :url, :case_sensitive => false
-  validates_format_of :url, :with => UrlFormat
+  validates :url, :short_url_format => true
 
   validates_presence_of :funds_needed
   validates_numericality_of :funds_needed, :greater_than => 0
@@ -42,7 +42,7 @@ class Cause < ActiveRecord::Base
 
   def inactive_if_charity_is_inactive
     errors.add(:status, "must be inactive when charity is inactive") if
-      self.charity.status == :inactive and self.status != :inactive
+      !self.charity.nil? and self.charity.status == :inactive and self.status != :inactive
   end
 
 

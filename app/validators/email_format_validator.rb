@@ -4,4 +4,4 @@ class EmailFormatValidator < ActiveModel::EachValidator
       object.errors[attribute] << (options[:message] || "is not formatted properly")
     end
   end
-end  
+end

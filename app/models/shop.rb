@@ -39,6 +39,7 @@ class Shop < ActiveRecord::Base
   validates_presence_of   :short_url
   validates_length_of     :short_url, :maximum => 255
   validates_uniqueness_of :short_url, :case_sensitive => false
+  validates :short_url, :short_url_format => true
 
   #TODO: Validate widget fields
 
