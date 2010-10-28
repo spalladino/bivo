@@ -46,7 +46,7 @@ class Cause < ActiveRecord::Base
   end
 
 
-  enum_attr :status, %w(^inactive active raising_funds completed paid deleted)
+  enum_attr :status, %w(^inactive active raising_funds completed paid deleted),:nil => false
 
 
 

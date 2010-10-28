@@ -23,7 +23,7 @@ class Shop < ActiveRecord::Base
   validates_presence_of :url
   validates_length_of :url, :maximum => 255
 
-  enum_attr :redirection, %w(^search_box purchase_button custom_widget custom_html) do
+  enum_attr :redirection, %w(^search_box purchase_button custom_widget custom_html),:nil => false do
     labels :search_box => _("Use a search box"),
            :purchase_button => _("Use a purchase button"),
            :custom_widget => _("Use a custom widget"),
