@@ -1,11 +1,11 @@
 class CreateShops < ActiveRecord::Migration
   def self.up
     create_table :shops do |t|
-      t.string :name
-      t.string :short_url
-      t.string :url
-      t.string :redirection
-      t.string :description
+      t.string :name, :limit => 255
+      t.string :short_url, :limit => 255
+      t.string :url, :limit => 255
+      t.string :redirection, :limit => 255
+      t.string :description, :limit => 255
       t.boolean :worldwide
       t.string :affiliate_code
 
