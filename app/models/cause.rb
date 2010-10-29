@@ -54,6 +54,18 @@ class Cause < ActiveRecord::Base
     self.with_exclusive_scope {find(id)}
   end
 
+  def self.count_deleted(charity_id = nil)
+    self.with_exclusive_scope do
+      cond = where('causes.status = ?', :deleted)
+      cond = cond.where('causes.charity_id = ?', charity_id) if charity_id
+      cond.count
+    end
+  end
+
+  def self.all_deleted()
+    self.with_exclusive_scope { where('causes.status = ?', :deleted).all }
+  end
+
   def can_edit?
     [:inactive, :active, :raising_funds].include? self.status
   end
