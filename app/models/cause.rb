@@ -11,7 +11,7 @@ class Cause < ActiveRecord::Base
   belongs_to :country
   belongs_to :charity
 
-  has_many :votes
+  has_many :votes, :dependent => :destroy
 
   validates_presence_of :charity
   validates_presence_of :country
