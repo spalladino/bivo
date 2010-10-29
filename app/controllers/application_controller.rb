@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
   end
 
  def only_admin
-    if not current_user.is_admin_user
+    if not (current_user && current_user.is_admin_user)
       render :nothing => true, :status => :forbidden
     end
   end

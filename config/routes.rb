@@ -3,6 +3,9 @@ Bivo::Application.routes.draw do
 
   match '/auth/facebook/callback' => 'facebook_authentications#create'
 
+  get "admin/:id/edit_user", :to => "admin#edit_user", :as => "admin_edit_user"
+  post "admin/edit_user", :to => "admin#update", :as => "admin_update_user"
+
   get "eula", :to => "home#eula", :as => "eula"
   get "accept_eula",  :to => "home#accept_eula", :as => "accept_eula"
   post "confirm_eula", :to => "home#confirm_eula", :as => "confirm_eula"

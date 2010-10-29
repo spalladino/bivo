@@ -16,7 +16,7 @@ class CharityTest < ActiveSupport::TestCase
     assert_equal 3, charities.first.causes_count.to_i
     assert_equal 300, charities.first.total_funds_raised.to_i
   end
-=begin
+
   test "should mark as deleted and delete related causes" do
     charity = Charity.make :status => :active
 
@@ -36,11 +36,11 @@ class CharityTest < ActiveSupport::TestCase
     assert_equal :deleted, deleted_cause.reload.status, "Status of deleted cause is not deleted"
 
     assert_raise ActiveRecord::RecordNotFound do
-      Cause.find_deleted(active_cause.id)
+      Cause.find_deleted(active_cause_id)
     end
 
     assert_raise ActiveRecord::RecordNotFound do
-      Cause.find_deleted(inactive_cause.id)
+      Cause.find_deleted(inactive_cause_id)
     end
 
   end
@@ -83,6 +83,6 @@ class CharityTest < ActiveSupport::TestCase
 
     assert_not_nil Charity.find_deleted(id1), "Deleted charity is not retrieved with exclusive scope"
   end
-=end
+
 end
 
