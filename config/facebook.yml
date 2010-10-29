@@ -1,9 +1,0 @@
-production:
-    APIKey: c88ee7f4799fd42511397ad351d2bec7
-    ApplicationSecret: 6b8dad0a23c30c2be785a38c6dd6d6f2
-test:
-    APIKey: c88ee7f4799fd42511397ad351d2bec7
-    ApplicationSecret: 6b8dad0a23c30c2be785a38c6dd6d6f2
-development:
-    APIKey: 327938c85477d8fc41e02529898cabf1
-    ApplicationSecret: 34e402f45b4ae1ac95d29e4e1dfa9411
