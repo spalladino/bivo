@@ -443,7 +443,6 @@ class CausesControllerTest < ActionController::TestCase
     user = create_and_sign_in
     url = Cause.make.url
     get :check_url, :url=>url
-    p "url is #{Cause.make.url}"
     assert_not_equal 'not_available',@response.body.to_s
   end
 
