@@ -1,0 +1,9 @@
+production:
+    PublicKey: PUBLIC_KEY
+    PrivateKey: PRIVATE_KEY
+test:
+    PublicKey: 6LfMJb4SAAAAAPbPRo36iNHPs9J8Yf4OuQQa7EVz
+    PrivateKey: 6LfMJb4SAAAAALvm4H6j4Lrd1q4AtTPFw01nSlKN
+development:
+    PublicKey: 6LfMJb4SAAAAAPbPRo36iNHPs9J8Yf4OuQQa7EVz
+    PrivateKey: 6LfMJb4SAAAAALvm4H6j4Lrd1q4AtTPFw01nSlKN
