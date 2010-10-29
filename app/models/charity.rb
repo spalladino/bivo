@@ -14,7 +14,7 @@ class Charity < User
   belongs_to :charity_category
   belongs_to :country
 
-  has_many :causes
+  has_many :causes, :dependent => :destroy
   has_many :votes, :through => :causes
 
   attr_protected :funds_raised
@@ -83,14 +83,12 @@ class Charity < User
     return true
   end
 
-  def funds_raised
-    total_funds_raised
-  rescue
-    causes.sum(:funds_raised)
+  def raising_funds
+    return causes.count(:active) + causes.count(:inactive) < causes.count
   end
 
   def can_delete?
-    funds_raised == 0
+    not raising_funds
   end
 
   def destroyed?
@@ -102,6 +100,9 @@ class Charity < User
       super
     else
       update_attribute :status, :deleted
+      self.causes.each do |cause|
+        cause.destroy
+      end
     end
   end
 
