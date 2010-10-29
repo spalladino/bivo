@@ -37,6 +37,10 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def edit
+    @resource = resource
+    @resource_name = resource_name
+    @path = registration_path(resource_name)
+
     if (resource.type == "PersonalUser")
       @type = :personal
     elsif (resource.type == "Charity")
