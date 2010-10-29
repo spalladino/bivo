@@ -24,19 +24,19 @@ class CharitiesControllerTest < ActionController::TestCase
   end
 
   test "should get charities list first page" do
-    ('A'..'Z').map {|name| Charity.make(:charity_name => name)}
+    charities = ('A'..'Z').map{|name| Charity.make(:charity_name => name)}
 
     get :index
 
-    assert_charities Charity.where('charity_name < ?', 'K')
+    assert_charities charities.first(10)
   end
 
   test "should get charities list second page different size" do
-    ('A'..'Z').map {|name| Charity.make(:charity_name => name)}
+    charities = ('A'..'Z').map {|name| Charity.make(:charity_name => name)}
 
     get :index, :page => 2, :per_page => 20
 
-    assert_charities Charity.where('charity_name > ?', 'T')
+    assert_charities charities[20...40]
   end
 
   test "should get charities list filter by category" do
