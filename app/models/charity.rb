@@ -84,11 +84,11 @@ class Charity < User
   end
 
   def raising_funds
-    return causes.count(:active) + causes.count(:inactive) < causes.count
+    return !self.causes.where('causes.status IN (?,?,?)', :raising_funds, :completed, :paid).first.nil? || Cause.count_deleted(self.id) > 0
   end
 
   def can_delete?
-    not raising_funds
+    return (not raising_funds)
   end
 
   def destroyed?

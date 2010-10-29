@@ -5,3 +5,5 @@ tmp/**/*
 Gemfile.lock
 app/views/**/.tmp*
 public/system/data/**/*
+config/facebook.yml
+config/recaptcha.yml
