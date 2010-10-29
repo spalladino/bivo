@@ -64,10 +64,17 @@ class CharitiesController < ApplicationController
   end
 
   def check_url
-    if Charity.find_by_short_url(params[:url])
-      render :text => _('not_available')
+    charity = Charity.new
+    charity.short_url = params[:url]
+
+    if (charity.valid? || charity.errors[:short_url].empty?)
+      if (Charity.find_by_short_url(params[:short_url]))
+        render :text => _('not_available')
+      else
+        render :text => _('available')
+      end
     else
-      render :text => _('available')
+      render :text => _('invalid')
     end
   end
 

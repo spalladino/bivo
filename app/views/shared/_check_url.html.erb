@@ -12,12 +12,17 @@ function checkUrl() {
 	  data: {url : $("#short_url").val()},
 	  success: function(status) {
 		  $("#checkBtn").removeAttr('disabled');
-		  showAvailable(status == 'available');
+		  showAvailable(status);
 	  }
   });
 }
 
-function showAvailable(isAvailable) {
-  var result = isAvailable ? '<%=_("Available")%>' : '<%=_("Unavailable")%>';
-  $("#available").html(result);
+function showAvailable(urlStatus) {
+  if (urlStatus == "available") {
+    $("#available").html('<%=_("Available")%>');
+  } else if (urlStatus == "not_available") {
+    $("#available").html('<%=_("Unavailable")%>');
+  } else if (urlStatus == "invalid") {
+    $("#available").html('<%=_("Invalid Format")%>');
+  }
 }

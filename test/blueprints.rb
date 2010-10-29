@@ -6,10 +6,11 @@ require "./test/blueprints_helper"
 
 Sham.name         { "#{Faker::Name.name} #{rand(100)}" }
 Sham.simple_name  { "#{Faker::Name.last_name} #{rand(100)}" }
+Sham.short_name   { Faker::Name.last_name.gsub(/[^0-9a-z]+/i, '') }
 Sham.bs           { Faker::Company.bs.capitalize }
 Sham.description  { Faker::Company.catch_phrase }
 Sham.email        { Faker::Internet.email }
-Sham.url          { Faker::Internet.domain_name}
+Sham.url          { 'http://' + Faker::Internet.domain_name}
 Sham.country      { Faker::Address.uk_county }
 Sham.city         { Faker::Address.city }
 Sham.password     { rand(36**8).to_s(36) }
@@ -34,11 +35,10 @@ Cause.blueprint do
   charity         {Charity.make_or_get(5)}
   country         {Country.make_or_get(5)}
   cause_category  {CauseCategory.make_or_get(5)}
-
-  name          {Sham.bs}
-  url           {Sham.simple_name}
-  funds_needed  {Sham.funds}
-  funds_raised  {Sham.funds}
+  url             {Sham.short_name}
+  name            {Sham.bs}
+  funds_needed    {Sham.funds}
+  funds_raised    {Sham.funds}
 end
 
 PersonalUser.blueprint do
@@ -63,7 +63,7 @@ Charity.blueprint do
   email
   password
   charity_website  {Sham.url}
-  short_url        {Sham.simple_name}
+  short_url        {Sham.short_name}
   charity_type     {Sham.simple_name}
   tax_reg_number   {Sham.simple_name}
   city
@@ -74,7 +74,7 @@ end
 
 Shop.blueprint do
   name             {Sham.simple_name}
-  short_url        {Sham.simple_name}
+  short_url        {Sham.short_name}
   url              {Sham.url}
   redirection      {%w(search_box purchase_button custom_widget custom_html)[rand(4)].to_sym}
   description      {Sham.simple_name}

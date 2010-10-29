@@ -8,6 +8,8 @@ class Shop < ActiveRecord::Base
   has_many :countries, :through => :country_shops
   has_many :country_shops, :dependent => :destroy
 
+  accepts_nested_attributes_for :comissions
+
   UrlFormat = /[a-zA-Z\-_][a-zA-Z0-9\-_]*/
 
   enum_attr :status, %w(^inactive active deleted)
@@ -43,6 +45,7 @@ class Shop < ActiveRecord::Base
   validates_presence_of   :short_url
   validates_length_of     :short_url, :maximum => 255
   validates_uniqueness_of :short_url, :case_sensitive => false
+  validates :short_url, :short_url_format => true
 
 
   enum_attr :redirection, %w(^search_box purchase_button custom_widget custom_html) do
