@@ -83,14 +83,12 @@ class Charity < User
     return true
   end
 
-  def funds_raised
-    total_funds_raised
-  rescue
-    causes.sum(:funds_raised)
+  def raising_funds
+    return causes.count(:active) + causes.count(:inactive) < causes.count
   end
 
   def can_delete?
-    funds_raised == 0
+    not raising_funds
   end
 
   def destroyed?
