@@ -14,7 +14,7 @@ class Charity < User
   belongs_to :charity_category
   belongs_to :country
 
-  has_many :causes
+  has_many :causes, :dependent => :destroy
   has_many :votes, :through => :causes
 
   attr_protected :funds_raised
@@ -102,6 +102,9 @@ class Charity < User
       super
     else
       update_attribute :status, :deleted
+      self.causes.each do |cause|
+        cause.destroy
+      end
     end
   end
 
