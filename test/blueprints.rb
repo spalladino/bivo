@@ -61,6 +61,7 @@ Charity.blueprint do
   country          {Country.make_or_get(5)}
   charity_name     {Sham.simple_name}
   email
+  description
   password
   charity_website  {Sham.url}
   short_url        {Sham.short_name}

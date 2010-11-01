@@ -1,29 +1,10 @@
-<p>
-    <b><%=_('Name:')%></b>
-    <%= @cause.name %>
-</p>
-<p>
-    <b><%=_('Title:')%></b>
-    <%= @cause.url %>
-</p>
-<p>
-    <b><%=_('Content:')%></b>
-    <%= @cause.description %>
-</p>
-<p>
-    <b><%=s_('Cause|City') %></b>
-    <%= @cause.city %>
-</p>
-
-<p>
-<b><%=_('Founds Needed:')%></b>
-    <%= @cause.funds_needed %>
-</p>
-
-
-<div id="funds_raised">
-  <%= @cause.funds_raised %>
-</div>
+<p> <b><%=_('Name')%></b>: <%= @cause.name %> </p>
+<p> <b><%=_('Title')%></b>: <%= @cause.url %> </p>
+<p> <b><%=_('Content:')%></b>: <%= @cause.description %> </p>
+<p> <b><%=s_('Cause|City')%></b>: <%= @cause.city %> </p>
+<p> <b><%=_('country')%></b>: <%= Country.find(@cause.country_id).name%> </p>
+<p> <b><%=_('Founds Needed')%></b>: <%= @cause.funds_needed %> </p>
+<div id="funds_raised"> <%= @cause.funds_raised %> </div>
 
 <br/>
 <div id="vote_button">
@@ -49,7 +30,6 @@
 <div id="activate_deactivate_cause_btn">
   <%= active_deactive_cause_button @cause %>
 </div>
-
 
 <br/>
 <div id="progress_box">

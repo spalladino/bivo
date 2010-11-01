@@ -1,8 +1,13 @@
 <%= form_for @cause do |f|%>
 
   <%= render "shared/error_messages", :target => @cause %>
+  <br/>  <br/>
+  <%if current_user.is_admin_user%>
+     <%= f.label _('Charity')%>: <%= collection_select('cause', 'charity_id', Charity.all, :id, :name) %>
+  <%end%>
 
-  <%= f.label _("Cause Name")%><br/>
+  <br/>  <br/>
+  <%= f.label _("Cause Name")%>
   <%= f.text_field :name %><br/>
 
   <%= f.label _("Short Url")%><br/>

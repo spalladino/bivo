@@ -40,12 +40,14 @@ module CauseHelper
     end
 
    return content_tag :div,
-      button_to(label, { :action => "vote", :id => cause.id },
+      button_to(label,
+        {:action => "vote",:id => cause.id},
         :remote => true,
         :disabled => disabled ,
-        :onclick => '$(this).val("Submitting...");$(this).attr("disabled","true");return true;'),
-      :class => (if not visible then 'hidden' end),
-      :id => "vote_btn_#{cause.id}"
+        :onclick => 'disableAndContinue(this,"Submitting...")',
+        :class => (if not visible then 'hidden' end),
+        :id => "vote_btn_#{cause.id}"
+      )
   end
 
   # *Follow* is displayed when the user is not following the cause, otherwise *Unfollow* is displayed.
@@ -62,11 +64,13 @@ module CauseHelper
     end
 
     return content_tag :div,
-      button_to(label, { :action => action, :id => cause.id },
+      button_to(label,
+        {:action => action, :id => cause.id },
         :remote => true,
         :disabled => disabled ,
-        :onclick => '$(this).val("Submitting...");$(this).attr("disabled", "true");return true;'),
-      :id => "follow_cause_btn"
+        :onclick => 'disableAndContinue(this,"Submitting...")',
+        :id => "follow_cause_btn"
+      )
 
   end
 
@@ -76,23 +80,27 @@ module CauseHelper
     if current_user && current_user.is_admin_user
       label = if cause.status_inactive? then _("Activate") else _("Deactivate") end
       action = if cause.status_inactive? then "activate" else "deactivate" end
-      return content_tag :div, button_to(label, { :action => action, :id => cause.id },:remote => true,:onclick => '$(this).val("Submitting...");$(this).attr("disabled", "true");return true;',:id => "submit_active_btn")
+      return content_tag :div, button_to(label,
+        {:action => action, :id => cause.id },
+        :remote => true,
+        :onclick => 'disableAndContinue(this,"Submitting...")',
+        :id => "submit_active_btn"
+      )
     end
   end
 
 
 
-  def mark_as_paid_button(cause)
-    if current_user &&  current_user.is_admin_user
-      if cause.can_mark_as_paid?
-	      return content_tag :div, button_to(_("Mark as paid"), { :action => "mark_paid", :id => cause.id })
-      end
-    end
-  end
-
-  def mark_as_unpaid_button(cause)
-    if current_user && current_user.is_admin_user
-      return content_tag :div, button_to(_("Mark as unpaid"), { :action => "mark_unpaid", :id => cause.id })
+  def mark_as_paid_and_unpaid_button(cause)
+    if current_user && current_user.is_admin_user && ([:completed, :paid].include? cause.status)
+      label = if cause.status_completed? then _("Mark as Paid") else _("Mark as Unpaid") end
+      action = if cause.status_completed? then "mark_paid" else "mark_unpaid" end
+      return content_tag :div, button_to(label,
+        {:action => action, :id => cause.id },
+        :remote => true,
+        :onclick => 'disableAndContinue(this,"Submitting...")',
+        :id => "submit_active_btn"
+      )
     end
   end
 
@@ -107,9 +115,9 @@ module CauseHelper
   def progress_box(cause)
     if cause.status == :active
       return vote_counter cause
-    elsif cause.status = :raising_funds
+    elsif cause.status == :raising_funds
       return content_tag :span, cause_funds_completed(cause)
-    elsif cause.status = :completed
+  elsif cause.status == :completed
       return content_tag :span, cause.founds_raised
     end
   end

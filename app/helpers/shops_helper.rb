@@ -7,7 +7,12 @@ module ShopsHelper
     if current_user && current_user.is_admin_user
       label = if shop.status_inactive? then _("Activate") else _("Deactivate") end
       action = if shop.status_inactive? then "activate" else "deactivate" end
-      return content_tag :div, button_to(label, { :action => action, :id => shop.id },:remote => true,:onclick => '$(this).val("Submitting...");$(this).attr("disabled", "true");return true;',:id => "submit_active_btn")
+      return content_tag :div, button_to(label,
+        { :action => action, :id => shop.id },
+        :remote => true,
+        :onclick => 'disableAndContinue(this,"Submitting..")',
+        :id => "submit_active_btn"
+      )
     end
   end
 

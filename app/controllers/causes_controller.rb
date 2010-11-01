@@ -4,7 +4,7 @@ class CausesController < ApplicationController
   before_filter :load_cause, :except => [ :details, :index, :new, :check_url, :create ]
 
   before_filter :only_owner_or_admin, :only => [:delete, :edit, :update]
-  before_filter :only_charity, :only => [:create]
+  before_filter :only_admin_or_charity, :only => [:create]
   before_filter :only_admin, :only => [:activate, :deactivate, :mark_paid, :mark_unpaid ]
 
   before_filter :status_allow_edit , :only => [:edit, :update]
@@ -110,7 +110,9 @@ class CausesController < ApplicationController
   def create
     @cause = Cause.new params[:cause]
     @cause.funds_raised = 0
-    @cause.charity_id = current_user.id
+    if !current_user.is_admin_user
+      @cause.charity_id = current_user.id
+    end
     if !@cause.save
       render 'new'
     else
@@ -173,14 +175,22 @@ class CausesController < ApplicationController
 
   def mark_paid
     @cause.status = :paid
-    @cause.save
-    redirect_to request.referer
+    if @cause.save then
+      ajax_flash[:notice] = _("Marked as Paid")
+    else
+      ajax_flash[:notice] = _("Error marking as UnPaid cause")
+    end
+    redirect_to request.referer unless request.xhr?
   end
 
   def mark_unpaid
     @cause.status = :completed
-    @cause.save
-    redirect_to request.referer
+    if @cause.save then
+      ajax_flash[:notice] = _("Marked as UnPaid")
+    else
+      ajax_flash[:notice] = _("Error marking as UnPaid cause")
+    end
+    redirect_to request.referer unless request.xhr?
   end
 
   private
@@ -202,15 +212,15 @@ class CausesController < ApplicationController
     end
   end
 
-  def only_charity
-    if not current_user.is_charity_user
+  def only_admin_or_charity
+    if not (current_user.is_charity_user || current_user.is_admin_user)
       render :nothing => true, :status => :forbidden
     end
   end
 
   def status_allow_edit
-    if !@cause.can_edit?
-       render :nothing => true, :status => :forbidden
+    if !@cause.can_edit? && (current_user && !current_user.is_admin_user)
+      render :nothing => true, :status => :forbidden
     end
   end
 
