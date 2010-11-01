@@ -41,11 +41,7 @@
   </div>
   
   <h3><%=_("Comissions")%></h3>
-  <%# render :partial => 'comission', :locals => {:f => f}, :object => Comission.new(:shop => @shop) %>
-  <%# fields_for 'shop[comission_attributes][]', Comission.new(:shop => @shop), :index => 100 do |cf|%>
-  <% @shop.comissions.each do |comission| %>
-    <%= render :partial => 'comission', :locals => {:f => f}, :object => comission %>
-  <% end %>
+
   
   <h3><%=_("Image")%></h3>
   <div class="field">
