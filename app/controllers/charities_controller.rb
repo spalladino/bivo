@@ -24,7 +24,7 @@ class CharitiesController < ApplicationController
     # TODO: Use full text search
     @name = params[:name]
     apply_filters do |c|
-      c.where("#{Charity.table_name}.charity_name = ? OR #{Charity.table_name}.description = ?", @name, @name)
+      c.where("#{Charity.table_name}.charity_name ~* ? OR #{Charity.table_name}.description ~* ?", @name, @name)
     end unless @name.blank?
 
     # Set categories to show

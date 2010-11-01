@@ -50,7 +50,7 @@ class CausesController < ApplicationController
 
     # Filter by text
     @name = params[:name]
-    apply_filters { |c| c.where('causes.name = ? OR causes.description = ?', @name, @name) } unless @name.blank?
+    apply_filters { |c| c.where('causes.name ~* ? OR causes.description ~* ?', @name, @name) } unless @name.blank?
 
     # Count for all causes
     all_causes_count = @causes.size
