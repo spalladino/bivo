@@ -208,24 +208,28 @@ class CausesController < ApplicationController
 
   def only_owner_or_admin
     if not (@cause.charity.id == current_user.id || current_user.is_admin_user)
+      ajax_flash[:notice] = _("Only admin")
       render :nothing => true, :status => :forbidden
     end
   end
 
   def only_admin_or_charity
     if not (current_user.is_charity_user || current_user.is_admin_user)
+      ajax_flash[:notice] = _("Only admin or charity")
       render :nothing => true, :status => :forbidden
     end
   end
 
   def status_allow_edit
     if !@cause.can_edit? && (current_user && !current_user.is_admin_user)
+      ajax_flash[:notice] = _("Status doesnt allow edit")
       render :nothing => true, :status => :forbidden
     end
   end
 
   def status_allow_delete
     if !current_user.is_admin_user && !@cause.can_delete?
+       ajax_flash[:notice] = _("Status doesnt allow delete")
        render :nothing => true, :status => :forbidden
     end
   end
@@ -234,6 +238,7 @@ class CausesController < ApplicationController
   def follows_exist
     @follow = Follow.find_by_cause_id_and_user_id(params[:id], current_user.id)
     if not @follow
+      ajax_flash[:notice] = _("Follow already exists")
       render :nothing => true, :status => :method_not_allowed
     end
   end
