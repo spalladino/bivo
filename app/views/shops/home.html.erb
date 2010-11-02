@@ -1,3 +1,17 @@
+<% content_for(:js) do %>
+	function replaceSearch(form){
+    var value = $("input").val();
+    if (value != ""){
+      form.action = form.action.replace("$query",value);
+      return true;
+    }else{
+      alert("you must complete the search field");
+      return false;
+    }
+	}
+<% end %>
+
+
 <p>
     <b><%=_('Name:')%></b>
     <%= @shop.name %>
@@ -16,7 +30,22 @@
 
 <p>
     <b><%=_('affiliate code')%>:</b><br/>
-    <%=raw @shop.affiliate_code%>
+    <!-- Search box: -->
+    <%if @shop.redirection == :search_box%>
+        <form action="<%= @shop.affiliate_code %>" onsubmit="return replaceSearch(this)">
+          <p>Search: <br/>
+           <input type="text"/>
+            <%= submit_tag 'submit'%>
+          </form>
+    <%end%>
+    <!-- Purchase button: -->
+    <%if @shop.redirection == :purchase_button%>
+      <b><%=_('Go to:')%></b> <a href= "<%=@shop.affiliate_code %>"> <%=@shop.name %></a>
+    <%end%>
+
+    <!-- Custom widget: -->
+    <%if @shop.redirection == :custom_widget%><%=raw @shop.affiliate_code%><%end%>
+
 </p>
 
 <p>

@@ -37,6 +37,9 @@ class ShopsController < ApplicationController
 
   def home
     @shop = Shop.find_by_short_url! params[:short_url]
+    if @shop.redirection == :custom_html
+      redirect_to @shop.affiliate_code
+    end
   end
 
   def show
@@ -62,7 +65,7 @@ class ShopsController < ApplicationController
     end
     redirect_to request.referer unless request.xhr?
   end
-  
+
   def destroy
     #TODO: Check when a shop can be safely destroyed
     if @shop.destroy.destroyed? then
