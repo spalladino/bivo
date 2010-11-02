@@ -14,14 +14,15 @@
     <%= @shop.description %>
 </p>
 
-
-
 <p>
     <b><%=_('Comission')%>:</b>
-    <%=@shop.comission_value%><%if @shop.comission_kind == :percentage%>%<% end%>
-    <%=@shop.comission_details%>
-</p>
+    <%=@shop.comission_value%><%if @shop.comission_kind == :percentage%>%<% end%> <%=_("will be donated for your purchase")%>
 
+</p>
+<p>
+<b><%=_('Comission details')%>:</b>
+  <%=@shop.comission_details%>
+</p>
 <p>
   <%= image_tag @shop.image.url(:small) if @shop.image_file_name %>
 </p>

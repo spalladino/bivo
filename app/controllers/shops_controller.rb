@@ -2,7 +2,7 @@ class ShopsController < ApplicationController
 
   before_filter :authenticate_user!, :except => [:details,:home,:show]
   before_filter :only_admin, :only => [:new, :create, :edit, :update, :activate, :deactivate]
-  before_filter :load_shop, :except => [ :details, :new, :create, :home]
+  before_filter :load_shop, :except => [ :details, :new, :create, :home, :index]
   before_filter :load_places, :only => [ :new, :edit, :create, :update ]
 
   def details
@@ -14,6 +14,17 @@ class ShopsController < ApplicationController
   end
 
   def edit
+  end
+
+   def index
+    @shops = Shop.all
+    @count = Shop.count
+
+    # Set pagination
+    @per_page = (params[:per_page] || 20).to_i
+    @shops = @shops.paginate(:per_page => @per_page, :page => params[:page])
+    @page_sizes = [5,10,20,50]
+
   end
 
   def create
