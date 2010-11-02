@@ -14,14 +14,12 @@
     <%= @shop.description %>
 </p>
 
-<p>
-    <b><%=_('Worldwide?:')%></b>
-    <%= @shop.worldwide %>
-</p>
+
 
 <p>
-    <b><%=_('affiliate code')%>:</b>
-    <%= @shop.affiliate_code%>
+    <b><%=_('Comission')%>:</b>
+    <%=@shop.comission_value%><%if @shop.comission_kind == :percentage%>%<% end%>
+    <%=@shop.comission_details%>
 </p>
 
 <p>

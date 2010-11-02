@@ -10,20 +10,29 @@
     <%= f.label :description %>
     <%= f.text_field :description %>
   </div>
-  
+
   <div class="field">
     <%= f.label :short_url %>
     <%= f.text_field :short_url %>
   </div>
-  
+
   <div class="field">
     <%= f.label :url %>
     <%= f.text_field :url %>
   </div>
-  
+
+
+  <h3><%= _("Affiliate Redirection") %></h3>
+  <div>
+    <%= f.radio_button :redirection,:search_box , :checked => true %> <%= f.label :search_box %> <br />
+    <%= f.radio_button :redirection,:purchase_button %>  <%= f.label :purchase_button %><br />
+    <%= f.radio_button :redirection,:custom_widget %>  <%= f.label :custom_widget %><br />
+    <%= f.radio_button :redirection,:custom_html %>  <%= f.label :custom_html %>
+  </div>
+
+  <h3><%= _("Affiliate Code") %></h3>
   <div class="field">
-    <%= f.label :description %>
-    <%= f.text_field :description %>
+    <%= f.text_area :affiliate_code %>
   </div>
 
   <h3><%= _("Recommended for") %></h3>
@@ -39,20 +48,27 @@
       </div>
     <% end%>
   </div>
-  
+
   <h3><%=_("Comissions")%></h3>
 
-  
+    <%= f.label _("Commision")%>
+    <%= f.text_field :comission_value %>
+    <%= f.enum_select :comission_kind , :include_blank => false%><br />
+    <%= f.label _("Commision Details")%>
+    <%= f.text_field :comission_details %> <br />
+    <%= f.check_box :comission_recurrent%>  <%= f.label _("recurrent each month")%><br />
+
+
   <h3><%=_("Image")%></h3>
   <div class="field">
     <%= f.label :image %>
     <%= f.file_field :image %>
   </div>
-  
+
   <div class="field">
     <%= image_tag @shop.image.url(:small) if @shop.image_file_name %>
   </div>
-  
+
   <p><%= f.submit 'Save' %></p>
 
 <% end %>

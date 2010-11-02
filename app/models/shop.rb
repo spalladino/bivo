@@ -13,11 +13,11 @@ class Shop < ActiveRecord::Base
                     :path => ":rails_root/public/system/data/shops/:id/:style/:basename.:extension"
 
   UrlFormat = /[a-zA-Z\-_][a-zA-Z0-9\-_]*/
-  
+
   enum_attr :comission_kind, %w(percentage fixed_amount) do
     labels :percentage => _("percentage"), :fixed_amount => _("fixed amount")
   end
-  
+
   enum_attr :status, %w(^inactive active deleted)
 
   enum_attr :redirection, %w(^search_box purchase_button custom_widget custom_html) do
@@ -47,9 +47,9 @@ class Shop < ActiveRecord::Base
   validates_presence_of     :comission_value
   validates_numericality_of :comission_value, :greater_than_or_equal_to => 0
   validates_numericality_of :comission_value, :less_than_or_equal_to => 100, :if => :comission_kind_percentage?
-  
+
   validates_length_of :comission_details, :maximum => 255
-  
+
   #TODO: Validate widget fields
 
 end
