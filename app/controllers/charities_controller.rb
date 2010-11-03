@@ -21,8 +21,7 @@ class CharitiesController < ApplicationController
     apply_filters {|c| c.where("#{Charity.table_name}.country_id = ?", @region.to_i)} unless @region.blank?
 
     # Filter by name
-    # TODO: Use full text search
-    @name = params[:name]
+   @name = params[:name]
     apply_filters do |c|
       c.where("#{Charity.table_name}.charity_name ~* ? OR #{Charity.table_name}.description ~* ?", @name, @name)
     end unless @name.blank?
