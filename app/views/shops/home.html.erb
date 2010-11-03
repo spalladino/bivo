@@ -1,7 +1,7 @@
 <% content_for(:js) do %>
 	function replaceSearch(form){
     var value = $("input").val();
-    if (value != ""){
+    if (value.trim() != ""){
       form.action = form.action.replace("$query",value);
       return true;
     }else{
