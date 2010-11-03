@@ -10,6 +10,7 @@ gem 'will_paginate'
 gem 'enumerated_attribute'
 gem 'omniauth'
 gem "jquery-rails"
+gem "texticle"
 
 group :test do
   gem 'machinist'
@@ -47,3 +48,4 @@ end
 # group :development, :test do
 #   gem 'webrat'
 # end
+

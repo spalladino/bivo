@@ -1,6 +1,13 @@
 require 'enumerated_attribute'
 
 class Shop < ActiveRecord::Base
+  index do
+    name
+    description
+  end
+  #Every time you modify columns in your index block, or add new index blocks,
+  #you should create a new migration to updated the indexes. (rake texticle:migration and rake db:migrate)
+  #If you don’t update the indexes, searches will still work as expected, they just might be kind of slow.
 
   has_many :comissions
   has_many :incomes
