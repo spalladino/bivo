@@ -8,6 +8,8 @@ class Shop < ActiveRecord::Base
   has_many :countries, :through => :country_shops
   has_many :country_shops, :dependent => :destroy
 
+  belongs_to :shop_category
+
   has_attached_file :image, :styles => { :small => "150x150>" },
                     :url  => "/system/data/shops/:id/:style/:basename.:extension",
                     :path => ":rails_root/public/system/data/shops/:id/:style/:basename.:extension"
