@@ -73,6 +73,10 @@ Charity.blueprint do
   status           {:active}
 end
 
+ShopCategory.blueprint do
+  name             {Sham.simple_name}
+end
+
 Shop.blueprint do
   name             {Sham.simple_name}
   short_url        {Sham.short_name}

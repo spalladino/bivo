@@ -79,7 +79,8 @@ class ShopsController < ApplicationController
 
   def destroy
     #TODO: Check when a shop can be safely destroyed
-    if @shop.destroy.destroyed? then
+    @shop.destroy
+    if @shop.destroyed? then
       flash[:notice] = _("Shop has been deleted")
       redirect_to root_url
     else
