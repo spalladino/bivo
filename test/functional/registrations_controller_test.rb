@@ -8,7 +8,7 @@ class RegistrationsControllerTest < ActionController::TestCase
   #CREATE
   test "should create charity" do
     @controller.stubs(:captcha_valid?).returns(true)
-    
+
     post :create,
       :user =>
       {
@@ -24,7 +24,8 @@ class RegistrationsControllerTest < ActionController::TestCase
         :charity_type          => "def",
         :tax_reg_number        => 123456,
         :country_id            => Country.make.id,
-        :city                  => "Bs As"
+        :city                  => "Bs As",
+        :description           => "Dscription test"
       }
 
     assert_not_nil Charity.find_by_email("char@bivotest.com")
@@ -130,7 +131,7 @@ class RegistrationsControllerTest < ActionController::TestCase
         :country_id            => Country.make.id,
         :city                  => "Bs As"
       }
-    
+
     assert_equal Charity.find(charity.id).email, "char123@bivotest.com"
     assert_response :found
   end
@@ -151,7 +152,7 @@ class RegistrationsControllerTest < ActionController::TestCase
         :country_id            => nil,
         :city                  => "Bs As"
       }
-    
+
     assert_not_equal Charity.find(charity.id).email, "char456@bivotest.com"
     assert_response :ok
   end
@@ -167,7 +168,7 @@ class RegistrationsControllerTest < ActionController::TestCase
         :first_name            => "juan",
         :last_name             => "rodriguez"
       }
-    
+
     assert_equal PersonalUser.find(personal.id).email, "aa@bb.com"
     assert_response :found
   end
@@ -183,8 +184,9 @@ class RegistrationsControllerTest < ActionController::TestCase
         :first_name            => "juan",
         :last_name             => nil
       }
-    
+
     assert_not_equal PersonalUser.find(personal.id).email, "dd@ee.com"
     assert_response :ok
   end
 end
+

@@ -26,8 +26,12 @@
   <p><%= f.label :city, "City" %><br />
   <%= f.text_field :city %></p>
 
+  <p><%= f.label _("Description") %><br />
+  <%= f.text_area :description %></p>
+
   <% content_for :js do %> <!-- javascript code to run, for this view only -->
     <%= render :partial => 'shared/check_url', :locals => {
       :is_new => true, :url_was => nil, :url_check => '/charity/check_url'
     } %>
   <%end%>
+

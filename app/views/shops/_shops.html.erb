@@ -1,0 +1,14 @@
+<%= will_paginate @shops %>
+
+<div id="shop-list">
+<% for shop in @shops %>
+  <div class="shop">
+	  <h3><%= link_to shop.name, shop_path(shop.id) %></h3>
+    <p><b><%=_('Website:')%></b> <%=shop.url%></p>
+    <p><%=shop.description%></p>
+    <p><b><%=_('Shop at:')%></b> <a href= "<%=shop.url %>"> <%=shop.url %></a></p>
+    <p><b><%=_('Comission')%>:</b><%=shop.comission_value%><%if shop.comission_kind == :percentage%>%<% end%> <%=_("will be donated for your purchase")%></p>
+  </div>
+<% end %>
+</div>
+

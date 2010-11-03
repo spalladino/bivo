@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101026182452) do
+ActiveRecord::Schema.define(:version => 20101029195753) do
 
   create_table "cause_categories", :force => true do |t|
     t.string   "name"
@@ -43,16 +43,6 @@ ActiveRecord::Schema.define(:version => 20101026182452) do
   create_table "charity_follows", :force => true do |t|
     t.integer  "user_id"
     t.integer  "charity_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "comissions", :force => true do |t|
-    t.float    "value"
-    t.string   "kind"
-    t.string   "details"
-    t.boolean  "recurrent"
-    t.integer  "shop_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -104,6 +94,10 @@ ActiveRecord::Schema.define(:version => 20101026182452) do
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
+    t.float    "comission_value"
+    t.string   "comission_kind"
+    t.string   "comission_details"
+    t.boolean  "comission_recurrent"
   end
 
   create_table "transactions", :force => true do |t|

@@ -41,7 +41,10 @@ class ShopsControllerTest < ActionController::TestCase
         :description => "Testing shop",
         :short_url => "shop",
         :url => "www.example.com",
-        :redirection => "purchase_button"
+        :redirection => "purchase_button",
+        :comission_value => 10.0,
+        :comission_details => "comission",
+        :comission_kind => "percentage"
       } 
     end
     
@@ -58,6 +61,9 @@ class ShopsControllerTest < ActionController::TestCase
         :short_url => "shop",
         :url => "www.example.com",
         :redirection => "purchase_button",
+        :comission_value => 10.0,
+        :comission_details => "comission",
+        :comission_kind => "percentage",
         :country_ids => countries.map(&:id)
       } 
     end

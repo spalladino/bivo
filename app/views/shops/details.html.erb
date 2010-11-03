@@ -15,15 +15,14 @@
 </p>
 
 <p>
-    <b><%=_('Worldwide?:')%></b>
-    <%= @shop.worldwide %>
-</p>
+    <b><%=_('Comission')%>:</b>
+    <%=@shop.comission_value%><%if @shop.comission_kind == :percentage%>%<% end%> <%=_("will be donated for your purchase")%>
 
+</p>
 <p>
-    <b><%=_('affiliate code')%>:</b>
-    <%= @shop.affiliate_code%>
+<b><%=_('Comission details')%>:</b>
+  <%=@shop.comission_details%>
 </p>
-
 <p>
   <%= image_tag @shop.image.url(:small) if @shop.image_file_name %>
 </p>

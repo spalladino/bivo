@@ -61,6 +61,7 @@ Charity.blueprint do
   country          {Country.make_or_get(5)}
   charity_name     {Sham.simple_name}
   email
+  description
   password
   charity_website  {Sham.url}
   short_url        {Sham.short_name}
@@ -81,6 +82,10 @@ Shop.blueprint do
   worldwide        {[true,false][rand(2)]}
   affiliate_code   {Sham.simple_name}
   status           {:active}
+  comission_value     {rand(10)}
+  comission_kind      {:percentage}
+  comission_details   {Sham.description}
+  comission_recurrent {[true,false][rand(2)]}
 end
 
 Vote.blueprint do

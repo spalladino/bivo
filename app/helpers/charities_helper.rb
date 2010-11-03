@@ -14,11 +14,13 @@ module CharitiesHelper
     end
 
     return content_tag :div,
-      button_to(label, { :action => action, :id => charity.id },
+      button_to(label,
+        { :action => action, :id => charity.id },
         :remote => true,
         :disabled => disabled ,
-        :onclick => '$(this).val("Submitting...");$(this).attr("disabled", "true");return true;'),
-      :id => "follow_charity_btn"
+        :onclick => 'disableAndContinue(this,"Submitting...")',
+        :id => "follow_charity_btn"
+      )
 
   end
 
@@ -29,7 +31,12 @@ module CharitiesHelper
     if current_user && current_user.is_admin_user
       label = if charity.status_inactive? then _("Activate") else _("Deactivate") end
       action = if charity.status_inactive? then "activate" else "deactivate" end
-      return content_tag :div, button_to(label, { :action => action, :id => charity.id },:remote => true,:onclick => '$(this).val("Submitting...");$(this).attr("disabled", "true");return true;',:id => "submit_active_btn")
+      return content_tag :div, button_to(label,
+        {:action => action,:id => charity.id },
+        :remote => true,
+        :onclick => 'disableAndContinue(this,"Submitting...")',
+        :id => "submit_active_btn"
+      )
     end
   end
 

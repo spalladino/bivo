@@ -9,7 +9,7 @@
 <p> <b><%=_('charity_type')%></b>: <%= @charity.charity_type%> </p>
 <p> <b><%=_('rating')%></b>: <%= @charity.rating%> </p>
 <p> <b><%=_('rating_url')%></b>: <%= @charity.rating_url%> </p>
-<p> <b><%=_('country_id')%></b>: <%= @charity.country_id%> </p>
+<p> <b><%=_('country')%></b>: <%= Country.find(@charity.country_id).name%> </p>
 <p> <b><%=_('city')%></b>: <%= @charity.city%> </p>
 <p> <b><%=_('description')%></b>: <%= @charity.description%> </p>
 

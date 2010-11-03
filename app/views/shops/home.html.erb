@@ -1,23 +1,47 @@
-<p>
-    <b><%=_('Name:')%></b>
-    <%= @shop.name %>
-</p>
-<p>
-    <b><%=_('Short_Url')%>:</b>
-    <%= @shop.short_url %>
-</p>
-<p>
-    <b><%=_('Shop at:')%></b> <a href= "<%=@shop.url %>"> <%=@shop.url %></a>
-</p>
-<p>
-    <b><%=_('Description:')%></b>
-    <%= @shop.description %>
-</p>
+<% content_for(:js) do %>
+	function replaceSearch(form){
+    var value = $("input").val();
+    if (value != ""){
+      form.action = form.action.replace("$query",value);
+      return true;
+    }else{
+      alert("you must complete the search field");
+      return false;
+    }
+	}
+<% end %>
 
-<p>
-    <b><%=_('affiliate code')%>:</b>
-    <%= @shop.affiliate_code%>
-</p>
+
+<h3><%= _("Name") %></h3>
+<p><%= @shop.name %></p>
+
+<h3><%= _("Short Url") %></h3>
+<p><%= @shop.short_url %></p>
+
+<h3><%= _("Shop at") %></h3>
+<p><a href= "<%=@shop.url %>"> <%=@shop.url %></a></p>
+
+<h3><%= _("Description") %></h3>
+<p><%= @shop.description %></p>
+
+<h3><%= _("Affiliate Code") %></h3>
+<div>
+<!-- Search box: -->
+    <%if @shop.redirection == :search_box%>
+        <form action="<%= @shop.affiliate_code %>" onsubmit="return replaceSearch(this)">
+          <p>Search: <br/>
+           <input type="text"/>
+            <%= submit_tag 'submit'%>
+          </form>
+    <%end%>
+    <!-- Purchase button: -->
+    <%if @shop.redirection == :purchase_button%>
+      <b><%=_('Go to:')%></b> <a href= "<%=@shop.affiliate_code %>"> <%=@shop.name %></a>
+    <%end%>
+
+    <!-- Custom widget: -->
+    <%if @shop.redirection == :custom_widget%><%=raw @shop.affiliate_code%><%end%>
+</div>
 
 <p>
   <%= image_tag @shop.image.url(:small) if @shop.image_file_name %>

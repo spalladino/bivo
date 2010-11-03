@@ -19,6 +19,8 @@ class Charity < User
 
   attr_protected :funds_raised
 
+
+
   validates_presence_of :country_id
   validates_presence_of :charity_category
 
@@ -47,6 +49,7 @@ class Charity < User
   validates_presence_of :city
   validates_length_of :city, :maximum => 255
 
+  validates_presence_of :description
   validates_length_of :description, :maximum => 255
 
   enum_attr :status, %w(^inactive active deleted),:nil => false
