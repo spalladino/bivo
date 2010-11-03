@@ -10,7 +10,6 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-
 ActiveRecord::Schema.define(:version => 20101103144154) do
 
   create_table "cause_categories", :force => true do |t|
@@ -97,11 +96,11 @@ ActiveRecord::Schema.define(:version => 20101103144154) do
     t.string   "affiliate_code"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "status"
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
-    t.string   "status"
     t.float    "comission_value"
     t.string   "comission_kind"
     t.string   "comission_details"
@@ -178,4 +177,3 @@ ActiveRecord::Schema.define(:version => 20101103144154) do
   end
 
 end
-
