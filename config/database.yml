@@ -41,6 +41,7 @@ test:
   pool: 5
   username: bivo
   password: bivo
+  min_messages: WARNING
 
 production:
   adapter: postgresql
