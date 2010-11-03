@@ -35,6 +35,10 @@ class User < ActiveRecord::Base
     false
   end
 
+  def name
+    "#{first_name} #{last_name}"
+  end
+
   # Had to overwrite it from devise because if not it asks for password every time you want to update and it's very annoying.
   def update_with_password(params={})
     if params[:password].blank?

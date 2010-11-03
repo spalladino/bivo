@@ -1,5 +1,10 @@
 class AdminController < ApplicationController
   prepend_before_filter :authenticate_user!, :only_admin
+  
+  def index
+    @users = User.all
+    
+  end
 
   def edit_user
     @id = params[:id]
