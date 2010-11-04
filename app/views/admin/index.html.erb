@@ -1,38 +1,41 @@
-<%= link_to "Add User" %>
-<%= link_to "Add Charity" %>
+<%= link_to "Add User", admin_new_personal_user_path %> |
+<%= link_to "Add Charity", admin_new_charity_path %>
 
-Show: <%= select( "search", "show", { 
-                   "all"                        => "1", 
-                   "charities"                  => "2", 
-                   "personal accounts"          => "3", 
-                   "active charities"           => "4",
-                   "inactive charities"         => "5",
-                   "active personal account"    => "6",
-                   "inactive personal accounts" => "7"
-      }) %>
+<br /><br />
+<%= form_tag "/admin/search", :method => "get" do %>
+<div>
+Show: <br />
 
-<%= text_field_tag :search, :filter_by  %>
+<%= select_tag :show, options_for_select(@show_options) %>
+
+<%= text_field_tag :filter %>
 <%= submit_tag("Search") %>
-
-<table>
-  <tr>
-    <th><%= _("Name") %></th>
-    <th><%= _("Type") %></th>
-    <th><%= _("Status") %></th>
-    <th><%= _("Last Login") %></th>
-    <th><%= _("Signup Date") %></th>
-    <th>&nbsp;</th>
-    <th>&nbsp;</th>
-  </tr>
-<% for user in @users %>
-  <tr>
-    <th><%= u.name %></th>
-    <th><%= u.type %></th>
-    <th><%= u.status %></th>
-    <th></th>
-    <th></th>
-    <th><%= link_to _("Delete") %></th>
-    <th><%= link_to _("Edit") %></th>
-  </tr>
+</div>
 <% end %>
-</table>
+<br />
+
+<div id="results">
+  Results: <br />
+  <table>
+    <tr>
+      <th>&nbsp;</th>
+      <th><%= _("Name") %></th>
+      <th><%= _("Type") %></th>
+      <th><%= _("Status") %></th>
+      <th><%= _("Last Login") %></th>
+      <th><%= _("Signup Date") %></th>
+      <th>&nbsp;</th>
+    </tr>
+  <% for user in @users %>
+    <tr>
+      <td><%= link_to _("Delete"), admin_delete_user_path(user.id), :confirm => "are you sure you want to delete the user?", :method => :post %></td>
+      <td><%= user.name %></td>
+      <td><%= user.type %></td>
+      <td><%= user.status %></td>
+      <td><%= user.last_sign_in_at %></td>
+      <td><%= user.created_at %></td>
+      <td><%= link_to _("Edit"), admin_edit_user_path(user.id) %></td>
+    </tr>
+  <% end %>
+  </table>
+</div>

@@ -1,5 +1,6 @@
-<h2><%= title_for @type %></h2>
-<%= form_for(@resource, :as => @resource_name, :url => admin_update_user_path, :html => { :method => :post }) do |f| %>
+<h2><%= _("Edit User") %></h2>
+
+<%= form_for(@resource, :as => :user, :url => admin_update_user_path, :html => { :method => :post }) do |f| %>
   <%= render "shared/error_messages", :target => @resource %>
   <%= hidden_field_tag :id, @id %>
   <p><%= f.label :email, _("E-Mail") %><br />

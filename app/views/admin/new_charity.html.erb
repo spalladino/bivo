@@ -1,0 +1,56 @@
+<h2><%= _("Create New User") %></h2>
+
+<%= form_for(@resource, :as => @resource_name, :url => admin_create_charity_path) do |f| %>
+  <%= render "shared/error_messages", :target => @resource %>
+  
+  <%= f.radio_button :type, _("PersonalUser"), :checked => true %> <%= f.label :personal, _("Personal") %> <br />
+  <%= f.radio_button :type, _("Charity") %>  <%= f.label :charity, _("Charity")  %>	
+
+  <p><%= f.label :email, _("E-Mail") %><br />
+  <%= f.text_field :email %></p>
+
+  <p><%= f.label :password %><br />
+  <%= f.password_field :password %></p>
+
+  <p><%= f.label :password_confirmation %><br />
+  <%= f.password_field :password_confirmation %></p>
+
+  <p><%= f.label :charity_name, "Charity Name" %><br />
+  <%= f.text_field :charity_name %></p>
+
+  <p><%= f.label :charity_website, "Charity Website" %><br />
+  <%= f.text_field :charity_website %></p>
+
+  <%= f.label _("Short Url")%><br/>
+  http://www.bivo.org/ng/<%= f.text_field :short_url, :id => 'short_url', :onfocus => "javascript:$('#available').html('');"%>
+  <%= tag 'input', {:type => 'button', :value => _('Check Url'), :onclick => "javascript:checkUrl();"} %>
+  &nbsp;
+  <span id="available"></span>
+  <br/>
+
+  <p><%= f.label :category, "Category" %>
+  <%= f.select :charity_category_id, @categories.collect{ |c| [c.name, c.id] }, :include_blank => true %></p>
+
+  <p><%= f.label :charity_type, "Charity Type" %><br />
+  <%= f.text_field :charity_type %></p>
+
+  <p><%= f.label :tax_reg_number, "Tax Registration Number" %><br />
+  <%= f.text_field :tax_reg_number %></p>
+
+  <p><%= f.label :country, "Country" %>
+  <%= f.select :country_id, @countries.collect{ |c| [c.name, c.id] }, :include_blank => true %></p>
+
+  <p><%= f.label :city, "City" %><br />
+  <%= f.text_field :city %></p>
+
+  <p><%= f.label _("Description") %><br />
+  <%= f.text_area :description %></p>
+
+  <% content_for :js do %> <!-- javascript code to run, for this view only -->
+    <%= render :partial => 'shared/check_url', :locals => {
+      :is_new => true, :url_was => nil, :url_check => '/charity/check_url'
+    } %>
+  <%end%>
+
+  <p><%= f.submit _("Create Account") %></p>
+<% end %>

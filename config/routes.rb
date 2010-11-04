@@ -1,16 +1,22 @@
 Bivo::Application.routes.draw do
   devise_for :users, :controllers => {:registrations => 'registrations' }
-
   match '/auth/facebook/callback' => 'facebook_authentications#create'
 
+  #paths for admin manager
+  get "admin", :to => "admin#index", :as => "admin_user_manager"
+  get "admin/new_personal_user", :to => "admin#new_personal_user", :as => "admin_new_personal_user"
+  post "admin/create_personal_user", :to => "admin#create_personal_user", :as => "admin_create_personal_user"
+  get "admin/new_charity", :to => "admin#new_charity", :as => "admin_new_charity"
+  post "admin/create_charity", :to => "admin#create_charity", :as => "admin_create_charity"
   get "admin/:id/edit_user", :to => "admin#edit_user", :as => "admin_edit_user"
-  post "admin/edit_user", :to => "admin#update", :as => "admin_update_user"
+  post "admin/update_user", :to => "admin#update_user", :as => "admin_update_user"
+  get "admin/search", :to => "admin#search", :as => "admin_search"
+  post "admin/delete_user/:id", :to => "admin#delete_user", :as => "admin_delete_user"
 
+  #paths for handling eula
   get "eula", :to => "home#eula", :as => "eula"
   get "accept_eula",  :to => "home#accept_eula", :as => "accept_eula"
   post "confirm_eula", :to => "home#confirm_eula", :as => "confirm_eula"
-
-
 
   get "charity/check_url", :to => "charities#check_url"
   get "charity/c/:url", :controller => "charities", :action => "details", :constraints => { :url => Charity::UrlFormat }

@@ -6,7 +6,8 @@
         <% elsif (current_user.type == "PersonalUser") %>
           <%= link_to _("User Settings"), edit_user_registration_path %>
         <% elsif (current_user.type == "Admin") %>
-          <%= _("Admin") %>
+          <%= link_to _("Admin User Manager"), admin_user_manager_path %>
+
         <% end %>
   <% else %>
     <%= link_to _("Sign up"), new_user_registration_path %>  (<%= link_to _("Forgot your password?"), new_user_password_path %>) |
