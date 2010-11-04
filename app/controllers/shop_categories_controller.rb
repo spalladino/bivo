@@ -1,6 +1,4 @@
 class ShopCategoriesController < ApplicationController
-  layout false
-
   def edit
     if params[:id].blank?    
       @category = nil

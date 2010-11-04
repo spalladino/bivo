@@ -1,6 +1,5 @@
 module ShopsHelper
 
-
   # *Deactivate* button: Deactivates the current shop,
   # *Activate* button: Displayed only when the shop is deactivated.
   def active_deactive_shop_button(shop)
