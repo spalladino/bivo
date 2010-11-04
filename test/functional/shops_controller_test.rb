@@ -300,8 +300,8 @@ class ShopsControllerTest < ActionController::TestCase
 
   test "should render edit categories partial" do
     create_admin_and_sign_in
-    shop = Shop.make  
-    get :edit_categories, :id => shop.id
+    get :edit_categories
+    assert assigns(:shop).new_record?
     assert_response :success
   end
 end

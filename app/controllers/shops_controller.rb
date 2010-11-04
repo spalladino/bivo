@@ -123,7 +123,7 @@ class ShopsController < ApplicationController
   end
 
   def edit_categories
-    load_shop # if params[:id]
+    @shop = Shop.new
     render :partial => 'select_categories'
   end
   

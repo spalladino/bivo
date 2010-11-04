@@ -34,7 +34,9 @@ Bivo::Application.routes.draw do
     member do
       post :activate
       post :deactivate
-      get :edit_categories
+    end
+    collection do
+      get :edit_categories    
     end
   end
 
