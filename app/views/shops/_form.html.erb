@@ -1,3 +1,14 @@
+<% content_for :js do %>
+$(function(){
+	$('.edit_categories').openDOMWindow({ 
+	eventType:'click', 
+	height:400, 
+	width:700, 
+	windowSource:'iframe'
+	});
+});
+<% end %>
+
 <%= form_for @shop, :html => { :multipart => true } do |f| %>
   <%= render "shared/error_messages", :target => @shop %>
 
@@ -78,7 +89,7 @@
 	</ul>
 	
   </div>
-  <%= link_to _('Edit Categories'), :admin_edit_shop_categories %>
+  <%= link_to _('Edit Categories'), :admin_edit_shop_categories, :class => 'edit_categories' %>
 
   <p><%= f.submit 'Save' %></p>
 
