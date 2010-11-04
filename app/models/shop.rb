@@ -15,7 +15,8 @@ class Shop < ActiveRecord::Base
   has_many :countries, :through => :country_shops
   has_many :country_shops, :dependent => :destroy
 
-  has_and_belongs_to_many :categories, :class_name => 'ShopCategory'
+  has_and_belongs_to_many :categories, :class_name => 'ShopCategory', :after_add => :add_parent_categories
+  before_save :ensure_parent_categories
 
   has_attached_file :image, :styles => { :small => "150x150>" },
                     :url  => "/system/data/shops/:id/:style/:basename.:extension",
@@ -61,5 +62,18 @@ class Shop < ActiveRecord::Base
 
   #TODO: Validate widget fields
 
+  protected
+  
+  def add_parent_categories(category)
+    if category.parent && !self.categories.include?(category.parent)
+      self.categories << category.parent
+    end
+  end
+  
+  def ensure_parent_categories
+    self.categories.each do |c|
+      self.add_parent_categories c
+    end
+  end
 end
 
