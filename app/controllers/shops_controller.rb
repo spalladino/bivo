@@ -4,6 +4,7 @@ class ShopsController < ApplicationController
   before_filter :only_admin, :only => [:new, :create, :edit, :update, :activate, :deactivate]
   before_filter :load_shop, :except => [ :details, :new, :create, :home, :index, :search]
   before_filter :load_places, :only => [ :new, :edit, :create, :update ]
+  before_filter :load_categories, :only => [ :new, :edit, :create, :update ]
 
   def details
     @shop = Shop.find_by_short_url! params[:short_url]
@@ -16,10 +17,10 @@ class ShopsController < ApplicationController
   def edit
   end
 
-   def index
+  def index
     @shops = Shop.all
     @count = Shop.count
-
+        
     # Set pagination
     @per_page = (params[:per_page] || 20).to_i
     @shops = @shops.paginate(:per_page => @per_page, :page => params[:page])
@@ -109,7 +110,8 @@ class ShopsController < ApplicationController
 
   def destroy
     #TODO: Check when a shop can be safely destroyed
-    if @shop.destroy.destroyed? then
+    @shop.destroy
+    if @shop.destroyed? then
       flash[:notice] = _("Shop has been deleted")
       redirect_to root_url
     else
@@ -127,6 +129,7 @@ private
   def save_shop
     params[:shop] ||= {}
     params[:shop][:country_ids] ||= []
+    params[:shop][:category_ids] ||= []
     @shop.attributes= params[:shop]
     @shop.save
   end
@@ -135,5 +138,9 @@ private
     @shop = Shop.find params[:id]
   end
 
+  def load_categories
+    # TODO should query all categories is a way the view is able to render the whole tree
+    @categories = ShopCategory.roots
+  end
 end
 

@@ -10,6 +10,10 @@
     <b><%=_('Shop at:')%></b> <a href= "<%=@shop.url %>"> <%=@shop.url %></a>
 </p>
 <p>
+	<b><%=_('Categories:')%></b>
+	<%= @shop.categories.map(&:name).to_sentence %>
+</p>
+<p>
     <b><%=_('Description:')%></b>
     <%= @shop.description %>
 </p>

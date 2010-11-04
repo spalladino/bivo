@@ -5,6 +5,8 @@ Bivo::Application.routes.draw do
 
   get "admin/:id/edit_user", :to => "admin#edit_user", :as => "admin_edit_user"
   post "admin/edit_user", :to => "admin#update", :as => "admin_update_user"
+  get 'admin/shop/categories', :to => 'shop_categories#edit', :as => 'admin_edit_shop_categories'
+  post 'admin/shop/categories/create', :to => 'shop_categories#create'
 
   get "eula", :to => "home#eula", :as => "eula"
   get "accept_eula",  :to => "home#accept_eula", :as => "accept_eula"

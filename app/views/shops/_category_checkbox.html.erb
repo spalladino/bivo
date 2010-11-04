@@ -1,0 +1,9 @@
+<li>
+	<%= check_box_tag name, category.id, selected.include?(category.id) %>
+	<%= category.name %>
+	<ul>
+	<% category.children.each do |c| %>
+		<%= render :partial => 'category_checkbox', :locals => { :category => c, :name => name, :selected => selected } %>
+	<% end %>
+	</ul>
+</li>

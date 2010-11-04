@@ -1,0 +1,22 @@
+
+<%= link_to _('Categories'), :action => :edit -%>
+<% @path.each do |c| %>
+	/ <%= link_to c.name, :action => :edit, :id => c.id -%>
+<% end %>
+
+<ul>
+<% @child_categories.each do |c| %>
+	<li><%= link_to c.name, :action => :edit, :id => c.id -%></li>
+<% end %>
+</ul>
+
+<%= form_for @newcategory, :as => :newcategory, :url => { :action => :create } do |f| -%>
+<fieldset>
+	<%= f.hidden_field :parent_id %>
+	
+	<%= f.label :name %>
+	<%= f.text_field :name %>
+	
+	<%= f.submit "Create category", :disable_with => 'Submiting...' %>
+</fieldset>
+<% end -%>

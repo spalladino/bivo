@@ -69,6 +69,17 @@
     <%= image_tag @shop.image.url(:small) if @shop.image_file_name %>
   </div>
 
+  <h3><%=_("Categories")%></h3>	
+  <div class="field">
+	<ul>
+	<% @categories.each do |c| %>
+		<%= render :partial => 'category_checkbox', :locals => { :category => c, :name => 'shop[category_ids][]', :selected => @shop.category_ids } %>
+	<% end %>
+	</ul>
+	
+  </div>
+  <%= link_to _('Edit Categories'), :admin_edit_shop_categories %>
+
   <p><%= f.submit 'Save' %></p>
 
 <% end %>
