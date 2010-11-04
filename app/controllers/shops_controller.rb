@@ -2,7 +2,7 @@ class ShopsController < ApplicationController
 
   before_filter :authenticate_user!, :except => [:details,:home,:show]
   before_filter :only_admin, :only => [:new, :create, :edit, :update, :activate, :deactivate]
-  before_filter :load_shop, :except => [ :details, :new, :create, :home, :index,:search]
+  before_filter :load_shop, :except => [ :details, :new, :create, :home, :index, :search]
   before_filter :load_places, :only => [ :new, :edit, :create, :update ]
 
   def details
@@ -36,23 +36,21 @@ class ShopsController < ApplicationController
       @shops = Shop.includes(:countries).search(@search_word)
     end
 
-
+    # Handle sorting options
+    @sorting = (params[:sorting] || :alphabetically).to_sym
+    if @sorting == :proximity && !current_user.country_id.nil?
+      @shops = @shops.where("exists (select * from country_shops where country_id = ? and shop_id = Shops.id)",current_user.country_id) + @shops.where("not exists (select * from country_shops where country_id = ? and shop_id = Shops.id)",current_user.country_id)
+    else
+      @shops = @shops.order 'name ASC, description ASC'
+    end
 
     # Set pagination
     @per_page = (params[:per_page] || 20).to_i
     @shops = @shops.paginate(:per_page => @per_page, :page => params[:page])
     @page_sizes = [5,10,20,50]
 
-   # Handle sorting options
-    @sorting = (params[:sorting] || :alphabetically).to_sym
-    #@shops = @shops.order case @sorting
-     # when :proximity then 'countries.name ASC'
-      #else 'name ASC, description ASC'
-    #end
-
-
-
-      @sortings = [
+    @count = @shops.count
+    @sortings = [
       [_('alphabetically'), :alphabetical],
       [_('proximity'), :proximity],
     ]
