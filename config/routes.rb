@@ -26,7 +26,7 @@ Bivo::Application.routes.draw do
     end
   end
 
-  get "shop/s/", :controller => "shops", :action => "search"
+  get "shop/search/", :controller => "shops", :action => "search"
   get "shop/h/:short_url", :controller => "shops", :action => "home", :constraints => { :short_url => Shop::UrlFormat }
   get "shop/c/:short_url", :controller => "shops", :action => "details", :constraints => { :short_url => Shop::UrlFormat }
 

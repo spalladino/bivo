@@ -20,7 +20,7 @@ class CausesController < ApplicationController
   end
 
   def index
-    @causes = Cause.includes(:country).includes(:charity).limit(50)
+    @causes = Cause.all_with_deleted.limit(50)
     @categories = CauseCategory.sorted_by_causes_count
 
     def apply_filters(&block)
@@ -65,7 +65,11 @@ class CausesController < ApplicationController
 
     # Fill filters fields
     @regions = Country.all
-    @statuses = [:active, :raising_funds, :completed]
+    if !current_user || !current_user.is_admin_user
+      @statuses = [:active, :raising_funds, :completed]
+    else
+      @statuses = [:active, :raising_funds, :completed, :inactive, :deleted]
+    end
     @categories = @categories.first(6).to_a.insert(0, all_category(all_causes_count))
     @page_sizes = [5,10,20,50]
     @sortings = causes_list_sortings_for(@status)

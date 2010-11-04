@@ -66,6 +66,10 @@ class Cause < ActiveRecord::Base
     self.with_exclusive_scope { where('causes.status = ?', :deleted).all }
   end
 
+  def self.all_with_deleted()
+    self.with_exclusive_scope { includes(:country).includes(:charity) }
+  end
+
   def can_edit?
     [:inactive, :active, :raising_funds].include? self.status
   end
