@@ -1,4 +1,6 @@
 class ShopCategoriesController < ApplicationController
+  before_filter :only_admin
+  
   def edit
     if params[:id].blank?    
       @category = nil

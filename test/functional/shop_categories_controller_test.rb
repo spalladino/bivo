@@ -13,8 +13,15 @@ class ShopCategoriesControllerTest < ActionController::TestCase
     @b = ShopCategory.create! :name => 'b'
   end
   
+  test "non-admin can edit shop categories" do
+    create_and_sign_in
+    get :edit
+    assert_response :forbidden
+  end
+    
   test "edit show roots by default (sorted by name)" do
     build_categories
+    create_admin_and_sign_in
     
     get :edit
     
@@ -26,6 +33,7 @@ class ShopCategoriesControllerTest < ActionController::TestCase
   
   test "edit show current category and it childs" do
     build_categories
+    create_admin_and_sign_in
     
     get :edit, :id => @a.id
     
@@ -37,6 +45,7 @@ class ShopCategoriesControllerTest < ActionController::TestCase
   
   test "path starts from root and goes up to current" do
     build_categories
+    create_admin_and_sign_in
     
     get :edit, :id => @a21.id
     
@@ -48,6 +57,7 @@ class ShopCategoriesControllerTest < ActionController::TestCase
   
   test "can create categories at root level" do
     build_categories
+    create_admin_and_sign_in
 
     assert_difference 'ShopCategory.count' do
       post :create, :newcategory => { :parent_id => '', :name => 'new-category' }
@@ -59,15 +69,16 @@ class ShopCategoriesControllerTest < ActionController::TestCase
   end
   
   test "can create categories at other levels" do
-     build_categories
+    build_categories
+    create_admin_and_sign_in
 
-      assert_difference 'ShopCategory.count' do
-        post :create, :newcategory => { :parent_id => @b.id, :name => 'new-category' }
-        
-        @b.reload
-        assert_equal 'new-category', @b.children.first.name
-      end
+    assert_difference 'ShopCategory.count' do
+      post :create, :newcategory => { :parent_id => @b.id, :name => 'new-category' }
 
-      assert_response :redirect
+      @b.reload
+      assert_equal 'new-category', @b.children.first.name
+    end
+
+    assert_response :redirect
   end
 end
