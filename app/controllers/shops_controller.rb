@@ -2,7 +2,7 @@ class ShopsController < ApplicationController
 
   before_filter :authenticate_user!, :except => [:details,:home,:show]
   before_filter :only_admin, :only => [:new, :create, :edit, :update, :activate, :deactivate]
-  before_filter :load_shop, :except => [ :details, :new, :create, :home, :index]
+  before_filter :load_shop, :except => [ :details, :new, :create, :home, :index,:search]
   before_filter :load_places, :only => [ :new, :edit, :create, :update ]
   before_filter :load_categories, :only => [ :new, :edit, :create, :update ]
 
@@ -27,6 +27,38 @@ class ShopsController < ApplicationController
     @page_sizes = [5,10,20,50]
 
   end
+
+   def search
+    # Filter by text
+    @search_word = params[:search_word]
+    if @search_word.blank?
+      @shops = Shop.includes(:countries)
+    else
+      @shops = Shop.includes(:countries).search(@search_word)
+    end
+
+
+
+    # Set pagination
+    @per_page = (params[:per_page] || 20).to_i
+    @shops = @shops.paginate(:per_page => @per_page, :page => params[:page])
+    @page_sizes = [5,10,20,50]
+
+   # Handle sorting options
+    @sorting = (params[:sorting] || :alphabetically).to_sym
+    #@shops = @shops.order case @sorting
+     # when :proximity then 'countries.name ASC'
+      #else 'name ASC, description ASC'
+    #end
+
+
+
+      @sortings = [
+      [_('alphabetically'), :alphabetical],
+      [_('proximity'), :proximity],
+    ]
+  end
+
 
   def create
     @shop = Shop.new

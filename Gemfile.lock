@@ -143,6 +143,7 @@ GEM
       ruby-openid (>= 2.1.7)
     rubyntlm (0.1.1)
     single_test (0.3.7)
+    texticle (1.0.4.20101004123327)
     thor (0.14.3)
     treetop (1.4.8)
       polyglot (>= 0.3.1)
@@ -171,4 +172,5 @@ DEPENDENCIES
   rails (>= 3.0.0)
   rails3-generators
   single_test
+  texticle
   will_paginate

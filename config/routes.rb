@@ -12,6 +12,8 @@ Bivo::Application.routes.draw do
   get "accept_eula",  :to => "home#accept_eula", :as => "accept_eula"
   post "confirm_eula", :to => "home#confirm_eula", :as => "confirm_eula"
 
+
+
   get "charity/check_url", :to => "charities#check_url"
   get "charity/c/:url", :controller => "charities", :action => "details", :constraints => { :url => Charity::UrlFormat }
 
@@ -24,7 +26,7 @@ Bivo::Application.routes.draw do
     end
   end
 
-
+  get "shop/s/", :controller => "shops", :action => "search"
   get "shop/h/:short_url", :controller => "shops", :action => "home", :constraints => { :short_url => Shop::UrlFormat }
   get "shop/c/:short_url", :controller => "shops", :action => "details", :constraints => { :short_url => Shop::UrlFormat }
 
