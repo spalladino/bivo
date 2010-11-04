@@ -3,14 +3,18 @@
 <% end %>
 
 <% content_for(:js) do %>
-	$(function() {
-		$('#filters select').add('#filters input').change(function() {
+
+  $(function() {
+    $('#filters select').add('#filters input').change(function() {
 			$('#filter_form').submit();
 		});
 	});
 <% end %>
 
 <% title "Causes" %>
+
+
+
 
 <h2>Filters</h2>
 

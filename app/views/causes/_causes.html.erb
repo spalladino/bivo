@@ -8,7 +8,7 @@
 	<p><%= cause.country.name %></p>
 	<p><%= _("Organized by")%>: <%=cause.charity.name%></p>
 	<p><%= link_to _("Funds needed"), cause_path(cause.id) %>: <%= cause.funds_needed %></p>
-	<p><%= read_more(cause.description, cause_path(cause.id), 20) %></p>
+	<p><%= read_more(raw(cause.description), cause_path(cause.id), 20) %></p>
 
 	<% case @status.to_sym %>
 		<% when :active%>
