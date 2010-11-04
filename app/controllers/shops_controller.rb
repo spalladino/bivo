@@ -1,10 +1,10 @@
 class ShopsController < ApplicationController
 
   before_filter :authenticate_user!, :except => [:details,:home,:show]
-  before_filter :only_admin, :only => [:new, :create, :edit, :update, :activate, :deactivate]
-  before_filter :load_shop, :except => [ :details, :new, :create, :home, :index,:search]
+  before_filter :only_admin, :only => [:new, :create, :edit, :update, :activate, :deactivate, :edit_categories]
+  before_filter :load_shop, :except => [ :details, :new, :create, :home, :index,:search, :edit_categories]
   before_filter :load_places, :only => [ :new, :edit, :create, :update ]
-  before_filter :load_categories, :only => [ :new, :edit, :create, :update ]
+  before_filter :load_categories, :only => [ :new, :edit, :create, :update, :edit_categories ]
 
   def details
     @shop = Shop.find_by_short_url! params[:short_url]
@@ -122,6 +122,11 @@ class ShopsController < ApplicationController
     end
   end
 
+  def edit_categories
+    load_shop # if params[:id]
+    render :partial => 'select_categories'
+  end
+  
 private
 
   def load_places

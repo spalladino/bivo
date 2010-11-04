@@ -1,0 +1,5 @@
+<ul>
+<% @categories.each do |c| %>
+	<%= render :partial => 'category_checkbox', :locals => { :category => c, :name => 'shop[category_ids][]', :selected => @shop.category_ids } %>
+<% end %>
+</ul>

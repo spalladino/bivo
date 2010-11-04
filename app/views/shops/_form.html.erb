@@ -1,10 +1,23 @@
 <% content_for :js do %>
 $(function(){
-	$('.edit_categories').openDOMWindow({ 
-	eventType:'click', 
-	height:400, 
-	width:700, 
-	windowSource:'iframe'
+	$('a.iframe').fancybox({
+		showCloseButton: false, 
+		onClosed: function(){ 
+			// save current selection
+			var current_selection = $('#select_categories_container :checked').map(function(){return this.value;});
+						
+			$('#select_categories_container')
+				.text('Loading...')
+				.load('<%=url_for :action => 'edit_categories'%>', function(){
+					// restore selection
+					$('#select_categories_container :checkbox').each(function(){
+						if ($.inArray(this.value, current_selection) != -1)
+							$(this).attr('checked', true);
+						else
+							$(this).removeAttr('checked');
+					})
+				});
+		}
 	});
 });
 <% end %>
@@ -81,15 +94,10 @@ $(function(){
   </div>
 
   <h3><%=_("Categories")%></h3>	
-  <div class="field">
-	<ul>
-	<% @categories.each do |c| %>
-		<%= render :partial => 'category_checkbox', :locals => { :category => c, :name => 'shop[category_ids][]', :selected => @shop.category_ids } %>
-	<% end %>
-	</ul>
-	
+  <div id="select_categories_container" class="field">
+	<%= render 'select_categories' %>
   </div>
-  <%= link_to _('Edit Categories'), :admin_edit_shop_categories, :class => 'edit_categories' %>
+  <%= link_to _('Edit Categories'), :admin_edit_shop_categories, :class => 'iframe' %>
 
   <p><%= f.submit 'Save' %></p>
 

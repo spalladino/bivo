@@ -298,5 +298,11 @@ class ShopsControllerTest < ActionController::TestCase
     assert_equal :active,Shop.find(id).status
   end
 
+  test "should render edit categories partial" do
+    create_admin_and_sign_in
+    shop = Shop.make  
+    get :edit_categories, :id => shop.id
+    assert_response :success
+  end
 end
 
