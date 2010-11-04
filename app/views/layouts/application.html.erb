@@ -5,15 +5,19 @@
   <%= stylesheet_link_tag :all, :cache => false %>
   <%= javascript_include_tag :defaults %>
   <%= javascript_include_tag 'jquery.jgrowl_minimized' %>
+  <%= javascript_include_tag 'jquery.fancybox' %>
+  <%= javascript_include_tag 'jquery-ui.min' %>
+  <%= javascript_include_tag 'jquery.simplemodal' %>
+  <%= javascript_include_tag 'jquery.wysiwyg' %>
   <%= csrf_meta_tag %>
-  
+
   <%= yield(:head) %>
-  
+
   <script type="text/javascript" language="JavaScript">
   	<%= on_document_ready { render(:partial => 'shared/notifications.js') } %>
-	<%= yield(:js) %>  	
+	<%= yield(:js) %>
   </script>
-  
+
 </head>
 <body>
 
@@ -21,3 +25,4 @@
 
 </body>
 </html>
+

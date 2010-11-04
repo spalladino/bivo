@@ -11,7 +11,7 @@
 <p> <b><%=_('rating_url')%></b>: <%= @charity.rating_url%> </p>
 <p> <b><%=_('country')%></b>: <%= Country.find(@charity.country_id).name%> </p>
 <p> <b><%=_('city')%></b>: <%= @charity.city%> </p>
-<p> <b><%=_('description')%></b>: <%= @charity.description%> </p>
+<p> <b><%=_('description')%></b>: <%=raw @charity.description%> </p>
 
 
 <div id="follow_charity_button">

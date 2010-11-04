@@ -7,6 +7,7 @@ class ShopsControllerTest < ActionController::TestCase
     get :new
     assert_response :success
     assert_not_nil assigns(:shop)
+    assert_not_nil assigns(:categories)
   end
   
   test "user cannot get new shop" do
@@ -138,6 +139,44 @@ class ShopsControllerTest < ActionController::TestCase
     assert_response :found
   end
   
+  test "should update shop with many categories" do
+    create_admin_and_sign_in
+    categories = ShopCategory.make_many(5)
+    shop = Shop.make :category_ids => [categories[1].id, categories[3].id]
+    
+    post :update, :id => shop.id, :shop => {
+      :name => "Shopname",
+      :description => shop.description,
+      :category_ids => [ categories[1].id, categories[2].id, categories[4].id ]
+    }
+    
+    shop.reload
+    
+    assert_equal "Shopname", shop.name
+    assert_includes shop.categories, categories[1]
+    assert_includes shop.categories, categories[2]
+    assert_includes shop.categories, categories[4]
+    assert_equal 3, shop.categories.count
+    assert_response :found
+  end
+  
+  test "should remove all categories from shop" do
+    create_admin_and_sign_in
+    categories = ShopCategory.make_many(5)
+    shop = Shop.make :category_ids => [categories[1].id, categories[3].id]
+    
+    post :update, :id => shop.id, :shop => {
+      :name => "Shopname",
+      :description => shop.description,
+    }
+    
+    shop.reload
+    
+    assert_equal "Shopname", shop.name
+    assert_equal 0, shop.categories.count
+    assert_response :found
+  end
+  
   test "should not update shop with no description" do
     create_admin_and_sign_in
     shop = Shop.make :name => "Shopname"
@@ -259,5 +298,11 @@ class ShopsControllerTest < ActionController::TestCase
     assert_equal :active,Shop.find(id).status
   end
 
+  test "should render edit categories partial" do
+    create_admin_and_sign_in
+    get :edit_categories
+    assert assigns(:shop).new_record?
+    assert_response :success
+  end
 end
 

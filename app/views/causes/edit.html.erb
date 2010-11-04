@@ -12,3 +12,11 @@
   <%= mark_as_paid_and_unpaid_button @cause %>
 </div>
 
+
+<% content_for(:js) do %>
+
+  $(function() {
+    $('#wysiwyg').wysiwyg();
+  });
+<% end %>
+

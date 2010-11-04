@@ -1,8 +1,14 @@
 require 'test_helper'
 
 class ShopCategoryTest < ActiveSupport::TestCase
-  # Replace this with your real tests.
-  test "the truth" do
-    assert true
+  test "shop can have multiple categories" do
+    a = ShopCategory.make
+    b = ShopCategory.make
+    s = Shop.make
+    
+    s.categories << a
+    s.categories << b
+    
+    s.save!
   end
 end

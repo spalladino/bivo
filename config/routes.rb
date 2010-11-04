@@ -13,6 +13,9 @@ Bivo::Application.routes.draw do
   get "admin/search", :to => "admin#search", :as => "admin_search"
   post "admin/delete_user/:id", :to => "admin#delete_user", :as => "admin_delete_user"
 
+  get 'admin/shop/categories', :to => 'shop_categories#edit', :as => 'admin_edit_shop_categories'
+  post 'admin/shop/categories/create', :to => 'shop_categories#create'
+
   #paths for handling eula
   get "eula", :to => "home#eula", :as => "eula"
   get "accept_eula",  :to => "home#accept_eula", :as => "accept_eula"
@@ -30,7 +33,7 @@ Bivo::Application.routes.draw do
     end
   end
 
-  get "shop/s/", :controller => "shops", :action => "search"
+  get "shop/search/", :controller => "shops", :action => "search"
   get "shop/h/:short_url", :controller => "shops", :action => "home", :constraints => { :short_url => Shop::UrlFormat }
   get "shop/c/:short_url", :controller => "shops", :action => "details", :constraints => { :short_url => Shop::UrlFormat }
 
@@ -38,6 +41,9 @@ Bivo::Application.routes.draw do
     member do
       post :activate
       post :deactivate
+    end
+    collection do
+      get :edit_categories    
     end
   end
 
