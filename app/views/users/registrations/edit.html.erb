@@ -1,3 +1,12 @@
+<% content_for(:js) do %>
+
+  $(function() {
+    $('#wysiwyg').wysiwyg();
+  });
+<% end %>
+
+
+
 <%= resource_name %>
 <h2><%= title_for @type %></h2>
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
@@ -52,3 +61,4 @@
 
   <p><%= f.submit _("Update") %></p>
 <% end %>
+
