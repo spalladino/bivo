@@ -5,4 +5,15 @@ class AdminControllerTest < ActionController::TestCase
 
   end
 
+  test "should add a charity from admin" do
+    
+  end
+
+  test "should add a personal user from admin" do
+    
+  end
+
+  test "should search a user from admin" do
+    
+  end
 end

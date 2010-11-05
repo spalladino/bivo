@@ -10,7 +10,6 @@ Bivo::Application.routes.draw do
   post "admin/create_charity", :to => "admin#create_charity", :as => "admin_create_charity"
   get "admin/:id/edit_user", :to => "admin#edit_user", :as => "admin_edit_user"
   post "admin/update_user", :to => "admin#update_user", :as => "admin_update_user"
-  get "admin/search", :to => "admin#search", :as => "admin_search"
   post "admin/delete_user/:id", :to => "admin#delete_user", :as => "admin_delete_user"
 
   get 'admin/shop/categories', :to => 'shop_categories#edit', :as => 'admin_edit_shop_categories'

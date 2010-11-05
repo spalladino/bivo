@@ -3,6 +3,8 @@
 <%= form_for(@resource, :as => @resource_name, :url => admin_create_charity_path) do |f| %>
   <%= render "shared/error_messages", :target => @resource %>
   
+  <%= hidden_field_tag :referer, @referer %>
+
   <%= f.radio_button :type, _("PersonalUser"), :checked => true %> <%= f.label :personal, _("Personal") %> <br />
   <%= f.radio_button :type, _("Charity") %>  <%= f.label :charity, _("Charity")  %>	
 
