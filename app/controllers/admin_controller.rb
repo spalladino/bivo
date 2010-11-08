@@ -56,7 +56,7 @@ class AdminController < ApplicationController
     @referer = params[:referer]
 
     if (@resource.save)
-      redirect_to @referer
+      redirect_to @referer || admin_user_manager_path
     else
       @type = @resource.type.to_sym
       
@@ -79,7 +79,7 @@ class AdminController < ApplicationController
     @referer = params[:referer]
 
     if (@resource.save)
-      redirect_to @referer
+      redirect_to @referer || admin_user_manager_path
     else
       @countries = Country.all
       @categories = CharityCategory.all
@@ -112,7 +112,7 @@ class AdminController < ApplicationController
     end
 
     if @resource.update_attributes(params[:user])
-      redirect_to @referer
+      redirect_to @referer || admin_user_manager_path
     else
       render "edit_user"
     end
