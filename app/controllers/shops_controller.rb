@@ -4,7 +4,7 @@ class ShopsController < ApplicationController
   before_filter :only_admin, :only => [:new, :create, :edit, :update, :activate, :deactivate, :edit_categories]
   before_filter :load_shop, :except => [ :details, :new, :create, :home, :index, :search, :edit_categories]
   before_filter :load_places, :only => [ :new, :edit, :create, :update ]
-  before_filter :load_categories, :only => [ :new, :edit, :create, :update, :edit_categories ]
+  before_filter :load_categories, :only => [ :new, :edit, :create, :update, :edit_categories, :index ]
 
   def details
     @shop = Shop.find_by_short_url! params[:short_url]
@@ -18,14 +18,17 @@ class ShopsController < ApplicationController
   end
 
   def index
+    @is_shop_list = true
     @shops = Shop.all
     @count = Shop.count
-        
+
+    category_id = params[:category_field]
+    @shops = ShopCategory.find(category_id).shops if category_id
+
     # Set pagination
     @per_page = (params[:per_page] || 20).to_i
     @shops = @shops.paginate(:per_page => @per_page, :page => params[:page])
     @page_sizes = [5,10,20,50]
-
   end
 
    def search
@@ -124,7 +127,7 @@ class ShopsController < ApplicationController
     @shop = Shop.new
     render :partial => 'select_categories'
   end
-  
+
 private
 
   def load_places

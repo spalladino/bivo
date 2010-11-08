@@ -1,0 +1,6 @@
+<ul>
+<% @categories.each do |c| %>
+	<%= render :partial => 'category_view', :locals => { :category => c, :name => 'shop[category_ids][]'} %>
+<% end %>
+</ul>
+

@@ -1,11 +1,12 @@
 <% content_for :js do %>
 $(function(){
+  $('#wysiwyg').wysiwyg();
 	$('a.iframe').fancybox({
-		showCloseButton: false, 
-		onClosed: function(){ 
+		showCloseButton: false,
+		onClosed: function(){
 			// save current selection
 			var current_selection = $('#select_categories_container :checked').map(function(){return this.value;});
-						
+
 			$('#select_categories_container')
 				.text('Loading...')
 				.load('<%=url_for :action => 'edit_categories'%>', function(){
@@ -94,7 +95,7 @@ $(function(){
     <%= image_tag @shop.image.url(:small) if @shop.image_file_name %>
   </div>
 
-  <h3><%=_("Categories")%></h3>	
+  <h3><%=_("Categories")%></h3>
   <div id="select_categories_container" class="field">
 	<%= render 'select_categories' %>
   </div>

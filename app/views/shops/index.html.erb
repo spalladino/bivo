@@ -2,12 +2,13 @@
 	<%= javascript_include_tag "pagination" %>
 <% end %>
 
-
 <% title "Shops" %>
+
 <%=_("Shops count")%> <%=@count%>
 <div id="filters">
 	<%= form_tag shops_path, :method => :get, :id => "filter_form" do %>
 				<%= _("Show per page")%>
+        <%= hidden_field_tag('category_field', "5") %>
 				<%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page)%>
 		<p>
 			<%= submit_tag _('Search'), :disable_with => _('Searching...') %>

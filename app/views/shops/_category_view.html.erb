@@ -1,0 +1,9 @@
+<li>
+	<a href="javascript:filterByCategory(<%=category.id%>)"><%=category.name%></a>
+  <ul>
+	<% category.children.each do |c| %>
+		<%= render :partial => 'category_view', :locals => { :category => c, :name => name} %>
+  <%end%>
+  </ul>
+</li>
+
