@@ -1,0 +1,10 @@
+<%= will_paginate @transactions %>
+
+<div id="transactions-list">
+<% for transaction in @transactions %>
+  <div class="transaction">
+	  <h3><%= transaction.name %></h3>
+  </div>
+<% end %>
+</div>
+

@@ -42,7 +42,7 @@ Bivo::Application.routes.draw do
       post :deactivate
     end
     collection do
-      get :edit_categories    
+      get :edit_categories
     end
   end
 
@@ -60,6 +60,8 @@ Bivo::Application.routes.draw do
       post :unfollow
     end
   end
+
+  resources :transactions, :path => 'transaction'
 
   root :to => "home#index"
 
