@@ -2,28 +2,26 @@
 <%= link_to "Add Charity", admin_new_charity_path %>
 
 <br /><br />
-<%= form_tag "/admin/search", :method => "get" do %>
+<%= form_tag admin_user_manager_path, :method => "get" do %>
 <div>
-Show: <br />
-
-<%= select_tag :show, options_for_select(@show_options) %>
-
-<%= text_field_tag :filter %>
+<%= _("Show") %> <%= select_tag :show, options_for_select(@show_options) %> <br />
+<%= _("Size per page")%> <%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page)%> <br />
+<%= _("Filter by") %> <%= text_field_tag :filter %> <br />
+<br />
 <%= submit_tag("Search") %>
 </div>
 <% end %>
 <br />
-
 <div id="results">
-  Results: <br />
+  <%= will_paginate @users %>
   <table>
     <tr>
       <th>&nbsp;</th>
-      <th><%= _("Name") %></th>
-      <th><%= _("Type") %></th>
-      <th><%= _("Status") %></th>
-      <th><%= _("Last Login") %></th>
-      <th><%= _("Signup Date") %></th>
+      <th><%= link_to _("Name"), request.parameters.merge({:sort_by => get_sort_for("name")}) %></th>
+      <th><%= link_to _("Type"), request.parameters.merge({:sort_by => get_sort_for("type")}) %></th>
+      <th><%= link_to _("Status"), request.parameters.merge({:sort_by => get_sort_for("status")}) %></th>
+      <th><%= link_to _("Last Login"), request.parameters.merge({:sort_by => get_sort_for("last_sign_in_at")}) %></th>
+      <th><%= link_to _("Signup Date"), request.parameters.merge({:sort_by => get_sort_for("created_at")}) %></th>
       <th>&nbsp;</th>
     </tr>
   <% for user in @users %>
@@ -32,8 +30,8 @@ Show: <br />
       <td><%= user.name %></td>
       <td><%= user.type %></td>
       <td><%= user.status %></td>
-      <td><%= user.last_sign_in_at %></td>
-      <td><%= user.created_at %></td>
+      <td><%= format_date user.last_sign_in_at %></td>
+      <td><%= format_date user.created_at %></td>
       <td><%= link_to _("Edit"), admin_edit_user_path(user.id) %></td>
     </tr>
   <% end %>

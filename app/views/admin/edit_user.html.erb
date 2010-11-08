@@ -2,7 +2,9 @@
 
 <%= form_for(@resource, :as => :user, :url => admin_update_user_path, :html => { :method => :post }) do |f| %>
   <%= render "shared/error_messages", :target => @resource %>
+
   <%= hidden_field_tag :id, @id %>
+  <%= hidden_field_tag :referer, @referer %>
   <p><%= f.label :email, _("E-Mail") %><br />
   <%= f.text_field :email %></p>
 

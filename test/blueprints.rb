@@ -42,17 +42,19 @@ Cause.blueprint do
 end
 
 PersonalUser.blueprint do
-  first_name   {Sham.simple_name}
-  last_name    {Sham.simple_name}
-  eula_accepted{true}
+  first_name    {Sham.simple_name}
+  last_name     {Sham.simple_name}
+  eula_accepted {true}
+  status        {:active}
   email
   password
 end
 
 Admin.blueprint do
-  first_name   {Sham.simple_name}
-  last_name    {Sham.simple_name}
-  eula_accepted{true}
+  first_name    {Sham.simple_name}
+  last_name     {Sham.simple_name}
+  eula_accepted {true}
+  status        {:active}
   email
   password
 end
