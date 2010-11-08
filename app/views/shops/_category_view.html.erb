@@ -1,0 +1,21 @@
+<%if @category && @path.include?(category)%>
+  <li class="open">
+<%else category.children.empty?%>
+   <li class="closed">
+<%end%>
+
+  <a href="javascript:filterByCategory(<%=category.id%>)"><%=category.name%></a>
+  <%if @category && (@category == category)%>
+    *
+  <%end%>
+
+  <%if !category.children.empty?%>
+    <ul>
+	  <% category.children.each do |c| %>
+		  <%= render :partial => 'category_view', :locals => { :category => c, :name => name} %>
+    <%end%>
+    </ul>
+  <%end%>
+
+</li>
+

@@ -1,5 +1,32 @@
 <%= will_paginate @shops %>
 
+<%if @is_shop_list%>
+  <% content_for :js do %>
+  $(function(){
+    $("#tree").treeview({
+				collapsed: true,
+				animated: "fast",
+			  persist: "location"
+     });
+  });
+
+  function filterByCategory(id){
+    $('#category_field').attr('value',id);
+    $('#filter_form').submit();
+  }
+
+  <%end%>
+<div id="sidetree">
+<div class="treeheader">&nbsp;</div>
+  <ul id="tree">
+    <%= render 'show_categories' %>
+  </ul>
+</div>
+</div>
+
+<%end%>
+
+
 <div id="shop-list">
 
 <% for shop in @shops %>
