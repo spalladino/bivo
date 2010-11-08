@@ -19,16 +19,19 @@ class ShopsController < ApplicationController
 
   def index
     @is_shop_list = true
-    @shops = Shop.all
-    @count = Shop.count
-
-    category_id = params[:category_field]
-    @shops = ShopCategory.find(category_id).shops if category_id
-
+    if params[:category_field]
+      @category = ShopCategory.find(params[:category_field])
+      @shops = @category.shops
+      @path = @category.ancestors
+    else
+      @shops = Shop.all
+    end
     # Set pagination
     @per_page = (params[:per_page] || 20).to_i
+    @count = Shop.count
     @shops = @shops.paginate(:per_page => @per_page, :page => params[:page])
     @page_sizes = [5,10,20,50]
+
   end
 
    def search

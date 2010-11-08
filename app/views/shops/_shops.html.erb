@@ -5,11 +5,9 @@
   $(function(){
     $("#tree").treeview({
 				collapsed: true,
-				animated: "medium",
-				control:"#sidetreecontrol",
-				persist: "location"
-			});
-
+				animated: "fast",
+			  persist: "location"
+     });
   });
 
   function filterByCategory(id){
@@ -20,7 +18,6 @@
   <%end%>
 <div id="sidetree">
 <div class="treeheader">&nbsp;</div>
-<div id="sidetreecontrol"><a href="?#">Collapse All</a> | <a href="?#">Expand All</a></div>
   <ul id="tree">
     <%= render 'show_categories' %>
   </ul>
