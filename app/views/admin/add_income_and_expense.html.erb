@@ -1,0 +1,79 @@
+<h2><%= _("Add/Edit Income/Expense") %></h2>
+
+<% content_for :js do %>
+
+$(document).ready(function(){
+  $(".extLink").fancybox({
+    'width' : '75%',
+    'height' : '75%',
+    'autoScale' : false,
+    'transitionIn' : 'none',
+    'transitionOut' : 'none',
+    'type' : 'iframe'
+  });
+
+  $('#transaction_income_category_id').change(function() {
+    var selectedCategory = $('#transaction_income_category_id :selected').text();
+    if (selectedCategory == "shop") {
+      $("#shop").css("display", "block");
+    } else {
+      $("#shop").css("display", "none");
+    }
+  });
+
+  $('#transaction_type').change(function() {
+    var selectedCategory = $('#transaction_type :selected').text();
+    if (selectedCategory == "Income") {
+      $("#income_fields").css("display", "block");
+      $("#expense_fields").css("display", "none");
+    } else {
+      $("#income_fields").css("display", "none");
+      $("#expense_fields").css("display", "block");
+    }
+  });
+
+  $('#cancel').click(function () {
+    location.href = "<%= root_path %>";
+    return false;
+  })
+});
+
+
+
+<% end %>
+
+<%= form_for(:transaction, @transaction, :url => create_income_and_expense_path) do |f| %>
+  <%= render "shared/error_messages", :target => @transaction %>
+
+  <p><%= f.label :type %><br />
+  <%= f.select :type, [["Income","Income"], ["Expense","Expense"]] %></p>
+
+  <p><%= f.label :date %><br />
+  <%= f.date_select :transaction_date %></p>
+
+  <div id="income_fields">
+    <p><%= f.label :sources %>
+    <%= f.select :income_category_id, @income_categories.collect{ |c| [c.name, c.id] }, :include_blank => true %></p>
+    <div id="shop" style="display:none;">
+      <p><%= f.label :shops %>
+      <%= f.select :shop_id, @shops.collect{ |s| [s.name, s.id] }, :include_blank => true %></p>
+    </div>
+  </div>
+
+  <div id="expense_fields" style="display:none;">
+    <p><%= f.label :category %>
+    <%= f.select :expense_category_id, @expense_categories.collect{ |c| [c.name, c.id] }, :include_blank => true %></p>
+    <%= link_to _("Add expense category"), admin_new_personal_user_path, :class => "extLink" %> |
+    <%= link_to _("Rename expense category"), admin_new_personal_user_path, :class => "extLink" %>
+    <p><%= f.label :paid_to %><br />
+    <%= f.text_field :paid_to %></p>
+  </div>
+
+  <p><%= f.label :amount %><br />
+  <%= f.text_field :amount %></p>
+
+  <p><%= f.label :description %><br />
+  <%= f.text_area :description %></p>
+
+  <p><%= f.submit :Save %> <%= f.submit :Cancel, :id => "cancel" %></p>
+<% end %>
