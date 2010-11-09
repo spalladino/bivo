@@ -8,6 +8,7 @@
        <th><%= _("date") %></th>
 	     <th><%= _("description") %></th>
        <th><%= _("category") %></th>
+       <th><%= _("details") %></th>
 
     </tr>
   </thead>
@@ -16,11 +17,12 @@
        <td><%= transaction.type %></td>
        <td><%= transaction.transaction_date %></td>
 	     <td><%= transaction.description %></td>
-       <% if transaction.type == :income  %>
-          <td><%= transaction.income_category_id %></td>
+       <% if transaction.type == "Income"  %>
+          <td><%= (IncomeCategory.find(transaction.income_category_id)).name %></td>
        <% else  %>
-          <td><%= transaction.expense_category_id %></td>
+          <td><%= (ExpenseCategory.find(transaction.expense_category_id)).name %></td>
        <% end  %>
+       <td><%= transaction.details %></td>
     </tr>
   <% end %>
   </table>
