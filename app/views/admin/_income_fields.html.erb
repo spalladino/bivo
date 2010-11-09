@@ -1,0 +1,6 @@
+    <p><%= f.label :sources %><br />
+    <%= f.select :income_category_id, income_categories.collect{ |c| [c.name, c.id] }, :include_blank => true %></p>
+    <div id="shop" style="<%= get_shop_display(transaction) %>">
+      <p><%= f.label :shops %>
+      <%= f.select :shop_id, shops.collect{ |s| [s.name, s.id] }, :include_blank => true %></p>
+    </div>

@@ -1,15 +1,31 @@
-<h2><%= _("Add/Edit Income/Expense") %></h2>
+<h2>
+<% if (@transaction.id.nil?) %>
+  <%= _("Add Income/Expense") %>
+<% else %>
+  <% if (@transaction.type == "Income") %>
+    <%= _("Edit Income") %>
+  <% else %>
+    <%= _("Edit Expense") %>
+  <% end %>  
+<% end %>
+</h2>
 
 <% content_for :js do %>
 
 $(document).ready(function(){
-  $(".extLink").fancybox({
-    'width' : '75%',
-    'height' : '75%',
-    'autoScale' : false,
-    'transitionIn' : 'none',
-    'transitionOut' : 'none',
-    'type' : 'iframe'
+  $("a.iframe").fancybox({
+    'onClosed': function() {
+
+		  // save current selection
+		  var current_selection = $('#transaction_expense_category_id').val();
+
+		  $('#transaction_expense_category_id')
+		  .load('<%=url_for :controller => 'expense_categories', :action => 'list_options'%>', function(){
+        if (current_selection) {
+          $("#transaction_expense_category_id option[value='" + current_selection + "']").attr('selected', 'selected');
+        }
+		  });
+    }
   });
 
   $('#transaction_income_category_id').change(function() {
@@ -26,9 +42,12 @@ $(document).ready(function(){
     if (selectedCategory == "Income") {
       $("#income_fields").css("display", "block");
       $("#expense_fields").css("display", "none");
-    } else {
+    } else if (selectedCategory == "Expense") {
       $("#income_fields").css("display", "none");
       $("#expense_fields").css("display", "block");
+    } else {
+      $("#income_fields").css("display", "none");
+      $("#expense_fields").css("display", "none");
     }
   });
 
@@ -38,35 +57,25 @@ $(document).ready(function(){
   })
 });
 
-
-
 <% end %>
 
 <%= form_for(:transaction, @transaction, :url => create_income_and_expense_path) do |f| %>
   <%= render "shared/error_messages", :target => @transaction %>
 
   <p><%= f.label :type %><br />
-  <%= f.select :type, [["Income","Income"], ["Expense","Expense"]] %></p>
+  <%= f.select :type, [["Income","Income"], ["Expense","Expense"]], :include_blank => true %></p>
 
   <p><%= f.label :date %><br />
   <%= f.date_select :transaction_date %></p>
 
-  <div id="income_fields">
-    <p><%= f.label :sources %>
-    <%= f.select :income_category_id, @income_categories.collect{ |c| [c.name, c.id] }, :include_blank => true %></p>
-    <div id="shop" style="display:none;">
-      <p><%= f.label :shops %>
-      <%= f.select :shop_id, @shops.collect{ |s| [s.name, s.id] }, :include_blank => true %></p>
-    </div>
+  <div id="income_fields" style="<%= get_display_of :Income, @transaction %>">
+    <%= render :partial => "income_fields", 
+          :locals => {:f => f, :income_categories => @income_categories, :shops => @shops, :transaction => @transaction} %>
   </div>
 
-  <div id="expense_fields" style="display:none;">
-    <p><%= f.label :category %>
-    <%= f.select :expense_category_id, @expense_categories.collect{ |c| [c.name, c.id] }, :include_blank => true %></p>
-    <%= link_to _("Add expense category"), admin_new_personal_user_path, :class => "extLink" %> |
-    <%= link_to _("Rename expense category"), admin_new_personal_user_path, :class => "extLink" %>
-    <p><%= f.label :paid_to %><br />
-    <%= f.text_field :paid_to %></p>
+  <div id="expense_fields" style="<%= get_display_of :Expense, @transaction %>">
+    <%= render :partial => "expense_fields",
+          :locals => {:f => f, :expense_categories => @expense_categories} %>
   </div>
 
   <p><%= f.label :amount %><br />

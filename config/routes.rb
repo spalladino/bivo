@@ -3,7 +3,9 @@ Bivo::Application.routes.draw do
   match '/auth/facebook/callback' => 'facebook_authentications#create'
 
   #incomes and expenses
-  get "admin/add_income_and_expense", :to => "admin#add_income_and_expense"
+  resources :expense_categories
+  get "expense/list_categories", :to => "expense_categories#list_options"
+  get "admin/add_income_and_expense", :to => "admin#add_income_and_expense", :as => "add_income_and_expense"
   post "admin/create_income_and_expense", :to => "admin#create_income_and_expense", :as => "create_income_and_expense"
   #incomes categories
   post "income_categories/create", :to => "income_categories#create"

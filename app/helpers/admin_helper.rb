@@ -15,6 +15,24 @@ module AdminHelper
     end
   end
 
+  def get_display_of(type, value)
+    if (value.type.to_sym == type)
+      "display:block;"
+    else
+      "display:none;"
+    end
+  end
+
+  def get_shop_display(transaction)
+    if ((transaction.type == "Income") && 
+        (transaction.income_category) &&
+        (transaction.income_category.name == "shop"))
+      "display:block;"
+    else
+      "display:none;"
+    end
+  end
+
   def format_date(value)
     if (value.nil?)
       ""
