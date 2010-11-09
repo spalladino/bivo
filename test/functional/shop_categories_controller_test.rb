@@ -81,4 +81,30 @@ class ShopCategoriesControllerTest < ActionController::TestCase
 
     assert_response :redirect
   end
+  
+  test "should change name of the current category" do
+    build_categories
+    create_admin_and_sign_in
+    post :update, :id => @a2.id, :category => { :name => 'new-name' }
+    assert_redirected_to :action => :edit, :id => @a2.id
+    @a2.reload
+    assert_equal 'new-name', @a2.name
+    assert_equal @a21, @a2.children.first
+  end
+  
+  test "should destroy and redirect to parent" do
+    build_categories
+    create_admin_and_sign_in
+    post :destroy, :id => @a2.id
+    assert_redirected_to :action => :edit, :id => @a.id
+    assert_nil ShopCategory.find_by_id(@a21.id)
+  end
+  
+  test "should destroy root category and redirect to edit" do
+    build_categories
+    create_admin_and_sign_in
+    post :destroy, :id => @a.id
+    assert_redirected_to :action => :edit
+    assert_nil ShopCategory.find_by_id(@a.id)
+  end
 end

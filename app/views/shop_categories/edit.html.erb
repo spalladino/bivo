@@ -1,22 +1,32 @@
-
+<div class="edit_catecories">
 <%= link_to _('Categories'), :action => :edit -%>
 <% @path.each do |c| %>
-	/ <%= link_to c.name, :action => :edit, :id => c.id -%>
+	/ <%= link_to c.name, :action => :edit, :id => c.id if c != @category -%>
 <% end %>
+
+<% if !@category.nil? %>
+	<%= form_for @category, :as => :category, :url => { :action => :update, :id => @category.id } do |f| -%>
+		<%= f.text_field :name %>	  
+		<%= f.submit _("Update"), :disable_with => 'Submiting...' %>
+	<% end -%>
+	<%= button_to _("Delete"), :action => :destroy, :id => @category.id, :method => :delete, :confirm => _("Are you sure?") %>
+	<%= render "shared/error_messages", :target => @category %>
+<% end %>
+
+</div>
 
 <ul>
 <% @child_categories.each do |c| %>
 	<li><%= link_to c.name, :action => :edit, :id => c.id -%></li>
 <% end %>
+
+	<li>
+		<%= form_for @newcategory, :as => :newcategory, :url => { :action => :create } do |f| -%>
+			<%= f.hidden_field :parent_id %>
+			<%= f.text_field :name %>	
+			<%= f.submit "Create category", :disable_with => 'Submiting...' %>
+		<%= render "shared/error_messages", :target => @newcategory %>
+	</li>
 </ul>
 
-<%= form_for @newcategory, :as => :newcategory, :url => { :action => :create } do |f| -%>
-<fieldset>
-	<%= f.hidden_field :parent_id %>
-	
-	<%= f.label :name %>
-	<%= f.text_field :name %>
-	
-	<%= f.submit "Create category", :disable_with => 'Submiting...' %>
-</fieldset>
 <% end -%>

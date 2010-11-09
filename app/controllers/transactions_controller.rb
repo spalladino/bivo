@@ -3,56 +3,98 @@ class TransactionsController < ApplicationController
   before_filter :authenticate_user!, :except => [:index]
 
  def index
-    @transactions = Transaction.all
-
-    # Filter by kind of transaction
-    @kind = params[:kind]
-    @transactions = @transactions.where('transactions.type = ?',@kind) unless (@kind.blank? || @kind == :all)
-
-    # Filter by text
-    @name = params[:name]
-    @transactions = @transactions.where('transactions.name ~* ? OR transactions.description ~* ?', @name, @name) unless @name.blank?
-
-    # Filter by period
-    @period = params[:period]
-    if @period
-      now = Date.today
-      from = case @period
-        when :this_month then now - now.day + 1.day
-        when :last_month then now - now.day + 1.day - 1.month
-        when :this_year then now - now.day + 1.day - now.month.month + 1.month
-        when :last_year then now - now.day + 1.day - now.month.month + 1.month - 1.year
-        when :this_quarter then now - now.day + 1.day - ((now.month-1)%3).month
-        when :last_quarter then now - now.day + 1.day - ((now.month-1)%3).month - 3.month
-        when :custom then now - 100.year
-      end
-
-      to = case @period
-        when :this_month then from + 1.month
-        when :last_month then from + 1.month
-        when :this_year then from + 1.year
-        when :last_year then from + 1.year
-        when :this_quarter then from + 3.month
-        when :last_quarter then from + 3.month
-        when :custom then now + 100.year
-      end
-
-      @transactions =  @transactions.where('transaction.transaction_date BETWEEN ? and ?', from, to)
+   # Filter by kind (income-expense)
+    if params[:kind]
+      @kind = params[:kind].to_sym
+    else
+      @kind = :all
     end
 
+    # Filter by description
+    if params[:description]
+      @description = params[:description].to_sym
+    else
+      @description = ""
+    end
 
-    # Count for all transactions
-    @count = @transactions.size
+    # Filter by period
+    if params[:period]
+      @period = params[:period].to_sym
+
+      if @period == :custom
+
+        @from = Date.civil(
+          params[:custom_from][:year].to_i,
+          params[:custom_from][:month].to_i,
+          params[:custom_from][:day].to_i
+        )
+
+        @to = Date.civil(
+          params[:custom_to][:year].to_i,
+          params[:custom_to][:month].to_i,
+          params[:custom_to][:day].to_i
+        )
+
+      else
+
+        @from = get_period_from(@period,Date.today)
+        @to = get_period_to(@period,Date.today)
+
+      end
+
+    end
+
+    # get transactions by kind
+    if @kind && @kind == :all
+      @transactions = Transaction.where("transactions.type ~* 'Expense' OR transactions.type ~* 'Income'")
+    else
+      @transactions = Transaction.where("transactions.type ~* ?",@kind)
+    end
+
+    #get transactions that match description
+    @transactions = @transactions.where("transactions.description ~* ?", @description) unless @description.blank?
+
+    #get transactions that match period
+    @transactions = @transactions.where('transactions.transaction_date BETWEEN ? AND ?', @from, @to) unless @period.nil?
+
+    # Set result count
+    @count = @transactions.count
 
     # Set pagination
     @per_page = (params[:per_page] || 10).to_i
     @transactions = @transactions.paginate(:per_page => @per_page, :page => params[:page])
+
+    # Options to complete selects
     @periods = [:this_month, :last_month, :this_year, :last_year, :this_quarter, :last_quarter,:custom]
     @kinds = [:all, :income, :expense]
     @page_sizes = [5,10,20,50,100]
 
   end
 
+private
 
+  def get_period_from(period,now)
+      from = case period
+        when :this_month then now.beginning_of_month
+        when :last_month then now.beginning_of_month - 1.month
+        when :this_year then now.beginning_of_year
+        when :last_year then now.beginning_of_year - 1.year
+        when :this_quarter then now.beginning_of_quarter
+        when :last_quarter then now.beginning_of_quarter - 3.month
+      end
+      return from
+  end
+
+  def get_period_to(period,now)
+      to = case period
+        when :this_month then now.end_of_month
+        when :last_month then now.end_of_month - 1.month
+        when :this_year then now.end_of_year
+        when :last_year then now.end_of_year - 1.year
+        when :this_quarter then now.end_of_quarter
+        when :last_quarter then now.end_of_quarter - 3.month
+      end
+      return to
+  end
 end
 

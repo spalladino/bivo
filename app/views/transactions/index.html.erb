@@ -5,19 +5,28 @@
 <% content_for(:js) do %>
 
   $(function() {
+		showOrHiddenCustomPeriod();
     $('#period').change(function() {
-			if ($('#period').attr('value') == "custom")
+			showOrHiddenCustomPeriod();
+     });
+	});
+
+  function showOrHiddenCustomPeriod(){
+    if ($('#period').attr('value') == "custom")
       {
         $('#custom').show();
       }
       else{
         $('#custom').hide();
       }
-     });
-	});
+    }
 <% end %>
 
+
+
 <% title "Transactions" %>
+
+<%=raw @info%>
 
 <%=_("Transaction count")%> <%=@count%>
 <div id="filters">
@@ -25,21 +34,20 @@
 		<%= _("Show per page")%>
     <%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page)%>
   	<%= _('Show') %>
-		<%= select_tag :kind, options_for_select(@kinds, @kinds) %>
-
+		<%= select_tag :kind, options_for_select(@kinds, @kind) %>
     <%= _('Period') %>
-		<%= select_tag :period, options_for_select(@periods, @periods) %>
+		<%= select_tag :period, options_for_select(@periods, @period) %>
   	<%= _('Filter by') %>
-    <%= text_field_tag :name, @name, :id => 'name_filter' %> <%= link_to_function(_('clear'), "$('#name_filter').val('').change();") if @name %>
+    <%= text_field_tag :description, @description, :id => 'description_filter' %> <%= link_to_function(_('clear'), "$('#description_filter').val('').change();") if @name %>
 
 
     <div id="custom">
       <br/>
       <%= _('From') %>
-      <%= date_select(:from, "written_on")%>
+      <%= select_date @from, :prefix => :custom_from, :start_year => 2000, :end_year => 2020%>
       <br/>
       <%= _('To') %>
-      <%= date_select(:to, "written_on")%>
+      <%= select_date @to, :prefix => :custom_to,:start_year => 2000, :end_year => 2020 %>
       <br/>
     </div>
 

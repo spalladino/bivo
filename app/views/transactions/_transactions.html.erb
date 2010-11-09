@@ -1,10 +1,30 @@
 <%= will_paginate @transactions %>
 
 <div id="transactions-list">
-<% for transaction in @transactions %>
-  <div class="transaction">
-	  <h3><%= transaction.name %></h3>
-  </div>
-<% end %>
+  <table border="1" frame="border">
+  <thead>
+    <tr>
+       <th><%= _("type") %></th>
+       <th><%= _("date") %></th>
+	     <th><%= _("description") %></th>
+       <th><%= _("category") %></th>
+       <th><%= _("details") %></th>
+
+    </tr>
+  </thead>
+  <% for transaction in @transactions %>
+    <tr>
+       <td><%= transaction.type %></td>
+       <td><%= transaction.transaction_date %></td>
+	     <td><%= transaction.description %></td>
+       <% if transaction.type == "Income"  %>
+          <td><%= (IncomeCategory.find(transaction.income_category_id)).name %></td>
+       <% else  %>
+          <td><%= (ExpenseCategory.find(transaction.expense_category_id)).name %></td>
+       <% end  %>
+       <td><%= transaction.details %></td>
+    </tr>
+  <% end %>
+  </table>
 </div>
 
