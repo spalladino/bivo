@@ -28,3 +28,7 @@
   max-width: 400px;
   overflow: auto;
 }
+
+.edit_catecories form, .edit_catecories form.button_to, .edit_catecories form.button_to div {
+	display: inline;
+}

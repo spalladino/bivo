@@ -11,4 +11,19 @@ class ShopCategoryTest < ActiveSupport::TestCase
     
     s.save!
   end
+  
+  test "list categories as case insensitve" do
+    a1 = ShopCategory.make :name => 'a1'
+    b = ShopCategory.make :name => 'b'
+    a2 = ShopCategory.make :name => 'A2'
+    
+    assert_equal a1, ShopCategory.roots.first
+    assert_equal a2, ShopCategory.roots.second
+    assert_equal b, ShopCategory.roots.third
+  end
+  
+  test "validate empty name" do
+    a = ShopCategory.make_unsaved :name => ''
+    assert !a.save
+  end
 end
