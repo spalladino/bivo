@@ -122,4 +122,33 @@ class AdminController < ApplicationController
     User.delete(params["id"]) unless params["id"].blank?
     redirect_to admin_user_manager_path
   end
+
+  def add_income_and_expense
+    @income_categories = IncomeCategory.all
+    @shops = Shop.all
+    @expense_categories = ExpenseCategory.all
+    @transaction = Transaction.new
+  end
+
+  def create_income_and_expense
+    type = params["transaction"].delete("type")
+
+    if (type == "Income")
+      @transaction = Income.new(params["transaction"])
+    else
+      @transaction = Expense.new(params["transaction"])
+    end
+
+    @transaction.user_id = current_user.id
+    
+    if (@transaction.save)
+      redirect_to root_path, :notice => "transaction created successfully"
+    else
+      @income_categories = IncomeCategory.all
+      @shops = Shop.all
+      @expense_categories = ExpenseCategory.all
+
+      render "add_income_and_expense"
+    end
+  end
 end

@@ -2,6 +2,14 @@ Bivo::Application.routes.draw do
   devise_for :users, :controllers => {:registrations => 'registrations' }
   match '/auth/facebook/callback' => 'facebook_authentications#create'
 
+  #incomes and expenses
+  get "admin/add_income_and_expense", :to => "admin#add_income_and_expense"
+  post "admin/create_income_and_expense", :to => "admin#create_income_and_expense", :as => "create_income_and_expense"
+  #incomes categories
+  post "income_categories/create", :to => "income_categories#create"
+  put "income_categories/update/:id", :to => "income_categories#update"
+  delete "income_categories/:id", :to => "income_categories#destroy"
+
   #paths for admin manager
   get "admin", :to => "admin#index", :as => "admin_user_manager"
   get "admin/new_personal_user", :to => "admin#new_personal_user", :as => "admin_new_personal_user"
@@ -44,7 +52,7 @@ Bivo::Application.routes.draw do
       post :deactivate
     end
     collection do
-      get :edit_categories    
+      get :edit_categories
     end
   end
 
@@ -62,6 +70,8 @@ Bivo::Application.routes.draw do
       post :unfollow
     end
   end
+
+  resources :transactions, :path => 'transaction'
 
   root :to => "home#index"
 
