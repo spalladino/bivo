@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101109192727) do
+ActiveRecord::Schema.define(:version => 20101109213954) do
 
   create_table "cause_categories", :force => true do |t|
     t.string   "name"
@@ -46,6 +46,23 @@ ActiveRecord::Schema.define(:version => 20101109192727) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "comments", :force => true do |t|
+    t.integer  "commentable_id",                 :default => 0
+    t.string   "commentable_type", :limit => 15, :default => ""
+    t.string   "title",                          :default => ""
+    t.text     "body",                           :default => ""
+    t.string   "subject",                        :default => ""
+    t.integer  "user_id",                        :default => 0,  :null => false
+    t.integer  "parent_id"
+    t.integer  "lft"
+    t.integer  "rgt"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "comments", ["commentable_id"], :name => "index_comments_on_commentable_id"
+  add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
   create_table "countries", :force => true do |t|
     t.string   "name"
@@ -101,11 +118,11 @@ ActiveRecord::Schema.define(:version => 20101109192727) do
     t.string   "affiliate_code"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "status"
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
+    t.string   "status"
     t.float    "comission_value"
     t.string   "comission_kind"
     t.string   "comission_details"
@@ -128,9 +145,9 @@ ActiveRecord::Schema.define(:version => 20101109192727) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "email",                                         :default => "", :null => false
-    t.string   "encrypted_password",             :limit => 128, :default => "", :null => false
-    t.string   "password_salt",                                 :default => "", :null => false
+    t.string   "email",                                         :default => "",    :null => false
+    t.string   "encrypted_password",             :limit => 128, :default => "",    :null => false
+    t.string   "password_salt",                                 :default => "",    :null => false
     t.string   "reset_password_token"
     t.string   "remember_token"
     t.datetime "remember_created_at"
@@ -167,7 +184,7 @@ ActiveRecord::Schema.define(:version => 20101109192727) do
     t.boolean  "notice_comment_added"
     t.boolean  "send_me_news"
     t.boolean  "auto_approve_comments"
-    t.boolean  "from_facebook"
+    t.boolean  "from_facebook",                                 :default => false
     t.boolean  "eula_accepted"
     t.string   "status"
   end
