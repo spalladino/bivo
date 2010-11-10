@@ -11,6 +11,8 @@ gem 'enumerated_attribute'
 gem 'omniauth'
 gem "jquery-rails"
 gem "texticle"
+gem 'aws-s3'
+gem 'paperclip'
 
 group :test do
   gem 'machinist'

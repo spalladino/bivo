@@ -1,4 +1,11 @@
 class PersonalUser < User
+  attr_accessible :picture, :delete_picture
+  #TODO define avatar size, and default image
+  has_attached_file :picture,
+        :storage => :s3, 
+        :s3_credentials => "#{::Rails.root}/config/amazon_s3.yml",
+        :path => ":class/:id/picture/:style/:filename"
+  before_validation :clear_picture
 
   validates_presence_of :first_name
   validates_length_of :first_name, :maximum => 255
@@ -18,6 +25,19 @@ class PersonalUser < User
 
   def name
     "#{first_name} #{last_name}"
+  end
+  
+  def delete_picture=(value)
+    @delete_picture = !value.to_i.zero?
+  end
+
+  def delete_picture
+    !!@delete_picture
+  end
+  alias_method :delete_picture?, :delete_picture
+  
+  def clear_picture
+    self.picture = nil if delete_picture? && !picture.dirty?
   end
 end
 

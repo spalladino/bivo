@@ -1,0 +1,14 @@
+development:
+    bucket: bivo-dev
+    access_key_id: <your key>
+    secret_access_key: <your key>
+    
+test:
+    bucket: bivo-test
+    access_key_id: <your key>
+    secret_access_key: <your key>
+
+production:
+    bucket: bivo
+    access_key_id: <your key>
+    secret_access_key: <your key>
