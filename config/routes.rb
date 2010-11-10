@@ -58,10 +58,9 @@ Bivo::Application.routes.draw do
     end
   end
 
-  get "cause/c/:url", :controller => "causes", :action => "details", :constraints => { :url => Cause::UrlFormat }
   get "cause/check_url", :controller => "causes", :action => "check_url", :as => 'check_cause_url'
 
-  resources :causes, :path => 'cause' do
+  resources :causes, :path => 'cause/a' do
     member do
       post :activate
       post :deactivate
@@ -72,6 +71,8 @@ Bivo::Application.routes.draw do
       post :unfollow
     end
   end
+
+  get "cause/:url", :controller => "causes", :action => "details", :as => "cause_details", :constraints => { :url => Cause::UrlFormat }
 
   resources :transactions, :path => 'transaction'
 

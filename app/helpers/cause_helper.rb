@@ -13,7 +13,7 @@ module CauseHelper
   end
 
   def view_cause_button(cause)
-    return link_to _("View"), cause_path(cause.id)
+    return link_to _("View"), cause_details_path(cause.url)
   end
 
   # Displayed when the cause is in “voting” mode or when the user did not vote for the cause.
@@ -127,7 +127,7 @@ module CauseHelper
 
   # Redirects to the cause page. Charity. (Owner)
   def cause_link(cause)
-    return content_tag :div,link_to(cause.name,cause_path(cause.id))
+    return content_tag :div,link_to(cause.name,cause_details_path(cause.url))
   end
 
 
