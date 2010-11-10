@@ -22,7 +22,7 @@ class Cause < ActiveRecord::Base
   validates_uniqueness_of :name, :case_sensitive => false
 
   validates_presence_of :url
-  validates_length_of :url, :maximum => 255
+  validates_length_of :url, :maximum => 255, :minimum => 3
   validates_uniqueness_of :url, :case_sensitive => false
   validates :url, :short_url_format => true
 
