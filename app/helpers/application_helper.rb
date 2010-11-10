@@ -34,8 +34,8 @@ module ApplicationHelper
   def facebook_like
     content_tag :iframe, nil, :src => "http://www.facebook.com/plugins/like.php?href=#{CGI::escape(request.url)}&layout=standard&show_faces=true&width=450&action=like&font=arial&colorscheme=light&height=80", :scrolling => 'no', :frameborder => '0', :allowtransparency => true, :id => :facebook_like
   end
-  
-  
+
+
   # Remove link for a child
   def remove_link_unless_new_record(fields)
     out = ''
@@ -61,7 +61,7 @@ module ApplicationHelper
   def generate_html(form_builder, method, options = {})
     options[:object] ||= form_builder.object.class.reflect_on_association(method).klass.new
     options[:partial] ||= method.to_s.singularize
-    options[:form_builder_local] ||= :f  
+    options[:form_builder_local] ||= :f
 
     form_builder.fields_for(method, options[:object], :child_index => 'NEW_RECORD') do |f|
       render(:partial => options[:partial], :locals => { options[:form_builder_local] => f })

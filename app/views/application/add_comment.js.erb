@@ -1,0 +1,5 @@
+
+$('#comment_form').hide();
+$('#add_comment_btn').show();
+$("#comments_list").last().append("<%= escape_javascript(render('comment_row', :comment => @comment))%>");
+

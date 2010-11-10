@@ -1,4 +1,5 @@
 class Charity < User
+  acts_as_commentable
   UrlFormat = /[a-zA-Z\-_][a-zA-Z0-9\-_]*/
   # Default scope excludes deleted charities
   default_scope where('users.status != ?', :deleted)
@@ -110,7 +111,7 @@ class Charity < User
   end
 
   private
-  
+
   def check_presence_of_protocol_in_website
     unless (["http","https"].include?(self.charity_website.split(":").first))
       self.charity_website = "http://" + self.charity_website
