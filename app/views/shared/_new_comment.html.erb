@@ -1,0 +1,50 @@
+<% content_for(:js) do %>
+
+  function showComments(){
+    $('#comment_form').show();
+    $('#add_comment_btn').hide();
+  }
+
+  function reply(id){
+    $('#parent_id').attr('value',id);
+  }
+
+
+<% end %>
+
+<div id="comments">
+  <div>
+    <table id="comments_list">
+      <tbody>
+        <%object.comment_threads.each do |comm|%>
+        <%= render('application/comment_row', :comment => comm)%>
+        <%end%>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="add_comment_btn">
+    <button type="button" onclick="showComments()"><%=_("Add Comment")%></button>
+  </div>
+
+  <div id= "comment_form" style="display:none">
+
+  <%= form_tag({:controller => 'application', :action => 'add_comment'},:remote => true) do%>
+    <%= text_field(:comment, :title) %>Title<br/>
+    <%= text_field(:comment, :subject) %>Subject<br/>
+    <%= text_area(:comment, :body) %>Body<br/>
+    <%= hidden_field_tag(:id, object.id) %>
+    <%= hidden_field_tag(:parent_id, nil) %>
+    <%= hidden_field_tag(:class, object.class) %>
+   	<%= submit_tag _('Submit'), :disable_with => _('Submitting...') %>
+		</p>
+
+  <% end %>
+
+
+
+
+  </div>
+
+</div>
+

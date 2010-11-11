@@ -18,25 +18,43 @@ class ApplicationController < ActionController::Base
     end
   end
 
- def only_admin
+  def only_admin
     if not (current_user && current_user.is_admin_user)
       render :nothing => true, :status => :forbidden
     end
   end
 
+  def add_comment
+    if params[:class] == "Shop"
+      @object = Shop.find(params[:id])
+    elsif params[:class] == "Charity"
+      @object = Charity.find(params[:id])
+    elsif params[:class] == "Cause"
+      @object = Cause.find(params[:id])
+    end
+    @user_who_commented = @current_user
+    @comment = Comment.build_from(@object, @user_who_commented.id,params[:comment]["body"])
+    @comment.subject = params[:comment][:subject]
+    @comment.title = params[:comment][:title]
+    if !params[:parent_id].nil?
+      @comment.parent_id = params[:parent_id]
+    end
+    @comment.save
+  end
+
   protected
-  
+
   def check_eula_accepted
     if (user_signed_in? && !current_user.eula_accepted)
       redirect_to accept_eula_path
     end
   end
- 
+
   def instantiate_controller_and_action_names
     @action_name = action_name
     @controller_name = controller_name
   end
-    
+
   def get_period_from(period,date)
       case period
         when :this_month   then date.beginning_of_month

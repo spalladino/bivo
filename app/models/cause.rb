@@ -1,7 +1,7 @@
 require 'enumerated_attribute'
 
 class Cause < ActiveRecord::Base
-
+  acts_as_commentable
   UrlFormat = /[a-zA-Z\-_][a-zA-Z0-9\-_]*/
 
   # Default scope excludes deleted causes
