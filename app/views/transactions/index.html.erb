@@ -6,9 +6,7 @@
 
   $(function() {
 		showOrHiddenCustomPeriod();
-    $('#period').change(function() {
-			showOrHiddenCustomPeriod();
-     });
+    $('#period').change(showOrHiddenCustomPeriod);
 	});
 
   function showOrHiddenCustomPeriod(){

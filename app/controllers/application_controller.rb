@@ -37,5 +37,26 @@ class ApplicationController < ActionController::Base
     @controller_name = controller_name
   end
     
+  def get_period_from(period,date)
+      case period
+        when :this_month   then date.beginning_of_month
+        when :last_month   then date.prev_month.beginning_of_month
+        when :this_year    then date.beginning_of_year
+        when :last_year    then date.prev_year.beginning_of_year
+        when :this_quarter then date.beginning_of_quarter
+        when :last_quarter then date.beginning_of_quarter - 3.month
+      end
+  end
+
+  def get_period_to(period,date)
+      case period
+        when :this_month   then date.end_of_month
+        when :last_month   then date.prev_month.end_of_month
+        when :this_year    then date.end_of_year
+        when :last_year    then date.prev_year.end_of_year
+        when :this_quarter then date.end_of_quarter
+        when :last_quarter then date.end_of_quarter - 3.month
+      end
+  end
 end
 

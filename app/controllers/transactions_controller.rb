@@ -70,31 +70,5 @@ class TransactionsController < ApplicationController
     @page_sizes = [5,10,20,50,100]
 
   end
-
-private
-
-  def get_period_from(period,now)
-      from = case period
-        when :this_month then now.beginning_of_month
-        when :last_month then now.beginning_of_month - 1.month
-        when :this_year then now.beginning_of_year
-        when :last_year then now.beginning_of_year - 1.year
-        when :this_quarter then now.beginning_of_quarter
-        when :last_quarter then now.beginning_of_quarter - 3.month
-      end
-      return from
-  end
-
-  def get_period_to(period,now)
-      to = case period
-        when :this_month then now.end_of_month
-        when :last_month then now.end_of_month - 1.month
-        when :this_year then now.end_of_year
-        when :last_year then now.end_of_year - 1.year
-        when :this_quarter then now.end_of_quarter
-        when :last_quarter then now.end_of_quarter - 3.month
-      end
-      return to
-  end
 end
 
