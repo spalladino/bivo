@@ -7,5 +7,9 @@ class Transaction < ActiveRecord::Base
   
   validates_length_of :description, :maximum => 255
   
-  validates_inclusion_of :type, :in => %w(Income Expense), :message => "%{value} should be either Income or Expense" 
+  validates_inclusion_of :type, :in => %w(Income Expense), :message => "%{value} should be either Income or Expense"
+
+  def self.transactions_count(from, to)
+    Transaction.where("transaction_date BETWEEN ? AND ?", from, to).count
+  end
 end

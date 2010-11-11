@@ -11,6 +11,8 @@ gem 'enumerated_attribute'
 gem 'omniauth'
 gem "jquery-rails"
 gem "texticle"
+gem "money"
+gem "google_currency"
 
 group :test do
   gem 'machinist'
