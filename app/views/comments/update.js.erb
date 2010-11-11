@@ -1,0 +1,5 @@
+<%if @could_save%>
+  $('#<%="row_"+@comment.id.to_s%>').replaceWith("<%= escape_javascript(render('comment_row', :comment => @comment))%>");
+<%end%>
+<%= render(:partial => 'shared/notifications.js') %>
+

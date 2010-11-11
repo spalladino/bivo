@@ -1,0 +1,79 @@
+<% content_for(:js) do %>
+
+  function showComments(){
+    $('#comment_form').show();
+    $('#add_comment_btn').hide();
+    $('#cancel_button').show();
+  }
+
+  function reply(id){
+    $('#parent_id').attr('value',id);
+  }
+
+  function editComment(id){
+    text = $('#comment_body_' + id).text();
+    $('#text_area_' + id).attr('value',text);
+    $('#text_area_' + id).show();
+    $('#comment_body_' + id).hide();
+    $('#edit_button_' + id).hide();
+    $('#save_button_' + id).show();
+    $('#cancel_button_' + id).show();
+  }
+
+  function cancelEdit(id){
+
+    $('#text_area_' + id).hide();
+    $('#comment_body_' + id).show();
+    $('#edit_button_' + id).show();
+    $('#save_button_' + id).hide();
+    $('#cancel_button_' + id).hide();
+
+  }
+
+  function cancelAdd(){
+    $('#comment_form form')[0].reset();
+    $('#comment_form').hide();
+    $('#add_comment_btn').show();
+
+  }
+
+
+
+
+
+<% end %>
+
+<div id="comments">
+    <table id="comments_list">
+      <tbody>
+        <%object.comment_threads.each do |comm|%>
+        <%= render('comments/comment_row', :comment => comm)%>
+        <%end%>
+      </tbody>
+    </table>
+
+  <div id="add_comment_btn">
+    <%=add_comment_button%>
+  </div>
+
+  <div id= "comment_form" style="display:none">
+
+  <%if @comment
+    action = 'update'
+    comment_id = @comment.id
+   else
+    action = 'create'
+  end%>
+
+
+  <%= form_tag({:controller => 'comments', :action => action},:remote => true) do%>
+    <%= text_area(:comment, :body, :rows => 3, :cols => 100, :id =>"comment_text_area") %><br/>
+    <%= hidden_field_tag(:object_id, object.id) %>
+    <%= hidden_field_tag(:parent_id, nil) %>
+    <%= hidden_field_tag(:class, object.class) %>
+    <%=cancel_add_button%>
+   	<%= submit_tag _('Submit'), :disable_with => _('Submitting...') %>
+  <% end %>
+  </div>
+</div>
+

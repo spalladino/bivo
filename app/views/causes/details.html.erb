@@ -6,7 +6,10 @@
 <p> <b><%=_('Founds Needed')%></b>: <%= @cause.funds_needed %> </p>
 <div id="funds_raised"> <%= @cause.funds_raised %> </div>
 
-<%= render :partial => "shared/new_comment", :locals => {:object => @cause}%>
+
+<div id="comments">
+  <%= comments @cause %>
+</div>
 
 <br/>
 <div id="vote_button">

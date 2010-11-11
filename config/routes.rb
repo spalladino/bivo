@@ -2,10 +2,11 @@ Bivo::Application.routes.draw do
   devise_for :users, :controllers => {:registrations => 'registrations' }
   match '/auth/facebook/callback' => 'facebook_authentications#create'
 
-  #applications comments
-  post "application/add_comment", :to => "application#add_comment", :as => "add_comment"
-  post "application/:id/edit_comment", :to => "application#edit_comment", :as => "edit_comment"
-  post "application/:id/delete_comment", :to => "application#delete_comment", :as => "delete_comment"
+  #comments
+  post "comments/:id/destroy", :to => "comments#destroy"
+  get "comments/:id/edit", :to => "comments#edit"
+  post "comments/:id/update", :to => "comments#update"
+  post "comments/create", :to => "comments#create"
 
   #incomes and expenses
   resources :expense_categories

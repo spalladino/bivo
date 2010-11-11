@@ -1,0 +1,20 @@
+<tr id = "<%="row_" + comment.id.to_s%>">
+<!--ROW FOR EACH COMMENT -->
+    <th><%=(User.find(comment.user_id)).email%></th>
+    <th>
+
+        <!--Form for edit each comment -->
+        <p id = "comment_body_<%=comment.id%>"><%=comment.body%></p>
+        <%form_tag({:controller => 'comments', :action => 'update', :id => comment.id},:remote => true,:id=>"edit_comment_form_#{comment.id}") do %>
+          <%=text_area(:comment,:body,:rows => 3,:cols => 30,:id => "text_area_" + comment.id.to_s ,:style => "display:none")%>
+          <%=cancel_save_button comment.id%>
+          <%= submit_tag _('Save'), :disable_with => _('Submitting...'),:style => "display:none", :id => "save_button_#{comment.id}"%>
+
+        <%end%>
+
+    </th>
+    <th><%=reply_comment_button comment.id%></th>
+    <th><%=edit_comment_button comment.id%></th>
+    <th><%=delete_comment_button comment.id%></th>
+</tr>
+

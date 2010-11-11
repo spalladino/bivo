@@ -29,31 +29,10 @@ module ApplicationHelper
     url_for({:action => action, :controller => controller}.merge(query))
   end
 
-  def reply_comment_button(comment)
-   return content_tag :div, button(_("Reply"),
-:onclick=>"showComments();reply(#{comment.id})")
-
+  def comments(object)
+    return render :partial => "comments/comments", :locals => {:object => object}
   end
 
-  def edit_comment_button(comment)
-
-    return content_tag :div,
-      button_to(_("Edit"),
-        {:action => "edit_comment",:controller => "application", :id => comment.id },
-        :remote => true,
-        :id => "follow_cause_btn"
-      )
-  end
-
-  def delete_comment_button(comment)
-
-    return content_tag :div,
-      button_to(_("Delete"),
-        {:action => "delete_comment", :controller => "application",:id => comment.id },
-        :remote => true,
-        :id => "follow_cause_btn"
-      )
-  end
 
   # Uses the Like functionality of Facebook.
   def facebook_like

@@ -60,5 +60,7 @@
   <%=facebook_like%>
 </div>
 
-<%= render :partial => "shared/new_comment", :locals => {:object => @charity}%>
+<div id="comments">
+  <%= comments @charity %>
+</div>
 
