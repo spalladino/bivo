@@ -1,8 +1,13 @@
 <tr>
+    <th><%=comment.title%></th>
     <th><%=comment.subject%></th>
     <th><%=comment.body%></th>
+    <th>
     <%if !comment.parent_id?%>
-      <th><button type="button" onclick="showComments();reply(<%=comment.id%>)"><%=_("Reply")%></button></th>
+      <%=reply_comment_button comment%>
     <%end%>
+    </th>
+    <th><%=edit_comment_button comment%></th>
+    <th><%=delete_comment_button comment%></th>
 </tr>
 

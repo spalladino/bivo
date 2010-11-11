@@ -42,6 +42,18 @@ class ApplicationController < ActionController::Base
     @comment.save
   end
 
+  def edit_comment(id)
+    @comment = Comment.find(id)
+  end
+
+  def update_comment(id)
+
+  end
+
+  def delete_comment(id)
+    Comment.find(id).destroy
+  end
+
   protected
 
   def check_eula_accepted
