@@ -1,8 +1,12 @@
+require 'money'
+require 'money/bank/google_currency'
+
 class HomeController < ApplicationController
   skip_before_filter :check_eula_accepted, :only => [:accept_eula, :confirm_eula]
 
   def index
     @raised_amount = Income.founds_raised(1.month.ago, Date.today)
+    @exchange = CurrencyExchange.get_conversion_rate(1, :USD, :EUR)
   end
 
   def eula

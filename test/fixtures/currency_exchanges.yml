@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  currency_from: MyString
+  currency_to: MyString
+  conversion_rate: 9.99
+  conversion_date: 2010-11-11 12:42:37
+
+two:
+  currency_from: MyString
+  currency_to: MyString
+  conversion_rate: 9.99
+  conversion_date: 2010-11-11 12:42:37
