@@ -42,4 +42,26 @@ class AccountTest < ActiveSupport::TestCase
     assert_equal "second movement", b.movements.second.description
     assert_equal "second movement", c.movements.first.description
   end
+  
+  class RejectAccount < Account
+    attr_reader :last_movement
+    
+    def process(movement)
+      @last_movement = movement
+      raise 'cancel'
+    end
+  end
+  
+  test "exception in process movement reject tranfer" do
+    a = Account.make
+    b = RejectAccount.create! 'b'
+    
+    Account.transfer a, b, 10
+    
+    assert_equal b, b.last_movement.account
+    
+    assert_equal 0.to_d, a.balance
+    assert_equal 0.to_d, b.balance
+    assert_equal 0, AccountMovement.count
+  end
 end
