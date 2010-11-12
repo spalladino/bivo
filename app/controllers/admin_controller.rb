@@ -128,10 +128,16 @@ class AdminController < ApplicationController
     @shops = Shop.all
     @expense_categories = ExpenseCategory.all
     @transaction = Transaction.new
+    @currency = Transaction::DefaultCurrency
+    @currencies = []
+    Bivo::Application.config.currencies.each_pair { |key, value| 
+      @currencies << [value, key]
+    }
   end
 
   def create_income_and_expense
     type = params["transaction"].delete("type")
+    @currency = params["currency"] || Transaction::DefaultCurrency
 
     if (type == "Income")
       @transaction = Income.new(params["transaction"])
@@ -140,13 +146,23 @@ class AdminController < ApplicationController
     end
 
     @transaction.user_id = current_user.id
-    
+
+    if ((@currency != Transaction::DefaultCurrency) && @transaction.valid?)
+      @transaction.amount =  CurrencyExchange.get_conversion_rate(
+        @transaction.amount, @currency, Transaction::DefaultCurrency
+      )
+    end
+
     if (@transaction.save)
       redirect_to root_path, :notice => "transaction created successfully"
     else
       @income_categories = IncomeCategory.all
       @shops = Shop.all
       @expense_categories = ExpenseCategory.all
+      @currencies = []
+      Bivo::Application.config.currencies.each_pair { |key, value| 
+        @currencies << [value, key]
+      }
 
       render "add_income_and_expense"
     end

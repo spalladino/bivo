@@ -6,7 +6,6 @@ class HomeController < ApplicationController
 
   def index
     @raised_amount = Income.founds_raised(1.month.ago, Date.today)
-    @exchange = CurrencyExchange.get_conversion_rate(1, :USD, :EUR)
   end
 
   def eula
