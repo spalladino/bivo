@@ -29,8 +29,8 @@ module ApplicationHelper
     url_for({:action => action, :controller => controller}.merge(query))
   end
 
-  def comments(object)
-    return render :partial => "comments/comments", :locals => {:object => object}
+  def comments(entity)
+    return render :partial => "comments/comments", :locals => {:entity => entity,:comment => @comment}
   end
 
 

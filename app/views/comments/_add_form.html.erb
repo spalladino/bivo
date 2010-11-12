@@ -1,0 +1,9 @@
+ <%= form_tag({:controller => 'comments', :action => action},:remote => true) do%>
+    <%= text_area(:comment, :body, :rows => 3, :cols => 100, :id =>"comment_text_area") %><br/>
+    <%= hidden_field_tag(:entity_id, entity.id) %>
+    <%= hidden_field_tag(:parent_id, nil) %>
+    <%= hidden_field_tag(:class, entity.class) %>
+    <%=cancel_add_button%>
+   	<%= submit_tag _('Submit'), :disable_with => _('Submitting...') %>
+  <% end %>
+
