@@ -2,6 +2,12 @@ Bivo::Application.routes.draw do
   devise_for :users, :controllers => {:registrations => 'registrations' }
   match '/auth/facebook/callback' => 'facebook_authentications#create'
 
+  #comments
+  post "comments/:id/destroy", :to => "comments#destroy"
+  get "comments/:id/edit", :to => "comments#edit"
+  post "comments/:id/update", :to => "comments#update"
+  post "comments/create", :to => "comments#create"
+
   #incomes and expenses
   resources :expense_categories
   get "expense/list_categories", :to => "expense_categories#list_options"
@@ -32,6 +38,10 @@ Bivo::Application.routes.draw do
   get "accept_eula",  :to => "home#accept_eula", :as => "accept_eula"
   post "confirm_eula", :to => "home#confirm_eula", :as => "confirm_eula"
 
+  #paths for dashboard
+  get "dashboard", :to => "home#dashboard"
+
+  #paths for charities
   get "charity/check_url", :to => "charities#check_url"
   get "charity/c/:url", :controller => "charities", :action => "details", :constraints => { :url => Charity::UrlFormat }
 

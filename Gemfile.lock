@@ -55,6 +55,8 @@ GEM
       locale (>= 2.0.5)
     gettext_i18n_rails (0.2.9)
       fast_gettext
+    google_currency (1.0.2)
+      money (~> 3.1.5)
     i18n (0.4.1)
     jquery-rails (0.2.4)
       rails (~> 3.0)
@@ -68,6 +70,7 @@ GEM
     mime-types (1.16)
     mocha (0.9.9)
       rake
+    money (3.1.5)
     mongrel (1.2.0.pre2)
       daemons (~> 1.0.10)
       gem_plugin (~> 0.2.3)
@@ -171,9 +174,11 @@ DEPENDENCIES
   ffaker
   gettext (>= 1.9.3)
   gettext_i18n_rails
+  google_currency
   jquery-rails
   machinist
   mocha
+  money
   mongrel
   mongrel_cluster
   omniauth

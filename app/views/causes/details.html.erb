@@ -6,6 +6,11 @@
 <p> <b><%=_('Founds Needed')%></b>: <%= @cause.funds_needed %> </p>
 <div id="funds_raised"> <%= @cause.funds_raised %> </div>
 
+
+<div id="comments">
+  <%= comments @cause %>
+</div>
+
 <br/>
 <div id="vote_button">
   <%= vote_button @cause %>

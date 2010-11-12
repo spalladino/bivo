@@ -1,7 +1,7 @@
 require 'enumerated_attribute'
 
 class Cause < ActiveRecord::Base
-
+  acts_as_commentable
   UrlFormat = /[a-zA-Z\-_][a-zA-Z0-9\-_]*/
 
   # Default scope excludes deleted causes
@@ -111,5 +111,15 @@ class Cause < ActiveRecord::Base
     end
   end
 
+  def self.most_voted_causes()
+    most_voted_causes = []
+
+    CauseCategory.all.each do |cat|
+      cause = Cause.where("cause_category_id = ?", cat.id).order("votes_count DESC").limit(1).first
+      most_voted_causes << cause unless cause.nil?
+    end
+
+    most_voted_causes
+  end
 end
 

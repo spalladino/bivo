@@ -13,6 +13,8 @@ gem "jquery-rails"
 gem "texticle"
 gem 'aws-s3'
 gem 'paperclip'
+gem "money"
+gem "google_currency"
 
 group :test do
   gem 'machinist'

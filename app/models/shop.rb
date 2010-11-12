@@ -1,6 +1,7 @@
 require 'enumerated_attribute'
 
 class Shop < ActiveRecord::Base
+  acts_as_commentable
   index do
     name
     description
@@ -63,13 +64,13 @@ class Shop < ActiveRecord::Base
   #TODO: Validate widget fields
 
   protected
-  
+
   def add_parent_categories(category)
     if category.parent && !self.categories.include?(category.parent)
       self.categories << category.parent
     end
   end
-  
+
   def ensure_parent_categories
     self.categories.each do |c|
       self.add_parent_categories c
