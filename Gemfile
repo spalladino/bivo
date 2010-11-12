@@ -11,6 +11,8 @@ gem 'enumerated_attribute'
 gem 'omniauth'
 gem "jquery-rails"
 gem "texticle"
+gem 'aws-s3'
+gem 'paperclip'
 gem "money"
 gem "google_currency"
 

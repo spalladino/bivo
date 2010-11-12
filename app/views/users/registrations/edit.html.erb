@@ -5,7 +5,7 @@
 <% end %>
 
 <h2><%= title_for @type %></h2>
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
+<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :multipart => (@type == :personal) }) do |f| %>
   <%= devise_error_messages! %>
 
   <p><%= f.label :email, _("E-Mail") %><br />
@@ -32,6 +32,11 @@
 
     <p><%= f.label _("About me") %><br />
     <%= f.text_area :about_me %></p>
+
+	<p><%= f.label _("Profile picture") %><br/>
+	Current: <%= image_tag resource.picture.url %>
+	<%= f.check_box :delete_picture %> <%= f.label _("Delete profile picture") %>
+	<%= f.file_field :picture %></p>
   <% end %>
 
   Email me updates of projects or charities I follow when: <br />
