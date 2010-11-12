@@ -79,6 +79,7 @@ $(document).ready(function(){
   </div>
 
   <p><%= f.label :amount %><br />
+  <%= select_tag :currency, options_for_select(@currencies, @currency) %>
   <%= f.text_field :amount %></p>
 
   <p><%= f.label :description %><br />

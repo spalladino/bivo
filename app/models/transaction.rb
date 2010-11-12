@@ -1,4 +1,5 @@
 class Transaction < ActiveRecord::Base
+  DefaultCurrency = :GBP
   belongs_to :user
   
   validates_numericality_of :amount
