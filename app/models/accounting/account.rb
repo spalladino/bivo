@@ -2,6 +2,18 @@ class Account < ActiveRecord::Base
 
   has_many :movements, :class_name => "AccountMovement"
 
+  def self.cash_reserves_account
+    CashReservesAccount.find_or_create_by_name(CashReservesAccount::NAME)
+  end
+
+  def self.cash_pool_account
+    CashPoolAccount.find_or_create_by_name(CashPoolAccount::NAME)
+  end
+
+  def self.investments_account
+    InvestmentsAccount.find_or_create_by_name(InvestmentsAccount::NAME)
+  end
+
   def self.transfer(from, to, amount, description = nil)
     reload = false
     Account.transaction do
