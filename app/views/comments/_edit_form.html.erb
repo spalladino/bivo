@@ -1,0 +1,24 @@
+<!--Form for edit each comment -->
+
+<%form_tag(
+      {:controller => 'comments',:action => 'update', :id => comment.id},
+      :remote => true,
+      :id=>"edit_comment_form_#{comment.id}") do%>
+          <%=text_area(:comment,
+              :body,
+              :rows => 3,
+              :cols => 30,
+              :id => "text_area_" + comment.id.to_s,
+              :style => "display:none")
+           %>
+          <%= hidden_field_tag(:entity_id, entity.id) %>
+          <%= hidden_field_tag(:class, entity.class) %>
+          <%= hidden_field_tag(:id, comment.id) %>
+          <%=cancel_save_button comment.id%>
+          <%= submit_tag _('Save'),
+              :disable_with => _('Submitting...'),
+              :style => "display:none",
+              :id => "save_button_#{comment.id}"
+           %>
+ <%end%>
+
