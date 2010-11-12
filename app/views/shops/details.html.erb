@@ -47,5 +47,7 @@
   <%= active_deactive_shop_button @shop %>
 </div>
 
-<%= render :partial => "shared/new_comment", :locals => {:object => @shop}%>
+<div id="comments">
+  <%= comments @shop %>
+</div>
 

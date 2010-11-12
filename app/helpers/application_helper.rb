@@ -29,6 +29,10 @@ module ApplicationHelper
     url_for({:action => action, :controller => controller}.merge(query))
   end
 
+  def comments(object)
+    return render :partial => "comments/comments", :locals => {:object => object}
+  end
+
 
   # Uses the Like functionality of Facebook.
   def facebook_like
