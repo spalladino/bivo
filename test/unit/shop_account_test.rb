@@ -32,4 +32,18 @@ class ShopAccountTest < ActiveSupport::TestCase
     assert_equal income, shop_movement.transaction
     assert_equal income, cash_pool_movement.transaction
   end
+  
+  test "creating incomes moves 5% amount to cash reserves" do
+    shop = Shop.make
+    income = Income.create! :amount => 100, :user => Admin.make, :transaction_date => Date.today, :income_category => IncomeCategory.get_shop_category, :shop => shop
+
+    shop_movement = Account.shop_account(shop).movements.second
+    cash_reserves_movement = Account.cash_reserves_account.movements.first
+    
+    assert_movement -5, -100, shop_movement
+    assert_movement 5, 5, cash_reserves_movement
+    
+    assert_equal income, shop_movement.transaction
+    assert_equal income, cash_reserves_movement.transaction
+  end
 end
