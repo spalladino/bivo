@@ -1,13 +1,5 @@
 <h2>
-<% if (@transaction.id.nil?) %>
   <%= _("Add Income/Expense") %>
-<% else %>
-  <% if (@transaction.type == "Income") %>
-    <%= _("Edit Income") %>
-  <% else %>
-    <%= _("Edit Expense") %>
-  <% end %>  
-<% end %>
 </h2>
 
 <% content_for :js do %>
@@ -69,7 +61,7 @@ $(document).ready(function(){
   <%= f.date_select :transaction_date %></p>
 
   <div id="income_fields" style="<%= get_display_of :Income, @transaction %>">
-    <%= render :partial => "income_fields", 
+    <%= render :partial => "income_fields",
           :locals => {:f => f, :income_categories => @income_categories, :shops => @shops, :transaction => @transaction} %>
   </div>
 
@@ -87,3 +79,4 @@ $(document).ready(function(){
 
   <p><%= f.submit :Save %> <%= f.submit :Cancel, :id => "cancel" %></p>
 <% end %>
+

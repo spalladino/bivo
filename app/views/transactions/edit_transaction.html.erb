@@ -1,0 +1,40 @@
+
+<% content_for :js do %>
+$(document).ready(function(){
+  $('#cancel').click(function () {
+    location.href = "<%= transaction_list_path %>";
+    return false;
+  })
+});
+
+<% end %>
+
+<h2>
+
+  <% if (@transaction.type == "Income") %>
+    <%= _("Edit Income") %>
+  <% else %>
+    <%= _("Edit Expense") %>
+  <% end %>
+
+
+</h2>
+
+
+<%= form_for(@transaction, :as => :transaction, :url => transaction_update_path, :id => @transaction.id) do |f| %>
+  <%= render "shared/error_messages", :target => @transaction %>
+
+  <div class="field">
+    <%= f.label :amount %><br />
+    <%= select_tag :currency, options_for_select(@currencies, @currency) %>
+    <%= f.text_field :amount %></p>
+  </div>
+
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_field :description %>
+  </div>
+
+  <p><%= f.submit :Save %> <%= f.submit :Cancel, :id => "cancel" %></p>
+<% end %>
+

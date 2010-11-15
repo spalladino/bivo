@@ -9,7 +9,8 @@
 	     <th><%= _("description") %></th>
        <th><%= _("category") %></th>
        <th><%= _("details") %></th>
-
+       <th><%= _("edit") %></th>
+       <th><%= _("destroy") %></th>
     </tr>
   </thead>
   <% for transaction in @transactions %>
@@ -23,6 +24,8 @@
           <td><%= (ExpenseCategory.find(transaction.expense_category_id)).name %></td>
        <% end  %>
        <td><%= transaction.details %></td>
+       <td><%= link_to _("Edit"),transaction_edit_path(transaction.id)%></td>
+       <td><%= link_to _("Destroy"), transaction_destroy_path(transaction.id), :confirm => 'Are you sure?', :method => :delete %></td>
     </tr>
   <% end %>
   </table>
