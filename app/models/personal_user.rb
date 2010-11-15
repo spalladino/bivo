@@ -19,5 +19,9 @@ class PersonalUser < User
   def name
     "#{first_name} #{last_name}"
   end
+
+  def can_add_causes?
+    false
+  end
 end
 

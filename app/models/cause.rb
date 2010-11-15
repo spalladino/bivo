@@ -38,17 +38,41 @@ class Cause < ActiveRecord::Base
   validates_numericality_of :funds_raised, :greater_than_or_equal_to => 0
 
   validate :inactive_if_charity_is_inactive
+  validate :valid_status_transition_if_changed, :on => :update
 
+
+  def valid_status_transition_if_changed
+    if ((self.status_changed?) && (!can_change_status?))
+      errors.add(:status, "invalid transition")
+    end
+  end
+
+  def can_change_status?
+    from_status = self.status_was.to_sym
+    to_status = self.status.to_sym
+
+    case from_status
+      when :inactive
+        to_status == :active
+      when :active
+        [:inactive, :raising_funds].include? to_status
+      when :raising_funds
+        [:completed, :deleted].include? to_status
+      when :completed
+        [:paid, :deleted].include? to_status
+      when :paid
+        [:completed, :deleted].include? to_status
+      else
+        false
+    end
+  end
 
   def inactive_if_charity_is_inactive
     errors.add(:status, "must be inactive when charity is inactive") if
       !self.charity.nil? and self.charity.status == :inactive and self.status != :inactive
   end
 
-
   enum_attr :status, %w(^inactive active raising_funds completed paid deleted),:nil => false
-
-
 
   def self.find_deleted(id)
     self.with_exclusive_scope {find(id)}
@@ -84,23 +108,6 @@ class Cause < ActiveRecord::Base
 
   def can_vote?
     self.status == :active
-  end
-
-  def can_change_status(to_status, from_status = self.status)
-    @result = false
-    case from_status
-      when :inactive
-        @result = to_status == :active
-      when :active
-        @result = [:inactive, :raising_funds].include? to_status
-      when :raising_funds
-        @result = [:completed, :deleted].include? to_status
-      when :completed
-        @result = [:paid, :deleted].include? to_status
-      when :paid
-        @result = [:completed, :deleted].include? to_status
-    end
-    @result
   end
 
   def destroy

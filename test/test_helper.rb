@@ -27,8 +27,8 @@ class ActionController::TestCase
     return user
   end
 
-  def create_charity_and_sign_in
-    user = Charity.make
+  def create_charity_and_sign_in(attributes={})
+    user = Charity.make attributes
     sign_in user
     return user
   end
