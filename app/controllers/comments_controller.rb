@@ -1,16 +1,16 @@
 class CommentsController < ApplicationController
-  before_filter :load_comment, :except => [:new, :create]
+
+  before_filter :authenticate_user!
+  before_filter :load_entity, :unless => [:edit]
+  before_filter :load_comment, :only => [:edit, :update, :destroy]
+  before_filter :create_allowed , :only => [:create]
+  before_filter :edit_allowed, :only=> [:edit,:update]
+  before_filter :delete_allowed, :only => [:destroy]
 
   def create
-    if params[:class] == "Shop"
-      @object = Shop.find(params[:object_id])
-    elsif params[:class] == "Charity"
-      @object = Charity.find(params[:object_id])
-    elsif params[:class] == "Cause"
-      @object = Cause.find(params[:object_id])
-    end
+
     @user_who_commented = @current_user
-    @comment = Comment.build_from(@object, @user_who_commented.id,params[:comment]["body"])
+    @comment = Comment.build_from(@entity, @user_who_commented.id,params[:comment]["body"])
     @comment.parent_id = params[:parent_id]
     @could_save = true
     if !@comment.save
@@ -40,12 +40,44 @@ class CommentsController < ApplicationController
 
 protected
 
+  def load_entity
+    if params[:class] == "Shop"
+      @entity = Shop.find(params[:entity_id])
+    elsif params[:class] == "Charity"
+      @entity = Charity.find(params[:entity_id])
+    elsif params[:class] == "Cause"
+      @entity = Cause.find(params[:entity_id])
+    end
+  end
+
   def load_comment
     @comment = Comment.find(params[:id])
   end
 
+  def create_allowed
+    if !rules.can_add?(current_user)
+      ajax_flash[:notice] = _("You can not create comments, please, sign up")
+      render :nothing => true, :status => :forbidden
+    end
+  end
 
+  def edit_allowed
+    if !rules.can_edit?(current_user,@entity)
+      ajax_flash[:notice] = _("You can not edit this comment")
+      render :nothing => true, :status => :forbidden
+    end
+  end
 
+  def delete_allowed
+    if !rules.can_delete?(current_user,@entity)
+      ajax_flash[:notice] = _("You can not delete this comment")
+      render :nothing => true, :status => :forbidden
+    end
+  end
+
+  def rules
+    eval("#{@entity.class}::CommentRules")
+  end
 
 end
 

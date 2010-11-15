@@ -10,7 +10,24 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101109213954) do
+ActiveRecord::Schema.define(:version => 20101112183147) do
+
+  create_table "account_movements", :force => true do |t|
+    t.integer  "account_id"
+    t.string   "description"
+    t.decimal  "amount"
+    t.decimal  "balance"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "accounts", :force => true do |t|
+    t.string   "type"
+    t.string   "name"
+    t.decimal  "balance",    :precision => 12, :scale => 3, :default => 0.0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "cause_categories", :force => true do |t|
     t.string   "name"
@@ -118,11 +135,11 @@ ActiveRecord::Schema.define(:version => 20101109213954) do
     t.string   "affiliate_code"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "status"
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
-    t.string   "status"
     t.float    "comission_value"
     t.string   "comission_kind"
     t.string   "comission_details"
@@ -145,9 +162,9 @@ ActiveRecord::Schema.define(:version => 20101109213954) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "email",                                         :default => "", :null => false
-    t.string   "encrypted_password",             :limit => 128, :default => "", :null => false
-    t.string   "password_salt",                                 :default => "", :null => false
+    t.string   "email",                                         :default => "",    :null => false
+    t.string   "encrypted_password",             :limit => 128, :default => "",    :null => false
+    t.string   "password_salt",                                 :default => "",    :null => false
     t.string   "reset_password_token"
     t.string   "remember_token"
     t.datetime "remember_created_at"
@@ -184,9 +201,13 @@ ActiveRecord::Schema.define(:version => 20101109213954) do
     t.boolean  "notice_comment_added"
     t.boolean  "send_me_news"
     t.boolean  "auto_approve_comments"
-    t.boolean  "from_facebook"
+    t.boolean  "from_facebook",                                 :default => false
     t.boolean  "eula_accepted"
     t.string   "status"
+    t.string   "picture_file_name"
+    t.string   "picture_content_type"
+    t.integer  "picture_file_size"
+    t.datetime "picture_updated_at"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

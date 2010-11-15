@@ -2,7 +2,7 @@
   $('#comment_form').hide();
   $('#comment_form form')[0].reset();
   $('#add_comment_btn').show();
-  $("#comments_list").last().append("<%= escape_javascript(render('comment_row', :comment => @comment))%>");
+  $("#comments_list").last().append("<%= escape_javascript(render('comment_row', :comment => @comment,:entity => @entity))%>");
 <%end%>
 <%= render(:partial => 'shared/notifications.js') %>
 

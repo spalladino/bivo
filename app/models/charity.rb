@@ -1,5 +1,20 @@
 class Charity < User
-  acts_as_commentable
+
+
+  class CommentRules
+    def self.can_delete?(user,entity)
+      return !user.nil? && user.is_admin_user
+    end
+
+    def self.can_edit?(user,entity)
+      return !user.nil? && user.is_admin_user
+    end
+
+    def self.can_add?(user)
+      return !user.nil?
+    end
+  end
+
   UrlFormat = /[a-zA-Z\-_][a-zA-Z0-9\-_]*/
   # Default scope excludes deleted charities
   default_scope where('users.status != ?', :deleted)

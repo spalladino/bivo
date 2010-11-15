@@ -4,6 +4,19 @@ class Cause < ActiveRecord::Base
   acts_as_commentable
   UrlFormat = /[a-zA-Z\-_][a-zA-Z0-9\-_]*/
 
+  class CommentRules
+    def self.can_delete?(user,entity)
+      return !user.nil? && (user.is_admin_user || entity.charity == user )
+    end
+
+    def self.can_edit?(user,entity)
+      return !user.nil? && (user.is_admin_user || entity.charity == user )
+    end
+
+    def self.can_add?(user)
+      return !user.nil?
+    end
+  end
   # Default scope excludes deleted causes
   default_scope where('causes.status != ?', :deleted)
 

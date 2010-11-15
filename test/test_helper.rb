@@ -14,6 +14,10 @@ class ActiveSupport::TestCase
     assert_equal list1.sort, list2.sort, msg
   end
 
+  def assert_movement(amount, balance, movement)
+    assert_equal amount.to_d, movement.amount
+    assert_equal balance.to_d, movement.balance
+  end
 end
 
 class ActionController::TestCase

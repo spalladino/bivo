@@ -6,6 +6,20 @@ class Shop < ActiveRecord::Base
     name
     description
   end
+
+  class CommentRules
+    def self.can_delete?(user,entity)
+      return !user.nil? && user.is_admin_user
+    end
+
+    def self.can_edit?(user,entity)
+      return !user.nil? && user.is_admin_user
+    end
+
+    def self.can_add?(user)
+      return !user.nil?
+    end
+  end
   #Every time you modify columns in your index block, or add new index blocks,
   #you should create a new migration to updated the indexes. (rake texticle:migration and rake db:migrate)
   #If you don’t update the indexes, searches will still work as expected, they just might be kind of slow.

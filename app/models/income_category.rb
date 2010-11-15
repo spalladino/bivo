@@ -7,7 +7,7 @@ class IncomeCategory < ActiveRecord::Base
   ShopName = 'shop'
   
   def self.get_shop_category
-    @@shop ||= self.find_by_name ShopName
+    @@shop ||= self.find_or_create_by_name ShopName
   end
 
 end
