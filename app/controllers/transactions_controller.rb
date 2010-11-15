@@ -12,7 +12,7 @@ class TransactionsController < ApplicationController
 
     # Filter by description
     if params[:description]
-      @description = params[:description].to_sym
+      @description = params[:description]
     else
       @description = ""
     end

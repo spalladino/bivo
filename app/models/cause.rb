@@ -68,7 +68,11 @@ class Cause < ActiveRecord::Base
       when :inactive
         to_status == :active
       when :active
-        [:inactive, :raising_funds].include? to_status
+        if (to_status == :raising_funds)
+          Cause.where("status = ? and cause_category_id = ?", :raising_funds, self.cause_category.id).empty?
+        else
+          to_status == :inactive
+        end
       when :raising_funds
         [:completed, :deleted].include? to_status
       when :completed

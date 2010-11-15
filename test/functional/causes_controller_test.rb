@@ -387,6 +387,64 @@ class CausesControllerTest < ActionController::TestCase
     assert_response :found
   end
 
+  test "shouldnt change to raising funds if there is one in that state of the same category" do
+    user = create_charity_and_sign_in
+    cause_category = CauseCategory.make
+    raising_funds_cause = Cause.make :charity_id => user.id, :status => :raising_funds, 
+      :cause_category_id => cause_category.id
+    active_cause = Cause.make :charity_id => user.id, :status => :active, 
+      :cause_category_id => cause_category.id
+
+    post :update,
+      :id => active_cause.id,
+      :cause =>
+      {
+        :name => 'Hi',
+        :description =>"ss",
+        :city => "cba",
+        :status => :raising_funds,
+        :charity_id => user.id,
+        :country_id => Country.make.id,
+        :cause_category_id => cause_category.id,
+        :url => "url",
+        :funds_needed => 100,
+        :funds_raised => 0
+      }
+
+    cause = Cause.find(active_cause.id)
+
+    assert_not_equal active_cause.status, :raising_funds
+    assert_response :found
+  end
+
+  test "should change to raising funds if there isnt any in that state of the same category" do
+    user = create_charity_and_sign_in
+    cause_category = CauseCategory.make
+    active_cause = Cause.make :charity_id => user.id, :status => :active, 
+      :cause_category_id => cause_category.id
+
+    post :update,
+      :id => active_cause.id,
+      :cause =>
+      {
+        :name => 'Hi',
+        :description =>"ss",
+        :city => "cba",
+        :status => :raising_funds,
+        :charity_id => user.id,
+        :country_id => Country.make.id,
+        :cause_category_id => cause_category.id,
+        :url => "url",
+        :funds_needed => 100,
+        :funds_raised => 0
+      }
+
+    cause = Cause.find(active_cause.id)
+
+    assert_not_equal active_cause.status, :raising_funds
+    assert_response :found
+  end
+
   #UPDATE
   test "shouldnt update" do
     user = create_charity_and_sign_in

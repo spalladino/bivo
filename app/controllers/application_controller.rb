@@ -61,11 +61,11 @@ class ApplicationController < ActionController::Base
   end
 
   def render_forbidden
-    render :file => "#{RAILS_ROOT}/public/403.html", :layout => false, :status => :forbidden
+    render :file => "#{Rails.root.to_s}/public/403.html", :layout => false, :status => :forbidden
   end
 
   def render_not_found
-    render :file => "#{RAILS_ROOT}/public/404.html", :layout => false, :status => :not_found
+    render :file => "#{Rails.root.to_s}/public/404.html", :layout => false, :status => :not_found
   end
 end
 

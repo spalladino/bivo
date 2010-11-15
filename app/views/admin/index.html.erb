@@ -6,7 +6,7 @@
 <div>
 <%= _("Show") %> <%= select_tag :show, options_for_select(@show_options) %> <br />
 <%= _("Size per page")%> <%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page)%> <br />
-<%= _("Filter by") %> <%= text_field_tag :filter %> <br />
+<%= _("Filter by") %> <%= text_field_tag :filter, @filter %> <br />
 <br />
 <%= submit_tag("Search") %>
 </div>
