@@ -4,13 +4,13 @@
   <table border="1" frame="border">
   <thead>
     <tr>
-       <th><%= _("type") %></th>
-       <th><%= _("date") %></th>
-	     <th><%= _("description") %></th>
-       <th><%= _("category") %></th>
-       <th><%= _("details") %></th>
-       <th><%= _("edit") %></th>
-       <th><%= _("destroy") %></th>
+       <th><%= _("Type") %></th>
+       <th><%= _("Date") %></th>
+	     <th><%= _("Description") %></th>
+       <th><%= _("Category") %></th>
+       <th><%= _("Detail") %></th>
+       <th>&nbsp;</th>
+       <th>&nbsp;</th>
     </tr>
   </thead>
   <% for transaction in @transactions %>
@@ -23,7 +23,7 @@
        <% else  %>
           <td><%= (ExpenseCategory.find(transaction.expense_category_id)).name %></td>
        <% end  %>
-       <td><%= transaction.details %></td>
+       <td><%= transaction.detail %></td>
        <td><%= link_to _("Edit"),transaction_edit_path(transaction.id)%></td>
        <td><%= link_to _("Destroy"), transaction_destroy_path(transaction.id), :confirm => 'Are you sure?', :method => :delete %></td>
     </tr>

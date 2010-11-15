@@ -6,5 +6,7 @@ class Expense < Transaction
   
   validates_presence_of :expense_category_id
   
-  
+  def detail
+    self.paid_to
+  end
 end

@@ -17,6 +17,14 @@ class Income < Transaction
     end
   end
 
+  def detail
+    if (shop.nil?)
+      ""
+    else
+      shop.name
+    end
+  end
+
   def self.funds_raised(from, to)
     Income.where("transaction_date BETWEEN ? AND ?", from, to).sum("amount")
   end
