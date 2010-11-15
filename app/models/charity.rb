@@ -1,5 +1,5 @@
 class Charity < User
-
+  acts_as_commentable
 
   class CommentRules
     def self.can_delete?(user,entity)
