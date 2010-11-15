@@ -1,13 +1,17 @@
 class ApplicationController < ActionController::Base
+  rescue_from ActiveRecord::RecordNotFound, :with => :render_not_found
   protect_from_forgery
 
   before_filter :set_gettext_locale
   before_filter :check_eula_accepted
   before_filter :instantiate_controller_and_action_names
 
-  def set_gettext_locale
-    #session[:locale] = 'es' # Uncomment this line to test setting an alternative locale for gettext testingzzzzz
-    super
+  protected
+
+  def only_admin
+    if not (current_user && current_user.is_admin_user)
+      render_forbidden
+    end
   end
 
   def ajax_flash
@@ -18,14 +22,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def only_admin
-    if not (current_user && current_user.is_admin_user)
-      render :nothing => true, :status => :forbidden
-    end
+  def set_gettext_locale
+    #session[:locale] = 'es' # Uncomment this line to test setting an alternative locale for gettext testingzzzzz
+    super
   end
-
-
-  protected
 
   def check_eula_accepted
     if (user_signed_in? && !current_user.eula_accepted)
@@ -58,6 +58,14 @@ class ApplicationController < ActionController::Base
         when :this_quarter then date.end_of_quarter
         when :last_quarter then date.end_of_quarter - 3.month
       end
+  end
+
+  def render_forbidden
+    render :file => "#{RAILS_ROOT}/public/403.html", :layout => false, :status => :forbidden
+  end
+
+  def render_not_found
+    render :file => "#{RAILS_ROOT}/public/404.html", :layout => false, :status => :not_found
   end
 end
 

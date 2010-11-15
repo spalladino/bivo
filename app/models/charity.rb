@@ -110,6 +110,10 @@ class Charity < User
     return (not raising_funds)
   end
 
+  def can_add_causes?
+    true
+  end
+
   def destroyed?
     super || self.status == :deleted
   end
