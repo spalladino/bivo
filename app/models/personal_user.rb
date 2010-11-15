@@ -26,6 +26,10 @@ class PersonalUser < User
   def name
     "#{first_name} #{last_name}"
   end
+
+  def can_add_causes?
+    false
+  end
   
   def delete_picture=(value)
     @delete_picture = !value.to_i.zero?

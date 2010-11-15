@@ -104,3 +104,10 @@ Vote.blueprint(:singleuser) do
   cause        {Cause.make}
 end
 
+Account.blueprint do
+  name  { Sham.simple_name }
+end
+
+IncomeCategory.blueprint do
+  name  { Sham.simple_name }
+end

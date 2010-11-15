@@ -10,7 +10,24 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101110130801) do
+ActiveRecord::Schema.define(:version => 20101112183147) do
+
+  create_table "account_movements", :force => true do |t|
+    t.integer  "account_id"
+    t.string   "description"
+    t.decimal  "amount"
+    t.decimal  "balance"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "accounts", :force => true do |t|
+    t.string   "type"
+    t.string   "name"
+    t.decimal  "balance",    :precision => 12, :scale => 3, :default => 0.0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "cause_categories", :force => true do |t|
     t.string   "name"
@@ -118,11 +135,11 @@ ActiveRecord::Schema.define(:version => 20101110130801) do
     t.string   "affiliate_code"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "status"
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
+    t.string   "status"
     t.float    "comission_value"
     t.string   "comission_kind"
     t.string   "comission_details"

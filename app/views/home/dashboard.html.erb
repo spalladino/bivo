@@ -59,7 +59,7 @@
 <div id="most_voted_causes">
   <h2><%= _("Most voted causes") %></h2>
   <% @most_voted_causes.each do |cause| %>
-    <%= cause.name %> <br />
+    <%= cause.cause_category.name %>: <%= cause.name %> <br />
   <% end %>
 
   

@@ -34,8 +34,9 @@ class Shop < ActiveRecord::Base
   before_save :ensure_parent_categories
 
   has_attached_file :image, :styles => { :small => "150x150>" },
-                    :url  => "/system/data/shops/:id/:style/:basename.:extension",
-                    :path => ":rails_root/public/system/data/shops/:id/:style/:basename.:extension"
+        :storage => :s3, 
+        :s3_credentials => "#{::Rails.root}/config/amazon_s3.yml",
+        :path => ":class/:id/image/:style/:filename"
 
   UrlFormat = /[a-zA-Z\-_][a-zA-Z0-9\-_]*/
 

@@ -44,4 +44,35 @@ class CauseTest < ActiveSupport::TestCase
     assert_not_nil Cause.find_deleted(id1), "Deleted cause is not retrieved with exclusive scope"
   end
 
+  test "should change status from active to raising founds" do
+    cause = Cause.make :status => :active
+    cause.status = :raising_funds
+    cause.save
+
+    assert_equal Cause.find(cause.id).status, :raising_funds
+  end
+
+  test "shouldnt change status from active to completed" do
+    cause = Cause.make :status => :active
+    cause.status = :completed
+    cause.save
+
+    assert_not_equal Cause.find(cause.id).status, :completed
+  end
+
+  test "should change status from inactive to active" do
+    cause = Cause.make :status => :inactive
+    cause.status = :active
+    cause.save
+
+    assert_equal Cause.find(cause.id).status, :active
+  end
+
+  test "shouldnt change status from inactive to raising_funds" do
+    cause = Cause.make :status => :inactive
+    cause.status = :raising_funds
+    cause.save
+
+    assert_not_equal Cause.find(cause.id).status, :raising_funds
+  end
 end

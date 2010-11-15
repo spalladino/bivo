@@ -218,7 +218,7 @@ class CausesController < ApplicationController
   end
 
   def only_admin_or_charity
-    if not (current_user.is_charity_user || current_user.is_admin_user)
+    unless (current_user.can_add_causes?)
       ajax_flash[:notice] = _("Only admin or charity")
       render :nothing => true, :status => :forbidden
     end

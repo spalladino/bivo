@@ -14,6 +14,10 @@ class ActiveSupport::TestCase
     assert_equal list1.sort, list2.sort, msg
   end
 
+  def assert_movement(amount, balance, movement)
+    assert_equal amount.to_d, movement.amount
+    assert_equal balance.to_d, movement.balance
+  end
 end
 
 class ActionController::TestCase
@@ -27,8 +31,8 @@ class ActionController::TestCase
     return user
   end
 
-  def create_charity_and_sign_in
-    user = Charity.make
+  def create_charity_and_sign_in(attributes={})
+    user = Charity.make attributes
     sign_in user
     return user
   end
