@@ -14,7 +14,7 @@ class Account < ActiveRecord::Base
     InvestmentsAccount.find_or_create_by_name(InvestmentsAccount::NAME)
   end
 
-  def self.transfer(from, to, amount, description = nil)
+  def self.transfer(from, to, amount, description = nil, transaction = nil)
     reload = false
     Account.transaction do
       from.lock!
@@ -22,12 +22,12 @@ class Account < ActiveRecord::Base
             
       from.balance -= amount
       from.save!
-      from_line = AccountMovement.new :description => description, :amount => -amount, :balance => from.balance
+      from_line = AccountMovement.new :description => description, :amount => -amount, :balance => from.balance, :transaction_id => transaction.id
       from.movements << from_line
       
       to.balance += amount
       to.save!
-      to_line = AccountMovement.new :description => description, :amount => amount, :balance => to.balance
+      to_line = AccountMovement.new :description => description, :amount => amount, :balance => to.balance, :transaction_id => transaction.id
       to.movements << to_line
       
       begin
