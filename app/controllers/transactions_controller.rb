@@ -97,7 +97,7 @@ class TransactionsController < ApplicationController
     @transaction.description = params[:transaction][:description]
 
     if @transaction.save
-      redirect_to :controller => "transactions", :action => "index"
+      redirect_to transaction_list_path
     else
       @currencies = []
       Bivo::Application.config.currencies.each_pair { |key, value|
@@ -110,7 +110,7 @@ class TransactionsController < ApplicationController
   def destroy
     trans = Transaction.find(params[:id])
     trans.destroy
-    redirect_to :controller => "transactions", :action => "index"
+    redirect_to transaction_list_path
   end
 
 

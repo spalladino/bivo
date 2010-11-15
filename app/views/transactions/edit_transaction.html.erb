@@ -1,3 +1,14 @@
+
+<% content_for :js do %>
+$(document).ready(function(){
+  $('#cancel').click(function () {
+    location.href = "<%= transaction_list_path %>";
+    return false;
+  })
+});
+
+<% end %>
+
 <h2>
 
   <% if (@transaction.type == "Income") %>

@@ -90,6 +90,8 @@ Bivo::Application.routes.draw do
   delete "transaction/:id",:controller => "transactions", :action => "destroy",:as => "transaction_destroy"
   get "transaction/:id/edit", :controller => "transactions", :action => "edit", :as => "transaction_edit"
 
+  get "transaction", :controller => "transactions", :action => "index", :as => 'transaction_list'
+
   resources :transactions, :path => 'transaction'
 
   root :to => "home#index"

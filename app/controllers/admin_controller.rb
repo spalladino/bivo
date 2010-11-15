@@ -154,7 +154,7 @@ class AdminController < ApplicationController
     end
 
     if (@transaction.save)
-      redirect_to :controller=>"transactions",:action => "index"
+      redirect_to transaction_list_path
     else
       @income_categories = IncomeCategory.all
       @shops = Shop.all
