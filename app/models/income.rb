@@ -18,6 +18,8 @@ class Income < Transaction
   def process_income
     if !self.category_is_shop?
       Account.investments_account.accept_investment self
+    else
+      Account.shop_account(self.shop).accept_income self
     end
   end
 end

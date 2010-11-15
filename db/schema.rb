@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101115184435) do
+ActiveRecord::Schema.define(:version => 20101115192704) do
 
   create_table "account_movements", :force => true do |t|
     t.integer  "account_id"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(:version => 20101115184435) do
     t.decimal  "balance",    :precision => 12, :scale => 3, :default => 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "shop_id"
   end
 
   create_table "cause_categories", :force => true do |t|

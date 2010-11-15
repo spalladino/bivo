@@ -14,6 +14,15 @@ class Account < ActiveRecord::Base
     InvestmentsAccount.find_or_create_by_name(InvestmentsAccount::NAME)
   end
 
+  def self.shop_account(shop)
+    account = ShopAccount.find_by_shop_id shop.id
+    if account.nil?
+      account = ShopAccount.new :name => shop.name, :shop => shop
+      account.save!
+    end
+    account
+  end
+
   def self.transfer(from, to, amount, description = nil, transaction = nil)
     reload = false
     Account.transaction do
