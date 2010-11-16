@@ -2,13 +2,22 @@ class CommentsController < ApplicationController
 
   before_filter :authenticate_user!
   before_filter :load_entity, :unless => [:edit]
-  before_filter :load_comment, :only => [:edit, :update, :destroy]
+  before_filter :load_comment, :only => [:edit, :update, :destroy, :approve]
   before_filter :create_allowed , :only => [:create]
   before_filter :edit_allowed, :only=> [:edit,:update]
   before_filter :delete_allowed, :only => [:destroy]
+  before_filter :appr_allowed, :only => [:approve]
+
+
+
+  def approve
+    @comment.approved = true
+    if !@comment.save
+      ajax_flash[:notice] = _("Comment can not be approved")
+    end
+  end
 
   def create
-
     @user_who_commented = @current_user
     @comment = Comment.build_from(@entity, @user_who_commented.id,params[:comment]["body"])
     @comment.parent_id = params[:parent_id]
@@ -18,7 +27,6 @@ class CommentsController < ApplicationController
       ajax_flash[:notice] = _("Comment text is required")
     end
   end
-
 
   def update
     @comment.body = params[:comment]["body"]
@@ -69,15 +77,24 @@ protected
   end
 
   def delete_allowed
-    if !rules.can_delete?(current_user,@entity)
+    if !rules.can_delete?(current_user,@entity,@comment)
       ajax_flash[:notice] = _("You can not delete this comment")
       render :nothing => true, :status => :forbidden
     end
   end
 
+ def appr_allowed
+    if !rules.can_approve?(current_user,@entity,@comment)
+      ajax_flash[:notice] = _("You can not approve this comment")
+      render :nothing => true, :status => :forbidden
+    end
+  end
+
+
   def rules
     eval("#{@entity.class}::CommentRules")
   end
+
 
 end
 

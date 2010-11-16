@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101115212525) do
+ActiveRecord::Schema.define(:version => 20101116180900) do
 
   create_table "account_movements", :force => true do |t|
     t.integer  "account_id"
@@ -70,12 +70,13 @@ ActiveRecord::Schema.define(:version => 20101115212525) do
     t.string   "title",                          :default => ""
     t.text     "body",                           :default => ""
     t.string   "subject",                        :default => ""
-    t.integer  "user_id",                        :default => 0,  :null => false
+    t.integer  "user_id",                        :default => 0,     :null => false
     t.integer  "parent_id"
     t.integer  "lft"
     t.integer  "rgt"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "approved",                       :default => false
   end
 
   add_index "comments", ["commentable_id"], :name => "index_comments_on_commentable_id"
@@ -135,11 +136,11 @@ ActiveRecord::Schema.define(:version => 20101115212525) do
     t.string   "affiliate_code"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "status"
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
-    t.string   "status"
     t.float    "comission_value"
     t.string   "comission_kind"
     t.string   "comission_details"

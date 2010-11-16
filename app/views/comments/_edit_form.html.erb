@@ -4,10 +4,10 @@
       {:controller => 'comments',:action => 'update', :id => comment.id},
       :remote => true,
       :id=>"edit_comment_form_#{comment.id}") do%>
-          <%=text_area(:comment,
+          <%=text_area(
+              :comment,
               :body,
-              :rows => 3,
-              :cols => 30,
+              :size => "30x5",
               :id => "text_area_" + comment.id.to_s,
               :style => "display:none")
            %>

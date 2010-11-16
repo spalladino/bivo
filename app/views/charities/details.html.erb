@@ -35,22 +35,22 @@
 
 
 <div id="cause_list">
-  <TABLE BORDER="1">
-  <TR>
-    <TH>Name</TH>
-    <TH>Status</TH>
-    <TH>Progress</TH>
-  </TR>
+  <table BORDER="1">
+  <tr>
+    <th>Name</th>
+    <th>Status</th>
+    <th>Progress</th>
+  </tr>
 
   <% @charity.causes.each do |cause|%>
-  <TR>
-    <TD><%=cause_link cause%></TD>
-    <TD><%=cause.status%></TD>
-    <TD><%=progress_box cause%></TD>
-  </TR>
+  <tr>
+    <td><%=cause_link cause%></td>
+    <td><%=cause.status%></td>
+    <td><%=progress_box cause%></td>
+  </tr>
   <%end%>
 
-  </TABLE>
+  </table>
 
 </div>
 
@@ -58,6 +58,10 @@
 <br/>
 <div id="facebook_like">
   <%=facebook_like%>
+</div>
+
+<div id="comments_pending_approval_link">
+  <%= comments_pending_approval_link @charity %>
 </div>
 
 <div id="comments">

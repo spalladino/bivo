@@ -57,5 +57,15 @@ module CharitiesHelper
   end
 
 
+  def comments_pending_approval_link(charity)
+    if current_user && charity.id == current_user.id
+      return content_tag :div, link_to(_("You have comments pending to approval"), :controller => "charities", :action => "manage_comments", :id => charity.id)
+    end
+  end
+
+  def comments_to_approve(charity)
+    return Comment.where(:commentable_type => charity.class.name, :commentable_id => charity.id, :approved => false).order('created_at ASC')
+  end
+
 end
 

@@ -152,5 +152,9 @@ module CauseHelper
 
 
 
+  def comments_to_approve(cause)
+    return Comment.where(:commentable_type => cause.class.name, :commentable_id => cause.id, :approved => false).order('created_at ASC')
+  end
+
 end
 

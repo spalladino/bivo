@@ -1,0 +1,17 @@
+<div id="comments_list">
+
+  <%=@charity.name%> <br/>
+    <% comments_to_approve(@charity).each do |comm|%>
+      <%= render('comment', :comment => comm, :entity => @charity)%>
+    <%end%>
+
+  <% @charity.causes.each do |cause| %>
+    <%=cause.name%> <br/>
+    <% comments_to_approve(cause).each do |comm|%>
+      <%= render('comment', :comment => comm, :entity => cause)%>
+    <%end%>
+  <%end%>
+
+
+</div>
+
