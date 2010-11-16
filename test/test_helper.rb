@@ -15,6 +15,7 @@ class ActiveSupport::TestCase
   end
 
   def assert_movement(amount, balance, movement)
+    assert_not_nil movement, "movement should not be nil"
     assert_equal amount.to_d, movement.amount
     assert_equal balance.to_d, movement.balance
   end

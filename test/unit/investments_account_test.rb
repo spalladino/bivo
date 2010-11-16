@@ -12,9 +12,14 @@ class InvestmentsAccountTest < ActiveSupport::TestCase
   end
   
   test "creating investment moves total amount to cash pool" do
-    # TODO assert movements are associated with Income
-    Income.create! :amount => 100, :user => Admin.make, :transaction_date => Date.today, :income_category => IncomeCategory.make
-    assert_movement -100, -100, Account.investments_account.movements.first
-    assert_movement 100, 100, Account.cash_pool_account.movements.first
+    income = Income.create! :amount => 100, :user => Admin.make, :transaction_date => Date.today, :income_category => IncomeCategory.make
+    investment_movement = Account.investments_account.movements.first
+    cash_pool_movement = Account.cash_pool_account.movements.first
+    
+    assert_movement -100, -100, investment_movement
+    assert_movement 100, 100, cash_pool_movement
+    
+    assert_equal income, investment_movement.transaction
+    assert_equal income, cash_pool_movement.transaction
   end
 end

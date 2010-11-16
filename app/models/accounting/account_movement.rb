@@ -3,4 +3,5 @@ class AccountMovement < ActiveRecord::Base
   default_scope :order => 'created_at ASC'
 
   belongs_to :account
+  belongs_to :transaction
 end
