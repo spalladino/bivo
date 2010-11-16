@@ -22,6 +22,15 @@ class Account < ActiveRecord::Base
     end
     account
   end
+  
+  def self.cause_account(cause)
+    account = CauseAccount.find_by_cause_id cause.id
+    if account.nil?
+      account = CauseAccount.new :name => cause.name, :cause => cause
+      account.save!
+    end
+    account
+  end
 
   def self.transfer(from, to, amount, description = nil, transaction = nil)
     reload = false
