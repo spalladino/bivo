@@ -32,6 +32,8 @@ class Shop < ActiveRecord::Base
 
   has_and_belongs_to_many :categories, :class_name => 'ShopCategory', :after_add => :add_parent_categories
   before_save :ensure_parent_categories
+  
+  after_save :ensure_shop_account
 
   has_attached_file :image, :styles => { :small => "150x150>" },
         :storage => :s3,
@@ -90,6 +92,10 @@ class Shop < ActiveRecord::Base
     self.categories.each do |c|
       self.add_parent_categories c
     end
+  end
+  
+  def ensure_shop_account
+    Account.shop_account self
   end
 end
 
