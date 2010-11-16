@@ -51,7 +51,7 @@ $(document).ready(function(){
 
 <% end %>
 
-<%= form_for(@transaction, :as => :transaction, :url => create_income_and_expense_path) do |f| %>
+<%= form_for(@transaction, :as => :transaction, :url => {:controller => "transactions", :action => "create"}) do |f| %>
   <%= render "shared/error_messages", :target => @transaction %>
 
   <p><%= f.label :type %><br />

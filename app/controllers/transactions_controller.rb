@@ -1,6 +1,6 @@
 class TransactionsController < ApplicationController
-
   before_filter :authenticate_user!, :except => [:index]
+  before_filter :only_admin, :except => [:index]
 
  def index
    # Filter by kind (income-expense)
@@ -71,6 +71,50 @@ class TransactionsController < ApplicationController
 
   end
 
+  def new
+    @income_categories = IncomeCategory.all
+    @shops = Shop.all
+    @expense_categories = ExpenseCategory.all
+    @transaction = Transaction.new
+    @currency = Transaction::DefaultCurrency
+    @currencies = []
+    Bivo::Application.config.currencies.each_pair { |key, value|
+      @currencies << [value, key]
+    }
+  end
+
+  def create
+    type = params["transaction"].delete("type")
+    @currency = params["currency"] || Transaction::DefaultCurrency
+
+    if (type == "Income")
+      @transaction = Income.new(params["transaction"])
+    else
+      @transaction = Expense.new(params["transaction"])
+    end
+
+    @transaction.user_id = current_user.id
+
+    if ((@currency != Transaction::DefaultCurrency) && @transaction.valid?)
+      @transaction.amount = CurrencyExchange.instance.get_conversion_rate(
+        @transaction.amount, @currency, Transaction::DefaultCurrency
+      )
+    end
+
+    if (@transaction.save)
+      redirect_to transaction_list_path
+    else
+      @income_categories = IncomeCategory.all
+      @shops = Shop.all
+      @expense_categories = ExpenseCategory.all
+      @currencies = []
+      Bivo::Application.config.currencies.each_pair { |key, value|
+        @currencies << [value, key]
+      }
+
+      render "new"
+    end
+  end
 
 
   def edit
@@ -80,7 +124,6 @@ class TransactionsController < ApplicationController
     Bivo::Application.config.currencies.each_pair { |key, value|
       @currencies << [value, key]
     }
-    render "edit_transaction"
   end
 
 
@@ -88,10 +131,11 @@ class TransactionsController < ApplicationController
     @transaction = Transaction.find(params[:id])
     @transaction.amount = params[:transaction][:amount].to_f
 
-
     @currency = params[:currency]
     if (@currency != Transaction::DefaultCurrency)
-      @transaction.amount =  CurrencyExchange.get_conversion_rate(@transaction.amount, @currency,Transaction::DefaultCurrency)
+      @transaction.amount =  CurrencyExchange.instance.get_conversion_rate(
+        @transaction.amount, @currency,Transaction::DefaultCurrency
+      )
     end
 
     @transaction.description = params[:transaction][:description]
@@ -101,9 +145,9 @@ class TransactionsController < ApplicationController
     else
       @currencies = []
       Bivo::Application.config.currencies.each_pair { |key, value|
-      @currencies << [value, key]
-    }
-      render "edit_transaction"
+        @currencies << [value, key]
+      }
+      render "edit"
     end
   end
 
@@ -112,8 +156,5 @@ class TransactionsController < ApplicationController
     trans.destroy
     redirect_to transaction_list_path
   end
-
-
-
 end
 

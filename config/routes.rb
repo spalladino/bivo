@@ -12,23 +12,21 @@ Bivo::Application.routes.draw do
   resources :expense_categories
   get "expense/list_categories", :to => "expense_categories#list_options"
 
-
-  get "admin/add_income_and_expense", :to => "admin#add_income_and_expense", :as => "add_income_and_expense"
-  post "admin/create_income_and_expense", :to => "admin#create_income_and_expense", :as => "create_income_and_expense"
   #incomes categories
   post "income_categories/create", :to => "income_categories#create"
   put "income_categories/update/:id", :to => "income_categories#update"
   delete "income_categories/:id", :to => "income_categories#destroy"
 
   #paths for admin manager
-  get "admin", :to => "admin#index", :as => "admin_user_manager"
+  get "admin/tools"
+  get "admin/user_manager"
   get "admin/new_personal_user", :to => "admin#new_personal_user", :as => "admin_new_personal_user"
   post "admin/create_personal_user", :to => "admin#create_personal_user", :as => "admin_create_personal_user"
   get "admin/new_charity", :to => "admin#new_charity", :as => "admin_new_charity"
   post "admin/create_charity", :to => "admin#create_charity", :as => "admin_create_charity"
   get "admin/:id/edit_user", :to => "admin#edit_user", :as => "admin_edit_user"
   post "admin/update_user", :to => "admin#update_user", :as => "admin_update_user"
-  post "admin/delete_user/:id", :to => "admin#delete_user", :as => "admin_delete_user"
+  post "admin/delete_user/:id", :to => "admin#-delete_user", :as => "admin_delete_user"
 
   get 'admin/shop/categories', :to => 'shop_categories#edit', :as => 'admin_edit_shop_categories'
   post 'admin/shop/categories/create', :to => 'shop_categories#create'
@@ -41,7 +39,8 @@ Bivo::Application.routes.draw do
   post "confirm_eula", :to => "home#confirm_eula", :as => "confirm_eula"
 
   #paths for dashboard
-  get "dashboard", :to => "home#dashboard"
+  get "dashboard", :to => "home#dashboard", :as => "dashboard"
+  get "stats", :to => "home#stats", :as => "stats"
 
   #paths for charities
   get "charity/check_url", :to => "charities#check_url"
