@@ -5,7 +5,7 @@ class HomeController < ApplicationController
   skip_before_filter :check_eula_accepted, :only => [:accept_eula, :confirm_eula]
 
   def index
-    @raised_amount = Income.founds_raised(1.month.ago, Date.today)
+    @raised_amount = Income.funds_raised(1.month.ago, Date.today)
   end
 
   def eula
@@ -55,8 +55,8 @@ class HomeController < ApplicationController
       @to = get_period_to(@period.to_sym, Date.today)
     end
 
-    @founds_raised = Income.founds_raised(@from, @to)
-    @transactions = Transaction.transactions_count(@from, @to)
+    @funds_raised = Income.funds_raised(@from, @to)
+    @transactions = Income.transactions_count(@from, @to)
     @most_voted_causes = Cause.most_voted_causes
   end
 end

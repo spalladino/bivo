@@ -10,10 +10,6 @@ class Income < Transaction
   def category_is_shop?
     self.income_category_id == IncomeCategory.get_shop_category.id
   end
-
-  def self.founds_raised(from, to)
-    Income.where("transaction_date BETWEEN ? AND ?", from, to).sum("amount")
-  end
   
   def process_income
     if !self.category_is_shop?
@@ -21,5 +17,21 @@ class Income < Transaction
     else
       Account.shop_account(self.shop).accept_income self
     end
+  end
+
+  def detail
+    if (shop.nil?)
+      ""
+    else
+      shop.name
+    end
+  end
+
+  def self.funds_raised(from, to)
+    Income.where("transaction_date BETWEEN ? AND ?", from, to).sum("amount")
+  end
+
+  def self.transactions_count(from, to)
+    Income.where("transaction_date BETWEEN ? AND ?", from, to).count
   end
 end

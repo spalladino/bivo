@@ -12,7 +12,7 @@ class TransactionsController < ApplicationController
 
     # Filter by description
     if params[:description]
-      @description = params[:description].to_sym
+      @description = params[:description]
     else
       @description = ""
     end
@@ -70,5 +70,50 @@ class TransactionsController < ApplicationController
     @page_sizes = [5,10,20,50,100]
 
   end
+
+
+
+  def edit
+    @transaction = Transaction.find(params[:id])
+    @currency = Transaction::DefaultCurrency
+    @currencies = []
+    Bivo::Application.config.currencies.each_pair { |key, value|
+      @currencies << [value, key]
+    }
+    render "edit_transaction"
+  end
+
+
+  def update
+    @transaction = Transaction.find(params[:id])
+    @transaction.amount = params[:transaction][:amount].to_f
+
+
+    @currency = params[:currency]
+    if (@currency != Transaction::DefaultCurrency)
+      @transaction.amount =  CurrencyExchange.get_conversion_rate(@transaction.amount, @currency,Transaction::DefaultCurrency)
+    end
+
+    @transaction.description = params[:transaction][:description]
+
+    if @transaction.save
+      redirect_to transaction_list_path
+    else
+      @currencies = []
+      Bivo::Application.config.currencies.each_pair { |key, value|
+      @currencies << [value, key]
+    }
+      render "edit_transaction"
+    end
+  end
+
+  def destroy
+    trans = Transaction.find(params[:id])
+    trans.destroy
+    redirect_to transaction_list_path
+  end
+
+
+
 end
 

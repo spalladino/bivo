@@ -118,7 +118,7 @@ module CauseHelper
     elsif cause.status == :raising_funds
       return content_tag :span, cause_funds_completed(cause)
   elsif cause.status == :completed
-      return content_tag :span, cause.founds_raised
+      return content_tag :span, cause.funds_raised
     end
   end
 

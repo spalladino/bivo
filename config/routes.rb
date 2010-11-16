@@ -11,6 +11,8 @@ Bivo::Application.routes.draw do
   #incomes and expenses
   resources :expense_categories
   get "expense/list_categories", :to => "expense_categories#list_options"
+
+
   get "admin/add_income_and_expense", :to => "admin#add_income_and_expense", :as => "add_income_and_expense"
   post "admin/create_income_and_expense", :to => "admin#create_income_and_expense", :as => "create_income_and_expense"
   #incomes categories
@@ -83,6 +85,12 @@ Bivo::Application.routes.draw do
   end
 
   get "cause/:url", :controller => "causes", :action => "details", :as => "cause_details", :constraints => { :url => Cause::UrlFormat }
+
+  post "transaction/:id", :controller => "transactions", :action => "update",:as => "transaction_update"
+  delete "transaction/:id",:controller => "transactions", :action => "destroy",:as => "transaction_destroy"
+  get "transaction/:id/edit", :controller => "transactions", :action => "edit", :as => "transaction_edit"
+
+  get "transaction", :controller => "transactions", :action => "index", :as => 'transaction_list'
 
   resources :transactions, :path => 'transaction'
 

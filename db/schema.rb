@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101115192704) do
+ActiveRecord::Schema.define(:version => 20101115212525) do
 
   create_table "account_movements", :force => true do |t|
     t.integer  "account_id"
@@ -160,7 +160,6 @@ ActiveRecord::Schema.define(:version => 20101115192704) do
     t.datetime "updated_at"
     t.string   "type"
     t.integer  "shop_id"
-    t.string   "details"
   end
 
   create_table "users", :force => true do |t|

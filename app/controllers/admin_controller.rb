@@ -1,11 +1,11 @@
 class AdminController < ApplicationController
   prepend_before_filter :authenticate_user!, :only_admin
-  
+
   def index
     @show_options = [
-      ["all", "all"], 
-      ["charities", "charities"], 
-      ["personal accounts", "personal_accounts"], 
+      ["all", "all"],
+      ["charities", "charities"],
+      ["personal accounts", "personal_accounts"],
       ["active charities", "active_charities"],
       ["inactive charities", "inactive_charities"],
       ["active personal account", "active_personal_account"],
@@ -59,7 +59,7 @@ class AdminController < ApplicationController
       redirect_to @referer || admin_user_manager_path
     else
       @type = @resource.type.to_sym
-      
+
       render "new_personal_user"
     end
   end
@@ -83,7 +83,7 @@ class AdminController < ApplicationController
     else
       @countries = Country.all
       @categories = CharityCategory.all
-      
+
       render "new_charity"
     end
   end
@@ -97,7 +97,7 @@ class AdminController < ApplicationController
     if (@type == :Charity)
       @countries = Country.all
     end
-    
+
     render "edit_user"
   end
 
@@ -130,7 +130,7 @@ class AdminController < ApplicationController
     @transaction = Transaction.new
     @currency = Transaction::DefaultCurrency
     @currencies = []
-    Bivo::Application.config.currencies.each_pair { |key, value| 
+    Bivo::Application.config.currencies.each_pair { |key, value|
       @currencies << [value, key]
     }
   end
@@ -154,17 +154,21 @@ class AdminController < ApplicationController
     end
 
     if (@transaction.save)
-      redirect_to root_path, :notice => "transaction created successfully"
+      redirect_to transaction_list_path
     else
       @income_categories = IncomeCategory.all
       @shops = Shop.all
       @expense_categories = ExpenseCategory.all
       @currencies = []
-      Bivo::Application.config.currencies.each_pair { |key, value| 
+      Bivo::Application.config.currencies.each_pair { |key, value|
         @currencies << [value, key]
       }
 
       render "add_income_and_expense"
     end
   end
+
+
+
 end
+
