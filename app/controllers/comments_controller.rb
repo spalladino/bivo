@@ -21,6 +21,15 @@ class CommentsController < ApplicationController
     @user_who_commented = @current_user
     @comment = Comment.build_from(@entity, @user_who_commented.id,params[:comment]["body"])
     @comment.parent_id = params[:parent_id]
+
+    if @entity.class.name == "Shop"
+      @comment.approved = true
+    elsif @entity.class.name == "Charity"
+      @comment.approved = @entity.auto_approve_comments
+    elsif @entity.class.name == "Cause"
+      @comment.approved = @entity.charity.auto_approve_comments
+    end
+
     @could_save = true
     if !@comment.save
       @could_save = false
