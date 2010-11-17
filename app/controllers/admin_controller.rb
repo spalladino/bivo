@@ -1,7 +1,7 @@
 class AdminController < ApplicationController
   prepend_before_filter :authenticate_user!, :only_admin
 
-  def index
+  def user_manager
     @show_options = [
       ["all", "all"],
       ["charities", "charities"],
@@ -123,52 +123,8 @@ class AdminController < ApplicationController
     redirect_to admin_user_manager_path
   end
 
-  def add_income_and_expense
-    @income_categories = IncomeCategory.all
-    @shops = Shop.all
-    @expense_categories = ExpenseCategory.all
-    @transaction = Transaction.new
-    @currency = Transaction::DefaultCurrency
-    @currencies = []
-    Bivo::Application.config.currencies.each_pair { |key, value|
-      @currencies << [value, key]
-    }
+  def tools
+
   end
-
-  def create_income_and_expense
-    type = params["transaction"].delete("type")
-    @currency = params["currency"] || Transaction::DefaultCurrency
-
-    if (type == "Income")
-      @transaction = Income.new(params["transaction"])
-    else
-      @transaction = Expense.new(params["transaction"])
-    end
-
-    @transaction.user_id = current_user.id
-
-    if ((@currency != Transaction::DefaultCurrency) && @transaction.valid?)
-      @transaction.amount =  CurrencyExchange.get_conversion_rate(
-        @transaction.amount, @currency, Transaction::DefaultCurrency
-      )
-    end
-
-    if (@transaction.save)
-      redirect_to transaction_list_path
-    else
-      @income_categories = IncomeCategory.all
-      @shops = Shop.all
-      @expense_categories = ExpenseCategory.all
-      @currencies = []
-      Bivo::Application.config.currencies.each_pair { |key, value|
-        @currencies << [value, key]
-      }
-
-      render "add_income_and_expense"
-    end
-  end
-
-
-
 end
 
