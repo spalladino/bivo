@@ -14,8 +14,8 @@ module CommentsHelper
   end
 
   def delete_comment_button(id,entity)
-    if rules(entity).can_delete?(current_user,entity)
-      return button_to(_("Delete"),{:action => "destroy",:controller => "comments", :id => id, :class => entity.class, :entity_id => entity.id }, :remote => true, :method => "post")
+    if rules(entity).can_delete?(current_user,entity,Comment.find(id))
+      return button_to(_("Delete"),{:action => "destroy",:controller => "comments", :id => id, :entity_id => entity.id, :class => entity.class}, :remote => true, :method => "post")
     end
   end
 
@@ -41,8 +41,22 @@ module CommentsHelper
     eval("#{entity.class}::CommentRules")
   end
 
-  def comments_ordered_by_date(entity)
-      Comment.where(:commentable_id => entity.id, :commentable_type => entity.class.name).order('created_at ASC')
+  def comments_roots_by_date(entity)
+    return Comment.where(:commentable_id => entity.id, :commentable_type => entity.class.name,:parent_id => nil, :approved => true).order('created_at ASC')
+  end
+
+  def owner_of(comment)
+    return (User.find(comment.user_id)).email
+  end
+
+  def children(comment)
+    return Comment.where(:parent_id => comment.id,:approved => true).order('created_at ASC')
+  end
+
+  def approve_comment_button(id,entity)
+    if rules(entity).can_approve?(current_user,entity,Comment.find(id))
+    return button_to(_("Approve"),{:action => "approve",:controller => "comments", :id => id, :entity_id => entity.id, :class => entity.class}, :remote => true, :method => "post")
+    end
   end
 end
 

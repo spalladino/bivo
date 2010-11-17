@@ -136,6 +136,11 @@ class CharitiesController < ApplicationController
   end
 
 
+  def manage_comments
+
+  end
+
+
  protected
 
   def load_charity

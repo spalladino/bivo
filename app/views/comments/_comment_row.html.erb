@@ -1,17 +1,22 @@
 
-<div id = "<%="row_" + comment.id.to_s%>">
-  <span>
-     <b><%=_("by")%></b> <%=(User.find(comment.user_id)).email%> <b><%=_("on")%></b> <%= l comment.created_at, :format => :short %>
-  </span>
-  <br/>
-  <span id = "comment_body_<%=comment.id%>">
-    <%=comment.body%>
-  </span>
-  <%= render('comments/edit_form', :comment => comment, :entity =>entity)%>
-  <br/>
-    <%=reply_comment_button comment.id, entity%>
-    <%=edit_comment_button comment.id,entity%>
-    <%=delete_comment_button comment.id, entity%>
-</div>
-<br/>
+<ul id = "<%="row_" + comment.id.to_s%>">
+  <div>
+    <span>
+       <b><%=_("by")%></b> <%=owner_of(comment)%> <b><%=_("on")%></b> <%= l comment.created_at, :format => :short %>
+    </span>
+    <br/>
+    <span id = "comment_body_<%=comment.id%>">
+      <%=comment.body%>
+    </span>
+    <%= render('comments/edit_form', :comment => comment, :entity =>entity)%>
+    <br/>
+      <%=reply_comment_button comment.id, entity%>
+      <%=edit_comment_button comment.id,entity%>
+      <%=delete_comment_button comment.id, entity%>
+ </div>
+  <% children(comment).each do |c| %>
+     <%= render('comments/comment_row', :comment => c, :entity => entity)%>
+  <% end %>
+
+</ul>
 

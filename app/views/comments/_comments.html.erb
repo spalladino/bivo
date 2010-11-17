@@ -1,15 +1,24 @@
 <%= render(:partial => 'shared/notifications.js') %>
 <% content_for(:js) do %>
 
+  function scrollToBottom(){
+    var scrollH=document.body.scrollHeight;
+    var offsetH=document.body.offsetHeight;
+    if(scrollH>offsetH) window.scrollTo(0,scrollH);
+    else window.scrollTo(0,offsetH);
+  }
+
   function showComments(){
     $('#comment_form').show();
+    $('#comment_text_area').focus();
     $('#add_comment_btn').hide();
     $('#cancel_button').show();
+    scrollToBottom();
   }
 
   function reply(id){
     $('#parent_id').attr('value',id);
-  }
+   }
 
   function editComment(id){
     text = $('#comment_body_' + id).text();
@@ -48,10 +57,10 @@
 <br/>
 <div id="comments">
     <div id="comments_list">
-        <% comments_ordered_by_date(entity).each do |comm|%>
+        <% comments_roots_by_date(entity).each do |comm|%>
         <%= render('comments/comment_row', :comment => comm, :entity => entity)%>
         <%end%>
-     </div>
+    </div>
 
   <div id="add_comment_btn">
     <%=add_comment_button entity%>
