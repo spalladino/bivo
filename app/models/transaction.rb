@@ -1,11 +1,10 @@
 class Transaction < ActiveRecord::Base
   DefaultCurrency = :GBP
   belongs_to :user
-  attr_accessor :currency
 
-  validates_numericality_of :amount
+  validates_numericality_of :input_amount
   
-  validates_presence_of :user_id, :amount, :transaction_date, :type
+  validates_presence_of :user_id, :input_amount, :transaction_date, :type
   
   validates_length_of :description, :maximum => 255
   
@@ -15,10 +14,11 @@ class Transaction < ActiveRecord::Base
 
   def check_convertion_to_currency
     begin
-      if (currency != DefaultCurrency)
+      if (input_currency.to_sym != DefaultCurrency)
         self.amount = CurrencyExchange.instance.get_conversion_rate(
-          amount, currency, DefaultCurrency
+          input_amount, input_currency.to_sym, DefaultCurrency
         )
+        self.input_currency = DefaultCurrency
       end
     rescue Exception => e
       errors.add(:currency, e.message)

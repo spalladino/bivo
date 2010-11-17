@@ -12,14 +12,14 @@ class TransactionsControllerTest < ActionController::TestCase
     admin = create_admin_and_sign_in
 
     post :create,
-    :currency => "GBP",
     :transaction =>
     {
       :type               => "Income",
       :transaction_date   => "2010-10-10",
       :income_category_id => @shop_category.id,
       :shop_id            => Shop.make.id,
-      :amount             => "1.22",
+      :input_amount       => "1.22",
+      :input_currency    => "GBP",
       :description        => "test"
     }
 
@@ -32,12 +32,12 @@ class TransactionsControllerTest < ActionController::TestCase
     admin = create_admin_and_sign_in
 
     post :create,
-    :currency => "GBP",
     :transaction =>
     {
       :type               => "Income",
       :transaction_date   => "2010-11-11",
-      :amount             => "1.31",
+      :input_amount       => "1.31",
+      :input_currency     => "GBP",
       :description        => "test"
     }
 
@@ -50,14 +50,14 @@ class TransactionsControllerTest < ActionController::TestCase
     admin = create_admin_and_sign_in
 
     post :create,
-    :currency => "GBP",
     :transaction =>
     {
       :type                => "Expense",
       :transaction_date    => "2010-10-10",
       :expense_category_id => @shop_category.id,
       :paid_to             => "somebody",
-      :amount              => "1.22",
+      :input_amount        => "1.22",
+      :input_currency      => "GBP",
       :description         => "test"
     }
 
@@ -70,12 +70,12 @@ class TransactionsControllerTest < ActionController::TestCase
     admin = create_admin_and_sign_in
 
     post :create,
-    :currency => "GBP",
     :transaction =>
     {
       :type                => "Expense",
       :transaction_date    => "2010-10-10",
-      :amount              => "1.22",
+      :input_amount        => "1.22",
+      :input_currency      => "GBP",
       :description         => "test"
     }
 
@@ -90,14 +90,14 @@ class TransactionsControllerTest < ActionController::TestCase
     Money.default_bank.stubs(:get_rate).raises Exception.new
 
     post :create,
-    :currency => "ARS",
     :transaction =>
     {
       :type                => "Expense",
       :transaction_date    => "2010-10-10",
       :expense_category_id => @shop_category.id,
       :paid_to             => "somebody",
-      :amount              => "100",
+      :input_amount        => "100",
+      :input_currency      => "ARS",
       :description         => "test"
     }
 
