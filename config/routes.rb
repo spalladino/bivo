@@ -6,6 +6,7 @@ Bivo::Application.routes.draw do
   post "comments/:id/destroy", :to => "comments#destroy"
   get "comments/:id/edit", :to => "comments#edit"
   post "comments/:id/update", :to => "comments#update"
+  post "comments/:id/approve", :to => "comments#approve"
   post "comments/create", :to => "comments#create"
 
   #incomes and expenses
@@ -49,6 +50,7 @@ Bivo::Application.routes.draw do
 
   resources :charities, :path => 'charity' do
     member do
+      get  :manage_comments
       post :activate
       post :deactivate
       post :follow

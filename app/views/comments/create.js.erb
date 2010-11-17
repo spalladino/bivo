@@ -1,8 +1,13 @@
 <%if @could_save%>
+
   $('#comment_form').hide();
   $('#comment_form form')[0].reset();
   $('#add_comment_btn').show();
-  $("#comments_list").last().append("<%= escape_javascript(render('comment_row', :comment => @comment,:entity => @entity))%>");
+  <%if !@comment.parent.nil? %>
+    $('<%= "#row_#{@comment.parent_id}" %>').append("<%= escape_javascript(render('comment_row', :comment => @comment,:entity => @entity))%>");
+  <%else%>
+    $("#comments_list").append("<%= escape_javascript(render('comment_row', :comment => @comment,:entity => @entity))%>");
+  <%end%>
 <%end%>
 <%= render(:partial => 'shared/notifications.js') %>
 

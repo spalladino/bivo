@@ -5,7 +5,11 @@ class Cause < ActiveRecord::Base
   UrlFormat = /[a-zA-Z\-_][a-zA-Z0-9\-_]*/
 
   class CommentRules
-    def self.can_delete?(user,entity)
+    def self.can_approve?(user,entity,comment)
+      return !user.nil? && (user.is_charity_user && user.id == entity.charity.id && comment.commentable_type == "Cause" && entity.id == comment.commentable_id )
+    end
+
+    def self.can_delete?(user,entity,comment)
       return !user.nil? && (user.is_admin_user || entity.charity == user )
     end
 

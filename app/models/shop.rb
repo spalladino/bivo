@@ -8,7 +8,7 @@ class Shop < ActiveRecord::Base
   end
 
   class CommentRules
-    def self.can_delete?(user,entity)
+    def self.can_delete?(user,entity,comment)
       return !user.nil? && user.is_admin_user
     end
 
@@ -36,7 +36,7 @@ class Shop < ActiveRecord::Base
   after_save :ensure_shop_account
 
   has_attached_file :image, :styles => { :small => "150x150>" },
-        :storage => :s3, 
+        :storage => :s3,
         :s3_credentials => "#{::Rails.root}/config/amazon_s3.yml",
         :path => ":class/:id/image/:style/:filename"
 
