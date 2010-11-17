@@ -1,0 +1,10 @@
+<h1><%= _("Admin tools") %></h1>
+
+<ul>
+  <li><%= link_to _("Transaction manager"), transaction_list_path %></li>
+  <li><%= link_to _("User manager"), admin_user_manager_path %> </li>
+  <li><%= link_to "Add a new shop", new_shop_path %></li>
+  <li><%= link_to "List shops", shops_path %></li>
+  <li><%= link_to "Stats", stats_path %></li>
+  <li><%= link_to "Dashboard", dashboard_path %> </li>
+</ul>
