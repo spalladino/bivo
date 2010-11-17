@@ -85,7 +85,7 @@ class TransactionsController < ApplicationController
 
   def create
     type = params["transaction"].delete("type")
-    @currency = params["currency"] || Transaction::DefaultCurrency
+    @currency = params["transaction"]["input_currency"] || Transaction::DefaultCurrency
 
     if (type == "Income")
       @transaction = Income.new(params["transaction"])
@@ -94,7 +94,6 @@ class TransactionsController < ApplicationController
     end
 
     @transaction.user_id = current_user.id
-    @transaction.currency = @currency.to_sym
 
     if (@transaction.save)
       redirect_to transaction_list_path
@@ -122,10 +121,11 @@ class TransactionsController < ApplicationController
 
 
   def update
-    @currency = params[:currency]
+    @currency = params["transaction"]["input_currency"] || Transaction::DefaultCurrency
     @transaction = Transaction.find(params[:id])
-    @transaction.currency = @currency.to_sym
     @transaction.description = params[:transaction][:description]
+    @transaction.input_currency = params["transaction"]["input_currency"]
+    @transaction.input_amount = params["transaction"]["amount"]
 
     if @transaction.save
       redirect_to transaction_list_path

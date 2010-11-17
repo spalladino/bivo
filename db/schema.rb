@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101116190659) do
+ActiveRecord::Schema.define(:version => 20101117151336) do
 
   create_table "account_movements", :force => true do |t|
     t.integer  "account_id"
@@ -162,12 +162,14 @@ ActiveRecord::Schema.define(:version => 20101116190659) do
     t.datetime "updated_at"
     t.string   "type"
     t.integer  "shop_id"
+    t.string   "input_currency"
+    t.float    "input_amount"
   end
 
   create_table "users", :force => true do |t|
-    t.string   "email",                                         :default => "",    :null => false
-    t.string   "encrypted_password",             :limit => 128, :default => "",    :null => false
-    t.string   "password_salt",                                 :default => "",    :null => false
+    t.string   "email",                                         :default => "", :null => false
+    t.string   "encrypted_password",             :limit => 128, :default => "", :null => false
+    t.string   "password_salt",                                 :default => "", :null => false
     t.string   "reset_password_token"
     t.string   "remember_token"
     t.datetime "remember_created_at"
@@ -204,13 +206,14 @@ ActiveRecord::Schema.define(:version => 20101116190659) do
     t.boolean  "notice_comment_added"
     t.boolean  "send_me_news"
     t.boolean  "auto_approve_comments"
-    t.boolean  "from_facebook",                                 :default => false
+    t.boolean  "from_facebook"
     t.boolean  "eula_accepted"
     t.string   "status"
     t.string   "picture_file_name"
     t.string   "picture_content_type"
     t.integer  "picture_file_size"
     t.datetime "picture_updated_at"
+    t.string   "preferred_language"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
