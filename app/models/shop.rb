@@ -8,6 +8,10 @@ class Shop < ActiveRecord::Base
   end
 
   class CommentRules
+    def self.before_add(comment)
+      comment.approved = true
+    end
+
     def self.can_delete?(user,entity,comment)
       return !user.nil? && user.is_admin_user
     end
@@ -32,7 +36,7 @@ class Shop < ActiveRecord::Base
 
   has_and_belongs_to_many :categories, :class_name => 'ShopCategory', :after_add => :add_parent_categories
   before_save :ensure_parent_categories
-  
+
   after_save :ensure_shop_account
 
   has_attached_file :image, :styles => { :small => "150x150>" },
@@ -93,7 +97,7 @@ class Shop < ActiveRecord::Base
       self.add_parent_categories c
     end
   end
-  
+
   def ensure_shop_account
     Account.shop_account self
   end

@@ -13,12 +13,14 @@
     $('#comment_text_area').focus();
     $('#add_comment_btn').hide();
     $('#cancel_button').show();
+    $('#parent_id').removeAttr('value');
     scrollToBottom();
   }
 
   function reply(id){
     $('#parent_id').attr('value',id);
    }
+
 
   function editComment(id){
     text = $('#comment_body_' + id).text();

@@ -8,8 +8,6 @@ class CommentsController < ApplicationController
   before_filter :delete_allowed, :only => [:destroy]
   before_filter :appr_allowed, :only => [:approve]
 
-
-
   def approve
     @comment.approved = true
     if !@comment.save
@@ -22,13 +20,7 @@ class CommentsController < ApplicationController
     @comment = Comment.build_from(@entity, @user_who_commented.id,params[:comment]["body"])
     @comment.parent_id = params[:parent_id]
 
-    if @entity.class.name == "Shop"
-      @comment.approved = true
-    elsif @entity.class.name == "Charity"
-      @comment.approved = @entity.auto_approve_comments
-    elsif @entity.class.name == "Cause"
-      @comment.approved = @entity.charity.auto_approve_comments
-    end
+    rules.before_add @comment
 
     @could_save = true
     if !@comment.save
@@ -52,8 +44,6 @@ class CommentsController < ApplicationController
 
   def edit
   end
-
-
 
 protected
 
