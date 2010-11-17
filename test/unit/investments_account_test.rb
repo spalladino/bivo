@@ -12,7 +12,7 @@ class InvestmentsAccountTest < ActiveSupport::TestCase
   end
   
   test "creating investment moves total amount to cash pool" do
-    income = Income.create! :amount => 100, :currency => Transaction::DefaultCurrency, :user => Admin.make, :transaction_date => Date.today, :income_category => IncomeCategory.make
+    income = Income.create! :input_amount => 100, :input_currency => Transaction::DefaultCurrency, :user => Admin.make, :transaction_date => Date.today, :income_category => IncomeCategory.make
     investment_movement = Account.investments_account.movements.first
     cash_pool_movement = Account.cash_pool_account.movements.first
     

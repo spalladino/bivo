@@ -19,6 +19,9 @@ class Transaction < ActiveRecord::Base
           input_amount, input_currency.to_sym, DefaultCurrency
         )
         self.input_currency = DefaultCurrency
+      else
+        # TODO add test that ensures this
+        self.amount = input_amount
       end
     rescue Exception => e
       errors.add(:currency, e.message)
