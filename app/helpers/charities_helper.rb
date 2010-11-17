@@ -58,8 +58,8 @@ module CharitiesHelper
 
 
   def comments_pending_approval_link(charity)
-    if current_user && charity.id == current_user.id
-      return content_tag :div, link_to(_("You have comments pending to approval"), :controller => "charities", :action => "manage_comments", :id => charity.id)
+    if current_user && charity.id == current_user.id && (charity.comments_to_approve_count > 0)
+      return content_tag :div, link_to(_("You have " +charity.comments_to_approve_count.to_s + " comments pending to approval"), :controller => "charities", :action => "manage_comments", :id => charity.id)
     end
   end
 
