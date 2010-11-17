@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101117151336) do
+ActiveRecord::Schema.define(:version => 20101117191914) do
 
   create_table "account_movements", :force => true do |t|
     t.integer  "account_id"
@@ -111,6 +111,26 @@ ActiveRecord::Schema.define(:version => 20101117151336) do
     t.datetime "updated_at"
   end
 
+  create_table "galleries", :force => true do |t|
+    t.integer  "entity_id"
+    t.string   "entity_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "gallery_items", :force => true do |t|
+    t.integer  "gallery_id"
+    t.integer  "relative_order"
+    t.string   "type"
+    t.string   "video_url"
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "income_categories", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -139,11 +159,11 @@ ActiveRecord::Schema.define(:version => 20101117151336) do
     t.string   "affiliate_code"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "status"
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
-    t.string   "status"
     t.float    "comission_value"
     t.string   "comission_kind"
     t.string   "comission_details"

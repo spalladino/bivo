@@ -111,3 +111,14 @@ end
 IncomeCategory.blueprint do
   name  { Sham.simple_name }
 end
+
+Gallery.blueprint do
+  entity_id {Charity.make.id}
+  entity_type {"Charity"}
+end
+
+GalleryItem.blueprint do
+  gallery {Gallery.make}
+
+end
+
