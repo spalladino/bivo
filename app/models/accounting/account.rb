@@ -40,12 +40,12 @@ class Account < ActiveRecord::Base
             
       from.balance -= amount
       from.save!
-      from_line = AccountMovement.new :description => description, :amount => -amount, :balance => from.balance, :transaction_id => transaction.id
+      from_line = AccountMovement.new :description => description, :amount => -amount, :balance => from.balance, :transaction => transaction
       from.movements << from_line
       
       to.balance += amount
       to.save!
-      to_line = AccountMovement.new :description => description, :amount => amount, :balance => to.balance, :transaction_id => transaction.id
+      to_line = AccountMovement.new :description => description, :amount => amount, :balance => to.balance, :transaction => transaction
       to.movements << to_line
       
       begin
