@@ -19,7 +19,7 @@ class TransactionsControllerTest < ActionController::TestCase
       :income_category_id => @shop_category.id,
       :shop_id            => Shop.make.id,
       :input_amount       => "1.22",
-      :input_currency    => "GBP",
+      :input_currency     => "GBP",
       :description        => "test"
     }
 
