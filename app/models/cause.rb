@@ -5,6 +5,11 @@ class Cause < ActiveRecord::Base
   UrlFormat = /[a-zA-Z\-_][a-zA-Z0-9\-_]*/
 
   class CommentRules
+    def self.before_add(comment)
+        entity = Cause.find(comment.commentable_id)
+        comment.approved = entity.charity.auto_approve_comments
+    end
+
     def self.can_approve?(user,entity,comment)
       return !user.nil? && (user.is_charity_user && user.id == entity.charity.id && comment.commentable_type == "Cause" && entity.id == comment.commentable_id )
     end
@@ -29,7 +34,7 @@ class Cause < ActiveRecord::Base
   belongs_to :charity
 
   has_many :votes, :dependent => :destroy
-  
+
   after_save :ensure_cause_account
 
   validates_presence_of :charity
@@ -155,6 +160,6 @@ class Cause < ActiveRecord::Base
   def ensure_cause_account
     Account.cause_account self
   end
-  
+
 end
 

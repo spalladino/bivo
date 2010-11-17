@@ -2,6 +2,12 @@ class Charity < User
   acts_as_commentable
 
   class CommentRules
+
+    def self.before_add(comment)
+        entity = Charity.find(comment.commentable_id)
+        comment.approved = entity.auto_approve_comments
+    end
+
     def self.can_approve?(user,entity,comment)
      return !user.nil? && (user.is_charity_user && user.id == comment.commentable_id && comment.commentable_type == "Charity")
     end

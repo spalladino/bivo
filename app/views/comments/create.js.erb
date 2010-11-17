@@ -1,13 +1,20 @@
 <%if @could_save%>
-
   $('#comment_form').hide();
   $('#comment_form form')[0].reset();
   $('#add_comment_btn').show();
   <%if !@comment.parent.nil? %>
-    $('<%= "#row_#{@comment.parent_id}" %>').append("<%= escape_javascript(render('comment_row', :comment => @comment,:entity => @entity))%>");
+    $('<%= "#row_#{@comment.parent_id}" %>').append("<%= escape_javascript(raw "<ul>"+ render('comment_row', :comment => @comment,:entity => @entity) + "</ul>" ) %>");
   <%else%>
     $("#comments_list").append("<%= escape_javascript(render('comment_row', :comment => @comment,:entity => @entity))%>");
   <%end%>
+
+  <%  if !@comment.approved? %>
+    $('#<%="reply_button_"+@comment.id.to_s%>').hide();
+    $('#<%="comment_body_"+@comment.id.to_s%>').append("<b> <%= _('Approval pending')%> </b>");
+  <% end %>
+
 <%end%>
+
+
 <%= render(:partial => 'shared/notifications.js') %>
 
