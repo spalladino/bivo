@@ -139,6 +139,18 @@ class Charity < User
     end
   end
 
+  def comments_to_approve_count
+    count = Comment.where(:commentable_id => self.id, :commentable_type => self.class.name, :approved => false).count
+    self.causes.each do |cause|
+    count = count + Comment.where(:commentable_id => cause.id, :commentable_type => cause.class.name, :approved => false).count
+    end
+    return count
+  end
+
+  def has_own_comments_to_approve?
+    Comment.where(:commentable_id => self.id, :commentable_type => self.class.name, :approved => false).count > 0
+  end
+
   private
 
   def check_presence_of_protocol_in_website

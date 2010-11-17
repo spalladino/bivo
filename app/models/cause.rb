@@ -161,5 +161,10 @@ class Cause < ActiveRecord::Base
     Account.cause_account self
   end
 
+
+  def has_own_comments_to_approve?
+    Comment.where(:commentable_id => self.id, :commentable_type => self.class.name, :approved => false).count > 0
+  end
+
 end
 
