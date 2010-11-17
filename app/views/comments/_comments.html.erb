@@ -21,10 +21,12 @@
     $('#parent_id').attr('value',id);
    }
 
+  function replaceAll(txt, replace, with_this) {
+    return txt.replace(new RegExp(replace, 'g'),with_this);
+  }
 
-  function editComment(id){
-    text = $('#comment_body_' + id).text();
-    $('#text_area_' + id).attr('value',text);
+  function editComment(id,body){
+    $('#text_area_' + id).attr('value',replaceAll(body,'<br>', '\n'));
     $('#text_area_' + id).show();
     $('#comment_body_' + id).hide();
     $('#edit_button_' + id).hide();
