@@ -8,7 +8,7 @@ class CurrencyExchange
     begin
       value.to_money(currency_from).exchange_to(currency_to)
     rescue
-      raise Exception.new("google finance service is unavailable")
+      raise Exception.new("cant be converted to the selected currency right know. Please try again later.")
     end
   end
 end

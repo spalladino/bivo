@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'money'
 
 class TransactionsControllerTest < ActionController::TestCase
   def build_income_categories
@@ -11,6 +12,7 @@ class TransactionsControllerTest < ActionController::TestCase
     admin = create_admin_and_sign_in
 
     post :create,
+    :currency => "GBP",
     :transaction =>
     {
       :type               => "Income",
@@ -30,6 +32,7 @@ class TransactionsControllerTest < ActionController::TestCase
     admin = create_admin_and_sign_in
 
     post :create,
+    :currency => "GBP",
     :transaction =>
     {
       :type               => "Income",
@@ -47,6 +50,7 @@ class TransactionsControllerTest < ActionController::TestCase
     admin = create_admin_and_sign_in
 
     post :create,
+    :currency => "GBP",
     :transaction =>
     {
       :type                => "Expense",
@@ -66,11 +70,34 @@ class TransactionsControllerTest < ActionController::TestCase
     admin = create_admin_and_sign_in
 
     post :create,
+    :currency => "GBP",
     :transaction =>
     {
       :type                => "Expense",
       :transaction_date    => "2010-10-10",
       :amount              => "1.22",
+      :description         => "test"
+    }
+
+    assert_nil Expense.first
+    assert_response :ok
+  end
+
+  test "shouldnt add a transaction if error in google currency conversion service" do
+    build_income_categories
+    admin = create_admin_and_sign_in
+
+    Money.default_bank.stubs(:get_rate).raises Exception.new
+
+    post :create,
+    :currency => "ARS",
+    :transaction =>
+    {
+      :type                => "Expense",
+      :transaction_date    => "2010-10-10",
+      :expense_category_id => @shop_category.id,
+      :paid_to             => "somebody",
+      :amount              => "100",
       :description         => "test"
     }
 

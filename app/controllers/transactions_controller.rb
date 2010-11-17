@@ -94,12 +94,7 @@ class TransactionsController < ApplicationController
     end
 
     @transaction.user_id = current_user.id
-
-    if ((@currency != Transaction::DefaultCurrency) && @transaction.valid?)
-      @transaction.amount = CurrencyExchange.instance.get_conversion_rate(
-        @transaction.amount, @currency, Transaction::DefaultCurrency
-      )
-    end
+    @transaction.currency = @currency.to_sym
 
     if (@transaction.save)
       redirect_to transaction_list_path
@@ -116,7 +111,6 @@ class TransactionsController < ApplicationController
     end
   end
 
-
   def edit
     @transaction = Transaction.find(params[:id])
     @currency = Transaction::DefaultCurrency
@@ -128,16 +122,9 @@ class TransactionsController < ApplicationController
 
 
   def update
-    @transaction = Transaction.find(params[:id])
-    @transaction.amount = params[:transaction][:amount].to_f
-
     @currency = params[:currency]
-    if (@currency != Transaction::DefaultCurrency)
-      @transaction.amount =  CurrencyExchange.instance.get_conversion_rate(
-        @transaction.amount, @currency,Transaction::DefaultCurrency
-      )
-    end
-
+    @transaction = Transaction.find(params[:id])
+    @transaction.currency = @currency.to_sym
     @transaction.description = params[:transaction][:description]
 
     if @transaction.save
