@@ -21,7 +21,7 @@ class ShopAccountTest < ActiveSupport::TestCase
   
   test "creating incomes moves 95% amount to cash pool" do
     shop = Shop.make
-    income = Income.create! :amount => 100, :currency => Transaction::DefaultCurrency, :user => Admin.make, :transaction_date => Date.today, :income_category => IncomeCategory.get_shop_category, :shop => shop
+    income = Income.create! :input_amount => 100, :input_currency => Transaction::DefaultCurrency, :user => Admin.make, :transaction_date => Date.today, :income_category => IncomeCategory.get_shop_category, :shop => shop
 
     shop_movement = Account.shop_account(shop).movements.first
     cash_pool_movement = Account.cash_pool_account.movements.first
@@ -35,7 +35,7 @@ class ShopAccountTest < ActiveSupport::TestCase
   
   test "creating incomes moves 5% amount to cash reserves" do
     shop = Shop.make
-    income = Income.create! :amount => 100, :currency => Transaction::DefaultCurrency, :user => Admin.make, :transaction_date => Date.today, :income_category => IncomeCategory.get_shop_category, :shop => shop
+    income = Income.create! :input_amount => 100, :input_currency => Transaction::DefaultCurrency, :user => Admin.make, :transaction_date => Date.today, :income_category => IncomeCategory.get_shop_category, :shop => shop
 
     shop_movement = Account.shop_account(shop).movements.second
     cash_reserves_movement = Account.cash_reserves_account.movements.first
