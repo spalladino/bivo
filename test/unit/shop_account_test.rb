@@ -2,6 +2,12 @@ require 'test_helper'
 
 class ShopAccountTest < ActiveSupport::TestCase
 
+  test "shop income blueprint works" do
+    income = Income.make(:shop)
+    assert_equal IncomeCategory.get_shop_category.id, income.income_category_id
+    assert_not_nil income.shop
+  end
+
   test "shop account is created together with shop entity" do
     s = nil
     a = nil
@@ -20,10 +26,9 @@ class ShopAccountTest < ActiveSupport::TestCase
   end
   
   test "creating incomes moves 95% amount to cash pool" do
-    shop = Shop.make
-    income = Income.create! :input_amount => 100, :input_currency => Transaction::DefaultCurrency, :user => Admin.make, :transaction_date => Date.today, :income_category => IncomeCategory.get_shop_category, :shop => shop
-
-    shop_movement = Account.shop_account(shop).movements.first
+    income = Income.make :shop, :input_amount => 100
+    
+    shop_movement = Account.shop_account(income.shop).movements.first
     cash_pool_movement = Account.cash_pool_account.movements.first
     
     assert_movement -95, -95, shop_movement
@@ -34,10 +39,9 @@ class ShopAccountTest < ActiveSupport::TestCase
   end
   
   test "creating incomes moves 5% amount to cash reserves" do
-    shop = Shop.make
-    income = Income.create! :input_amount => 100, :input_currency => Transaction::DefaultCurrency, :user => Admin.make, :transaction_date => Date.today, :income_category => IncomeCategory.get_shop_category, :shop => shop
+    income = Income.make :shop, :input_amount => 100
 
-    shop_movement = Account.shop_account(shop).movements.second
+    shop_movement = Account.shop_account(income.shop).movements.second
     cash_reserves_movement = Account.cash_reserves_account.movements.first
     
     assert_movement -5, -100, shop_movement
