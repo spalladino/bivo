@@ -29,8 +29,6 @@ group :development do
   gem 'mongrel_cluster'
 end
 
-
-
 # Use unicorn as the web server
 # gem 'unicorn'
 

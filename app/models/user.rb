@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
   attr_accessible :charity_name, :charity_website, :short_url, :short_url_desc
   attr_accessible :notice_all_funds_raised, :notice_status_change, :notice_status_update_published
   attr_accessible :notice_comment_added, :send_me_news, :auto_approve_comments, :eula_accepted
-  attr_accessible :charity_category_id, :charity_type, :tax_reg_number, :country_id, :city
+  attr_accessible :charity_category_id, :charity_type, :tax_reg_number, :country_id, :city, :preferred_language
 
   attr_accessor_with_default :captcha_valid, true
 

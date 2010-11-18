@@ -16,6 +16,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
+
+msgid "Raised amount"
+msgstr "Monto levantado"
+
 #: locale/model_attributes.rb:5
 msgid "CauseCategory|Name"
 msgstr ""

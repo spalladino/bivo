@@ -23,6 +23,14 @@ class ApplicationController < ActionController::Base
   end
 
   def set_gettext_locale
+    if user_signed_in?
+      session["locale"] = current_user.preferred_language
+    else
+      if (session["locale"].nil?)
+        session["locale"] = Language.preferred(request.accept_language)
+      end
+    end
+
     #session[:locale] = 'es' # Uncomment this line to test setting an alternative locale for gettext testingzzzzz
     super
   end

@@ -255,7 +255,6 @@
       long: "%e de %B de %Y %H:%M"
     am: "am"
     pm: "pm"
-
   # Used in array.to_sentence.
   support:
     array:
