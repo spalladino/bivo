@@ -13,3 +13,4 @@ class AddAttachmentImageToShop < ActiveRecord::Migration
     remove_column :shops, :image_updated_at
   end
 end
+

@@ -76,5 +76,13 @@ module ApplicationHelper
     escape_javascript generate_html(form_builder, method, options)
   end
 
+  def nl2br(s)
+     s.gsub(/\n/, '<br>')
+  end
+
+  def br2nl(s)
+     s.gsub('<br>',/\n/)
+  end
+
 end
 

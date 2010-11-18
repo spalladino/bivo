@@ -6,9 +6,9 @@ module CommentsHelper
     end
   end
 
-  def edit_comment_button(id,entity)
+  def edit_comment_button(id,entity,body)
     if rules(entity).can_edit?(current_user,entity)
-      return raw("<input type=\"button\" id =\"edit_button_#{id}\" value=\"#{_("Edit")}\" onclick=\"editComment(#{id})\"/>")
+      return raw("<input type=\"button\" id =\"edit_button_#{id}\" value=\"#{_("Edit")}\" onclick=\"editComment(#{id},\'#{nl2br(body)}\')\"/>")
 
     end
   end
