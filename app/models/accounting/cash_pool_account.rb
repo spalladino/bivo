@@ -6,10 +6,12 @@ class CashPoolAccount < Account
     return if (@processing || false)
     @processing = true
     
-    causes = Cause.where(:status => :raising_funds)
-    amount_for_cause = (self.balance / causes.count).to_d
-        
+    causes = Cause.where(:status => :raising_funds).all
+    total_votes = causes.map(&:votes_count).inject { |sum,c| sum + c }
+    initial_balance = self.balance
+    
     causes.each do |cause|
+      amount_for_cause = (initial_balance * cause.votes_count / total_votes).to_d
       Account.transfer self, Account.cause_account(cause), amount_for_cause
     end
     
