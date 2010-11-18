@@ -24,16 +24,18 @@ class ApplicationController < ActionController::Base
 
   def set_gettext_locale
     if user_signed_in?
-      session["locale"] = current_user.preferred_language
+      session[:locale] = current_user.preferred_language.to_sym
     else
-      if (session["locale"].nil?)
-        session["locale"] = Language.preferred(request.accept_language)
+      if (session[:locale].nil?)
+        session[:locale] = Language.preferred(get_browser_accept_languages).id
       end
     end
-
-    #session[:locale] = 'es' # Uncomment this line to test setting an alternative locale for gettext testingzzzzz
     super
   end
+
+  def get_browser_accept_languages
+    request.accept_language
+  end  
 
   def check_eula_accepted
     if (user_signed_in? && !current_user.eula_accepted)
@@ -49,7 +51,7 @@ class ApplicationController < ActionController::Base
   def get_period_from(period,date)
       case period
         when :this_month   then date.beginning_of_month
-        when :last_month   then date.prev_month.beginning_of_month
+      when :last_month   then date.prev_month.beginning_of_month
         when :this_year    then date.beginning_of_year
         when :last_year    then date.prev_year.beginning_of_year
         when :this_quarter then date.beginning_of_quarter

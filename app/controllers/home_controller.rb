@@ -6,7 +6,6 @@ class HomeController < ApplicationController
   skip_before_filter :check_eula_accepted, :only => [:accept_eula, :confirm_eula]
 
   def index
-    
     @raised_amount = Income.funds_raised(1.month.ago, Date.today)
     @languages = Language.all
     @language = Language.by_id session[:locale].to_sym
