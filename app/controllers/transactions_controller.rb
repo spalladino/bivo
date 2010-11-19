@@ -72,56 +72,35 @@ class TransactionsController < ApplicationController
   end
 
   def new
-    @income_categories = IncomeCategory.all
-    @shops = Shop.all
-    @expense_categories = ExpenseCategory.all
+    load_create_options
     @transaction = Transaction.new
-    @currency = Transaction::DefaultCurrency
-    @currencies = []
-    Bivo::Application.config.currencies.each_pair { |key, value|
-      @currencies << [value, key]
-    }
   end
 
   def create
     type = params["transaction"].delete("type")
-    @currency = params["transaction"]["input_currency"] || Transaction::DefaultCurrency
 
     if (type == "Income")
       @transaction = Income.new(params["transaction"])
-    else
+    elsif (type == "Expense")
       @transaction = Expense.new(params["transaction"])
     end
 
-    @transaction.user_id = current_user.id
+    @transaction.user = current_user
 
     if (@transaction.save)
       redirect_to transaction_list_path
     else
-      @income_categories = IncomeCategory.all
-      @shops = Shop.all
-      @expense_categories = ExpenseCategory.all
-      @currencies = []
-      Bivo::Application.config.currencies.each_pair { |key, value|
-        @currencies << [value, key]
-      }
-
+      load_create_options
       render "new"
     end
   end
 
   def edit
     @transaction = Transaction.find(params[:id])
-    @currency = Transaction::DefaultCurrency
-    @currencies = []
-    Bivo::Application.config.currencies.each_pair { |key, value|
-      @currencies << [value, key]
-    }
+    load_update_options
   end
 
-
   def update
-    @currency = params["transaction"]["input_currency"] || Transaction::DefaultCurrency
     @transaction = Transaction.find(params[:id])
     @transaction.description = params[:transaction][:description]
     @transaction.input_currency = params["transaction"]["input_currency"]
@@ -130,10 +109,8 @@ class TransactionsController < ApplicationController
     if @transaction.save
       redirect_to transaction_list_path
     else
-      @currencies = []
-      Bivo::Application.config.currencies.each_pair { |key, value|
-        @currencies << [value, key]
-      }
+      load_update_options
+
       render "edit"
     end
   end
@@ -142,6 +119,29 @@ class TransactionsController < ApplicationController
     trans = Transaction.find(params[:id])
     trans.destroy
     redirect_to transaction_list_path
+  end
+
+  private
+
+  def load_create_options
+    load_currency
+    @currencies = Currency.all.collect { |c| [c.name, c.id] }
+    @income_categories = IncomeCategory.all
+    @expense_categories = ExpenseCategory.all
+    @shops = Shop.all
+  end
+
+  def load_update_options
+    load_currency
+    @currencies = Currency.all.collect { |c| [c.name, c.id] }
+  end
+
+  def load_currency
+    if (params["transaction"])
+      @currency = params["transaction"]["input_currency"]
+    else
+      @currency = Transaction::DefaultCurrency
+    end
   end
 end
 
