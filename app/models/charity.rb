@@ -42,10 +42,9 @@ class Charity < User
 
   has_many :causes, :dependent => :destroy
   has_many :votes, :through => :causes
+  has_one :gallery
 
   attr_protected :funds_raised
-
-
 
   validates_presence_of :country_id
   validates_presence_of :charity_category
