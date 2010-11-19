@@ -1,3 +1,4 @@
+# coding: utf-8
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
@@ -7,68 +8,1419 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: version 0.0.1\n"
-"POT-Creation-Date: 2010-10-08 17:03-0300\n"
+"POT-Creation-Date: 2010-11-19 14:40-0300\n"
 "PO-Revision-Date: 2010-10-08 14:49-0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-
-msgid "Raised amount"
-msgstr "Monto levantado"
-
-#: locale/model_attributes.rb:5
-msgid "CauseCategory|Name"
+#: app/views/charities/_charities.html.erb:12
+msgid " causes"
 msgstr ""
 
-#: locale/model_attributes.rb:10
+#: app/views/charities/_charities.html.erb:11
+msgid " raised"
+msgstr ""
+
+#: app/views/shops/_form.html.erb:60
+msgid "$query word will be replaced in the search box option"
+msgstr ""
+
+#: app/controllers/causes_controller.rb:262
+msgid "% of completion"
+msgstr ""
+
+#: app/views/admin/edit_user.html.erb:30
+#: app/views/users/registrations/edit.html.erb:33
+msgid "About me"
+msgstr ""
+
+#: app/views/home/accept_eula.html.erb:12
+msgid "Accept"
+msgstr ""
+
+#: locale/model_attributes.rb:30
+msgid "AccountMovement|Amount"
+msgstr ""
+
+#: locale/model_attributes.rb:31
+msgid "AccountMovement|Balance"
+msgstr ""
+
+#: locale/model_attributes.rb:29
+msgid "AccountMovement|Description"
+msgstr ""
+
+#: locale/model_attributes.rb:61
+msgid "Account|Balance"
+msgstr ""
+
+#: locale/model_attributes.rb:60
+msgid "Account|Name"
+msgstr ""
+
+#: app/helpers/shops_helper.rb:7 app/helpers/cause_helper.rb:81
+#: app/helpers/charities_helper.rb:32
+msgid "Activate"
+msgstr ""
+
+#: app/controllers/causes_controller.rb:163
+#: app/controllers/shops_controller.rb:100
+#: app/controllers/charities_controller.rb:91
+msgid "Activated"
+msgstr ""
+
+#: app/helpers/charities_helper.rb:55 app/views/transactions/index.html.erb:59
+msgid "Add"
+msgstr ""
+
+#: app/views/transactions/new.html.erb:2
+msgid "Add Income/Expense"
+msgstr ""
+
+#: app/views/home/_user_nav.html.erb:18
+msgid "Admin Tools"
+msgstr ""
+
+#: app/views/admin/tools.html.erb:1
+msgid "Admin tools"
+msgstr ""
+
+#: app/views/shops/home.html.erb:27 app/views/shops/_form.html.erb:57
+msgid "Affiliate Code"
+msgstr ""
+
+#: app/views/shops/_form.html.erb:49
+msgid "Affiliate Redirection"
+msgstr ""
+
+#: app/controllers/causes_controller.rb:207
+#: app/controllers/charities_controller.rb:157
+msgid "All"
+msgstr ""
+
+#: app/views/charities/index.html.erb:29 app/views/causes/index.html.erb:33
+msgid "All countries"
+msgstr ""
+
+#: app/views/admin/edit_user.html.erb:36
+#: app/views/users/registrations/edit.html.erb:44
+msgid "All founds are raised"
+msgstr ""
+
+#: app/views/comments/create.js.erb:13
+msgid "Approval pending"
+msgstr ""
+
+#: app/helpers/comments_helper.rb:58
+msgid "Approve"
+msgstr ""
+
+#: app/views/comments/approve.js.erb:1
+msgid "Approved"
+msgstr ""
+
+#: app/views/shops/_form.html.erb:108
+msgid "Are you sure you want to delete this shop?"
+msgstr ""
+
+#: app/helpers/cause_helper.rb:149 app/views/shop_categories/edit.html.erb:12
+msgid "Are you sure?"
+msgstr ""
+
+#: app/views/home/accept_eula.html.erb:2
+msgid ""
+"As you login from facebook the first time, you should accept the terms and "
+"conditions of Bivo"
+msgstr ""
+
+#: app/views/admin/edit_user.html.erb:49
+#: app/views/users/registrations/edit.html.erb:57
+msgid "Auto-approve comments of my charity of projects"
+msgstr ""
+
+#: app/views/shared/_check_url.html.erb:22
+msgid "Available"
+msgstr ""
+
+#: app/views/home/index.html.erb:3
+msgid "Bivo Home Page"
+msgstr ""
+
+#: app/views/shops/_form.html.erb:107 app/views/causes/_form.html.erb:50
+msgid "Cancel"
+msgstr ""
+
+#: app/views/shop_categories/edit.html.erb:2 app/views/shops/_form.html.erb:97
+#: app/views/causes/index.html.erb:25
+msgid "Categories"
+msgstr ""
+
+#: app/views/shops/details.html.erb:13
+msgid "Categories:"
+msgstr ""
+
+#: app/views/charities/index.html.erb:21
+msgid "Categories: "
+msgstr ""
+
+#: app/views/transactions/_transactions.html.erb:10
+#: app/views/causes/_form.html.erb:20
+#, fuzzy
+msgid "Category"
+msgstr "Nombre"
+
+#: app/views/causes/_form.html.erb:10
+#, fuzzy
+msgid "Cause Name"
+msgstr "Nombre"
+
+#: locale/model_attributes.rb:3
+msgid "CauseCategory|Name"
+msgstr "Nombre"
+
+#: app/views/causes/details.html.erb:4 locale/model_attributes.rb:8
 msgid "Cause|City"
 msgstr ""
 
-#: locale/model_attributes.rb:11
+#: locale/model_attributes.rb:9
 msgid "Cause|Description"
 msgstr ""
 
-#: locale/model_attributes.rb:9
+#: locale/model_attributes.rb:7
 msgid "Cause|Funds needed"
 msgstr ""
 
-#: locale/model_attributes.rb:12
+#: locale/model_attributes.rb:10
 msgid "Cause|Funds raised"
 msgstr ""
 
-#: locale/model_attributes.rb:7
+#: locale/model_attributes.rb:5
 msgid "Cause|Name"
 msgstr ""
 
-#: locale/model_attributes.rb:13
+#: locale/model_attributes.rb:11
 #, fuzzy
 msgid "Cause|Status"
 msgstr "Estado"
 
-#: locale/model_attributes.rb:8
+#: locale/model_attributes.rb:6
 msgid "Cause|Url"
 msgstr ""
 
-#: locale/model_attributes.rb:3
+#: locale/model_attributes.rb:12
+msgid "Cause|Votes count"
+msgstr ""
+
+#: app/views/users/registrations/new.html.erb:21
+#: app/views/causes/_form.html.erb:6
+msgid "Charity"
+msgstr ""
+
+#: app/views/admin/edit_user.html.erb:12
+#: app/views/users/registrations/edit.html.erb:15
+msgid "Charity Name"
+msgstr ""
+
+#: app/views/home/_user_nav.html.erb:14
+msgid "Charity Settings"
+msgstr ""
+
+#: app/views/admin/edit_user.html.erb:15
+#: app/views/users/registrations/edit.html.erb:18
+msgid "Charity Website"
+msgstr ""
+
+#: locale/model_attributes.rb:14
+#, fuzzy
+msgid "CharityCategory|Name"
+msgstr "Nombre"
+
+#: app/views/admin/new_charity.html.erb:25
+#: app/views/users/registrations/_new_charity.html.erb:9
+#: app/views/causes/_form.html.erb:15
+msgid "Check Url"
+msgstr ""
+
+#: app/views/admin/edit_user.html.erb:21
+#: app/views/users/registrations/edit.html.erb:24
+#: app/views/causes/_form.html.erb:32
+msgid "City"
+msgstr ""
+
+#: app/views/shops/_shops.html.erb:38 app/views/shops/details.html.erb:22
+msgid "Comission"
+msgstr ""
+
+#: app/views/shops/details.html.erb:27
+msgid "Comission details"
+msgstr ""
+
+#: app/views/shops/_form.html.erb:77
+msgid "Comissions"
+msgstr ""
+
+#: app/controllers/comments_controller.rb:14
+msgid "Comment can not be approved"
+msgstr ""
+
+#: app/controllers/comments_controller.rb:28
+#: app/controllers/comments_controller.rb:37
+msgid "Comment text is required"
+msgstr ""
+
+#: app/views/admin/edit_user.html.erb:45
+#: app/views/users/registrations/edit.html.erb:53
+msgid "Comments are added"
+msgstr ""
+
+#: locale/model_attributes.rb:58
+msgid "Comment|Approved"
+msgstr ""
+
+#: locale/model_attributes.rb:54
+msgid "Comment|Body"
+msgstr ""
+
+#: locale/model_attributes.rb:52
+msgid "Comment|Commentable type"
+msgstr ""
+
+#: locale/model_attributes.rb:56
+msgid "Comment|Lft"
+msgstr ""
+
+#: locale/model_attributes.rb:57
+msgid "Comment|Rgt"
+msgstr ""
+
+#: locale/model_attributes.rb:55
+msgid "Comment|Subject"
+msgstr ""
+
+#: locale/model_attributes.rb:53
+msgid "Comment|Title"
+msgstr ""
+
+#: app/views/shops/_form.html.erb:79
+msgid "Commision"
+msgstr ""
+
+#: app/views/shops/_form.html.erb:82
+msgid "Commision Details"
+msgstr ""
+
+#: app/views/causes/details.html.erb:3
+msgid "Content:"
+msgstr ""
+
+#: app/views/admin/edit_user.html.erb:18
+#: app/views/users/registrations/edit.html.erb:21
+#: app/views/causes/_form.html.erb:29
+msgid "Country"
+msgstr ""
+
+#: locale/model_attributes.rb:16
 msgid "Country|Name"
 msgstr ""
 
-#: app/views/cause/details.html.erb:23
+#: app/views/admin/new_personal_user.html.erb:31
+#: app/views/admin/new_charity.html.erb:54
+#: app/views/users/registrations/new.html.erb:49
+msgid "Create Account"
+msgstr ""
+
+#: app/views/admin/new_charity.html.erb:1
+msgid "Create New User"
+msgstr ""
+
+#: app/views/admin/new_personal_user.html.erb:1
+msgid "Create Personal User"
+msgstr ""
+
+#: app/views/shops/new.html.erb:1
+msgid "Create new shop"
+msgstr ""
+
+#: app/views/transactions/_transactions.html.erb:8
+msgid "Date"
+msgstr ""
+
+#: app/helpers/shops_helper.rb:7 app/helpers/cause_helper.rb:81
+#: app/helpers/charities_helper.rb:32
+msgid "Deactivate"
+msgstr ""
+
+#: app/controllers/causes_controller.rb:173
+#: app/controllers/shops_controller.rb:110
+#: app/controllers/charities_controller.rb:107
+msgid "Deactivated"
+msgstr ""
+
+#: app/helpers/shops_helper.rb:28 app/helpers/cause_helper.rb:149
+#: app/helpers/comments_helper.rb:18 app/helpers/charities_helper.rb:48
+#: app/views/shop_categories/edit.html.erb:12
+#: app/views/admin/user_manager.html.erb:29 app/views/shops/_form.html.erb:108
+msgid "Delete"
+msgstr ""
+
+#: app/views/users/registrations/edit.html.erb:38
+msgid "Delete profile picture"
+msgstr ""
+
+#: app/views/admin/new_charity.html.erb:45
+#: app/views/admin/edit_user.html.erb:24
+#: app/views/users/registrations/_new_charity.html.erb:29
+#: app/views/users/registrations/edit.html.erb:27
+#: app/views/transactions/_transactions.html.erb:9
+#: app/views/shops/home.html.erb:24 app/views/causes/_form.html.erb:45
+msgid "Description"
+msgstr ""
+
+#: app/views/shops/details.html.erb:17
+msgid "Description:"
+msgstr ""
+
+#: app/views/transactions/_transactions.html.erb:28
+msgid "Destroy"
+msgstr ""
+
+#: app/views/transactions/_transactions.html.erb:11
+msgid "Detail"
+msgstr ""
+
+#: app/views/admin/new_personal_user.html.erb:7
+#: app/views/admin/new_charity.html.erb:8 app/views/admin/edit_user.html.erb:8
+#: app/views/users/registrations/edit.html.erb:11
+#: app/views/users/registrations/new.html.erb:23
+msgid "E-Mail"
+msgstr ""
+
+#: app/helpers/shops_helper.rb:21 app/helpers/cause_helper.rb:139
+#: app/views/admin/user_manager.html.erb:35
+#: app/views/transactions/_transactions.html.erb:27
+msgid "Edit"
+msgstr ""
+
+#: app/views/shops/_form.html.erb:101
+msgid "Edit Categories"
+msgstr ""
+
+#: app/helpers/transactions_helper.rb:6
+msgid "Edit Expense"
+msgstr ""
+
+#: app/helpers/transactions_helper.rb:4
+msgid "Edit Income"
+msgstr ""
+
+#: app/views/admin/edit_user.html.erb:1
+msgid "Edit User"
+msgstr ""
+
+#: app/views/shops/edit.html.erb:1
+msgid "Edit shop"
+msgstr ""
+
+#: app/controllers/causes_controller.rb:165
+msgid "Error activating cause"
+msgstr ""
+
+#: app/controllers/charities_controller.rb:93
+msgid "Error activating charity"
+msgstr ""
+
+#: app/controllers/shops_controller.rb:102
+msgid "Error activating shop"
+msgstr ""
+
+#: app/controllers/causes_controller.rb:175
+msgid "Error deactivating cause"
+msgstr ""
+
+#: app/controllers/charities_controller.rb:107
+msgid "Error deactivating charity"
+msgstr ""
+
+#: app/controllers/shops_controller.rb:112
+msgid "Error deactivating shop"
+msgstr ""
+
+#: app/controllers/causes_controller.rb:185
+#: app/controllers/causes_controller.rb:195
+msgid "Error marking as UnPaid cause"
+msgstr ""
+
+#: app/controllers/causes_controller.rb:91
+#: app/controllers/causes_controller.rb:101
+#: app/controllers/charities_controller.rb:113
+#: app/controllers/charities_controller.rb:132
+msgid "Error, try again"
+msgstr ""
+
+#: app/views/expense_categories/index.html.erb:1
+msgid "Expense Categories"
+msgstr ""
+
+#: locale/model_attributes.rb:18
+#, fuzzy
+msgid "ExpenseCategory|Name"
+msgstr "Nombre"
+
+#: app/views/charities/index.html.erb:40
+#: app/views/admin/user_manager.html.erb:9
+#: app/views/transactions/index.html.erb:38 app/views/causes/index.html.erb:48
+msgid "Filter by"
+msgstr ""
+
+#: app/views/charities/index.html.erb:28 app/views/causes/index.html.erb:32
+msgid "Filter by region"
+msgstr ""
+
+#: app/helpers/cause_helper.rb:62 app/helpers/charities_helper.rb:12
+msgid "Follow"
+msgstr ""
+
+#: app/controllers/causes_controller.rb:245
+msgid "Follow already exists"
+msgstr ""
+
+#: app/controllers/causes_controller.rb:89
+#: app/controllers/charities_controller.rb:113
+msgid "Follow submitted"
+msgstr ""
+
+#: app/views/users/passwords/new.html.erb:1
+#: app/views/home/_user_nav.html.erb:21
+msgid "Forgot your password?"
+msgstr ""
+
+#: app/views/causes/details.html.erb:6
+msgid "Founds Needed"
+msgstr ""
+
+#: app/views/transactions/index.html.erb:44
+#: app/views/home/dashboard.html.erb:25
+msgid "From"
+msgstr ""
+
+#: app/views/home/dashboard.html.erb:38
+msgid "Funds Raised"
+msgstr ""
+
+#: app/views/causes/_causes.html.erb:10 app/views/causes/_form.html.erb:23
+msgid "Funds needed"
+msgstr ""
+
+#: app/views/causes/_causes.html.erb:17 app/views/causes/_causes.html.erb:19
+msgid "Funds raised"
+msgstr ""
+
+#: locale/model_attributes.rb:111
+msgid "GalleryItem|Image content type"
+msgstr ""
+
+#: locale/model_attributes.rb:110
+msgid "GalleryItem|Image file name"
+msgstr ""
+
+#: locale/model_attributes.rb:112
+msgid "GalleryItem|Image file size"
+msgstr ""
+
+#: locale/model_attributes.rb:113
+msgid "GalleryItem|Image updated at"
+msgstr ""
+
+#: locale/model_attributes.rb:108
+msgid "GalleryItem|Relative order"
+msgstr ""
+
+#: locale/model_attributes.rb:109
+msgid "GalleryItem|Video url"
+msgstr ""
+
+#: locale/model_attributes.rb:106
+msgid "Gallery|Entity type"
+msgstr ""
+
+#: app/views/shops/home.html.erb:39
+msgid "Go to:"
+msgstr ""
+
+#: app/views/users/registrations/new.html.erb:44
+msgid "I agree to the "
+msgstr ""
+
+#: app/views/home/accept_eula.html.erb:11
+msgid "I agree to the terms and conditions"
+msgstr ""
+
+#: app/views/home/_user_nav.html.erb:23
+msgid ""
+"If you are a charity, please use bivo registration and cancel the sign in. "
+"Otherwise, click ok."
+msgstr ""
+
+#: app/views/shops/_form.html.erb:87
+msgid "Image"
+msgstr ""
+
+#: locale/model_attributes.rb:20
+#, fuzzy
+msgid "IncomeCategory|Name"
+msgstr "Nombre"
+
+#: app/views/shared/_check_url.html.erb:26
+msgid "Invalid Format"
+msgstr ""
+
+#: app/views/home/_user_nav.html.erb:25
+msgid "Language:"
+msgstr ""
+
+#: app/views/admin/user_manager.html.erb:23
+msgid "Last Login"
+msgstr ""
+
+#: app/helpers/cause_helper.rb:58 app/helpers/charities_helper.rb:8
+msgid "Login to follow"
+msgstr ""
+
+#: app/helpers/cause_helper.rb:28
+msgid "Login to vote"
+msgstr ""
+
+#: app/views/transactions/_expense_fields.html.erb:3
+msgid "Manage Categories"
+msgstr ""
+
+#: app/helpers/cause_helper.rb:96
+msgid "Mark as Paid"
+msgstr ""
+
+#: app/helpers/cause_helper.rb:96
+msgid "Mark as Unpaid"
+msgstr ""
+
+#: app/controllers/causes_controller.rb:183
+msgid "Marked as Paid"
+msgstr ""
+
+#: app/controllers/causes_controller.rb:193
+msgid "Marked as UnPaid"
+msgstr ""
+
+#: app/views/home/dashboard.html.erb:60
+msgid "Most voted causes"
+msgstr ""
+
+#: app/views/admin/user_manager.html.erb:20 app/views/shops/home.html.erb:15
+#: app/views/causes/details.html.erb:1
+msgid "Name"
+msgstr ""
+
+#: app/views/shops/details.html.erb:2
+msgid "Name:"
+msgstr ""
+
+#: app/views/admin/edit_user.html.erb:42
+#: app/views/users/registrations/edit.html.erb:50
+msgid "New status updates are published"
+msgstr ""
+
+#: app/views/home/_user_nav.html.erb:12
+msgid "Not you?"
+msgstr ""
+
+#: app/controllers/causes_controller.rb:215
+msgid "Only admin"
+msgstr ""
+
+#: app/controllers/causes_controller.rb:222
+msgid "Only admin or charity"
+msgstr ""
+
+#: app/views/causes/_causes.html.erb:9
+msgid "Organized by"
+msgstr ""
+
+#: app/views/transactions/index.html.erb:36
+#: app/views/home/dashboard.html.erb:20
+msgid "Period"
+msgstr ""
+
+#: app/views/users/registrations/new.html.erb:20
+msgid "Personal"
+msgstr ""
+
+#: app/views/users/registrations/new.html.erb:20
+msgid "PersonalUser"
+msgstr ""
+
+#: app/views/users/registrations/edit.html.erb:36
+msgid "Profile picture"
+msgstr ""
+
+#: app/views/home/index.html.erb:5
+msgid "Raised amount"
+msgstr "Monto obtenido"
+
+#: app/views/shops/_form.html.erb:63
+msgid "Recommended for"
+msgstr ""
+
+#: app/views/shops/search.html.erb:8
+msgid "Results found"
+msgstr ""
+
+#: app/views/comments/_edit_form.html.erb:18
+msgid "Save"
+msgstr ""
+
+#: app/views/charities/index.html.erb:45
+#: app/views/transactions/index.html.erb:53 app/views/shops/search.html.erb:23
+#: app/views/shops/search.html.erb:28 app/views/shops/index.html.erb:14
+#: app/views/causes/index.html.erb:53 app/views/home/dashboard.html.erb:32
+msgid "Search"
+msgstr ""
+
+#: app/views/charities/index.html.erb:45
+#: app/views/transactions/index.html.erb:53 app/views/shops/search.html.erb:28
+#: app/views/shops/index.html.erb:14 app/views/causes/index.html.erb:53
+#: app/views/home/dashboard.html.erb:32
+msgid "Searching..."
+msgstr ""
+
+#: app/views/admin/edit_user.html.erb:53
+#: app/views/users/registrations/edit.html.erb:61
+msgid "Send me bivo.org news"
+msgstr ""
+
+#: app/views/users/passwords/new.html.erb:9
+msgid "Send me reset password instructions"
+msgstr ""
+
+#: app/views/shops/home.html.erb:21
+msgid "Shop at"
+msgstr ""
+
+#: app/views/shops/_shops.html.erb:37 app/views/shops/details.html.erb:10
+msgid "Shop at:"
+msgstr ""
+
+#: app/controllers/shops_controller.rb:124
+msgid "Shop could not be deleted"
+msgstr ""
+
+#: app/controllers/shops_controller.rb:121
+msgid "Shop has been deleted"
+msgstr ""
+
+#: app/controllers/shops_controller.rb:70
+msgid "Shop successfully created"
+msgstr ""
+
+#: app/controllers/shops_controller.rb:79
+msgid "Shop successfully updated"
+msgstr ""
+
+#: locale/model_attributes.rb:50
+#, fuzzy
+msgid "ShopCategory|Name"
+msgstr "Nombre"
+
+#: app/views/shops/index.html.erb:7
+msgid "Shops count"
+msgstr ""
+
+#: locale/model_attributes.rb:39
+msgid "Shop|Affiliate code"
+msgstr ""
+
+#: locale/model_attributes.rb:47
+msgid "Shop|Comission details"
+msgstr ""
+
+#: locale/model_attributes.rb:46
+msgid "Shop|Comission kind"
+msgstr ""
+
+#: locale/model_attributes.rb:48
+msgid "Shop|Comission recurrent"
+msgstr ""
+
+#: locale/model_attributes.rb:45
+msgid "Shop|Comission value"
+msgstr ""
+
+#: locale/model_attributes.rb:37
+msgid "Shop|Description"
+msgstr ""
+
+#: locale/model_attributes.rb:41
+msgid "Shop|Image content type"
+msgstr ""
+
+#: locale/model_attributes.rb:40
+msgid "Shop|Image file name"
+msgstr ""
+
+#: locale/model_attributes.rb:42
+msgid "Shop|Image file size"
+msgstr ""
+
+#: locale/model_attributes.rb:43
+msgid "Shop|Image updated at"
+msgstr ""
+
+#: locale/model_attributes.rb:33
+msgid "Shop|Name"
+msgstr ""
+
+#: locale/model_attributes.rb:36
+msgid "Shop|Redirection"
+msgstr ""
+
+#: locale/model_attributes.rb:34
+msgid "Shop|Short url"
+msgstr ""
+
+#: locale/model_attributes.rb:44
+#, fuzzy
+msgid "Shop|Status"
+msgstr "Estado"
+
+#: locale/model_attributes.rb:35
+msgid "Shop|Url"
+msgstr ""
+
+#: locale/model_attributes.rb:38
+msgid "Shop|Worldwide"
+msgstr ""
+
+#: app/views/admin/new_charity.html.erb:23
+#: app/views/users/registrations/_new_charity.html.erb:7
+#: app/views/shops/home.html.erb:18 app/views/causes/_form.html.erb:13
+msgid "Short Url"
+msgstr ""
+
+#: app/views/shops/details.html.erb:6
+msgid "Short_Url"
+msgstr ""
+
+#: app/views/admin/user_manager.html.erb:7
+#: app/views/transactions/index.html.erb:34
+msgid "Show"
+msgstr ""
+
+#: app/views/charities/index.html.erb:32
+#: app/views/transactions/index.html.erb:32 app/views/shops/search.html.erb:15
+#: app/views/shops/index.html.erb:10 app/views/causes/index.html.erb:36
+msgid "Show per page"
+msgstr ""
+
+#: app/views/causes/index.html.erb:40
+msgid "Showing"
+msgstr ""
+
+#: app/views/users/registrations/new.html.erb:15
+msgid "Sign Up"
+msgstr ""
+
+#: app/views/home/_user_nav.html.erb:22
+msgid "Sign in via bivo"
+msgstr ""
+
+#: app/views/home/_user_nav.html.erb:23
+msgid "Sign in via facebook"
+msgstr ""
+
+#: app/views/users/registrations/new.html.erb:47
+msgid "Sign me up to the newsletter"
+msgstr ""
+
+#: app/views/home/_user_nav.html.erb:21
+msgid "Sign up"
+msgstr ""
+
+#: app/views/home/_user_nav.html.erb:12
+msgid "Signed in as"
+msgstr ""
+
+#: app/controllers/facebook_authentications_controller.rb:19
+#: app/controllers/facebook_authentications_controller.rb:28
+msgid "Signed in succesfully"
+msgstr ""
+
+#: app/views/admin/user_manager.html.erb:24
+msgid "Signup Date"
+msgstr ""
+
+#: app/views/admin/user_manager.html.erb:8
+msgid "Size per page"
+msgstr ""
+
+#: app/views/charities/index.html.erb:36 app/views/shops/search.html.erb:19
+#: app/views/causes/index.html.erb:44
+msgid "Sort by"
+msgstr ""
+
+#: app/views/admin/user_manager.html.erb:22
 msgid "Status"
 msgstr "Estado"
 
-#: locale/model_attributes.rb:6
-msgid "cause"
+#: app/controllers/causes_controller.rb:236
+msgid "Status doesnt allow delete"
+msgstr ""
+
+#: app/controllers/causes_controller.rb:229
+msgid "Status doesnt allow edit"
+msgstr ""
+
+#: app/views/comments/_add_form.html.erb:7
+msgid "Submit"
+msgstr ""
+
+#: app/views/comments/_edit_form.html.erb:19
+#: app/views/comments/_add_form.html.erb:7
+msgid "Submitting..."
+msgstr ""
+
+#: app/views/admin/edit_user.html.erb:39
+#: app/views/users/registrations/edit.html.erb:47
+msgid "The status changes"
+msgstr ""
+
+#: app/controllers/facebook_authentications_controller.rb:31
+msgid "There was an error creating the user"
+msgstr ""
+
+#: app/views/home/_eula.html.erb:1
+msgid "This is about you and your rights."
+msgstr ""
+
+#: app/views/causes/details.html.erb:2
+msgid "Title"
+msgstr ""
+
+#: app/views/transactions/index.html.erb:47
+#: app/views/home/dashboard.html.erb:28
+msgid "To"
+msgstr ""
+
+#: app/views/transactions/index.html.erb:29
+msgid "Transaction count"
+msgstr ""
+
+#: app/views/admin/tools.html.erb:4
+msgid "Transaction manager"
+msgstr ""
+
+#: app/views/home/dashboard.html.erb:43
+msgid "Transactions"
+msgstr ""
+
+#: locale/model_attributes.rb:23
+msgid "Transaction|Amount"
+msgstr ""
+
+#: locale/model_attributes.rb:24
+msgid "Transaction|Description"
+msgstr ""
+
+#: locale/model_attributes.rb:27
+msgid "Transaction|Input amount"
+msgstr ""
+
+#: locale/model_attributes.rb:26
+msgid "Transaction|Input currency"
+msgstr ""
+
+#: locale/model_attributes.rb:25
+msgid "Transaction|Paid to"
+msgstr ""
+
+#: locale/model_attributes.rb:22
+msgid "Transaction|Transaction date"
+msgstr ""
+
+#: app/views/admin/user_manager.html.erb:21
+#: app/views/transactions/_transactions.html.erb:7
+msgid "Type"
+msgstr ""
+
+#: app/views/shared/_check_url.html.erb:24
+msgid "Unavailable"
+msgstr ""
+
+#: app/helpers/cause_helper.rb:62 app/helpers/charities_helper.rb:12
+msgid "Unfollow"
+msgstr ""
+
+#: app/controllers/causes_controller.rb:99
+#: app/controllers/charities_controller.rb:130
+msgid "Unfollow submitted"
+msgstr ""
+
+#: app/views/shop_categories/edit.html.erb:10
+#: app/views/admin/edit_user.html.erb:55
+#: app/views/users/registrations/edit.html.erb:63
+msgid "Update"
+msgstr ""
+
+#: app/models/shop.rb:58
+msgid "Use a custom widget"
+msgstr ""
+
+#: app/models/shop.rb:57
+msgid "Use a purchase button"
+msgstr ""
+
+#: app/models/shop.rb:56
+msgid "Use a search box"
+msgstr ""
+
+#: app/models/shop.rb:59
+msgid "Use custom HTML"
+msgstr ""
+
+#: app/views/home/_user_nav.html.erb:16
+msgid "User Settings"
+msgstr ""
+
+#: app/views/admin/tools.html.erb:5
+msgid "User manager"
+msgstr ""
+
+#: locale/model_attributes.rb:80
+msgid "User|About me"
+msgstr ""
+
+#: locale/model_attributes.rb:90
+msgid "User|Active"
+msgstr ""
+
+#: locale/model_attributes.rb:96
+msgid "User|Auto approve comments"
+msgstr ""
+
+#: locale/model_attributes.rb:78
+msgid "User|Birthday"
+msgstr ""
+
+#: locale/model_attributes.rb:81
+msgid "User|Charity name"
+msgstr ""
+
+#: locale/model_attributes.rb:84
+msgid "User|Charity type"
+msgstr ""
+
+#: locale/model_attributes.rb:82
+msgid "User|Charity website"
+msgstr ""
+
+#: locale/model_attributes.rb:88
+msgid "User|City"
+msgstr ""
+
+#: locale/model_attributes.rb:70
+msgid "User|Current sign in at"
+msgstr ""
+
+#: locale/model_attributes.rb:72
+msgid "User|Current sign in ip"
+msgstr ""
+
+#: locale/model_attributes.rb:89
+msgid "User|Description"
+msgstr ""
+
+#: locale/model_attributes.rb:63
+msgid "User|Email"
+msgstr ""
+
+#: locale/model_attributes.rb:64
+msgid "User|Encrypted password"
+msgstr ""
+
+#: locale/model_attributes.rb:98
+msgid "User|Eula accepted"
+msgstr ""
+
+#: locale/model_attributes.rb:75
+msgid "User|First name"
+msgstr ""
+
+#: locale/model_attributes.rb:97
+msgid "User|From facebook"
+msgstr ""
+
+#: locale/model_attributes.rb:79
+msgid "User|Gender"
+msgstr ""
+
+#: locale/model_attributes.rb:76
+msgid "User|Last name"
+msgstr ""
+
+#: locale/model_attributes.rb:71
+msgid "User|Last sign in at"
+msgstr ""
+
+#: locale/model_attributes.rb:73
+msgid "User|Last sign in ip"
+msgstr ""
+
+#: locale/model_attributes.rb:77
+msgid "User|Nickname"
+msgstr ""
+
+#: locale/model_attributes.rb:91
+msgid "User|Notice all funds raised"
+msgstr ""
+
+#: locale/model_attributes.rb:94
+msgid "User|Notice comment added"
+msgstr ""
+
+#: locale/model_attributes.rb:92
+msgid "User|Notice status change"
+msgstr ""
+
+#: locale/model_attributes.rb:93
+msgid "User|Notice status update published"
+msgstr ""
+
+#: locale/model_attributes.rb:65
+msgid "User|Password salt"
+msgstr ""
+
+#: locale/model_attributes.rb:101
+msgid "User|Picture content type"
+msgstr ""
+
+#: locale/model_attributes.rb:100
+msgid "User|Picture file name"
+msgstr ""
+
+#: locale/model_attributes.rb:102
+msgid "User|Picture file size"
+msgstr ""
+
+#: locale/model_attributes.rb:103
+msgid "User|Picture updated at"
+msgstr ""
+
+#: locale/model_attributes.rb:104
+msgid "User|Preferred language"
+msgstr ""
+
+#: locale/model_attributes.rb:86
+msgid "User|Rating"
+msgstr ""
+
+#: locale/model_attributes.rb:87
+msgid "User|Rating url"
+msgstr ""
+
+#: locale/model_attributes.rb:68
+msgid "User|Remember created at"
+msgstr ""
+
+#: locale/model_attributes.rb:67
+msgid "User|Remember token"
+msgstr ""
+
+#: locale/model_attributes.rb:66
+msgid "User|Reset password token"
+msgstr ""
+
+#: locale/model_attributes.rb:74
+msgid "User|Rpx identifier"
+msgstr ""
+
+#: locale/model_attributes.rb:95
+msgid "User|Send me news"
+msgstr ""
+
+#: locale/model_attributes.rb:83
+msgid "User|Short url"
+msgstr ""
+
+#: locale/model_attributes.rb:69
+msgid "User|Sign in count"
+msgstr ""
+
+#: locale/model_attributes.rb:99
+#, fuzzy
+msgid "User|Status"
+msgstr "Estado"
+
+#: locale/model_attributes.rb:85
+msgid "User|Tax reg number"
+msgstr ""
+
+#: app/helpers/cause_helper.rb:16
+msgid "View"
+msgstr ""
+
+#: app/helpers/cause_helper.rb:33
+msgid "Vote"
+msgstr ""
+
+#: app/controllers/causes_controller.rb:81
+msgid "Vote submitted"
+msgstr ""
+
+#: app/views/causes/_causes.html.erb:15
+msgid "Votes"
+msgstr ""
+
+#: app/models/charity_follow.rb:14
+msgid "Was Following"
+msgstr ""
+
+#: app/views/shops/_shops.html.erb:35
+msgid "Website:"
+msgstr ""
+
+#: app/controllers/facebook_authentications_controller.rb:22
+msgid "You already have an account in bivo. Please use it instead."
+msgstr ""
+
+#: app/controllers/comments_controller.rb:87
+msgid "You can not approve this comment"
+msgstr ""
+
+#: app/controllers/comments_controller.rb:66
+msgid "You can not create comments, please, sign up"
+msgstr ""
+
+#: app/controllers/comments_controller.rb:80
+msgid "You can not delete this comment"
+msgstr ""
+
+#: app/controllers/comments_controller.rb:73
+msgid "You can not edit this comment"
+msgstr ""
+
+#: app/helpers/charities_helper.rb:62
+msgid "You have "
+msgstr ""
+
+#: locale/model_attributes.rb:59
+msgid "account"
+msgstr ""
+
+#: locale/model_attributes.rb:28
+msgid "account movement"
+msgstr ""
+
+#: app/controllers/causes_controller.rb:252
+#: app/controllers/shops_controller.rb:61
+#: app/controllers/charities_controller.rb:57
+msgid "alphabetically"
+msgstr ""
+
+#: app/controllers/causes_controller.rb:153
+#: app/controllers/charities_controller.rb:73
+msgid "available"
+msgstr ""
+
+#: app/views/charities/_comment.html.erb:4
+#: app/views/comments/_comment_row.html.erb:5
+msgid "by"
 msgstr ""
 
 #: locale/model_attributes.rb:4
-msgid "cause category"
+msgid "cause"
 msgstr ""
 
 #: locale/model_attributes.rb:2
+msgid "cause category"
+msgstr ""
+
+#: locale/model_attributes.rb:13
+msgid "charity category"
+msgstr ""
+
+#: app/controllers/causes_controller.rb:254
+msgid "charity rating"
+msgstr ""
+
+#: app/views/charities/details.html.erb:8
+msgid "charity_category_id"
+msgstr ""
+
+#: app/views/charities/details.html.erb:6
+msgid "charity_name"
+msgstr ""
+
+#: app/views/charities/details.html.erb:9
+msgid "charity_type"
+msgstr ""
+
+#: app/views/charities/details.html.erb:7
+msgid "charity_website"
+msgstr ""
+
+#: app/views/shared/_check_url.html.erb:8
+msgid "checking..."
+msgstr ""
+
+#: app/views/charities/details.html.erb:13
+msgid "city"
+msgstr ""
+
+#: app/views/charities/index.html.erb:41
+#: app/views/transactions/index.html.erb:39 app/views/shops/search.html.erb:24
+#: app/views/causes/index.html.erb:49
+msgid "clear"
+msgstr ""
+
+#: locale/model_attributes.rb:51
+msgid "comment"
+msgstr ""
+
+#: app/views/charities/details.html.erb:12 app/views/causes/details.html.erb:5
+#: locale/model_attributes.rb:15
 msgid "country"
+msgstr ""
+
+#: app/views/charities/details.html.erb:14
+msgid "description"
+msgstr ""
+
+#: app/views/charities/details.html.erb:4
+msgid "email"
+msgstr ""
+
+#: app/views/home/accept_eula.html.erb:6
+msgid "eula"
+msgstr ""
+
+#: locale/model_attributes.rb:17
+msgid "expense category"
+msgstr ""
+
+#: app/models/shop.rb:50
+#, fuzzy
+msgid "fixed amount"
+msgstr "Monto obtenido"
+
+#: app/controllers/causes_controller.rb:255
+msgid "funds needed"
+msgstr ""
+
+#: app/controllers/causes_controller.rb:262
+#: app/controllers/causes_controller.rb:264
+#: app/controllers/charities_controller.rb:60
+msgid "funds raised"
+msgstr ""
+
+#: locale/model_attributes.rb:105
+msgid "gallery"
+msgstr ""
+
+#: locale/model_attributes.rb:107
+msgid "gallery item"
+msgstr ""
+
+#: app/controllers/causes_controller.rb:253
+#: app/controllers/charities_controller.rb:58
+msgid "geographically"
+msgstr ""
+
+#: app/views/charities/details.html.erb:3
+msgid "id"
+msgstr ""
+
+#: locale/model_attributes.rb:19
+msgid "income category"
+msgstr ""
+
+#: app/models/charity_follow.rb:7
+msgid "inexistent charity"
+msgstr ""
+
+#: app/models/charity_follow.rb:6
+msgid "inexistent user"
+msgstr ""
+
+#: app/controllers/causes_controller.rb:155
+#: app/controllers/charities_controller.rb:75
+msgid "invalid"
+msgstr ""
+
+#: app/controllers/causes_controller.rb:150
+#: app/controllers/charities_controller.rb:70
+msgid "not_available"
+msgstr ""
+
+#: app/views/charities/_comment.html.erb:4
+#: app/views/comments/_comment_row.html.erb:5
+msgid "on"
+msgstr ""
+
+#: app/models/shop.rb:50
+msgid "percentage"
+msgstr ""
+
+#: app/controllers/causes_controller.rb:260
+msgid "popularity"
+msgstr ""
+
+#: app/controllers/shops_controller.rb:62
+msgid "proximity"
+msgstr ""
+
+#: app/controllers/charities_controller.rb:59
+#: app/views/charities/details.html.erb:10
+msgid "rating"
+msgstr ""
+
+#: app/views/charities/details.html.erb:11
+msgid "rating_url"
+msgstr ""
+
+#: app/views/shops/_form.html.erb:84
+msgid "recurrent each month"
+msgstr ""
+
+#: locale/model_attributes.rb:32
+msgid "shop"
+msgstr ""
+
+#: locale/model_attributes.rb:49
+msgid "shop category"
+msgstr ""
+
+#: app/views/users/registrations/new.html.erb:44
+msgid "terms and conditions"
+msgstr ""
+
+#: app/models/country_shop.rb:10
+msgid "the country is already recomended for the shop"
+msgstr ""
+
+#: locale/model_attributes.rb:21
+msgid "transaction"
+msgstr ""
+
+#: app/views/charities/details.html.erb:5
+msgid "type"
+msgstr ""
+
+#: locale/model_attributes.rb:62
+msgid "user"
+msgstr ""
+
+#: app/views/shops/_shops.html.erb:38 app/views/shops/details.html.erb:23
+msgid "will be donated for your purchase"
 msgstr ""
