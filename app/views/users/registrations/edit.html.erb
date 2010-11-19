@@ -6,7 +6,7 @@
 
 <h2><%= title_for @type %></h2>
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put, :multipart => (@type == :personal) }) do |f| %>
-  <%= devise_error_messages! %>
+  <%= render "shared/error_messages", :target => resource %>
 
   <p><%= f.label :email, _("E-Mail") %><br />
   <%= f.text_field :email %></p>
