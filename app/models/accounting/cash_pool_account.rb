@@ -6,13 +6,13 @@ class CashPoolAccount < Account
       Cause.ensure_raising_funds
       causes = Cause.where(:status => :raising_funds).all
       break if causes.count == 0
-      self.single_pass_transfer_funds causes
+      self.single_pass_transfer_funds causes, movement
     end    
   end
   
 protected
   
-  def single_pass_transfer_funds(causes)
+  def single_pass_transfer_funds(causes, due_to_movement)
     total_votes = causes.map(&:votes_count).inject { |sum,c| sum + c }
     initial_balance = self.balance
     remaining_amount = initial_balance
@@ -29,7 +29,7 @@ protected
       
       amount_for_cause = [amount_for_cause, cause.funds_pending].min
       
-      Account.transfer_no_callback_from self, Account.cause_account(cause), amount_for_cause
+      Account.transfer_no_callback_from self, Account.cause_account(cause), amount_for_cause, "", due_to_movement.transaction
     end    
   end
   

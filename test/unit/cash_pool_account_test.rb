@@ -157,4 +157,10 @@ class CashPoolAccountTest < ActiveSupport::TestCase
     assert_equal 25, r1.funds_raised
     assert_equal 25, r2.funds_raised
   end
+  
+  test "account movements are associated with transaction" do
+    r1, r2 = make_raising_causes [{},{}]
+    income = Income.make(:shop)
+    assert_equal income, Account.cause_account(r1).movements.first.transaction
+  end
 end
