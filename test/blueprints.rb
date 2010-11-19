@@ -39,7 +39,7 @@ Cause.blueprint do
   url             {Sham.short_name}
   name            {Sham.bs}
   funds_needed    {Sham.funds}
-  funds_raised    {Sham.funds}
+  funds_raised    {0}
 end
 
 PersonalUser.blueprint do

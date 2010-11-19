@@ -36,6 +36,7 @@ class Cause < ActiveRecord::Base
   has_many :votes, :dependent => :destroy
 
   after_save :ensure_cause_account
+  before_validation :ensure_complete_when_funds_raised
 
   validates_presence_of :charity
   validates_presence_of :country
@@ -161,10 +162,16 @@ class Cause < ActiveRecord::Base
     Account.cause_account self
   end
 
-
   def has_own_comments_to_approve?
     Comment.where(:commentable_id => self.id, :commentable_type => self.class.name, :approved => false).count > 0
   end
 
+  def ensure_complete_when_funds_raised
+    if self.funds_raised_changed? && self.status == :raising_funds
+      if self.funds_raised >= self.funds_needed
+        self.status = :completed
+      end
+    end
+  end  
 end
 

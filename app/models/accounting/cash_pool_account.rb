@@ -12,6 +12,7 @@ class CashPoolAccount < Account
     
     causes.each do |cause|
       amount_for_cause = (initial_balance * cause.votes_count / total_votes).to_d
+      amount_for_cause = [amount_for_cause, cause.funds_needed].min
       Account.transfer self, Account.cause_account(cause), amount_for_cause
     end
     

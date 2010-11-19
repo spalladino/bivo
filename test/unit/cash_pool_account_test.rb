@@ -57,7 +57,19 @@ class CashPoolAccountTest < ActiveSupport::TestCase
     c2.reload
     
     assert_equal 100, c1.funds_raised + c2.funds_raised
-    puts "#{c1.inspect}, #{c2.inspect}"
     assert_equal 0, Account.cash_pool_account.balance
+  end
+  
+  test "do not transfer more than it is needed" do
+    c1, c2 = make_raising_causes({}, {})
+    add_cash_pool_income 300
+    c1.reload
+    c2.reload
+    
+    assert_equal c1.funds_needed, c1.funds_raised
+    assert_equal c2.funds_needed, c2.funds_raised
+    assert_equal :completed, c1.status
+    assert_equal :completed, c2.status
+    assert_equal 100, Account.cash_pool_account.balance
   end
 end
