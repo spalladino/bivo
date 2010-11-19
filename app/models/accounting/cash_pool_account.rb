@@ -2,18 +2,12 @@ class CashPoolAccount < Account
   NAME = 'Cash Pool'
     
   def process(movement)
-    # instead of processing flag, maybe a transfer that do not call a initiator of the transaction
-    return if (@processing || false)
-    @processing = true
-    
     while self.balance > 0
       Cause.ensure_raising_funds
       causes = Cause.where(:status => :raising_funds).all
       break if causes.count == 0
       self.single_pass_transfer_funds causes
-    end
-    
-    @processing = false
+    end    
   end
   
 protected
@@ -33,8 +27,9 @@ protected
         amount_for_cause = remaining_amount
       end      
       
-      amount_for_cause = [amount_for_cause, cause.funds_needed].min
-      Account.transfer self, Account.cause_account(cause), amount_for_cause
+      amount_for_cause = [amount_for_cause, cause.funds_pending].min
+      
+      Account.transfer_no_callback_from self, Account.cause_account(cause), amount_for_cause
     end    
   end
   

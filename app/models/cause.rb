@@ -65,6 +65,9 @@ class Cause < ActiveRecord::Base
   validate :inactive_if_charity_is_inactive
   validate :valid_status_transition_if_changed, :on => :update
 
+  def funds_pending
+    self.funds_needed - self.funds_raised
+  end
 
   def valid_status_transition_if_changed
     if ((self.status_changed?) && (!can_change_status?))

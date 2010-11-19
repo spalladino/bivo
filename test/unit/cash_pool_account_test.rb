@@ -129,4 +129,32 @@ class CashPoolAccountTest < ActiveSupport::TestCase
     assert_equal 100, r2.funds_raised
     assert_equal 40, a2.funds_raised
   end
+  
+  test "at most use funds_pending" do
+    r1, r2 = make_raising_causes [{},{}]    
+    Account.transfer Account.make, Account.cause_account(r1), 50.to_d    
+    r1.reload
+    
+    assert_equal 50, r1.funds_raised    
+    add_cash_pool_income 200    
+    r1.reload
+    
+    assert_equal 100, r1.funds_raised
+    assert_equal 100.to_d, Account.cause_account(r1).balance    
+  end
+  
+  test "allow negative balance in cash pool" do
+    r1, r2 = make_raising_causes [{},{}]
+    
+    # only negative income movement. it is not passed to causes accounts
+    assert_difference('AccountMovement.count', 2) do
+      add_cash_pool_income -50
+    end
+    
+    add_cash_pool_income 100
+    [r1, r2].map &:reload
+    
+    assert_equal 25, r1.funds_raised
+    assert_equal 25, r2.funds_raised
+  end
 end
