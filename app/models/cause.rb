@@ -28,7 +28,7 @@ class Cause < ActiveRecord::Base
   end
   # Default scope excludes deleted causes
   default_scope where('causes.status != ?', :deleted)
-
+  has_one :gallery
   belongs_to :cause_category
   belongs_to :country
   belongs_to :charity
