@@ -112,4 +112,21 @@ class CashPoolAccountTest < ActiveSupport::TestCase
     assert_equal 50, b1.funds_raised
     assert_equal 50, b2.funds_raised
   end
+  
+  test "always use votes" do
+    r1, r2 = make_raising_causes [{:votes => 1},{:votes => 4}]
+    a1, a2 = make_active_causes [{},{:votes => 2}]
+    
+    add_cash_pool_income 200
+    [r1, r2, a1, a2].map &:reload
+    
+    assert_equal :raising_funds, r1.status
+    assert_equal :completed, r2.status
+    assert_equal :active, a1.status
+    assert_equal :raising_funds, a2.status
+    
+    assert_equal 60, r1.funds_raised
+    assert_equal 100, r2.funds_raised
+    assert_equal 40, a2.funds_raised
+  end
 end
