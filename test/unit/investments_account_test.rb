@@ -2,6 +2,12 @@ require 'test_helper'
 
 class InvestmentsAccountTest < ActiveSupport::TestCase
 
+  test "investment income blueprint works" do
+    income = Income.make(:investment)
+    assert_not_equal IncomeCategory.get_shop_category.id, income.income_category_id
+    assert_nil income.shop
+  end
+
   test "create investments account" do
     assert_difference('InvestmentsAccount.count') do
       a = Account.investments_account
@@ -12,7 +18,7 @@ class InvestmentsAccountTest < ActiveSupport::TestCase
   end
   
   test "creating investment moves total amount to cash pool" do
-    income = Income.create! :input_amount => 100, :input_currency => Transaction::DefaultCurrency, :user => Admin.make, :transaction_date => Date.today, :income_category => IncomeCategory.make
+    income = Income.make :investment, :input_amount => 100
     investment_movement = Account.investments_account.movements.first
     cash_pool_movement = Account.cash_pool_account.movements.first
     

@@ -1,0 +1,8 @@
+<%if @new_position != @old_position%>
+  var a = $('#<%="item_"+@old_position%>');
+  var b = $('#<%="item_"+@new_position%>');
+  var html = a.wrapInner('<tr id = <%="item_"+@new_position%>> </tr>').html();
+  a.replaceWith(b.wrapInner('<tr id = <%="item_"+@old_position%>> </tr>').html());
+  b.replaceWith(html);
+<% end %>
+
