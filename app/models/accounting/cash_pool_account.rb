@@ -6,15 +6,12 @@ class CashPoolAccount < Account
     return if (@processing || false)
     @processing = true
     
-    Cause.ensure_raising_funds
-    causes = Cause.where(:status => :raising_funds).all
-    return if causes.count == 0
-    self.single_pass_transfer_funds causes
-    
-    Cause.ensure_raising_funds
-    causes = Cause.where(:status => :raising_funds).all
-    return if causes.count == 0
-    self.single_pass_transfer_funds causes
+    while self.balance > 0
+      Cause.ensure_raising_funds
+      causes = Cause.where(:status => :raising_funds).all
+      break if causes.count == 0
+      self.single_pass_transfer_funds causes
+    end
     
     @processing = false
   end

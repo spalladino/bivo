@@ -97,4 +97,19 @@ class CashPoolAccountTest < ActiveSupport::TestCase
     assert_equal 50, a1.funds_raised
     assert_equal 50, a2.funds_raised
   end
+  
+  test "allow third round" do
+    r1, r2 = make_raising_causes [{},{}]
+    a1, a2 = make_active_causes [{:votes => 2},{:votes => 2}]
+    b1, b2 = make_active_causes [{},{}]
+    
+    add_cash_pool_income 500
+    b1.reload
+    b2.reload
+    
+    assert_equal :raising_funds, b1.status
+    assert_equal :raising_funds, b2.status
+    assert_equal 50, b1.funds_raised
+    assert_equal 50, b2.funds_raised
+  end
 end
