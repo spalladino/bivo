@@ -95,6 +95,8 @@ Bivo::Application.routes.draw do
 
   resources :transactions, :path => 'transaction'
 
+  get "change_language", :to => "home#change_language"
+
   root :to => "home#index"
 
   #post "cause/create", :to => 'causes#create', :as => 'create'

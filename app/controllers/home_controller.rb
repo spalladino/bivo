@@ -2,10 +2,13 @@ require 'money'
 require 'money/bank/google_currency'
 
 class HomeController < ApplicationController
+  skip_before_filter :set_gettext_locale, :only => [:change_language]
   skip_before_filter :check_eula_accepted, :only => [:accept_eula, :confirm_eula]
 
   def index
     @raised_amount = Income.funds_raised(1.month.ago, Date.today)
+    @languages = Language.all
+    @language = Language.by_id session[:locale].to_sym
   end
 
   def eula
@@ -59,5 +62,17 @@ class HomeController < ApplicationController
     @transactions = Income.transactions_count(@from, @to)
     @most_voted_causes = Cause.most_voted_causes
   end
-end
 
+  def change_language
+    if ((params["language"]) && (Language.all.map(&:id).include? params["language"].to_sym))
+      session[:locale] = params["language"].to_sym
+    end
+
+    if (user_signed_in?)
+      current_user.preferred_language = session[:locale]
+      current_user.save
+    end
+
+    redirect_to root_path
+  end
+end

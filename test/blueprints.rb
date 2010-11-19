@@ -47,6 +47,7 @@ PersonalUser.blueprint do
   last_name     {Sham.simple_name}
   eula_accepted {true}
   status        {:active}
+  preferred_language {:en}
   email
   password
 end
@@ -56,6 +57,7 @@ Admin.blueprint do
   last_name     {Sham.simple_name}
   eula_accepted {true}
   status        {:active}
+  preferred_language {:en}
   email
   password
 end
@@ -70,6 +72,7 @@ Charity.blueprint do
   short_url        {Sham.short_name}
   charity_type     {Sham.simple_name}
   tax_reg_number   {Sham.simple_name}
+  preferred_language {:en}
   city
   charity_category {CharityCategory.make_or_get(5)}
   eula_accepted    {true}

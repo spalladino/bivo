@@ -1,3 +1,4 @@
+# coding: utf-8
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
@@ -139,6 +140,12 @@ module Bivo
       :VND => "Vietnamese Dong (VND)",
       :YER => "Yemeni Rial (YER)",
       :ZMK => "Zambian Kwacha (ZMK)"
+    }
+
+    config.languages = {
+      :en => "English (EN)", 
+      :es => "Español (ES)", 
+      :fr => "Français (FR)"
     }
   end
 end

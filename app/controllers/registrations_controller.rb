@@ -22,6 +22,8 @@ class RegistrationsController < Devise::RegistrationsController
       resource.set_captcha_invalid
     end
 
+    resource.preferred_language = Language.preferred(request.accept_language)
+
     if resource.save
       if resource.active?
         set_flash_message :notice, :signed_up
