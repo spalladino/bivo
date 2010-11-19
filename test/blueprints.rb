@@ -15,6 +15,7 @@ Sham.country      { Faker::Address.uk_county }
 Sham.city         { Faker::Address.city }
 Sham.password     { rand(36**8).to_s(36) }
 Sham.funds        { rand(1000) }
+Sham.amount        { 1 + rand(1000) }
 
 Country.blueprint do
   name {Sham.country}
@@ -38,7 +39,7 @@ Cause.blueprint do
   url             {Sham.short_name}
   name            {Sham.bs}
   funds_needed    {Sham.funds}
-  funds_raised    {Sham.funds}
+  funds_raised    {0}
 end
 
 PersonalUser.blueprint do
@@ -125,3 +126,18 @@ GalleryItem.blueprint do
 
 end
 
+Income.blueprint do
+  input_amount { Sham.amount }
+  input_currency { Transaction::DefaultCurrency }
+  user { Admin.make }
+  transaction_date { Date.today }
+end
+
+Income.blueprint(:shop) do
+  income_category { IncomeCategory.get_shop_category }
+  shop { Shop.make }
+end
+
+Income.blueprint(:investment) do
+  income_category { IncomeCategory.make }
+end

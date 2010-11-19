@@ -18,4 +18,16 @@ class CauseAccountTest < ActiveSupport::TestCase
     assert_instance_of CauseAccount, a
     assert_equal c.name, a.name
   end
+  
+  test "upon balance change, update cause funds" do
+    c = Cause.make :funds_raised => 0
+    a = Account.cause_account c
+    
+    assert_equal 0, c.funds_raised
+    a.balance = 30.to_d
+    a.save!
+    c.reload
+    assert_equal 30, c.funds_raised
+  end  
+
 end

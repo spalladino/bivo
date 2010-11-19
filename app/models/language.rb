@@ -22,7 +22,6 @@ class Language
       nil
     end
   end
-
   #get the first language from the accepted languages that is available.
   #if there isnt one, it use the default language
   #note: may be its convenient to extend the module for request.

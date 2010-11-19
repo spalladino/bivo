@@ -187,9 +187,9 @@ ActiveRecord::Schema.define(:version => 20101118152322) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "email",                                         :default => "", :null => false
-    t.string   "encrypted_password",             :limit => 128, :default => "", :null => false
-    t.string   "password_salt",                                 :default => "", :null => false
+    t.string   "email",                                         :default => "",    :null => false
+    t.string   "encrypted_password",             :limit => 128, :default => "",    :null => false
+    t.string   "password_salt",                                 :default => "",    :null => false
     t.string   "reset_password_token"
     t.string   "remember_token"
     t.datetime "remember_created_at"
@@ -226,7 +226,7 @@ ActiveRecord::Schema.define(:version => 20101118152322) do
     t.boolean  "notice_comment_added"
     t.boolean  "send_me_news"
     t.boolean  "auto_approve_comments"
-    t.boolean  "from_facebook"
+    t.boolean  "from_facebook",                                 :default => false
     t.boolean  "eula_accepted"
     t.string   "status"
     t.string   "picture_file_name"

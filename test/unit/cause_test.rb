@@ -75,4 +75,16 @@ class CauseTest < ActiveSupport::TestCase
 
     assert_not_equal Cause.find(cause.id).status, :raising_funds
   end
+  
+  test "should change status to completed if all funds were raised" do
+    cause = Cause.make :status => :raising_funds, :funds_needed => 100, :funds_raised => 0
+    assert_equal :raising_funds, cause.status
+    cause.funds_raised += 50
+    cause.save!
+    assert_equal :raising_funds, cause.status
+    
+    cause.funds_raised += 50
+    cause.save!
+    assert_equal :completed, cause.status
+  end
 end

@@ -32,7 +32,15 @@ class Account < ActiveRecord::Base
     account
   end
 
+  def self.transfer_no_callback_from(from, to, amount, description = nil, transaction = nil)
+    Account.transfer_core(false, from, to, amount, description, transaction)
+  end
+  
   def self.transfer(from, to, amount, description = nil, transaction = nil)
+    Account.transfer_core(true, from, to, amount, description, transaction)
+  end
+  
+  def self.transfer_core(callback_from, from, to, amount, description = nil, transaction = nil)
     reload = false
     Account.transaction do
       from.lock!
@@ -49,7 +57,7 @@ class Account < ActiveRecord::Base
       to.movements << to_line
       
       begin
-        from.process from_line
+        from.process from_line if callback_from
         to.process to_line
       rescue
         reload = true

@@ -36,6 +36,7 @@ class Cause < ActiveRecord::Base
   has_many :votes, :dependent => :destroy
 
   after_save :ensure_cause_account
+  before_validation :ensure_complete_when_funds_raised
 
   validates_presence_of :charity
   validates_presence_of :country
@@ -64,6 +65,9 @@ class Cause < ActiveRecord::Base
   validate :inactive_if_charity_is_inactive
   validate :valid_status_transition_if_changed, :on => :update
 
+  def funds_pending
+    self.funds_needed - self.funds_raised
+  end
 
   def valid_status_transition_if_changed
     if ((self.status_changed?) && (!can_change_status?))
@@ -146,25 +150,47 @@ class Cause < ActiveRecord::Base
     end
   end
 
+  def self.most_voted_cause(category)
+    Cause.where(:status => :active).where("cause_category_id = ?", category.id).order("votes_count DESC").limit(1).first
+  end
+  
   def self.most_voted_causes()
     most_voted_causes = []
 
     CauseCategory.all.each do |cat|
-      cause = Cause.where("cause_category_id = ?", cat.id).order("votes_count DESC").limit(1).first
+      cause = Cause.most_voted_cause cat
       most_voted_causes << cause unless cause.nil?
     end
 
     most_voted_causes
+  end
+  
+  def self.ensure_raising_funds
+    CauseCategory.all.each do |cat|
+      if cat.causes.where(:status => :raising_funds).count == 0
+        cause = Cause.most_voted_cause cat
+        if cause
+          cause.status = :raising_funds
+          cause.save!
+        end
+      end
+    end
   end
 
   def ensure_cause_account
     Account.cause_account self
   end
 
-
   def has_own_comments_to_approve?
     Comment.where(:commentable_id => self.id, :commentable_type => self.class.name, :approved => false).count > 0
   end
 
+  def ensure_complete_when_funds_raised
+    if self.funds_raised_changed? && self.status == :raising_funds
+      if self.funds_raised >= self.funds_needed
+        self.status = :completed
+      end
+    end
+  end  
 end
 
