@@ -1,7 +1,7 @@
 
 class Numeric
   def to_d
-    BigDecimal.new(self.to_s)
+    BigDecimal.new(self.round(3).to_s)
   end
 end
 

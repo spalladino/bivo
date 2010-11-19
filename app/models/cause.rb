@@ -147,15 +147,31 @@ class Cause < ActiveRecord::Base
     end
   end
 
+  def self.most_voted_cause(category)
+    Cause.where(:status => :active).where("cause_category_id = ?", category.id).order("votes_count DESC").limit(1).first
+  end
+  
   def self.most_voted_causes()
     most_voted_causes = []
 
     CauseCategory.all.each do |cat|
-      cause = Cause.where("cause_category_id = ?", cat.id).order("votes_count DESC").limit(1).first
+      cause = Cause.most_voted_cause cat
       most_voted_causes << cause unless cause.nil?
     end
 
     most_voted_causes
+  end
+  
+  def self.ensure_raising_funds
+    CauseCategory.all.each do |cat|
+      if cat.causes.where(:status => :raising_funds).count == 0
+        cause = Cause.most_voted_cause cat
+        if cause
+          cause.status = :raising_funds
+          cause.save!
+        end
+      end
+    end
   end
 
   def ensure_cause_account
