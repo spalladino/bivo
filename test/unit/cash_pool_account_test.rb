@@ -48,4 +48,16 @@ class CashPoolAccountTest < ActiveSupport::TestCase
     assert_equal 60, c1.funds_raised
     assert_equal 30, c2.funds_raised
   end
+  
+  test "take care of rounded currency amounts. always split everything" do
+    c1, c2 = make_raising_causes({:votes => 2}, {:votes => 1})
+    add_cash_pool_income 100
+    
+    c1.reload
+    c2.reload
+    
+    assert_equal 100, c1.funds_raised + c2.funds_raised
+    puts "#{c1.inspect}, #{c2.inspect}"
+    assert_equal 0, Account.cash_pool_account.balance
+  end
 end
