@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   before_filter :set_gettext_locale
   before_filter :check_eula_accepted
   before_filter :instantiate_controller_and_action_names
+  before_filter :load_languages
 
   protected
 
@@ -76,6 +77,11 @@ class ApplicationController < ActionController::Base
 
   def render_not_found
     render :file => "#{Rails.root.to_s}/public/404.html", :layout => false, :status => :not_found
+  end
+  
+  def load_languages
+    @languages = Language.all
+    @language = Language.by_id session[:locale].to_sym    
   end
 end
 

@@ -7,8 +7,6 @@ class HomeController < ApplicationController
 
   def index
     @raised_amount = Income.funds_raised(1.month.ago, Date.today)
-    @languages = Language.all
-    @language = Language.by_id session[:locale].to_sym
   end
 
   def eula

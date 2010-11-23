@@ -32,3 +32,15 @@
 .edit_catecories form, .edit_catecories form.button_to, .edit_catecories form.button_to div {
 	display: inline;
 }
+
+form.inline {
+	display: inline;
+}
+
+.box {
+	border: 1px solid black;
+	width: 400px;
+	padding: 15px;
+	padding-top: 0px;
+	margin: 2px;
+}
