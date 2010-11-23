@@ -12,6 +12,11 @@ class HomeControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test "should get dashboard" do
+    get :dashboard
+    assert_response :success
+  end
+
   test "should use browser language if not language setted before" do
     get :index
 

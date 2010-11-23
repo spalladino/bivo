@@ -4,6 +4,8 @@
 
 <% title "Shops" %>
 
+<%= link_to "New Shop", new_shop_path %> <br /> <br />
+
 <%=_("Shops count")%> <%=@count%>
 <div id="filters">
 	<%= form_tag shops_path, :method => :get, :id => "filter_form" do %>

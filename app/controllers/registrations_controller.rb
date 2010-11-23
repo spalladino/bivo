@@ -22,7 +22,7 @@ class RegistrationsController < Devise::RegistrationsController
       resource.set_captcha_invalid
     end
 
-    resource.preferred_language = Language.preferred(request.accept_language)
+    resource.preferred_language = Language.preferred(request.accept_language).id
 
     if resource.save
       if resource.active?

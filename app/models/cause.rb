@@ -150,11 +150,14 @@ class Cause < ActiveRecord::Base
     end
   end
 
-  def self.most_voted_cause(category)
+  #tomar en cuenta la fecha de la creacion de los votos para el count, y no usar votes_count.
+  def self.most_voted_cause(category, from, to)
+    #agarrar 
+    Cause.votes.where("created_at  BETWEEN ? AND ?", from, to).count
     Cause.where(:status => :active).where("cause_category_id = ?", category.id).order("votes_count DESC").limit(1).first
   end
   
-  def self.most_voted_causes()
+  def self.most_voted_causes(from, to)
     most_voted_causes = []
 
     CauseCategory.all.each do |cat|
