@@ -83,6 +83,5 @@ module ApplicationHelper
   def br2nl(s)
      s.gsub('<br>',/\n/)
   end
-
 end
 

@@ -77,4 +77,13 @@ class HomeController < ApplicationController
   
   def how_it_works
   end
+  
+  def jobs
+  end
+  
+  def social_initiatives
+  end
+  
+  def fund_raisers
+  end
 end

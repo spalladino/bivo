@@ -103,6 +103,9 @@ Bivo::Application.routes.draw do
 
   # path for static pages
   get "how_it_works", :to => "home#how_it_works"
+  get "jobs", :to => "home#jobs"
+  get "social_initiatives", :to => "home#social_initiatives"
+  get "fund_raisers", :to => "home#fund_raisers"
 
   root :to => "home#index"
 
