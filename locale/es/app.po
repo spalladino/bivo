@@ -668,7 +668,7 @@ msgstr ""
 
 #: app/views/home/index.html.erb:5
 msgid "Raised amount"
-msgstr "Monto obtenido"
+msgstr "Recaudacion"
 
 #: app/views/shops/_form.html.erb:63
 msgid "Recommended for"
@@ -1312,7 +1312,7 @@ msgstr ""
 #: app/models/shop.rb:50
 #, fuzzy
 msgid "fixed amount"
-msgstr "Monto obtenido"
+msgstr ""
 
 #: app/controllers/causes_controller.rb:255
 msgid "funds needed"
