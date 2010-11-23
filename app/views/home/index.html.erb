@@ -19,5 +19,13 @@
 	<%= link_to _("Vote Causes"), causes_url %>
 </div>
 
+<div class="box">
+	<h2>3. <%= _("done!")%></h2>
+	<p><%= _("Bivo donates the comissions from all sales to the causes with most votes.") %></p>
+	<p><%= _("Track how your contribution is distributed between charities using our fundraising dashboard.") %></p>
+	
+	<%= link_to _("Go to Dashboard"), dashboard_url %>
+</div>
+
 <strong><%= _("Raised amount") %></strong>
 <%= @raised_amount %>

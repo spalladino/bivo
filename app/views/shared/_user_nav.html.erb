@@ -9,6 +9,7 @@
 <div id="user_nav">
   	<%= link_to "Home", root_path %> | 
 	<%= link_to _("Vote Causes"), causes_url %> | 
+	<%= link_to _("Dashboard"), dashboard_url %> | 
     <% if user_signed_in? %>
       <%= _("Signed in as") %> <%= current_user.email %>. <%= link_to _("Not you?"), destroy_user_session_path %> |
           <% if (current_user.type == "Charity") %>
