@@ -97,7 +97,7 @@ Bivo::Application.routes.draw do
 
   get "transaction", :controller => "transactions", :action => "index", :as => 'transaction_list'
 
-  resources :transactions, :path => 'transaction'
+  resources :transactions, :path => 'transaction', :except => :destroy
 
   get "change_language", :to => "home#change_language"
 
