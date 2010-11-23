@@ -1,7 +1,8 @@
 
 <table>
   <tbody>
-  <%GalleryItem.where('gallery_id = ?',Gallery.find_by_entity_id(Cause.first.id)).order('relative_order').each do |item|%>
+  <%=@id%>
+  <%@gallery_items.each do |item|%>
       <tr id = "item_<%=item.relative_order%>">
         <td> (<%=item.relative_order%>)<%=item.type%>(id:<%=item.id%>)</td>
         <td><%=move_up_button item.id%></td>

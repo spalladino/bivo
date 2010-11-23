@@ -123,7 +123,8 @@ end
 
 GalleryItem.blueprint do
   gallery {Gallery.make}
-
+  type {'VideoItem'}
+  video_url { 'http://example.com' }
 end
 
 Income.blueprint do
@@ -141,3 +142,4 @@ end
 Income.blueprint(:investment) do
   income_category { IncomeCategory.make }
 end
+
