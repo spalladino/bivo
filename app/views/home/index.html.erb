@@ -3,13 +3,20 @@
 
 <div class="box">
 	<h2>1. <%= _("Shop") %></h2>
-	<p><%= _("Enter below the product or service to buy (i.e. book) or the name of the seller (i.e. Amazon)") %></p>
-	<p><%= _("Bivo will get a comission when you buy products from the seller using our website") %></p>
+	<p><%= _("Enter below the product or service to buy (i.e. book) or the name of the seller (i.e. Amazon).") %></p>
+	<p><%= _("Bivo will get a comission when you buy products from the seller using our website.") %></p>
 	
 	<%= form_tag(shop_search_path, :method => :get) do %>
 	  <%= text_field_tag :search_word %>
 	  <%= submit_tag _("Go") %>
 	<% end -%>
+</div>
+
+<div class="box">
+	<h2>2. <%= _("Vote")%></h2>
+	<p><%= _("Vote causes proposed by charities from all over the world. Projects with most votes get funds faster.") %></p>
+	
+	<%= link_to _("Vote Causes"), causes_url %>
 </div>
 
 <strong><%= _("Raised amount") %></strong>
