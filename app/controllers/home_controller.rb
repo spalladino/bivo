@@ -74,4 +74,7 @@ class HomeController < ApplicationController
 
     redirect_to root_path
   end
+  
+  def how_it_works
+  end
 end

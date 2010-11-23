@@ -1,6 +1,16 @@
 
 <h1><%= _("Bivo Home Page")%></h1>
 
+<div class="box" style="float: right;">
+	<h2><%= _("change the world while you shop") %></h2>
+	<p><%= _("Buy products and services from your trusted sellers using our website.") %></p>
+	<p><%= _("Bivo obtains comissions from your purchases and donates them to the charitable causes you vote.") %></p>
+	<span>$ <%= @raised_amount %></span>
+	<span><%= _("raised this month") %></span>
+	<p><%= _("And best of all, it doesn't cost extra!") %></p>
+	<%= link_to _("see how it works"), how_it_works_url %>
+</div>
+
 <div class="box">
 	<h2>1. <%= _("Shop") %></h2>
 	<p><%= _("Enter below the product or service to buy (i.e. book) or the name of the seller (i.e. Amazon).") %></p>
@@ -27,5 +37,3 @@
 	<%= link_to _("Go to Dashboard"), dashboard_url %>
 </div>
 
-<strong><%= _("Raised amount") %></strong>
-<%= @raised_amount %>
