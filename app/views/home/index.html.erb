@@ -1,5 +1,16 @@
 
 <h1><%= _("Bivo Home Page")%></h1>
 
+<div class="box">
+	<h2>1. <%= _("Shop") %></h2>
+	<p><%= _("Enter below the product or service to buy (i.e. book) or the name of the seller (i.e. Amazon)") %></p>
+	<p><%= _("Bivo will get a comission when you buy products from the seller using our website") %></p>
+	
+	<%= form_tag(shop_search_path, :method => :get) do %>
+	  <%= text_field_tag :search_word %>
+	  <%= submit_tag _("Go") %>
+	<% end -%>
+</div>
+
 <strong><%= _("Raised amount") %></strong>
 <%= @raised_amount %>

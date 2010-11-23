@@ -36,3 +36,10 @@
 form.inline {
 	display: inline;
 }
+
+.box {
+	border: 1px solid black;
+	width: 400px;
+	padding: 15px;
+	padding-top: 0px;
+}
