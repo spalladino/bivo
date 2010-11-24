@@ -101,6 +101,13 @@ Bivo::Application.routes.draw do
 
   get "change_language", :to => "home#change_language"
 
+  # path for static pages
+  get "how_it_works", :to => "home#how_it_works"
+  get "jobs", :to => "home#jobs"
+  get "social_initiatives", :to => "home#social_initiatives"
+  get "fund_raisers", :to => "home#fund_raisers"
+  get "about", :to => "home#about"
+
   root :to => "home#index"
 
   #post "cause/create", :to => 'causes#create', :as => 'create'
