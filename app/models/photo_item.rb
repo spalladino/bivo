@@ -9,8 +9,8 @@ class PhotoItem < GalleryItem
   end
 
   has_attached_file :image, :styles => { :small => "150x150>" }#,
-        #:storage => :s3,
-        #:s3_credentials => "#{::Rails.root}/config/amazon_s3.yml",
-        #:path => ":class/:id/image/:style/:filename"
+        :storage => :s3,
+        :s3_credentials => "#{::Rails.root}/config/amazon_s3.yml",
+        :path => ":class/:id/image/:style/:filename"
 end
 
