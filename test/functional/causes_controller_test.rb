@@ -338,7 +338,7 @@ class CausesControllerTest < ActionController::TestCase
         :funds_raised=>0
       }
     assert_equal 1,Cause.count
-    assert_response :found
+    assert_redirected_to :action => :details, :url => "url"
   end
 
   #CREATE

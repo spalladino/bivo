@@ -1,6 +1,7 @@
+<p> <b><%=_('Organized by')%>: <%= link_to_charity @cause.charity %>
 <p> <b><%=_('Name')%></b>: <%= @cause.name %> </p>
 <p> <b><%=_('Title')%></b>: <%= @cause.url %> </p>
-<p> <b><%=_('Content:')%></b>: <%= raw @cause.description %> </p>
+<p> <b><%=_('Content')%></b>: <%= raw @cause.description %> </p>
 <p> <b><%=s_('Cause|City')%></b>: <%= @cause.city %> </p>
 <p> <b><%=_('country')%></b>: <%= Country.find(@cause.country_id).name%> </p>
 <p> <b><%=_('Founds Needed')%></b>: <%= @cause.funds_needed %> </p>
