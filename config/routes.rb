@@ -4,7 +4,7 @@ Bivo::Application.routes.draw do
 
   #gallery
   get "gallery/:id/video_preview", :to => "galleries#video_preview"
-  get "gallery/:entity_id/edit_view", :to => "galleries#edit_view"
+  get "gallery/:entity_type/:entity_id/edit_view", :to => "galleries#edit_view", :as=>"edit_gallery"
   post "gallery/:id/move_up", :to => "galleries#move_up"
   post "gallery/:id/move_down", :to => "galleries#move_down"
   post "gallery/:id/add_photo", :to => "galleries#add_photo"

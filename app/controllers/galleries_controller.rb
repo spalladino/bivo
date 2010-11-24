@@ -1,9 +1,12 @@
 class GalleriesController < ApplicationController
 
   def edit_view
-    gallery = Gallery.find_by_entity_id(params[:entity_id])
+    gallery = Gallery.find_by_entity_id_and_entity_type(params[:entity_id],params[:entity_type])
+    if !gallery
+      gallery = Gallery.create!(:entity_id => params[:entity_id], :entity_type =>params[:entity_type])
+    end
     @gallery_id = gallery.id
-    @gallery_items = GalleryItem.where('gallery_id = ?',gallery.id).order('relative_order')
+    @gallery_items = gallery.items.order('relative_order')
   end
 
   def move_up
