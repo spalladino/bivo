@@ -2,6 +2,10 @@
 	visibility: hidden;
 }
 
+.nodisplay {
+    display: none;
+}
+
 .cause {
 	border: 1px solid gray;
 	margin: 20px;
@@ -32,3 +36,4 @@
 .edit_catecories form, .edit_catecories form.button_to, .edit_catecories form.button_to div {
 	display: inline;
 }
+

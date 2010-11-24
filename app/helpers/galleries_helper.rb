@@ -8,5 +8,9 @@ module GalleriesHelper
     return button_to(_("Move Down"),{:action => "move_down",:controller => "galleries", :id => id}, :remote => true, :method => "post")
   end
 
+  def delete_item_button(id)
+    return button_to(_("Destroy"),{:action => "destroy_gallery_item",:controller => "galleries", :id => id}, :remote => true, :method => "post")
+  end
+
 end
 

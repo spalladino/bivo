@@ -15,6 +15,7 @@ gem 'aws-s3'
 gem 'paperclip'
 gem "money"
 gem "google_currency"
+gem "hpricot"
 
 group :test do
   gem 'machinist'

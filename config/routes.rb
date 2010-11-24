@@ -3,9 +3,13 @@ Bivo::Application.routes.draw do
   match '/auth/facebook/callback' => 'facebook_authentications#create'
 
   #gallery
+  get "gallery/:id/video_preview", :to => "galleries#video_preview"
   get "gallery/:entity_id/edit_view", :to => "galleries#edit_view"
   post "gallery/:id/move_up", :to => "galleries#move_up"
   post "gallery/:id/move_down", :to => "galleries#move_down"
+  post "gallery/:id/add_photo", :to => "galleries#add_photo"
+  post "gallery/:id/destroy_gallery_item", :to => "galleries#destroy_gallery_item"
+  post "gallery/add_video", :to => "galleries#add_video"
   #comments
   post "comments/:id/destroy", :to => "comments#destroy"
   get "comments/:id/edit", :to => "comments#edit"

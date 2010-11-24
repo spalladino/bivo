@@ -1,5 +1,5 @@
 
-<div id = "<%="row_" + comment.id.to_s%>">
+<div id="<%="row_" + comment.id.to_s%>" class="comment_row">
   <div>
     <span>
        <b><%=_("by")%></b> <%=owner_of(comment)%> <b><%=_("on")%></b> <%= l comment.created_at, :format => :short %>
@@ -10,15 +10,16 @@
     </span>
     <%= render('comments/edit_form', :comment => comment, :entity =>entity)%>
     <br/>
-      <span id="reply_button_<%=comment.id%>"> <%=reply_comment_button comment.id, entity%> </span>
+      <%=reply_comment_button comment.id, entity%>
       <%=edit_comment_button comment.id, entity, comment.body%>
       <%=delete_comment_button comment.id, entity%>
+
  </div>
   <% children(comment).each do |c| %>
     <ul>
     <%= render('comments/comment_row', :comment => c, :entity => entity)%>
     </ul>
   <% end %>
-
+   <ul><div class="add_form_container"> </div></ul>
 </div>
 
