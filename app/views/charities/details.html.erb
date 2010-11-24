@@ -14,6 +14,10 @@
 <p> <b><%=_('description')%></b>: <%=raw @charity.description%> </p>
 
 
+<div id="vote_button">
+  <%= link_to_gallery @charity %>
+</div>
+
 <div id="follow_charity_button">
   <%= follow_charity_button @charity %>
 </div>
@@ -29,7 +33,7 @@
 </div>
 
 <br/>
-<div id="activate_deactivate_charity_btn">
+<div id="activate_deactivate_charity_btn_<%=@charity.id%>">
   <%= active_deactive_charity_button @charity %>
 </div>
 

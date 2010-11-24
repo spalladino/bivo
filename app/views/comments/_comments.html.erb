@@ -1,25 +1,28 @@
 <%= render(:partial => 'shared/notifications.js') %>
 <% content_for(:js) do %>
 
-  function scrollToBottom(){
-    var scrollH=document.body.scrollHeight;
-    var offsetH=document.body.offsetHeight;
-    if(scrollH>offsetH) window.scrollTo(0,scrollH);
-    else window.scrollTo(0,offsetH);
-  }
+  function showComments(button, id){
+  //it sets the form in the place where the button (reply or add_comment) is
+  //and set the parent id if replying, and show the cancel button.
 
-  function showComments(){
-    $('#comment_form').show();
-    $('#comment_text_area').focus();
-    $('#add_comment_btn').hide();
-    $('#cancel_button').show();
-    $('#parent_id').removeAttr('value');
-    scrollToBottom();
-  }
+    var comment_add_form = $('#comment_add_form');
 
-  function reply(id){
-    $('#parent_id').attr('value',id);
-   }
+    var container = $(".add_form_container:last", $(button).closest(".comment_row"));
+    var comment_text = $('textarea', comment_add_form);
+    var hidden_comment_parent = $('input[name="parent_id"]',comment_add_form);
+    var cancel_add_button = $('input[name="cancel_button"]',comment_add_form);
+
+    container.append(comment_add_form);
+
+    comment_text.val("");
+    hidden_comment_parent.val(id);
+    comment_add_form.show();
+    comment_text.focus();
+
+    $(button).hide();
+    cancel_add_button.show();
+
+  }
 
   function replaceAll(txt, replace, with_this) {
     return txt.replace(new RegExp(replace, 'g'),with_this);
@@ -42,10 +45,13 @@
     $('#cancel_button_' + id).hide();
   }
 
-  function cancelAdd(){
-    $('#comment_form form')[0].reset();
-    $('#comment_form').hide();
-    $('#add_comment_btn').show();
+  function cancelAdd(button){
+    var comment_add_form = $('#comment_add_form');
+    var reply_or_add_comment_button = $('input[name="reply_or_add_button"]:first', $(button).closest(".comment_row"));
+
+    comment_add_form.hide();
+    reply_or_add_comment_button.show();
+    $(button).hide();
   }
 
 <% end %>
@@ -66,12 +72,12 @@
         <%end%>
     </div>
 
-  <div id="add_comment_btn">
+  <div class="comment_row">
     <%=add_comment_button entity%>
-  </div>
 
-  <div id= "comment_form" style="display:none">
-    <%= render('comments/add_form', :entity => entity, :action => action)%>
+    <div class="add_form_container">
+      <%= render('comments/add_form', :entity => entity, :action => action)%>
+    </div>
   </div>
 </div>
 

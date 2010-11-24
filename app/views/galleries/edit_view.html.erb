@@ -1,12 +1,46 @@
 
+<% content_for(:js) do %>
+  function showVideoAdd(button){
+    $(button).hide();
+    $('#video_form').show();
+    $('#photo_form').hide();
+    $('#add_photo_button').show();
+    $('#video_url').text("");
+  }
+
+ function showPhotoAdd(button){
+    $(button).hide();
+    $('#photo_form').show();
+    $('#video_form').hide();
+    $('#add_video_button').show();
+  }
+<% end %>
+
+
+<%=add_photo_button%>
+<%= form_for :photo_item, :url => 'add_photo',:method => :post,:html => { :multipart => true, :id => 'photo_form',:class => 'nodisplay' } do |f|%>
+    <%= f.file_field :image %></p>
+    <%= f.hidden_field :gallery_id,:value => @gallery_id %>
+    <%= cancel_add_button%>
+   	<%= submit_tag _('Submit Photo'), :disable_with => _('Submitting...') %>
+  <% end %>
+<br/>
+<%=add_video_button%>
+ <%= form_tag({:controller => 'galleries', :action => "add_video"}, :id => 'video_form',:class => 'nodisplay',:method => "post") do%>
+    <%= text_field_tag :video_url%>
+    <%= hidden_field_tag :gallery_id, @gallery_id %>
+    <%= cancel_add_button%>
+   	<%= submit_tag _('Submit Video'), :disable_with => _('Submitting...') %>
+  <% end %>
+
 <table>
   <tbody>
-  <%=@id%>
-  <%@gallery_items.each do |item|%>
+   <%@gallery_items.each do |item|%>
       <tr id = "item_<%=item.relative_order%>">
         <td> (<%=item.relative_order%>)<%=item.type%>(id:<%=item.id%>)</td>
         <td><%=move_up_button item.id%></td>
         <td><%=move_down_button item.id%></td>
+        <td><%=delete_item_button item.id%></td>
       </tr>
   <% end %>
    </tbody>

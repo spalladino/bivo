@@ -21,6 +21,27 @@ module ApplicationHelper
     end
   end
 
+  # Admin only action to change charity status
+  # * Deactivate button:  All children causes are deactivated as well.
+  # * Activate button: Displayed only when the charity is deactivated.
+  def active_deactive_charity_button(charity)
+    if current_user && current_user.is_admin_user
+      label = if charity.status_inactive? then _("Activate") else _("Deactivate") end
+      action = if charity.status_inactive? then "activate" else "deactivate" end
+      return content_tag :div, button_to(label,
+        {:action => action, :controller=>"charities", :id => charity.id },
+        :remote => true,
+        :onclick => 'disableAndContinue(this,"Submitting...")',
+        :id => "submit_active_btn_" + charity.id.to_s
+      )
+    end
+  end
+
+  def link_to_gallery(entity)
+    return content_tag :div,link_to(_('Edit Gallery'), edit_gallery_path(entity.class.name,entity.id))
+
+  end
+
   # Appends a category parameter with the specified id to the current query string
   def category_filter_url(category, controller=@controller_name, action=@action_name)
     query = CGI.parse(request.query_string).symbolize_keys

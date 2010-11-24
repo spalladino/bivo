@@ -1,9 +1,10 @@
 <%if @could_save%>
-  $('#comment_form').hide();
-  $('#comment_form form')[0].reset();
-  $('#add_comment_btn').show();
+  var comment_add_form = $('#comment_add_form');
+  var button = $('input[name="cancel_button"]',comment_add_form);
+  cancelAdd(button);
   <%if !@comment.parent.nil? %>
     $('<%= "#row_#{@comment.parent_id}" %>').append("<%= escape_javascript(raw "<ul>"+ render('comment_row', :comment => @comment,:entity => @entity) + "</ul>" ) %>");
+    $('#<%="edit_here_"+@comment.id.to_s%>').html("");
   <%else%>
     $("#comments_list").append("<%= escape_javascript(render('comment_row', :comment => @comment,:entity => @entity))%>");
   <%end%>
