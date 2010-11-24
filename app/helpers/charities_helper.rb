@@ -24,23 +24,6 @@ module CharitiesHelper
 
   end
 
-  # Admin only action to change charity status
-  # * Deactivate button:  All children causes are deactivated as well.
-  # * Activate button: Displayed only when the charity is deactivated.
-  def active_deactive_charity_button(charity)
-    if current_user && current_user.is_admin_user
-      label = if charity.status_inactive? then _("Activate") else _("Deactivate") end
-      action = if charity.status_inactive? then "activate" else "deactivate" end
-      return content_tag :div, button_to(label,
-        {:action => action,:id => charity.id },
-        :remote => true,
-        :onclick => 'disableAndContinue(this,"Submitting...")',
-        :id => "submit_active_btn"
-      )
-    end
-  end
-
-
  # Deletes the current charity. If the charity has a history of raised funds the deletion is logical.
   # Admin only action.
   def delete_charity_button(charity)
