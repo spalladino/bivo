@@ -1,7 +1,6 @@
 <%= render(:partial => 'shared/notifications.js') %>
 <% content_for(:js) do %>
 
-
   function showComments(button, id){
   //it sets the form in the place where the button (reply or add_comment) is
   //and set the parent id if replying, and show the cancel button.
@@ -9,7 +8,7 @@
     var comment_add_form = $('#comment_add_form');
 
     var container = $(".add_form_container:last", $(button).closest(".comment_row"));
-    var comment_text =  $('textarea', comment_add_form);
+    var comment_text = $('textarea', comment_add_form);
     var hidden_comment_parent = $('input[name="parent_id"]',comment_add_form);
     var cancel_add_button = $('input[name="cancel_button"]',comment_add_form);
 

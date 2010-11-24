@@ -1,12 +1,33 @@
- <%= form_for :photo_item, :url => 'add_photo',:method => :post, :html => { :multipart => true } do |f|%>
+
+<% content_for(:js) do %>
+  function showVideoAdd(button){
+    $(button).hide();
+    $('#video_form').show();
+    $('#photo_form').hide();
+    $('#add_photo_button').show();
+    $('#video_url').text("");
+  }
+
+ function showPhotoAdd(button){
+    $(button).hide();
+    $('#photo_form').show();
+    $('#video_form').hide();
+    $('#add_video_button').show();
+  }
+<% end %>
+
+
+<%=add_photo_button%>
+<%= form_for :photo_item, :url => 'add_photo',:method => :post,:html => { :multipart => true, :id => 'photo_form',:class => 'nodisplay' } do |f|%>
     <%= f.file_field :image %></p>
     <%= f.hidden_field :gallery_id,:value => @gallery_id %>
     <%= cancel_add_button%>
    	<%= submit_tag _('Submit Photo'), :disable_with => _('Submitting...') %>
   <% end %>
-
- <%= form_tag({:controller => 'galleries', :action => "add_video"},:method => "post") do%>
-    <%= text_field :video_url, ""%>
+<br/>
+<%=add_video_button%>
+ <%= form_tag({:controller => 'galleries', :action => "add_video"}, :id => 'video_form',:class => 'nodisplay',:method => "post") do%>
+    <%= text_field_tag :video_url%>
     <%= hidden_field_tag :gallery_id, @gallery_id %>
     <%= cancel_add_button%>
    	<%= submit_tag _('Submit Video'), :disable_with => _('Submitting...') %>

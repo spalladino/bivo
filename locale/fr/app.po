@@ -108,7 +108,7 @@ msgstr ""
 
 #: app/views/admin/edit_user.html.erb:36
 #: app/views/users/registrations/edit.html.erb:44
-msgid "All founds are raised"
+msgid "All funds are raised"
 msgstr ""
 
 #: app/views/comments/create.js.erb:13
@@ -494,7 +494,7 @@ msgid "Forgot your password?"
 msgstr ""
 
 #: app/views/causes/details.html.erb:6
-msgid "Founds Needed"
+msgid "funds Needed"
 msgstr ""
 
 #: app/views/transactions/index.html.erb:44
@@ -668,7 +668,7 @@ msgid "Recommended for"
 msgstr ""
 
 #: app/views/shops/search.html.erb:8
-msgid "Results found"
+msgid "Results fund"
 msgstr ""
 
 #: app/views/comments/_edit_form.html.erb:18
@@ -1414,3 +1414,4 @@ msgstr ""
 #: app/views/shops/_shops.html.erb:38 app/views/shops/details.html.erb:23
 msgid "will be donated for your purchase"
 msgstr ""
+

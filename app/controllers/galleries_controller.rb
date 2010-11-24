@@ -25,19 +25,32 @@ class GalleriesController < ApplicationController
   end
 
   def add_video
-    VideoItem.create!(:video_url => params[:video_url], :gallery_id => params[:gallery_id])
+    vi = VideoItem.new
+    vi.video_url = params[:video_url]
+    vi.gallery_id = params[:gallery_id]
+    if vi.save
+      ajax_flash[:notice] = _("Video submitted")
+    else
+      ajax_flash[:notice] = _("Error, invalid video url")
+    end
     redirect_to request.referer
   end
 
  def add_photo
     pi = PhotoItem.new
     pi.attributes = params[:photo_item]
-    pi.save!
+    if pi.save
+      ajax_flash[:notice] = _("Photo submitted")
+    else
+      ajax_flash[:notice] = _("Error, try again")
+    end
     redirect_to request.referer
   end
 
   def destroy_gallery_item
-    GalleryItem.find(params[:id]).destroy
+    item = GalleryItem.find(params[:id])
+    @relative_ord = item.relative_order
+    item.destroy
   end
 
 
