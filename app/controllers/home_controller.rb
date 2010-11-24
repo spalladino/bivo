@@ -86,4 +86,7 @@ class HomeController < ApplicationController
   
   def fund_raisers
   end
+  
+  def about
+  end
 end

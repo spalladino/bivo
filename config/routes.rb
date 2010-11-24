@@ -106,6 +106,7 @@ Bivo::Application.routes.draw do
   get "jobs", :to => "home#jobs"
   get "social_initiatives", :to => "home#social_initiatives"
   get "fund_raisers", :to => "home#fund_raisers"
+  get "about", :to => "home#about"
 
   root :to => "home#index"
 
