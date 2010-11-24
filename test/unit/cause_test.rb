@@ -87,4 +87,34 @@ class CauseTest < ActiveSupport::TestCase
     cause.save!
     assert_equal :completed, cause.status
   end
+
+  test "should get the most voted cause (the oldest one from them if there is more than one)" do
+    cause_category = CauseCategory.make    
+    Cause.make_many 5, :cause_category => cause_category
+    causes = Cause.order("created_at")
+    Vote.make_many 5, :cause => causes[1]
+    Vote.make_many 3, :cause => causes[2]
+    Vote.make_many 5, :cause => causes[3]
+
+    assert_equal causes[1], Cause.most_voted_cause(cause_category)
+  end
+
+  test "should get the most voted cause in date range" do
+    cause_category = CauseCategory.make
+    cause = Cause.make :cause_category => cause_category    
+    Vote.make_many 3, :created_at => 1.month.ago, :cause => cause
+    
+    assert_not_nil Cause.most_voted_cause(cause_category, 1.month.ago - 1.day, 1.month.ago + 1.day)
+    assert_nil Cause.most_voted_cause(cause_category, 1.month.ago + 1.day, Date.today)
+    assert_nil Cause.most_voted_cause(cause_category, 1.year.ago, 1.month.ago - 1.day)
+  end
+
+  test "should get the most voted cause for each category" do
+    cause_categories = CauseCategory.make_many 3
+    causes = []
+    cause_categories.each { |cat| causes += Cause.make_many(5, :cause_category => cat) }
+    causes.each { |c| Vote.make_many(3, :cause => c) }
+
+    assert_equal Set.new(CauseCategory.all), Set.new(Cause.most_voted_causes.map(&:cause_category))
+  end
 end
