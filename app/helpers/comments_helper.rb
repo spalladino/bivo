@@ -2,7 +2,7 @@ module CommentsHelper
 
   def reply_comment_button(id,entity)
     if rules(entity).can_add?(current_user)
-      return raw("<input type=\"button\" value=\"#{_("Reply")}\" onclick=\"showComments();reply(#{id})\"/>")
+      return raw("<input type=\"button\" name=\"reply_or_add_button\" value=\"#{_("Reply")}\" onclick=\"showComments(this, #{id})\"/>")
     end
   end
 
@@ -21,20 +21,20 @@ module CommentsHelper
 
   def add_comment_button(entity)
     if rules(entity).can_add?(current_user)
-      return raw("<input type=\"button\" value=\"#{_("Add Comment")}\" onclick=\"showComments()\"/>")
+      return raw("<input type=\"button\" name = \"reply_or_add_button\" value=\"#{_("Add Comment")}\" onclick=\"showComments(this, null);\"/>")
     end
   end
 
   def save_comment_button(id)
-    return raw("<input type=\"button\" id =\"save_button_#{id}\" style=\"display:none\" value=\"#{_("Save")}\" onclick=\"saveEdit(#{id})\"/>")
+    return raw("<input type=\"button\" id =\"save_button_#{id}\" class=\"nodisplay\" value=\"#{_("Save")}\" onclick=\"saveEdit(#{id})\"/>")
   end
 
   def cancel_save_button(id)
-     return raw("<input type=\"button\" id =\"cancel_button_#{id}\" style=\"display:none\" value=\"#{_("Cancel")}\" onclick=\"cancelEdit(#{id})\"/>")
+     return raw("<input type=\"button\" id =\"cancel_button_#{id}\" class=\"nodisplay\" value=\"#{_("Cancel")}\" onclick=\"cancelEdit(#{id})\"/>")
   end
 
    def cancel_add_button
-     return raw("<input type=\"button\" id =\"cancel_button\" style=\"display:none\" value=\"#{_("Cancel")}\" onclick=\"cancelAdd()\"/>")
+     return raw("<input type=\"button\" name =\"cancel_button\" class=\"nodisplay\" value=\"#{_("Cancel")}\" onclick=\"cancelAdd(this)\"/>")
   end
 
   def rules(entity)

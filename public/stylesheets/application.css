@@ -2,6 +2,10 @@
 	visibility: hidden;
 }
 
+.nodisplay {
+    display: none;
+}
+
 .cause {
 	border: 1px solid gray;
 	margin: 20px;
@@ -33,6 +37,7 @@
 	display: inline;
 }
 
+
 form.inline {
 	display: inline;
 }
@@ -49,3 +54,4 @@ form.inline {
 	margin-top: 3px;
 	height: 26px;
 }
+

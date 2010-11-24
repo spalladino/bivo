@@ -1,6 +1,12 @@
 
 <h1><%= _("Bivo Home Page")%></h1>
 
+<% if (current_user && current_user.type == "Charity") %>
+<div class="box">
+	<%= raw(_("View %s and propose causes.") % link_to(_("your landing page"), :controller => "charities", :action => "details", :url => current_user.short_url)) %>
+</div>
+<% end %>
+
 <div class="box">
 	<h2><%= _("change the world while you shop") %></h2>
 	<p><%= _("Buy products and services from your trusted sellers using our website.") %></p>
