@@ -36,10 +36,8 @@ class Language
         y.last.to_f <=> x.last.to_f
       end.each do |l|
         temp_lang = l.first.downcase.gsub(/-[a-z]+$/i) { |x| x.upcase }
-        if (Bivo::Application.config.languages.keys.include? temp_lang.to_sym)
-          unless lang_selected
-            lang_selected = new(temp_lang.to_sym, Bivo::Application.config.languages[temp_lang.to_sym])
-          end
+        if (Bivo::Application.config.languages.keys.include?(temp_lang.to_sym) && !lang_selected)
+          lang_selected = new(temp_lang.to_sym, Bivo::Application.config.languages[temp_lang.to_sym])
         end
       end
       lang_selected || new(DefaultLanguage, Bivo::Application.config.languages[DefaultLanguage])

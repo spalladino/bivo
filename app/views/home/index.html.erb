@@ -1,6 +1,50 @@
-<%= render :partial => "user_nav", :locals => {:language => @language, :languages => @languages } %>
 
 <h1><%= _("Bivo Home Page")%></h1>
 
-<strong><%= _("Raised amount") %></strong>
-<%= @raised_amount %>
+<div class="box">
+	<h2><%= _("change the world while you shop") %></h2>
+	<p><%= _("Buy products and services from your trusted sellers using our website.") %></p>
+	<p><%= _("Bivo obtains comissions from your purchases and donates them to the charitable causes you vote.") %></p>
+	<span>$ <%= @raised_amount %></span>
+	<span><%= _("raised this month") %></span>
+	<p><%= _("And best of all, it doesn't cost extra!") %></p>
+	<%= link_to _("see how it works"), how_it_works_url %>
+</div>
+
+<div class="box">
+	<h2>1. <%= _("Shop") %></h2>
+	<p><%= _("Enter below the product or service to buy (i.e. book) or the name of the seller (i.e. Amazon).") %></p>
+	<p><%= _("Bivo will get a comission when you buy products from the seller using our website.") %></p>
+	
+	<%= form_tag(shop_search_path, :method => :get) do %>
+	  <%= text_field_tag :search_word %>
+	  <%= submit_tag _("Go") %>
+	<% end -%>
+</div>
+
+<div class="box">
+	<h2>2. <%= _("Vote")%></h2>
+	<p><%= _("Vote causes proposed by charities from all over the world. Projects with most votes get funds faster.") %></p>
+	
+	<%= link_to _("Vote Causes"), causes_url %>
+</div>
+
+<div class="box">
+	<h2>3. <%= _("done!")%></h2>
+	<p><%= _("Bivo donates the comissions from all sales to the causes with most votes.") %></p>
+	<p><%= _("Track how your contribution is distributed between charities using our fundraising dashboard.") %></p>
+	
+	<%= link_to _("Go to Dashboard"), dashboard_url %>
+</div>
+
+<div class="box">
+	<h3>4. <%= _("Spread the word")%></h2>
+	<p><%= _("Help promoting Bivo by telling all your friends about it!")%><%= facebook_like %></p>
+
+	<h3>5. <%= _("Volunteer")%></h2>
+	<p><%= raw(_("Find %s at Bivo and help us grow.") % link_to(_("volunteering jobs"), jobs_url)) %></p>
+	
+	<h3>6. <%= _("Support other social initiatives")%></h2>
+	<p><%= raw(_("Learn more about other %s and %s by Bivo.") % [link_to(_("social initiatives"), social_initiatives_url), link_to(_("fund raisers"), fund_raisers_url)]) %></p>
+</div>
+

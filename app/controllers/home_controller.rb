@@ -7,8 +7,6 @@ class HomeController < ApplicationController
 
   def index
     @raised_amount = Income.funds_raised(1.month.ago, Date.today)
-    @languages = Language.all
-    @language = Language.by_id session[:locale].to_sym
   end
 
   def eula
@@ -61,7 +59,7 @@ class HomeController < ApplicationController
     @funds_raised = Income.funds_raised(@from, @to)
     @transactions = Income.transactions_count(@from, @to)
     @causes_being_funded = Cause.where(:status => :raising_funds)
-    @most_voted_causes = Cause.most_voted_causes
+    @most_voted_causes = Cause.most_voted_causes(@from, @to)
   end
 
   def change_language
@@ -75,5 +73,20 @@ class HomeController < ApplicationController
     end
 
     redirect_to root_path
+  end
+  
+  def how_it_works
+  end
+  
+  def jobs
+  end
+  
+  def social_initiatives
+  end
+  
+  def fund_raisers
+  end
+  
+  def about
   end
 end

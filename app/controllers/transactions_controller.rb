@@ -115,12 +115,6 @@ class TransactionsController < ApplicationController
     end
   end
 
-  def destroy
-    trans = Transaction.find(params[:id])
-    trans.destroy
-    redirect_to transaction_list_path
-  end
-
   private
 
   def load_create_options

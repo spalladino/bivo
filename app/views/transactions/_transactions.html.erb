@@ -10,7 +10,6 @@
        <th><%= _("Category") %></th>
        <th><%= _("Detail") %></th>
        <th>&nbsp;</th>
-       <th>&nbsp;</th>
     </tr>
   </thead>
   <% for transaction in @transactions %>
@@ -25,7 +24,6 @@
        <% end  %>
        <td><%= transaction.detail %></td>
        <td><%= link_to _("Edit"),transaction_edit_path(transaction.id)%></td>
-       <td><%= link_to _("Destroy"), transaction_destroy_path(transaction.id), :confirm => 'Are you sure?', :method => :delete %></td>
     </tr>
   <% end %>
   </table>

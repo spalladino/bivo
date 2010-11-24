@@ -28,10 +28,10 @@ class Income < Transaction
   end
 
   def self.funds_raised(from, to)
-    Income.where("transaction_date BETWEEN ? AND ?", from, to).sum("amount")
+    where("transaction_date BETWEEN ? AND ?", from, to).sum("amount")
   end
 
   def self.transactions_count(from, to)
-    Income.where("transaction_date BETWEEN ? AND ?", from, to).count
+    where("transaction_date BETWEEN ? AND ?", from, to).count
   end
 end
