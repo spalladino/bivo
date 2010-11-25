@@ -120,7 +120,7 @@ class CausesController < ApplicationController
     if !@cause.save
       render 'new'
     else
-      redirect_to request.referer
+      redirect_to :action => :details, :url => @cause.url
     end
   end
 
