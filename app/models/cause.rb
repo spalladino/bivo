@@ -1,6 +1,7 @@
 require 'enumerated_attribute'
 
 class Cause < ActiveRecord::Base
+  attr_accessible :funds_raised_in_period
   acts_as_commentable
   UrlFormat = /[a-zA-Z\-_][a-zA-Z0-9\-_]*/
 
@@ -150,7 +151,6 @@ class Cause < ActiveRecord::Base
     end
   end
 
-  #tomar en cuenta la fecha de la creacion de los votos para el count, y no usar votes_count.
   def self.most_voted_cause(category, from=nil, to=nil)
     if (from.nil? || to.nil?)
       result = where(:cause_category_id => category.id, :status => :active)
@@ -158,11 +158,11 @@ class Cause < ActiveRecord::Base
     else
       cause_columns = column_names.map{|c| "#{Cause.table_name}.#{c}"}
       result = select(cause_columns + ["count(votes.id) votes_in_period"])
-      result = result.joins("LEFT JOIN votes on votes.cause_id = causes.id")
+      result = result.joins("LEFT JOIN votes ON votes.cause_id = causes.id")
       result = result.where(:cause_category_id => category.id, :status => :active)
       result = result.where("(votes.id IS NULL) OR (votes.created_at BETWEEN ? AND ?)", from, to)
-      result = result.group(cause_columns)
       result = result.order("votes_in_period DESC, created_at ASC")
+      result = result.group(cause_columns)
     end
 
     result.limit(1).first
@@ -177,6 +177,17 @@ class Cause < ActiveRecord::Base
     end
 
     most_voted_causes
+  end
+
+  def self.causes_being_funded(from, to)
+    cause_columns = column_names.map{|c| "#{Cause.table_name}.#{c}"}
+    result = Cause.select(cause_columns + ["SUM(account_movements.amount) funds_raised_in_period"])
+    result = result.joins("INNER JOIN accounts ON accounts.cause_id = causes.id")
+    result = result.joins("INNER JOIN account_movements ON account_movements.account_id = accounts.id")
+    result = result.where("account_movements.created_at BETWEEN ? AND ?", from, to)
+    result = result.order("cause_category_id ASC, funds_raised_in_period DESC")
+    result = result.group(cause_columns)
+    result
   end
   
   def self.ensure_raising_funds

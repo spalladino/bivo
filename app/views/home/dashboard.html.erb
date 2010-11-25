@@ -53,11 +53,11 @@
 </div>
 
 <div id="causes_being_funded">
-	<h2><%= _("Causes being funded")%>
+	<h2><%= _("Causes being funded")%></h2>
 
 	<% @causes_being_funded	.each do |cause| %>
-	  <%= cause.cause_category.name %>: <%= cause.name %> <br />
-	  <%= cause.funds_raised %> of <%= cause.funds_needed %>
+	  <%= cause.cause_category.name %>: <%= cause.name %>
+	  (<%= cause.funds_raised %> of <%= cause.funds_needed %>, <%= cause.funds_raised_in_period %> <%= _("in this period") %>) <br />
 	<% end %>
 </div>
 
