@@ -175,15 +175,6 @@ class Cause < ActiveRecord::Base
       result = result.joins("LEFT JOIN votes on votes.cause_id = causes.id")
       result = result.where(:cause_category_id => category.id, :status => :active)
       result = result.where("(votes.id IS NULL) OR (votes.created_at BETWEEN ? AND ?)", from, to)
-
-    end
-
-    cause_columns = column_names.map{|c| "#{Cause.table_name}.#{c}"}
-    result = result.where(:cause_category_id => category.id, :status => :active)
-    result = result.group(cause_columns)
-    result = result.order("votes_in_period DESC, created_at ASC")
-    result = result.select(cause_columns + ["count(votes.id) votes_in_period"])
-
       result = result.group(cause_columns)
       result = result.order("votes_in_period DESC, created_at ASC")
     end
