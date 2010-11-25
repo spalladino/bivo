@@ -26,6 +26,19 @@ class Cause < ActiveRecord::Base
       return !user.nil?
     end
   end
+
+
+
+  class NewsRules
+    def self.can_add?(user,cause_id)
+     return !user.nil? && (user.is_charity_user) && user.id == Cause.find(cause_id).charity_id
+    end
+
+    def self.can_delete?(user,cause)
+      return !user.nil? && (user.is_admin_user || cause.charity == user )
+    end
+  end
+
   # Default scope excludes deleted causes
   default_scope where('causes.status != ?', :deleted)
   has_one :gallery
@@ -33,6 +46,7 @@ class Cause < ActiveRecord::Base
   belongs_to :country
   belongs_to :charity
 
+  has_many :news, :as => :newsable
   has_many :votes, :dependent => :destroy
 
   after_save :ensure_cause_account
@@ -156,8 +170,8 @@ class Cause < ActiveRecord::Base
 
     unless (from.nil? || to.nil?)
       result = result.where("(votes.id IS NULL) OR (votes.created_at BETWEEN ? AND ?)", from, to)
-    end    
-    
+    end
+
     cause_columns = column_names.map{|c| "#{Cause.table_name}.#{c}"}
     result = result.where(:cause_category_id => category.id, :status => :active)
     result = result.group(cause_columns)
@@ -165,7 +179,7 @@ class Cause < ActiveRecord::Base
     result = result.select(cause_columns + ["count(votes.id) votes_in_period"])
     result.limit(1).first
   end
-  
+
   def self.most_voted_causes(from=nil, to=nil)
     most_voted_causes = []
 
@@ -176,7 +190,7 @@ class Cause < ActiveRecord::Base
 
     most_voted_causes
   end
-  
+
   def self.ensure_raising_funds
     CauseCategory.all.each do |cat|
       if cat.causes.where(:status => :raising_funds).count == 0
@@ -203,6 +217,6 @@ class Cause < ActiveRecord::Base
         self.status = :completed
       end
     end
-  end  
+  end
 end
 

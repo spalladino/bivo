@@ -25,6 +25,17 @@ class Charity < User
     end
   end
 
+  class NewsRules
+    def self.can_add?(user,charity_id)
+      return !user.nil? && user.is_charity_user && user.id == charity_id
+    end
+
+    def self.can_delete?(user,charity)
+      return !user.nil? && (user.is_admin_user || (user.is_charity_user && charity == user))
+    end
+
+  end
+
   UrlFormat = /[a-zA-Z\-_][a-zA-Z0-9\-_]*/
   # Default scope excludes deleted charities
   default_scope where('users.status != ?', :deleted)
@@ -43,7 +54,7 @@ class Charity < User
   has_many :causes, :dependent => :destroy
   has_many :votes, :through => :causes
   has_one :gallery
-
+  has_many :news, :as => :newsable
   attr_protected :funds_raised
 
   validates_presence_of :country_id

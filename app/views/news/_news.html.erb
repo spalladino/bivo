@@ -1,0 +1,37 @@
+<% content_for(:js) do %>
+
+  function showNewsForm(button){
+    $('#news_form').show();
+    $(button).hide();
+    $('#cancel_news_add_button').show();
+
+  }
+
+  function cancelNewsAdd(button){
+
+    $('#add_news_button').show();
+    $('#news_form').hide();
+    $('#news_body').text("");
+    $(button).hide();
+  }
+
+<% end %>
+
+<%=add_news_button newsable%>
+
+<% form_for [newsable, News.new],:html=>{:class => 'nodisplay', :id => 'news_form'} do |f| %>
+  <p>
+    <%= f.label :body %><br />
+    <%= f.text_area :body %>
+  </p>
+  <p><%= f.submit "Submit" %></p>
+  <%= cancel_news_add_button%>
+<% end %>
+
+
+<div id="news">
+<% for news in all_news %>
+  <%=render :partial=>'news/news_row',:locals => {:news => news, :newsable => newsable}%>
+<% end %>
+</div>
+

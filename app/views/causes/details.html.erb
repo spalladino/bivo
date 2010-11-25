@@ -50,3 +50,5 @@
   <%= comments @cause %>
 </div>
 
+<%= render :partial => 'news/news', :locals => { :newsable => @cause, :all_news => @cause.news }%>
+

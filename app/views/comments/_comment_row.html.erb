@@ -8,7 +8,7 @@
     <span id="comment_body_<%=comment.id%>">
       <%=raw nl2br(comment.body)%>
     </span>
-    <%= render('comments/edit_form', :comment => comment, :entity =>entity)%>
+    <%= render(:partial => 'comments/edit_form', :locals => {:comment => comment, :entity =>entity})%>
     <br/>
       <%=reply_comment_button comment.id, entity%>
       <%=edit_comment_button comment.id, entity, comment.body%>
@@ -17,7 +17,7 @@
  </div>
   <% children(comment).each do |c| %>
     <ul>
-    <%= render('comments/comment_row', :comment => c, :entity => entity)%>
+    <%= render(:partial => 'comments/comment_row', :locals => {:comment => c, :entity => entity})%>
     </ul>
   <% end %>
    <ul><div class="add_form_container"> </div></ul>

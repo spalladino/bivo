@@ -2,6 +2,9 @@ Bivo::Application.routes.draw do
   devise_for :users, :controllers => {:registrations => 'registrations' }
   match '/auth/facebook/callback' => 'facebook_authentications#create'
 
+  #news
+  post "news/:id/destroy", :to => "news#destroy"
+
   #gallery
   get "gallery/:id/video_preview", :to => "galleries#video_preview"
   get "gallery/:entity_type/:entity_id/edit_view", :to => "galleries#edit_view", :as=>"edit_gallery"
@@ -10,6 +13,7 @@ Bivo::Application.routes.draw do
   post "gallery/:id/add_photo", :to => "galleries#add_photo"
   post "gallery/:id/destroy_gallery_item", :to => "galleries#destroy_gallery_item"
   post "gallery/add_video", :to => "galleries#add_video"
+
   #comments
   post "comments/:id/destroy", :to => "comments#destroy"
   get "comments/:id/edit", :to => "comments#edit"
@@ -63,6 +67,7 @@ Bivo::Application.routes.draw do
       post :follow
       post :unfollow
     end
+    resources :news
   end
 
   get "shop/search/", :controller => "shops", :action => "search"
@@ -91,7 +96,11 @@ Bivo::Application.routes.draw do
       post :follow
       post :unfollow
     end
+
+    resources :news
   end
+
+
 
   get "cause/:url", :controller => "causes", :action => "details", :as => "cause_details", :constraints => { :url => Cause::UrlFormat }
 

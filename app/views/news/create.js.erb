@@ -1,0 +1,3 @@
+$("#news").append("<%= escape_javascript(render :partial=>'news/news_row',:locals => {:news => @news, :newsable => @newsable)%>");
+<%= render(:partial => 'shared/notifications.js') %>
+

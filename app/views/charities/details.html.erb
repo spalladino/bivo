@@ -72,3 +72,5 @@
   <%= comments @charity %>
 </div>
 
+<%= render :partial => 'news/news', :locals => { :newsable => @charity, :all_news => @charity.news } %>
+

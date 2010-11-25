@@ -3,7 +3,7 @@
   <%if @charity.has_own_comments_to_approve?%>
   <%=@charity.name%> <br/>
     <% comments_to_approve(@charity).each do |comm|%>
-      <%= render('comment', :comment => comm, :entity => @charity)%>
+      <%= render(:partial => 'comment', :locals => {:comment => comm, :entity => @charity})%>
     <%end%>
   <%end%>
 
@@ -12,7 +12,7 @@
     <%if cause.has_own_comments_to_approve?%>
       <%=cause.name%> <br/>
       <% comments_to_approve(cause).each do |comm|%>
-        <%= render('comment', :comment => comm, :entity => cause)%>
+        <%= render(:partial => 'comment', :locals => {:comment => comm, :entity => cause})%>
       <%end%>
     <%end%>
   <%end%>
