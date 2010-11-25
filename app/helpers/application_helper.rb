@@ -104,5 +104,9 @@ module ApplicationHelper
   def br2nl(s)
      s.gsub('<br>',/\n/)
   end
+  
+  def link_to_charity(charity)
+    link_to charity.charity_name, :controller => "charities", :action => "details", :url => charity.short_url
+  end
 end
 

@@ -166,10 +166,16 @@ class Cause < ActiveRecord::Base
 
   #tomar en cuenta la fecha de la creacion de los votos para el count, y no usar votes_count.
   def self.most_voted_cause(category, from=nil, to=nil)
-    result = joins("LEFT JOIN votes on votes.cause_id = causes.id")
-
-    unless (from.nil? || to.nil?)
+    if (from.nil? || to.nil?)
+      result = where(:cause_category_id => category.id, :status => :active)
+      result = result.order("votes_count DESC, created_at ASC")
+    else
+      cause_columns = column_names.map{|c| "#{Cause.table_name}.#{c}"}
+      result = select(cause_columns + ["count(votes.id) votes_in_period"])
+      result = result.joins("LEFT JOIN votes on votes.cause_id = causes.id")
+      result = result.where(:cause_category_id => category.id, :status => :active)
       result = result.where("(votes.id IS NULL) OR (votes.created_at BETWEEN ? AND ?)", from, to)
+
     end
 
     cause_columns = column_names.map{|c| "#{Cause.table_name}.#{c}"}
@@ -177,6 +183,12 @@ class Cause < ActiveRecord::Base
     result = result.group(cause_columns)
     result = result.order("votes_in_period DESC, created_at ASC")
     result = result.select(cause_columns + ["count(votes.id) votes_in_period"])
+
+      result = result.group(cause_columns)
+      result = result.order("votes_in_period DESC, created_at ASC")
+    end
+
+
     result.limit(1).first
   end
 
