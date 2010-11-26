@@ -198,7 +198,7 @@ class Cause < ActiveRecord::Base
 
   def self.causes_being_funded(from, to)
     cause_columns = column_names.map{|c| "#{Cause.table_name}.#{c}"}
-    result = Cause.select(cause_columns + ["SUM(account_movements.amount) funds_raised_in_period"])
+    result = Cause.select(cause_columns + ["SUM(account_movements.amount) AS funds_raised_in_period"])
     result = result.joins("INNER JOIN accounts ON accounts.cause_id = causes.id")
     result = result.joins("INNER JOIN account_movements ON account_movements.account_id = accounts.id")
     result = result.where("account_movements.created_at BETWEEN ? AND ?", from, to)
