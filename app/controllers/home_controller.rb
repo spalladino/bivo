@@ -10,7 +10,7 @@ class HomeController < ApplicationController
   end
 
   def eula
-    
+
   end
 
   def accept_eula
@@ -30,15 +30,15 @@ class HomeController < ApplicationController
 
   def dashboard
     @periods = [["this month","this_month"],
-                ["last month","last_month"], 
+                ["last month","last_month"],
                 ["this year", "this_year"],
                 ["last year", "last_year"],
                 ["this quarter", "this_quarter"],
                 ["last quarter", "last_quarter"],
                 ["custom", "custom"]]
-    
+
     @period = params["period"] || "this_month"
-    
+
     if (@period.to_sym == :custom)
         @from = Date.civil(
           params[:custom_from][:year].to_i,
@@ -60,6 +60,7 @@ class HomeController < ApplicationController
     @transactions = Income.transactions_count(@from, @to)
     @causes_being_funded = Cause.causes_being_funded(@from, @to)
     @most_voted_causes = Cause.most_voted_causes(@from, @to)
+    @shops_to_cloud = Shop.all
   end
 
   def change_language
@@ -74,19 +75,20 @@ class HomeController < ApplicationController
 
     redirect_to root_path
   end
-  
+
   def how_it_works
   end
-  
+
   def jobs
   end
-  
+
   def social_initiatives
   end
-  
+
   def fund_raisers
   end
-  
+
   def about
   end
 end
+
