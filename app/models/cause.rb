@@ -27,15 +27,13 @@ class Cause < ActiveRecord::Base
     end
   end
 
-
-
   class NewsRules
     def self.can_add?(user,cause_id)
      return !user.nil? && (user.is_charity_user) && user.id == Cause.find(cause_id).charity_id
     end
 
     def self.can_delete?(user,cause,news)
-      return !user.nil? && (user.is_admin_user || (cause.charity == user && cause.charity.id == news.newsable_id))
+      return !user.nil? && (user.is_admin_user || (cause.charity == user && cause.id == news.newsable_id))
     end
   end
 
@@ -111,6 +109,10 @@ class Cause < ActiveRecord::Base
       else
         false
     end
+  end
+
+  def is_charity_user
+    return false
   end
 
   def inactive_if_charity_is_inactive

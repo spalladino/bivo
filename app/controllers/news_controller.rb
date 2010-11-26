@@ -5,10 +5,10 @@ class NewsController < ApplicationController
   before_filter :delete_allowed, :only => [:destroy]
 
   def create
+
     @news = @newsable.news.build(params[:news])
     if @news.save
       flash[:notice] = _("Successfully created news.")
-      redirect_to request.referer
     else
       flash[:notice] = _("Error creating news.")
       redirect_to request.referer
