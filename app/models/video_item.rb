@@ -33,6 +33,9 @@ class VideoItem < GalleryItem
     end
   end
 
-
+  def thumbnail_url
+    "http://img.youtube.com/vi/#{self.video_id}/default.jpg"
+  end
+  
 end
 
