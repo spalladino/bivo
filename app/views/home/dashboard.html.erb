@@ -19,7 +19,7 @@
   <%= form_tag(dashboard_path, :method => "get") do %>
     <%= _('Period') %>
     <%= select_tag :period, options_for_select(@periods, @period) %>
-    
+
     <div id="custom_period">
       <br />
       <%= _('From') %>
@@ -45,11 +45,15 @@
 </div>
 
 <div id="fully_founded_causes">
- 
+
 </div>
 
-<div id="fundraising_sources">
 
+<div id="fundraising_sources">
+  <h2><%= _("Fundraising Sources") %></h2>
+  <% @shops_to_cloud.each do |shop| %>
+    <%= shop.name %>: <%= shop.incomes_in_period @from,@to%> <br />
+  <% end %>
 </div>
 
 <div id="causes_being_funded">
@@ -59,7 +63,7 @@
 
 	<% @causes_being_funded.each do |cause| %>
 	  <%= cause.cause_category.name %>: <%= cause.name %>
-	  (<%= cause.funds_raised %> of <%= cause.funds_needed %>, <%= cause.funds_raised_in_period %> <%= _("in this period") %>) 
+	  (<%= cause.funds_raised %> of <%= cause.funds_needed %>, <%= cause.funds_raised_in_period %> <%= _("in this period") %>)
 	<% end %>
 </div>
 
@@ -72,3 +76,4 @@
     <%= cause.cause_category.name %>: <%= cause.name %> <br />
   <% end %>
 </div>
+

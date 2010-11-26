@@ -80,6 +80,9 @@ class Shop < ActiveRecord::Base
   validates_length_of :comission_details, :maximum => 255
 
   #TODO: Validate widget fields
+  def incomes_in_period(from, to)
+    return Income.where('shop_id = ? and transaction_date BETWEEN ? AND ?',self.id,from,to).sum('amount')
+  end
 
   protected
 
