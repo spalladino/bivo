@@ -1,0 +1,8 @@
+$("#news").prepend("<%= escape_javascript(render :partial=>'news/news_row',:locals => {:news => @news, :newsable => @newsable})%>");
+$('#add_news_button').show();
+$('#news_form').hide();
+$('#news_body').val("");
+$('#cancel_news_add_button').hide();
+
+<%= render(:partial => 'shared/notifications.js') %>
+

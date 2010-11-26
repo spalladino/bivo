@@ -26,6 +26,17 @@ class Cause < ActiveRecord::Base
       return !user.nil?
     end
   end
+
+  class NewsRules
+    def self.can_add?(user,cause_id)
+     return !user.nil? && (user.is_charity_user) && user.id == Cause.find(cause_id).charity_id
+    end
+
+    def self.can_delete?(user,cause,news)
+      return !user.nil? && (user.is_admin_user || (cause.charity == user && cause.id == news.newsable_id))
+    end
+  end
+
   # Default scope excludes deleted causes
   default_scope where('causes.status != ?', :deleted)
   has_one :gallery
@@ -33,6 +44,7 @@ class Cause < ActiveRecord::Base
   belongs_to :country
   belongs_to :charity
 
+  has_many :news, :as => :newsable
   has_many :votes, :dependent => :destroy
 
   after_save :ensure_cause_account
@@ -99,6 +111,10 @@ class Cause < ActiveRecord::Base
     end
   end
 
+  def is_charity_user
+    return false
+  end
+
   def inactive_if_charity_is_inactive
     errors.add(:status, "must be inactive when charity is inactive") if
       !self.charity.nil? and self.charity.status == :inactive and self.status != :inactive
@@ -150,7 +166,6 @@ class Cause < ActiveRecord::Base
     end
   end
 
-  #tomar en cuenta la fecha de la creacion de los votos para el count, y no usar votes_count.
   def self.most_voted_cause(category, from=nil, to=nil)
     if (from.nil? || to.nil?)
       result = where(:cause_category_id => category.id, :status => :active)
@@ -158,16 +173,17 @@ class Cause < ActiveRecord::Base
     else
       cause_columns = column_names.map{|c| "#{Cause.table_name}.#{c}"}
       result = select(cause_columns + ["count(votes.id) votes_in_period"])
-      result = result.joins("LEFT JOIN votes on votes.cause_id = causes.id")
+      result = result.joins("LEFT JOIN votes ON votes.cause_id = causes.id")
       result = result.where(:cause_category_id => category.id, :status => :active)
       result = result.where("(votes.id IS NULL) OR (votes.created_at BETWEEN ? AND ?)", from, to)
-      result = result.group(cause_columns)
       result = result.order("votes_in_period DESC, created_at ASC")
+      result = result.group(cause_columns)
     end
+
 
     result.limit(1).first
   end
-  
+
   def self.most_voted_causes(from=nil, to=nil)
     most_voted_causes = []
 
@@ -178,7 +194,20 @@ class Cause < ActiveRecord::Base
 
     most_voted_causes
   end
-  
+
+
+  def self.causes_being_funded(from, to)
+    cause_columns = column_names.map{|c| "#{Cause.table_name}.#{c}"}
+    result = Cause.select(cause_columns + ["SUM(account_movements.amount) funds_raised_in_period"])
+    result = result.joins("INNER JOIN accounts ON accounts.cause_id = causes.id")
+    result = result.joins("INNER JOIN account_movements ON account_movements.account_id = accounts.id")
+    result = result.where("account_movements.created_at BETWEEN ? AND ?", from, to)
+    result = result.order("cause_category_id ASC, funds_raised_in_period DESC")
+    result = result.group(cause_columns)
+    result.all
+  end
+
+
   def self.ensure_raising_funds
     CauseCategory.all.each do |cat|
       if cat.causes.where(:status => :raising_funds).count == 0
@@ -205,6 +234,6 @@ class Cause < ActiveRecord::Base
         self.status = :completed
       end
     end
-  end  
+  end
 end
 

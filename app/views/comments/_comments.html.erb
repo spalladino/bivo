@@ -1,4 +1,3 @@
-<%= render(:partial => 'shared/notifications.js') %>
 <% content_for(:js) do %>
 
   function showComments(button, id){
@@ -68,7 +67,7 @@
 <div id="comments">
     <div id="comments_list">
         <% comments_roots_by_date(entity).each do |comm|%>
-        <%= render('comments/comment_row', :comment => comm, :entity => entity)%>
+        <%= render(:partial => 'comments/comment_row', :locals => { :comment => comm, :entity => entity})%>
         <%end%>
     </div>
 
@@ -76,7 +75,7 @@
     <%=add_comment_button entity%>
 
     <div class="add_form_container">
-      <%= render('comments/add_form', :entity => entity, :action => action)%>
+      <%= render(:partial => 'comments/add_form', :locals => {:entity => entity, :action => action})%>
     </div>
   </div>
 </div>
