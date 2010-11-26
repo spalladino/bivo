@@ -7,9 +7,24 @@ module NewsHelper
   end
 
   def delete_news_button(id,newsable)
-    if news_rules(newsable).can_delete?(current_user,newsable)
-      return button_to(_("Delete"),{:action => "destroy",:controller => "news", :id => id, :newsable_id => newsable.id, :class => newsable.class.name}, :remote => true, :method => "post")
+    if news_rules(newsable).can_delete?(current_user,newsable,News.find(id))
+      if newsable.is_charity_user
+        return button_to(_("Delete"),{
+            :action => "destroy",
+            :controller => "news",
+            :id => id,
+            :user_id => newsable.id
+          }, :remote => true, :method => "post")
+      else
+        return button_to(_("Delete"),{
+            :action => "destroy",
+            :controller => "news",
+            :id => id,
+            :cause_id => newsable.id
+          }, :remote => true, :method => "post")
+      end
     end
+
   end
 
   def news_rules(newsable)

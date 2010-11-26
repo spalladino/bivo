@@ -1,5 +1,5 @@
 class NewsController < ApplicationController
-  before_filter :load_newsable
+  before_filter :load_newsable, :only => [:create,:destroy]
   before_filter :create_allowed, :only => [:create]
   before_filter :load_news, :only => [:destroy]
   before_filter :delete_allowed, :only => [:destroy]
@@ -7,20 +7,17 @@ class NewsController < ApplicationController
   def create
     @news = @newsable.news.build(params[:news])
     if @news.save
-      flash[:notice] = "Successfully created news."
+      flash[:notice] = _("Successfully created news.")
       redirect_to request.referer
     else
-      flash[:notice] = "Error creating news."
+      flash[:notice] = _("Error creating news.")
       redirect_to request.referer
     end
   end
 
   def destroy
-    newsable_type = params[:newsable_type]
-    newsable_type = "User" if newsable_type == "Charity"
-
-    @news = News.find_by_newsable_type_and_newsable_id(newsable_type,params[:newsable_id])
     @news.destroy
+    flash[:notice] = _("Successfully destroyed news.")
   end
 
   private
@@ -43,7 +40,7 @@ class NewsController < ApplicationController
  end
 
   def delete_allowed
-    if !rules(@newsable).can_delete?(current_user,@news,@newsable)
+    if !rules(@newsable).can_delete?(current_user,@newsable,@news)
       ajax_flash[:notice] = _("You can not delete this news")
       render :nothing => true, :status => :forbidden
     end
@@ -58,7 +55,7 @@ class NewsController < ApplicationController
 
 
   def rules(newsable)
-    eval("#{newsable.class}::NewsRules")
+    eval("#{newsable.class.name}::NewsRules")
   end
 
 end

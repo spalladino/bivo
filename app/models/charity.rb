@@ -30,8 +30,8 @@ class Charity < User
       return !user.nil? && user.is_charity_user && user.id == charity_id
     end
 
-    def self.can_delete?(user,charity)
-      return !user.nil? && (user.is_admin_user || (user.is_charity_user && charity == user))
+    def self.can_delete?(user,charity,news)
+      return !user.nil? && (user.is_admin_user || (charity == user && charity.id == news.newsable_id))
     end
 
   end

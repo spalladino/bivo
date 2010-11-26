@@ -34,8 +34,8 @@ class Cause < ActiveRecord::Base
      return !user.nil? && (user.is_charity_user) && user.id == Cause.find(cause_id).charity_id
     end
 
-    def self.can_delete?(user,cause)
-      return !user.nil? && (user.is_admin_user || cause.charity == user )
+    def self.can_delete?(user,cause,news)
+      return !user.nil? && (user.is_admin_user || (cause.charity == user && cause.charity.id == news.newsable_id))
     end
   end
 

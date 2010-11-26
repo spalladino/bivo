@@ -19,10 +19,10 @@
 
 <%=add_news_button newsable%>
 
-<% form_for [newsable, News.new],:html=>{:class => 'nodisplay', :id => 'news_form'} do |f| %>
+<%= form_for [newsable, News.new],:html=>{:class => 'nodisplay', :id => 'news_form'} do |f| %>
   <p>
     <%= f.label :body %><br />
-    <%= f.text_area :body %>
+    <%= f.text_field :body %>
   </p>
   <p><%= f.submit "Submit" %></p>
   <%= cancel_news_add_button%>
