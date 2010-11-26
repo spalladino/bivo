@@ -1,7 +1,6 @@
 require 'enumerated_attribute'
 
 class Cause < ActiveRecord::Base
-  attr_accessible :funds_raised_in_period
   acts_as_commentable
   UrlFormat = /[a-zA-Z\-_][a-zA-Z0-9\-_]*/
 
@@ -187,7 +186,7 @@ class Cause < ActiveRecord::Base
     result = result.where("account_movements.created_at BETWEEN ? AND ?", from, to)
     result = result.order("cause_category_id ASC, funds_raised_in_period DESC")
     result = result.group(cause_columns)
-    result
+    result.all
   end
   
   def self.ensure_raising_funds

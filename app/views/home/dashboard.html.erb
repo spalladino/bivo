@@ -55,17 +55,20 @@
 <div id="causes_being_funded">
 	<h2><%= _("Causes being funded")%></h2>
 
-	<% @causes_being_funded	.each do |cause| %>
+  <%= _("No causes with votes in the current period") if @causes_being_funded.empty? %>
+
+	<% @causes_being_funded.each do |cause| %>
 	  <%= cause.cause_category.name %>: <%= cause.name %>
-	  (<%= cause.funds_raised %> of <%= cause.funds_needed %>, <%= cause.funds_raised_in_period %> <%= _("in this period") %>) <br />
+	  (<%= cause.funds_raised %> of <%= cause.funds_needed %>, <%= cause.funds_raised_in_period %> <%= _("in this period") %>) 
 	<% end %>
 </div>
 
 <div id="most_voted_causes">
   <h2><%= _("Most voted causes") %></h2>
+
+  <%= _("No causes in the current period") if @most_voted_causes.empty? %>
+
   <% @most_voted_causes.each do |cause| %>
     <%= cause.cause_category.name %>: <%= cause.name %> <br />
   <% end %>
-
-  
 </div>
