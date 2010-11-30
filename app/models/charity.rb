@@ -36,6 +36,8 @@ class Charity < User
 
   end
 
+  attr_protected :status
+
   UrlFormat = /[a-zA-Z\-_][a-zA-Z0-9\-_]*/
   # Default scope excludes deleted charities
   default_scope where('users.status != ?', :deleted)
@@ -88,13 +90,13 @@ class Charity < User
   validates_presence_of :description
   validates_length_of :description, :maximum => 255
 
-  validate :inactive_at_first
+  #validate :inactive_at_first, :on => :create
 
-  def inactive_at_first
-    if self.status != :inactive
-      errors.add(:status, _("the Charity must be inactive") )
-    end
-  end
+  #def inactive_at_first
+  #  if self.status != :inactive
+  #    errors.add(:status, _("the Charity must be inactive") )
+  #  end
+  #end
   enum_attr :status, %w(^inactive active deleted),:nil => false
 
   def self.find_deleted(id)
