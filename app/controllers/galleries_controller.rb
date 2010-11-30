@@ -1,6 +1,8 @@
 class GalleriesController < ApplicationController
+  before_filter :load_entity
+  before_filter :can_edit
   
-  def edit_view
+  def edit
     load_gallery_for_entity
   end
 
@@ -16,10 +18,6 @@ class GalleriesController < ApplicationController
     @old_position = gallery_item.relative_order.to_s
     gallery_item.move_down
     @new_position = gallery_item.relative_order.to_s
-  end
-
-  def video_preview
-    @video = GalleryItem.find(params[:id])
   end
 
   def add_video
@@ -53,9 +51,18 @@ class GalleriesController < ApplicationController
 
 protected
 
+  def load_entity
+    @entity = params[:entity_type].constantize.find(params[:entity_id])
+  end
+  
+  def can_edit
+    if !eval("#{@entity.class}::GalleryRules").can_edit?(current_user, @entity)
+      render :nothing => true, :status => :forbidden
+    end
+  end
+  
   def load_gallery_for_entity
-    entity = params[:entity_type].constantize.find(params[:entity_id])    
-    gallery = Gallery.for_entity entity
+    gallery = Gallery.for_entity @entity
     @gallery_id = gallery.id
     @gallery_items = gallery.items.order('relative_order')    
   end

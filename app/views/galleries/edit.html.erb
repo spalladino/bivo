@@ -16,6 +16,10 @@
   }
 <% end %>
 
+<h1>
+<%= link_to_charity @entity if @entity.class == Charity %>
+<%= link_to_cause @entity if @entity.class == Cause %> 
+| <%=_('Gallery')%></h1>
 
 <%=add_photo_button%>
 <%= form_for :photo_item, :url => 'add_photo',:method => :post,:html => { :multipart => true, :id => 'photo_form',:class => 'nodisplay' } do |f|%>

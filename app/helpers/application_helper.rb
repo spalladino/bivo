@@ -110,6 +110,10 @@ module ApplicationHelper
      s.gsub('<br>',/\n/)
   end
   
+  def link_to_cause(cause)
+    link_to cause.name, cause_details_path(cause.url)
+  end
+  
   def link_to_charity(charity)
     link_to charity.charity_name, url_charity(charity)
   end

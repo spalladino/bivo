@@ -4,9 +4,9 @@
 <% for cause in @causes %>
   <div class="cause">
 
-	<h3><%= link_to cause.name, cause_details_path(cause.url) %></h3>
+	<h3><%= link_to_cause cause %></h3>
 	<p><%= cause.country.name %></p>
-	<p><%= _("Organized by")%>: <%=cause.charity.name%></p>
+	<p><%= _("Organized by")%>: <%= link_to_charity cause.charity %></p>
 	<p><%= link_to _("Funds needed"), cause_details_path(cause.url) %>: <%= cause.funds_needed %></p>
 	<p><%= read_more(raw(cause.description), cause_details_path(cause.url), 20) %></p>
 
