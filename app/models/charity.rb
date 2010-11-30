@@ -33,7 +33,12 @@ class Charity < User
     def self.can_delete?(user,charity,news)
       return !user.nil? && (user.is_admin_user || (charity == user && charity.id == news.newsable_id))
     end
-
+  end
+  
+  class GalleryRules
+    def self.can_edit?(user, entity)
+      return user == entity
+    end
   end
 
   UrlFormat = /[a-zA-Z\-_][a-zA-Z0-9\-_]*/

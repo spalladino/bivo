@@ -36,6 +36,12 @@ class Cause < ActiveRecord::Base
       return !user.nil? && (user.is_admin_user || (cause.charity == user && cause.id == news.newsable_id))
     end
   end
+  
+  class GalleryRules
+    def self.can_edit?(user, entity)
+      return entity.charity == user
+    end
+  end
 
   # Default scope excludes deleted causes
   default_scope where('causes.status != ?', :deleted)

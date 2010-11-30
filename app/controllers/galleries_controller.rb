@@ -1,8 +1,4 @@
 class GalleriesController < ApplicationController
-
-  def view
-    load_gallery_for_entity
-  end
   
   def edit_view
     load_gallery_for_entity
@@ -58,10 +54,8 @@ class GalleriesController < ApplicationController
 protected
 
   def load_gallery_for_entity
-    gallery = Gallery.find_by_entity_id_and_entity_type(params[:entity_id],params[:entity_type])
-    if !gallery
-      gallery = Gallery.create!(:entity_id => params[:entity_id], :entity_type =>params[:entity_type])
-    end
+    entity = params[:entity_type].constantize.find(params[:entity_id])    
+    gallery = Gallery.for_entity entity
     @gallery_id = gallery.id
     @gallery_items = gallery.items.order('relative_order')    
   end

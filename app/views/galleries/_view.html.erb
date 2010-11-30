@@ -3,7 +3,7 @@
 	</div>
 
 	<div class="thumbnails">
-		<%@gallery_items.each_with_index do |item, index|
+		<% gallery.items.each_with_index do |item, index|
 			options = {}		
 			options[:class] = 'current' if index == 0		
 			options['data-kind'] = item.kind
@@ -17,3 +17,5 @@
 		<% end %>
 	</div>
 </div>
+
+<%= edit_gallery_link entity %>

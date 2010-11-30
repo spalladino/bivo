@@ -1,4 +1,7 @@
 
+<h1><%= @charity.charity_name%></h1>
+
+<%= gallery @charity %>
 
 <p> <b><%=_('id')%></b>: <%= @charity.id%> </p>
 <p> <b><%=_('email')%></b>: <%= @charity.email%> </p>
@@ -14,9 +17,6 @@
 <p> <b><%=_('description')%></b>: <%=raw @charity.description%> </p>
 
 
-<div id="vote_button">
-  <%= link_to_gallery @charity %>
-</div>
 
 <div id="follow_charity_button">
   <%= follow_charity_button @charity %>
