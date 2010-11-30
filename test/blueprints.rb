@@ -76,8 +76,7 @@ Charity.blueprint do
   city
   charity_category {CharityCategory.make_or_get(5)}
   eula_accepted    {true}
-  #status           {:inactive}
-  status           {:active}
+  status           {:inactive}
 
 end
 

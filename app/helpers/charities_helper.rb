@@ -14,14 +14,15 @@ module CharitiesHelper
     end
 
     return content_tag :div,
-      button_to(label,
-        { :action => action, :id => charity.id },
+    button_to(label,
+        {
+        :action => action, :id => charity.id },
         :remote => true,
         :disabled => disabled ,
         :onclick => 'disableAndContinue(this,"Submitting...")',
         :id => "follow_charity_btn"
-      )
-
+      ),
+      :id => "follow_charity_button"
   end
 
  # Deletes the current charity. If the charity has a history of raised funds the deletion is logical.

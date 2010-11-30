@@ -14,14 +14,15 @@ module NewsHelper
             :controller => "news",
             :id => id,
             :user_id => newsable.id
-          }, :remote => true, :method => "post")
+          },:onclick => 'disableAndContinue(this,"Deleting...")', :remote => true, :method => "post")
       else
         return button_to(_("Delete"),{
             :action => "destroy",
             :controller => "news",
+
             :id => id,
             :cause_id => newsable.id
-          }, :remote => true, :method => "post")
+          },:onclick => 'disableAndContinue(this,"Deleting...")', :remote => true, :method => "post")
       end
     end
 
