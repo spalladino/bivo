@@ -110,7 +110,7 @@ module ApplicationHelper
   end
   
   def url_charity(charity)
-    { :controller => "charities", :action => "details", :url => current_user.short_url }
+    { :controller => "charities", :action => "details", :url => charity.short_url }
   end
 end
 

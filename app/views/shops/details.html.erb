@@ -27,6 +27,11 @@
 <b><%=_('Comission details')%>:</b>
   <%= @shop.comission_details%>
 </p>
+<div>
+
+  <%= @shop.incomes_in_period(1.month.ago, Date.today)%>
+  <b><%=_('Raised this month')%></b>
+</div>
 <p>
   <%= image_tag @shop.image.url(:small) if @shop.image_file_name %>
 </p>
@@ -46,6 +51,8 @@
 <div id="activate_deactivate_shop_btn">
   <%= active_deactive_shop_button @shop %>
 </div>
+
+
 
 <div id="comments">
   <%= comments @shop %>

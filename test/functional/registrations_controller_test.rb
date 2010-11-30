@@ -27,10 +27,45 @@ class RegistrationsControllerTest < ActionController::TestCase
         :city                  => "Bs As",
         :description           => "Dscription test"
       }
+    charity = Charity.find_by_email("char@bivotest.com")
 
-    assert_not_nil Charity.find_by_email("char@bivotest.com")
+    assert_not_nil charity
+    assert_equal :inactive, charity.status
     assert_response :found
   end
+
+
+
+ test "should create charity inactive disparite status param" do
+    @controller.stubs(:captcha_valid?).returns(true)
+
+    post :create,
+      :user =>
+      {
+        :status                => :active,
+        :type                  => "Charity",
+        :email                 => "char@bivotest.com",
+        :password              => "123456",
+        :password_confirmation => "123456",
+        :eula_accepted         => true,
+        :charity_name          => "test",
+        :charity_website       => "http://www.test.com",
+        :charity_category_id   => CharityCategory.make.id,
+        :short_url             => "abc",
+        :charity_type          => "def",
+        :tax_reg_number        => 123456,
+        :country_id            => Country.make.id,
+        :city                  => "Bs As",
+        :description           => "Dscription test"
+      }
+    charity = Charity.find_by_email("char@bivotest.com")
+
+    assert_not_nil charity
+    assert_equal :inactive, charity.status
+    assert_response :found
+  end
+
+
 
   #CREATE
   test "shouldnt create charity" do

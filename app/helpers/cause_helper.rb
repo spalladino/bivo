@@ -70,7 +70,7 @@ module CauseHelper
         :disabled => disabled ,
         :onclick => 'disableAndContinue(this,"Submitting...")',
         :id => "follow_cause_btn"
-      )
+      ), :id => "follow_cause_button"
 
   end
 
