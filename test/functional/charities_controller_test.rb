@@ -11,10 +11,7 @@ class CharitiesControllerTest < ActionController::TestCase
     assert_charities_unsorted Charity.all
   end
 
-  test "shouldnt create charity with active status" do
-    Charity.make :status => :active
-    assert_equal 0,Charity.count
-  end
+
 
   test "should get charities list with categories" do
     categories = CharityCategory.make_many 3

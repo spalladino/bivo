@@ -131,7 +131,6 @@ class CharitiesController < ApplicationController
     else
       ajax_flash[:notice] = _("Error, try again")
     end
-
     redirect_to request.referer unless request.xhr?
   end
 
