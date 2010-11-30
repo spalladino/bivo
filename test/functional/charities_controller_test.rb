@@ -11,7 +11,36 @@ class CharitiesControllerTest < ActionController::TestCase
     assert_charities_unsorted Charity.all
   end
 
+  test "shouldnt get inactive charities on the list" do
+    Charity.make_many 5
+    Charity.make :status => :inactive
 
+    get :index
+
+    assert_charities_unsorted Charity.where('users.status != ?', :inactive)
+  end
+
+  test "shoulnt get inactive charities on the list beeing admin" do
+    user = create_admin_and_sign_in
+    Charity.make_many 5
+    Charity.make :status => :inactive
+
+    get :index
+
+    assert_charities_unsorted Charity.where('users.status != ?', :inactive)
+  end
+
+
+  test "shoulnt get inactive charities on the list beeing the inactive charity" do
+    Charity.make_many 5
+    user = create_charity_and_sign_in
+    user.status = :inactive
+    user.save!
+
+    get :index
+
+    assert_charities_unsorted Charity.where('users.status != ?', :inactive)
+  end
 
   test "should get charities list with categories" do
     categories = CharityCategory.make_many 3
@@ -125,7 +154,7 @@ class CharitiesControllerTest < ActionController::TestCase
 
   #DETAILS
   test "should get details" do
-    charity = Charity.make :short_url => "foobar"
+    charity = Charity.make :short_url => "foobar",:status => :active
 
     get :details, :url => "foobar"
 
@@ -133,6 +162,44 @@ class CharitiesControllerTest < ActionController::TestCase
     assert_equal assigns(:charity), charity
     assert_response :success
   end
+
+  test "shouldnt get details if inactive and not admin or charity" do
+    charity = Charity.make :short_url => "foobar",:status => :inactive
+
+    get :details, :url => "foobar"
+
+    assert_not_nil assigns(:charity)
+    assert_equal assigns(:charity), charity
+    assert_response :forbidden
+  end
+
+
+  test "should get details if inactive and admin logged" do
+    user = create_admin_and_sign_in
+    charity = Charity.make :short_url => "foobar",:status => :inactive
+
+    get :details, :url => "foobar"
+
+    assert_not_nil assigns(:charity)
+    assert_equal assigns(:charity), charity
+    assert_response :success
+  end
+
+  test "should get details if inactive and inactive charity is logged" do
+
+    charity = create_charity_and_sign_in
+    charity.short_url = "foobar"
+    charity.status = :inactive
+    charity.save!
+
+    get :details, :url => "foobar"
+
+    assert_not_nil assigns(:charity)
+    assert_equal assigns(:charity), charity
+    assert_response :success
+  end
+
+
 
   #NEW
   test "should go to new charity" do

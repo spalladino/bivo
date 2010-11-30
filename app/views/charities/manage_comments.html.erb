@@ -1,7 +1,7 @@
 <div id="comments_list">
 
   <%if @charity.has_own_comments_to_approve?%>
-  <%=@charity.name%> <br/>
+  <h3><%=@charity.name%></h3>
     <% comments_to_approve(@charity).each do |comm|%>
       <%= render(:partial => 'comment', :locals => {:comment => comm, :entity => @charity})%>
     <%end%>
@@ -10,7 +10,7 @@
 
   <% @charity.causes.each do |cause| %>
     <%if cause.has_own_comments_to_approve?%>
-      <%=cause.name%> <br/>
+      <h3> <%=cause.name%></h3>
       <% comments_to_approve(cause).each do |comm|%>
         <%= render(:partial => 'comment', :locals => {:comment => comm, :entity => cause})%>
       <%end%>
