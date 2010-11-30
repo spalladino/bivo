@@ -390,9 +390,9 @@ class CausesControllerTest < ActionController::TestCase
   test "shouldnt change to raising funds if there is one in that state of the same category" do
     user = create_charity_and_sign_in
     cause_category = CauseCategory.make
-    raising_funds_cause = Cause.make :charity_id => user.id, :status => :raising_funds, 
+    raising_funds_cause = Cause.make :charity_id => user.id, :status => :raising_funds,
       :cause_category_id => cause_category.id
-    active_cause = Cause.make :charity_id => user.id, :status => :active, 
+    active_cause = Cause.make :charity_id => user.id, :status => :active,
       :cause_category_id => cause_category.id
 
     post :update,
@@ -420,7 +420,7 @@ class CausesControllerTest < ActionController::TestCase
   test "should change to raising funds if there isnt any in that state of the same category" do
     user = create_charity_and_sign_in
     cause_category = CauseCategory.make
-    active_cause = Cause.make :charity_id => user.id, :status => :active, 
+    active_cause = Cause.make :charity_id => user.id, :status => :active,
       :cause_category_id => cause_category.id
 
     post :update,
