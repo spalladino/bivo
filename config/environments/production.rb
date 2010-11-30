@@ -49,5 +49,9 @@ Bivo::Application.configure do
 
   config.gem 'texticle'
 
+  Paperclip::Attachment.default_options.merge! :storage => :s3,
+        :s3_credentials => "#{::Rails.root}/config/amazon_s3.yml",
+        :path => ":class/:id/image/:style/:filename"
+
 end
 

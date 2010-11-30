@@ -172,7 +172,7 @@ class Cause < ActiveRecord::Base
       result = result.order("votes_count DESC, created_at ASC")
     else
       cause_columns = column_names.map{|c| "#{Cause.table_name}.#{c}"}
-      result = select(cause_columns + ["count(votes.id) votes_in_period"])
+      result = select(cause_columns + ["count(votes.id) AS votes_in_period"])
       result = result.joins("LEFT JOIN votes ON votes.cause_id = causes.id")
       result = result.where(:cause_category_id => category.id, :status => :active)
       result = result.where("(votes.id IS NULL) OR (votes.created_at BETWEEN ? AND ?)", from, to)
@@ -198,7 +198,7 @@ class Cause < ActiveRecord::Base
 
   def self.causes_being_funded(from, to)
     cause_columns = column_names.map{|c| "#{Cause.table_name}.#{c}"}
-    result = Cause.select(cause_columns + ["SUM(account_movements.amount) funds_raised_in_period"])
+    result = Cause.select(cause_columns + ["SUM(account_movements.amount) AS funds_raised_in_period"])
     result = result.joins("INNER JOIN accounts ON accounts.cause_id = causes.id")
     result = result.joins("INNER JOIN account_movements ON account_movements.account_id = accounts.id")
     result = result.where("account_movements.created_at BETWEEN ? AND ?", from, to)

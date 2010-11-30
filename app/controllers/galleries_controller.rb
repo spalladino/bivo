@@ -1,12 +1,11 @@
 class GalleriesController < ApplicationController
 
+  def view
+    load_gallery_for_entity
+  end
+  
   def edit_view
-    gallery = Gallery.find_by_entity_id_and_entity_type(params[:entity_id],params[:entity_type])
-    if !gallery
-      gallery = Gallery.create!(:entity_id => params[:entity_id], :entity_type =>params[:entity_type])
-    end
-    @gallery_id = gallery.id
-    @gallery_items = gallery.items.order('relative_order')
+    load_gallery_for_entity
   end
 
   def move_up
@@ -56,6 +55,16 @@ class GalleriesController < ApplicationController
     item.destroy
   end
 
+protected
+
+  def load_gallery_for_entity
+    gallery = Gallery.find_by_entity_id_and_entity_type(params[:entity_id],params[:entity_type])
+    if !gallery
+      gallery = Gallery.create!(:entity_id => params[:entity_id], :entity_type =>params[:entity_type])
+    end
+    @gallery_id = gallery.id
+    @gallery_items = gallery.items.order('relative_order')    
+  end
 
 end
 

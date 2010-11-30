@@ -1,10 +1,8 @@
 class PersonalUser < User
   attr_accessible :picture, :delete_picture
   #TODO define avatar size, and default image
-  has_attached_file :picture,
-        :storage => :s3, 
-        :s3_credentials => "#{::Rails.root}/config/amazon_s3.yml",
-        :path => ":class/:id/picture/:style/:filename"
+  has_attached_file :picture
+  
   before_validation :clear_picture
 
   validates_presence_of :first_name

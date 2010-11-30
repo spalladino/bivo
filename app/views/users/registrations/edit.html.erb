@@ -27,6 +27,11 @@
     <p><%= f.label _("Description") %><br />
     <%= f.text_area :description %></p>
 
+	<p>
+		<%= f.label _("Landing page") %><br />
+		<%= link_to(url_for(url_charity(current_user).merge({ :only_path => false })), url_charity(current_user)) %>
+	</p>
+	
   <% elsif (@type == :personal) %>
     <%= render :partial => 'users/registrations/new_personal', :locals => {:f => f} %>
 

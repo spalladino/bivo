@@ -106,7 +106,11 @@ module ApplicationHelper
   end
   
   def link_to_charity(charity)
-    link_to charity.charity_name, :controller => "charities", :action => "details", :url => charity.short_url
+    link_to charity.charity_name, url_charity(charity)
+  end
+  
+  def url_charity(charity)
+    { :controller => "charities", :action => "details", :url => charity.short_url }
   end
 end
 

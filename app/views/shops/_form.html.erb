@@ -1,7 +1,6 @@
 <% content_for :js do %>
 $(function(){
 	$('a.iframe').fancybox({
-		showCloseButton: false,
 		onClosed: function(){
 			// save current selection
 			var current_selection = $('#select_categories_container :checked').map(function(){return this.value;});
