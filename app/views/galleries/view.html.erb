@@ -68,18 +68,17 @@ function showVimeoThumbnail(data){
 	</div>
 
 	<div class="thumbnails">
-	<%@gallery_items.each_with_index do |item, index|
-		options = {}		
-		options[:class] = 'current' if index == 0		
-		if item.is_video?
+		<%@gallery_items.each_with_index do |item, index|
+			options = {}		
+			options[:class] = 'current' if index == 0		
 			options['data-kind'] = item.kind
-			options['data-video_id'] = item.video_id
-		elsif item.is_photo?
-			options['data-kind'] = 'photo'
-			options['data-url'] = item.image.url(:normal)
-		end
-	%>
-		<%= image_tag item.thumbnail_url, options %>
-	<% end %>
+			if item.is_video?
+				options['data-video_id'] = item.video_id
+			elsif item.is_photo?
+				options['data-url'] = item.image.url(:normal)
+			end
+		%>
+			<%= image_tag item.thumbnail_url, options %>
+		<% end %>
 	</div>
 </div>
