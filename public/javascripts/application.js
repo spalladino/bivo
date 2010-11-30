@@ -7,3 +7,64 @@ function disableAndContinue(element, text) {
     },0);
 }
 
+// gallery related scripts
+
+$(function(){
+	$('.gallery .thumbnails img').click(function(){
+		var _this = $(this);
+		var gallery = _this.closest('.gallery');
+		var view = $('.view', gallery);
+		var kind = _this.attr('data-kind');
+		
+		// mark thumbnail as current
+		$('.current', gallery).removeClass('current');
+		_this.addClass('current');
+		
+		// render full size content in ".gallery .view"
+		// show/hide didn't work, so add/remove is used
+		var content;
+		if (kind == 'photo') {
+			content = $('<img>').attr('src', _this.attr('data-url'));
+		} else if (kind == 'youtube') {
+			content = $('<iframe>')
+				.attr('src', 'http://www.youtube.com/embed/' + _this.attr('data-video_id') + '?rel=0')
+				.attr('type', 'text/html')
+				.attr('width', '425')
+				.attr('height', '349')
+				.attr('frameborder', '0');				
+		} else if (kind == 'vimeo') {
+			content = $('<iframe>')
+				.attr('src', 'http://player.vimeo.com/video/' + _this.attr('data-video_id') + '?title=0&amp;byline=0&amp;portrait=0&amp;autoplay=1')
+				.attr('type', 'text/html')
+				.attr('width', '425')
+				.attr('height', '239')
+				.attr('frameborder', '0');				
+		}
+		
+		view.html(content);
+		$(content).css('margin-top', (view.height() - content.height()) / 2);
+	});
+
+	// load first item
+	$('.gallery .thumbnails img:first').click();
+	
+	// load vimeo thumbnails
+	$('.gallery .thumbnails img').each(function(){
+		// load thumbnails
+		var img = $(this);
+		if (img.attr('data-kind') == 'vimeo') {
+			var url = "http://vimeo.com/api/v2/video/" + img.attr('data-video_id') + ".json?callback=showVimeoThumbnail";
+			var script = $('<script src="' + url + '">');
+			img.before(script);
+		}
+	});
+});
+
+// load vimeo thumbnails callback
+// HACK: assume just one gallery is loaded
+function showVimeoThumbnail(data){
+	img = $('.gallery .thumbnails img[data-video_id=' + data[0].id + ']');
+    $(img).attr('src',data[0].thumbnail_small);
+}
+
+
