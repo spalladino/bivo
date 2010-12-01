@@ -111,7 +111,11 @@ module ApplicationHelper
   end
   
   def link_to_cause(cause)
-    link_to cause.name, cause_details_path(cause.url)
+    link_to cause.name, url_cause(cause)
+  end
+
+  def url_cause(cause)
+    { :controller => "causes", :action => "details", :url => cause.url }
   end
   
   def link_to_charity(charity)
