@@ -3,9 +3,9 @@ class Charity < User
 
   class CommentRules
 
-    def self.before_add(comment)
+    def self.before_add(comment,user)
         entity = Charity.find(comment.commentable_id)
-        comment.approved = entity.auto_approve_comments
+        comment.approved = entity.auto_approve_comments  || user == entity
     end
 
     def self.can_approve?(user,entity,comment)
@@ -33,14 +33,22 @@ class Charity < User
     def self.can_delete?(user,charity,news)
       return !user.nil? && (user.is_admin_user || (charity == user && charity.id == news.newsable_id))
     end
-
   end
+
+  class GalleryRules
+    def self.can_edit?(user, entity)
+      return user == entity
+    end
+  end
+
+  attr_protected :status
 
   UrlFormat = /[a-zA-Z\-_][a-zA-Z0-9\-_]*/
   # Default scope excludes deleted charities
   default_scope where('users.status != ?', :deleted)
 
-  scope :with_cause_data, proc { joins("LEFT JOIN #{Cause.table_name} ON #{Cause.table_name}.charity_id = #{Charity.table_name}.id")\
+  scope :with_cause_data, proc { where('users.status != ?', :inactive)
+      .joins("LEFT JOIN #{Cause.table_name} ON #{Cause.table_name}.charity_id = #{Charity.table_name}.id")\
       .joins(:country)\
       .group(self.column_names.map{|c| "#{Charity.table_name}.#{c}"})\
       .group("#{Country.table_name}.name")\
@@ -88,7 +96,7 @@ class Charity < User
   validates_presence_of :description
   validates_length_of :description, :maximum => 255
 
-  #validate :inactive_at_first
+  #validate :inactive_at_first, :on => :create
 
   #def inactive_at_first
   #  if self.status != :inactive

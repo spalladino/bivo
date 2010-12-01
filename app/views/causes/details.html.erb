@@ -1,3 +1,6 @@
+
+<%= gallery @cause %>
+
 <p> <b><%=_('Organized by')%>: <%= link_to_charity @cause.charity %>
 <p> <b><%=_('Name')%></b>: <%= @cause.name %> </p>
 <p> <b><%=_('Title')%></b>: <%= @cause.url %> </p>
@@ -6,10 +9,6 @@
 <p> <b><%=_('country')%></b>: <%= Country.find(@cause.country_id).name%> </p>
 <p> <b><%=_('Founds Needed')%></b>: <%= @cause.funds_needed %> </p>
 <div id="funds_raised"> <%= @cause.funds_raised %> </div>
-
-<div id="vote_button">
-  <%= link_to_gallery @cause %>
-</div>
 
 <br/>
 <div id="vote_button">

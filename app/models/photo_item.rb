@@ -14,6 +14,9 @@ class PhotoItem < GalleryItem
   def thumbnail_url
     self.image.url(:thumbnail)
   end
-    
+
+  def kind
+    :photo
+  end
 end
 

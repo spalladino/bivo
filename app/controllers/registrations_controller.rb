@@ -2,7 +2,7 @@ class RegistrationsController < Devise::RegistrationsController
 
   def new
     @countries = Country.all
-    @categories = CharityCategory.all    
+    @categories = CharityCategory.all
 
     super
   end
@@ -11,10 +11,10 @@ class RegistrationsController < Devise::RegistrationsController
     @countries = Country.all
     @categories = CharityCategory.all
 
-    if ((params["user"]["type"] != "PersonalUser") && 
+    if ((params["user"]["type"] != "PersonalUser") &&
         (params["user"]["type"] != "Charity"))
       params["user"]["type"] = "PersonalUser"
-    end  
+    end
 
     build_resource
 
@@ -47,7 +47,7 @@ class RegistrationsController < Devise::RegistrationsController
       @type = :personal
     elsif (resource.type == "Charity")
       @type = :charity
-      @countries = Country.all      
+      @countries = Country.all
     end
     render_with_scope :edit
   end
@@ -69,7 +69,7 @@ class RegistrationsController < Devise::RegistrationsController
 
       if (params["user"])
         if (params["user"]["type"] == "PersonalUser")
-          self.resource = PersonalUser.new(params["user"])   
+          self.resource = PersonalUser.new(params["user"])
         elsif (params["user"]["type"] == "Charity")
           self.resource = Charity.new(params["user"])
         end
@@ -80,3 +80,4 @@ class RegistrationsController < Devise::RegistrationsController
       verify_recaptcha
     end
 end
+

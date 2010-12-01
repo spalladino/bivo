@@ -1,5 +1,4 @@
-$("#follow_cause_btn").replaceWith("<%= escape_javascript(follow_cause_button(@cause)) %>");
-$("#activate_deactivate_cause_btn").html("<%= escape_javascript(active_deactive_cause_button(@cause)) %>");
+$("#follow_cause_button").replaceWith("<%= escape_javascript(follow_cause_button(@cause)) %>");
 
 <%= render(:partial => 'shared/notifications.js') %>
 

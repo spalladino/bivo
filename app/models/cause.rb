@@ -5,9 +5,9 @@ class Cause < ActiveRecord::Base
   UrlFormat = /[a-zA-Z\-_][a-zA-Z0-9\-_]*/
 
   class CommentRules
-    def self.before_add(comment)
+    def self.before_add(comment,user)
         entity = Cause.find(comment.commentable_id)
-        comment.approved = entity.charity.auto_approve_comments
+        comment.approved = entity.charity.auto_approve_comments || user == entity.charity
     end
 
     def self.can_approve?(user,entity,comment)
@@ -34,6 +34,12 @@ class Cause < ActiveRecord::Base
 
     def self.can_delete?(user,cause,news)
       return !user.nil? && (user.is_admin_user || (cause.charity == user && cause.id == news.newsable_id))
+    end
+  end
+
+  class GalleryRules
+    def self.can_edit?(user, entity)
+      return entity.charity == user
     end
   end
 

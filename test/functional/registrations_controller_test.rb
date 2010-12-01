@@ -27,10 +27,45 @@ class RegistrationsControllerTest < ActionController::TestCase
         :city                  => "Bs As",
         :description           => "Dscription test"
       }
+    charity = Charity.find_by_email("char@bivotest.com")
 
-    assert_not_nil Charity.find_by_email("char@bivotest.com")
+    assert_not_nil charity
+    assert_equal :inactive, charity.status
     assert_response :found
   end
+
+
+
+ test "should create charity inactive disparite status param" do
+    @controller.stubs(:captcha_valid?).returns(true)
+
+    post :create,
+      :user =>
+      {
+        :status                => :active,
+        :type                  => "Charity",
+        :email                 => "char@bivotest.com",
+        :password              => "123456",
+        :password_confirmation => "123456",
+        :eula_accepted         => true,
+        :charity_name          => "test",
+        :charity_website       => "http://www.test.com",
+        :charity_category_id   => CharityCategory.make.id,
+        :short_url             => "abc",
+        :charity_type          => "def",
+        :tax_reg_number        => 123456,
+        :country_id            => Country.make.id,
+        :city                  => "Bs As",
+        :description           => "Dscription test"
+      }
+    charity = Charity.find_by_email("char@bivotest.com")
+
+    assert_not_nil charity
+    assert_equal :inactive, charity.status
+    assert_response :found
+  end
+
+
 
   #CREATE
   test "shouldnt create charity" do
@@ -188,5 +223,63 @@ class RegistrationsControllerTest < ActionController::TestCase
     assert_not_equal PersonalUser.find(personal.id).email, "dd@ee.com"
     assert_response :ok
   end
+
+
+  #NEW
+  test "should go to new charity" do
+    assert_equal "TODO NOW","TODO LATER"
+    assert_response :ok
+  end
+
+  #NEW
+  test "shouldnt go to new charity" do
+    assert_equal "TODO NOW","TODO LATER"
+    assert_response :ok
+  end
+
+  #EDIT
+  test "should go to edit charity" do
+    assert_equal "TODO NOW","TODO LATER"
+    assert_response :ok
+  end
+
+  #EDIT
+  test "shouldnt go to edit charity" do
+    assert_equal "TODO NOW","TODO LATER"
+    assert_response :ok
+  end
+
+  #DESTROY
+  test "shouldnt destroy charity" do
+    assert_equal "TODO NOW","TODO LATER"
+    assert_response :ok
+  end
+
+  #DESTROY
+  test "should make logical destroy " do
+    assert_equal "TODO NOW","TODO LATER"
+    assert_response :ok
+  end
+
+  #DESTROY
+  test "should make complete destroy" do
+    assert_equal "TODO NOW","TODO LATER"
+    assert_response :ok
+  end
+
+  #CHECK_URL
+  test "should check url and return ok" do
+    assert_equal "TODO NOW","TODO LATER"
+    assert_response :ok
+  end
+
+  #CHECK_URL
+  test "should reject url" do
+    assert_equal "TODO NOW","TODO LATER"
+    assert_response :ok
+  end
+
+
+
 end
 

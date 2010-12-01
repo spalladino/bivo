@@ -37,9 +37,14 @@ module ApplicationHelper
     end
   end
 
-  def link_to_gallery(entity)
-    return content_tag :div,link_to(_('Edit Gallery'), edit_gallery_path(entity.class.name,entity.id))
-
+  def gallery(entity)
+    render :partial => 'galleries/view', :locals => { :entity => entity, :gallery => Gallery.for_entity(entity) }
+  end
+  
+  def edit_gallery_link(entity)
+    if eval("#{entity.class}::GalleryRules").can_edit?(current_user, entity)
+      link_to _('Edit Gallery'), edit_gallery_path(entity.class.name, entity.id)
+    end
   end
 
   # Appends a category parameter with the specified id to the current query string
@@ -105,12 +110,16 @@ module ApplicationHelper
      s.gsub('<br>',/\n/)
   end
   
+  def link_to_cause(cause)
+    link_to cause.name, cause_details_path(cause.url)
+  end
+  
   def link_to_charity(charity)
     link_to charity.charity_name, url_charity(charity)
   end
   
   def url_charity(charity)
-    { :controller => "charities", :action => "details", :url => current_user.short_url }
+    { :controller => "charities", :action => "details", :url => charity.short_url }
   end
 end
 

@@ -2,7 +2,7 @@ require 'test_helper'
 
 class CharitiesControllerTest < ActionController::TestCase
 
-#LIST
+  #LIST
   test "should get charities list" do
     Charity.make_many 10
 
@@ -11,9 +11,35 @@ class CharitiesControllerTest < ActionController::TestCase
     assert_charities_unsorted Charity.all
   end
 
-  test "shouldnt create charity with active status" do
-    Charity.make :status => :active
-    assert_equal 0,Charity.count
+  test "shouldnt get inactive charities on the list" do
+    Charity.make_many 5
+    Charity.make :status => :inactive
+
+    get :index
+
+    assert_charities_unsorted Charity.where('users.status != ?', :inactive)
+  end
+
+  test "shoulnt get inactive charities on the list beeing admin" do
+    user = create_admin_and_sign_in
+    Charity.make_many 5
+    Charity.make :status => :inactive
+
+    get :index
+
+    assert_charities_unsorted Charity.where('users.status != ?', :inactive)
+  end
+
+
+  test "shoulnt get inactive charities on the list beeing the inactive charity" do
+    Charity.make_many 5
+    user = create_charity_and_sign_in
+    user.status = :inactive
+    user.save!
+
+    get :index
+
+    assert_charities_unsorted Charity.where('users.status != ?', :inactive)
   end
 
   test "should get charities list with categories" do
@@ -128,7 +154,7 @@ class CharitiesControllerTest < ActionController::TestCase
 
   #DETAILS
   test "should get details" do
-    charity = Charity.make :short_url => "foobar"
+    charity = Charity.make :short_url => "foobar",:status => :active
 
     get :details, :url => "foobar"
 
@@ -137,28 +163,40 @@ class CharitiesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  #NEW
-  test "should go to new charity" do
-    #TODO completar
-    assert_response :ok
+  test "shouldnt get details if inactive and not admin or charity" do
+    charity = Charity.make :short_url => "foobar",:status => :inactive
+
+    get :details, :url => "foobar"
+
+    assert_not_nil assigns(:charity)
+    assert_equal assigns(:charity), charity
+    assert_response :forbidden
   end
 
-  #NEW
-  test "shouldnt go to new charity" do
-    #TODO completar
-    assert_response :ok
+
+  test "should get details if inactive and admin logged" do
+    user = create_admin_and_sign_in
+    charity = Charity.make :short_url => "foobar",:status => :inactive
+
+    get :details, :url => "foobar"
+
+    assert_not_nil assigns(:charity)
+    assert_equal assigns(:charity), charity
+    assert_response :success
   end
 
-  #EDIT
-  test "should go to edit charity" do
-    #TODO completar
-    assert_response :ok
-  end
+  test "should get details if inactive and inactive charity is logged" do
 
-  #EDIT
-  test "shouldnt go to edit charity" do
-    #TODO completar
-    assert_response :ok
+    charity = create_charity_and_sign_in
+    charity.short_url = "foobar"
+    charity.status = :inactive
+    charity.save!
+
+    get :details, :url => "foobar"
+
+    assert_not_nil assigns(:charity)
+    assert_equal assigns(:charity), charity
+    assert_response :success
   end
 
   #SHOW
@@ -209,36 +247,6 @@ class CharitiesControllerTest < ActionController::TestCase
     xhr :post, :unfollow, :id => charity.id
     assert_equal CharityFollow.count,0
     assert_response :method_not_allowed
-  end
-
-  #DESTROY
-  test "shouldnt destroy charity" do
-    #TODO completar
-    assert_response :ok
-  end
-
-  #DESTROY
-  test "should make logical destroy " do
-    #TODO completar
-    assert_response :ok
-  end
-
-  #DESTROY
-  test "should make complete destroy" do
-    #TODO completar
-    assert_response :ok
-  end
-
-  #CHECK_URL
-  test "should check url and return ok" do
-    #TODO completar
-    assert_response :ok
-  end
-
-  #CHECK_URL
-  test "should reject url" do
-    #TODO completar
-    assert_response :ok
   end
 
   #ACTIVATE

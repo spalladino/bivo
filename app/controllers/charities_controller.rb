@@ -1,8 +1,8 @@
 class CharitiesController < ApplicationController
 
   before_filter :authenticate_user!, :except => [:show, :details, :index, :check_url, :destroy]
-  before_filter :load_charity, :except => [:details, :index, :new, :create, :check_url,:destroy]
-
+  before_filter :load_charity, :except => [:index, :new, :create, :check_url,:destroy]
+  before_filter :only_owner_or_admin_if_inactive, :only => [:details]
   before_filter :only_owner_or_admin, :only => [:edit, :update]
   before_filter :only_admin, :only => [:activate, :deactivate, :create,:delete,:destroy]
   before_filter :follows_exist, :only => [:unfollow]
@@ -82,7 +82,6 @@ class CharitiesController < ApplicationController
   end
 
   def details
-    @charity = Charity.find_by_short_url! params[:url]
   end
 
   def activate
@@ -131,7 +130,6 @@ class CharitiesController < ApplicationController
     else
       ajax_flash[:notice] = _("Error, try again")
     end
-
     redirect_to request.referer unless request.xhr?
   end
 
@@ -144,7 +142,8 @@ class CharitiesController < ApplicationController
  protected
 
   def load_charity
-    @charity = Charity.find(params[:id])
+    @charity = Charity.find(params[:id]) if params[:id]
+    @charity = Charity.find_by_short_url(params[:url]) if params[:url]
   end
 
   def only_owner_or_admin
@@ -164,6 +163,14 @@ class CharitiesController < ApplicationController
     @follow = CharityFollow.find_by_charity_id_and_user_id(params[:id], current_user.id)
     if not @follow
       render :nothing => true, :status => :method_not_allowed
+    end
+  end
+
+  def only_owner_or_admin_if_inactive
+    if @charity.status == :inactive
+      if !current_user || (!(@charity.id == current_user.id) && !current_user.is_admin_user)
+              render :nothing => true, :status => :forbidden
+      end
     end
   end
 

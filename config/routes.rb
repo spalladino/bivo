@@ -6,9 +6,7 @@ Bivo::Application.routes.draw do
   post "news/:id/destroy", :to => "news#destroy"
 
   #gallery
-  get "gallery/:entity_type/:entity_id", :to => "galleries#view", :as=>"view_gallery"
-  get "gallery/:id/video_preview", :to => "galleries#video_preview"
-  get "gallery/:entity_type/:entity_id/edit_view", :to => "galleries#edit_view", :as=>"edit_gallery"
+  get "gallery/:entity_type/:entity_id/edit", :to => "galleries#edit", :as=>"edit_gallery"
   post "gallery/:id/move_up", :to => "galleries#move_up"
   post "gallery/:id/move_down", :to => "galleries#move_down"
   post "gallery/:entity_type/:entity_id/add_photo", :to => "galleries#add_photo"
@@ -40,7 +38,7 @@ Bivo::Application.routes.draw do
   post "admin/create_charity", :to => "admin#create_charity", :as => "admin_create_charity"
   get "admin/:id/edit_user", :to => "admin#edit_user", :as => "admin_edit_user"
   post "admin/update_user", :to => "admin#update_user", :as => "admin_update_user"
-  post "admin/delete_user/:id", :to => "admin#-delete_user", :as => "admin_delete_user"
+  post "admin/delete_user/:id", :to => "admin#delete_user", :as => "admin_delete_user"
 
   get 'admin/shop/categories', :to => 'shop_categories#edit', :as => 'admin_edit_shop_categories'
   post 'admin/shop/categories/create', :to => 'shop_categories#create'

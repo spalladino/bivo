@@ -38,7 +38,7 @@
 			</tr>
 			<tr>
 				<td><%= _('Showing') %></td>
-				<td><%= select_tag :status, options_from_collection_for_select(@statuses, 'to_s', 'to_s', @status) %></td>
+				<td><%= select_tag :status, options_from_collection_for_select(@statuses, 'to_s', 'description', @status) %></td>
 			</tr>
 			<tr>
 				<td><%= _('Sort by') %></td>
