@@ -1,5 +1,4 @@
 class CommentsController < ApplicationController
-
   before_filter :authenticate_user!
   before_filter :load_entity, :unless => [:edit]
   before_filter :load_comment, :only => [:edit, :update, :destroy, :approve]
@@ -23,7 +22,9 @@ class CommentsController < ApplicationController
     rules.before_add @comment
 
     @could_save = true
-    if !@comment.save
+    if @comment.save
+      rules.after_add @comment if rules.respond_to?(:after_add)
+    else
       @could_save = false
       ajax_flash[:notice] = _("Comment text is required")
     end

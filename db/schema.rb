@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101125143723) do
+ActiveRecord::Schema.define(:version => 20101130144436) do
 
   create_table "account_movements", :force => true do |t|
     t.integer  "account_id"
@@ -145,6 +145,14 @@ ActiveRecord::Schema.define(:version => 20101125143723) do
     t.string   "newsable_type"
   end
 
+  create_table "pending_mails", :force => true do |t|
+    t.string   "method"
+    t.text     "data"
+    t.integer  "retries"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "shop_categories", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -195,9 +203,9 @@ ActiveRecord::Schema.define(:version => 20101125143723) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "email",                                         :default => "",    :null => false
-    t.string   "encrypted_password",             :limit => 128, :default => "",    :null => false
-    t.string   "password_salt",                                 :default => "",    :null => false
+    t.string   "email",                                         :default => "", :null => false
+    t.string   "encrypted_password",             :limit => 128, :default => "", :null => false
+    t.string   "password_salt",                                 :default => "", :null => false
     t.string   "reset_password_token"
     t.string   "remember_token"
     t.datetime "remember_created_at"
@@ -234,7 +242,7 @@ ActiveRecord::Schema.define(:version => 20101125143723) do
     t.boolean  "notice_comment_added"
     t.boolean  "send_me_news"
     t.boolean  "auto_approve_comments"
-    t.boolean  "from_facebook",                                 :default => false
+    t.boolean  "from_facebook"
     t.boolean  "eula_accepted"
     t.string   "status"
     t.string   "picture_file_name"

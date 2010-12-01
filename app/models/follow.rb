@@ -5,7 +5,6 @@ class Follow < ActiveRecord::Base
 
   validates_presence_of :user,:message => "inexistent user"
   validates_presence_of :cause,:message => "inexistent cause"
-
   validate :didnt_follow
 
   def didnt_follow
@@ -13,8 +12,4 @@ class Follow < ActiveRecord::Base
       errors.add(:cause_id, "Was Following")
     end
   end
-
-
-
 end
-
