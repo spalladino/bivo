@@ -41,7 +41,7 @@ class Charity < User
     end
   end
 
-  attr_protected :status
+
 
   UrlFormat = /[a-zA-Z\-_][a-zA-Z0-9\-_]*/
   # Default scope excludes deleted charities
@@ -64,6 +64,7 @@ class Charity < User
   has_one :gallery
   has_many :news, :as => :newsable
   attr_protected :funds_raised
+  attr_protected :status
 
   validates_presence_of :country_id
   validates_presence_of :charity_category
@@ -96,13 +97,6 @@ class Charity < User
   validates_presence_of :description
   validates_length_of :description, :maximum => 255
 
-  #validate :inactive_at_first, :on => :create
-
-  #def inactive_at_first
-  #  if self.status != :inactive
-  #    errors.add(:status, _("the Charity must be inactive") )
-  #  end
-  #end
   enum_attr :status, %w(^inactive active deleted),:nil => false
 
   def self.find_deleted(id)
@@ -177,7 +171,7 @@ class Charity < User
   end
 
   def causes_to_show(user)
-    if user == self || user.is_admin_user
+    if user and (user == self || user.is_admin_user)
       self.causes
     else
       self.causes.where('status != ?',:inactive)

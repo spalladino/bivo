@@ -3,8 +3,8 @@ require 'test_helper'
 class CausesControllerTest < ActionController::TestCase
 
   #DETAILS
-  test "should get details" do
-    cause = Cause.make :url => "foobar"
+  test "should get details if active cause" do
+    cause = Cause.make :url => "foobar",:status => :active
 
     get :details, :url => "foobar"
 
@@ -14,7 +14,7 @@ class CausesControllerTest < ActionController::TestCase
   end
 
   #DETAILS
-  test "shouldnt get details of inactive charity if not owner nor admin" do
+  test "shouldnt get details of inactive cause if not owner nor admin" do
     cause = Cause.make :url => "foobar",:status => :inactive
 
     get :details, :url => "foobar"
@@ -47,9 +47,6 @@ class CausesControllerTest < ActionController::TestCase
     assert_equal assigns(:cause), cause
     assert_response :success
   end
-
-
-
 
   #LIST-sorted
   test "should get causes list voting status first page sorted by popularity" do
@@ -390,9 +387,7 @@ class CausesControllerTest < ActionController::TestCase
 
   #CREATE
   test "should create inactive causes from inactive charity ignoring params[:status]" do
-    user = create_charity_and_sign_in
-    user.status = :inactive
-    user.save!
+    user = create_charity_and_sign_in :status => :inactive
 
     post :create,
     :cause =>
@@ -586,7 +581,16 @@ class CausesControllerTest < ActionController::TestCase
   end
 
   #ACTIVATE
-  test "should not activate" do
+  test 'shouldnt activate causes whith inactive owner' do
+    user = create_admin_and_sign_in
+    cause = Cause.make :status=>:inactive, :charity => Charity.make(:status => :inactive)
+    post :activate, :id => cause.id
+    assert_response :found
+    assert_equal :inactive,cause.reload.status
+  end
+
+  #ACTIVATE
+  test "should not activate if not admin" do
     user = create_charity_and_sign_in
     cause = Cause.make :status=>:inactive
     post :activate, :id => cause.id
