@@ -176,6 +176,14 @@ class Charity < User
     Comment.where(:commentable_id => self.id, :commentable_type => self.class.name, :approved => false).count > 0
   end
 
+  def causes_to_show(user)
+    if user == self || user.is_admin_user
+      self.causes
+    else
+      self.causes.where('status != ?',:inactive)
+    end
+  end
+
   private
 
   def check_presence_of_protocol_in_website

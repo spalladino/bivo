@@ -13,6 +13,44 @@ class CausesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  #DETAILS
+  test "shouldnt get details of inactive charity if not owner nor admin" do
+    cause = Cause.make :url => "foobar",:status => :inactive
+
+    get :details, :url => "foobar"
+
+    assert_not_nil assigns(:cause)
+    assert_equal assigns(:cause), cause
+    assert_response :forbidden
+  end
+
+  #DETAILS
+  test "should get details if inactive and owner" do
+    user = create_charity_and_sign_in
+    cause = Cause.make :url => "foobar",:status => :inactive, :charity_id => user.id
+
+    get :details, :url => "foobar"
+
+    assert_not_nil assigns(:cause)
+    assert_equal assigns(:cause), cause
+    assert_response :success
+  end
+
+ #DETAILS
+  test "should get details if inactive and admin" do
+    user = create_admin_and_sign_in
+    cause = Cause.make :url => "foobar",:status => :inactive
+
+    get :details, :url => "foobar"
+
+    assert_not_nil assigns(:cause)
+    assert_equal assigns(:cause), cause
+    assert_response :success
+  end
+
+
+
+
   #LIST-sorted
   test "should get causes list voting status first page sorted by popularity" do
     create_incremental_voted_causes
@@ -346,6 +384,31 @@ class CausesControllerTest < ActionController::TestCase
         :funds_needed=>100,
         :funds_raised=>0
       }
+    assert_equal 1,Cause.count
+    assert_redirected_to :action => :details, :url => "url"
+  end
+
+  #CREATE
+  test "should create inactive causes from inactive charity ignoring params[:status]" do
+    user = create_charity_and_sign_in
+    user.status = :inactive
+    user.save!
+
+    post :create,
+    :cause =>
+      {
+        :name => 'Hi',
+        :description=>"ss",
+        :city => "cba",
+        :status =>:active,
+        :charity_id =>user.id,
+        :country_id =>Country.make.id,
+        :cause_category_id=>CauseCategory.make.id,
+        :url=> "url",
+        :funds_needed=>100,
+        :funds_raised=>0
+      }
+    assert_equal :inactive,Cause.first.status
     assert_equal 1,Cause.count
     assert_redirected_to :action => :details, :url => "url"
   end
