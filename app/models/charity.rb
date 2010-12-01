@@ -3,9 +3,9 @@ class Charity < User
 
   class CommentRules
 
-    def self.before_add(comment)
+    def self.before_add(comment,user)
         entity = Charity.find(comment.commentable_id)
-        comment.approved = entity.auto_approve_comments
+        comment.approved = entity.auto_approve_comments  || user == entity
     end
 
     def self.can_approve?(user,entity,comment)
@@ -34,7 +34,7 @@ class Charity < User
       return !user.nil? && (user.is_admin_user || (charity == user && charity.id == news.newsable_id))
     end
   end
-  
+
   class GalleryRules
     def self.can_edit?(user, entity)
       return user == entity

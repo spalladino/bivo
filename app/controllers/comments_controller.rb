@@ -20,7 +20,7 @@ class CommentsController < ApplicationController
     @comment = Comment.build_from(@entity, @user_who_commented.id,params[:comment]["body"])
     @comment.parent_id = params[:parent_id]
 
-    rules.before_add @comment
+    rules.before_add @comment,current_user
 
     @could_save = true
     if !@comment.save

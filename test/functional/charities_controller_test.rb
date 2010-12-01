@@ -2,7 +2,7 @@ require 'test_helper'
 
 class CharitiesControllerTest < ActionController::TestCase
 
-#LIST
+  #LIST
   test "should get charities list" do
     Charity.make_many 10
 
@@ -199,32 +199,6 @@ class CharitiesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-
-
-  #NEW
-  test "should go to new charity" do
-    #TODO completar
-    assert_response :ok
-  end
-
-  #NEW
-  test "shouldnt go to new charity" do
-    #TODO completar
-    assert_response :ok
-  end
-
-  #EDIT
-  test "should go to edit charity" do
-    #TODO completar
-    assert_response :ok
-  end
-
-  #EDIT
-  test "shouldnt go to edit charity" do
-    #TODO completar
-    assert_response :ok
-  end
-
   #SHOW
   test "show charity" do
     charity = Charity.make
@@ -273,36 +247,6 @@ class CharitiesControllerTest < ActionController::TestCase
     xhr :post, :unfollow, :id => charity.id
     assert_equal CharityFollow.count,0
     assert_response :method_not_allowed
-  end
-
-  #DESTROY
-  test "shouldnt destroy charity" do
-    #TODO completar
-    assert_response :ok
-  end
-
-  #DESTROY
-  test "should make logical destroy " do
-    #TODO completar
-    assert_response :ok
-  end
-
-  #DESTROY
-  test "should make complete destroy" do
-    #TODO completar
-    assert_response :ok
-  end
-
-  #CHECK_URL
-  test "should check url and return ok" do
-    #TODO completar
-    assert_response :ok
-  end
-
-  #CHECK_URL
-  test "should reject url" do
-    #TODO completar
-    assert_response :ok
   end
 
   #ACTIVATE

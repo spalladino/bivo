@@ -182,6 +182,15 @@ class CausesControllerTest < ActionController::TestCase
     assert_response :ok
   end
 
+ #EDIT
+  test "cant go to edit cause becouse is another charity's cause'" do
+    user = create_charity_and_sign_in
+    cause = Cause.make :charity_id => Charity.make.id
+    get :edit, :id => cause.id
+    assert_not_nil assigns(:cause)
+    assert_equal assigns(:cause), cause
+    assert_response :forbidden
+  end
 
    #EDIT
   test "cant go to edit cause because is completed" do
@@ -472,19 +481,19 @@ class CausesControllerTest < ActionController::TestCase
 
   #DESTROY
   test "shouldnt destroy" do
-    #TODO completar
+    assert_equal "TODO NOW","TODO LATER"
     assert_response :ok
   end
 
   #DESTROY
   test "should make logical destroy" do
-    #TODO completar
+    assert_equal "TODO NOW","TODO LATER"
     assert_response :ok
   end
 
   #DESTROY
   test "should make complete destroy" do
-    #TODO completar
+    assert_equal "TODO NOW","TODO LATER"
     assert_response :ok
   end
 

@@ -4,7 +4,10 @@
 
 <% title "Shops" %>
 
-<%= link_to "New Shop", new_shop_path %> <br /> <br />
+<% if current_user and current_user.is_admin_user%>
+  <%= link_to "New Shop", new_shop_path%> <br /> <br />
+<% end %>
+
 
 <%=_("Shops count")%> <%=@count%>
 <div id="filters">
