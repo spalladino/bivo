@@ -309,9 +309,6 @@ class CharitiesControllerTest < ActionController::TestCase
     assert_equal :active,Cause.find(cause.id).status
   end
 
-
-
-
   private
 
   def assert_charities_unsorted(causes_or_ids)

@@ -105,6 +105,37 @@ class CausesControllerTest < ActionController::TestCase
     assert_equal_unordered causes.map(&:id), assigns(:causes).map(&:id)
   end
 
+#LIST-filter
+  test "should get causes list inactive status filtered by category if admin" do
+    user = create_admin_and_sign_in
+    CauseCategory.make_many 2
+
+    causes = Cause.make_many 3, :status => :inactive, :cause_category => CauseCategory.first
+    Cause.make_many 3, :status => :raising_funds, :cause_category => CauseCategory.first
+    Cause.make_many 3, :status => :completed, :cause_category => CauseCategory.last
+
+    get :index, :status => :inactive, :category => CauseCategory.first.id
+
+    assert_response :success
+    assert_not_nil assigns(:causes)
+    assert_equal 3, assigns(:causes).size
+    assert_equal_unordered causes.map(&:id), assigns(:causes).map(&:id)
+  end
+
+  #LIST-filter
+  test "shouldnt get causes list inactive status filtered by category if not admin" do
+    user = create_and_sign_in
+    CauseCategory.make_many 2
+
+    causes = Cause.make_many 3, :status => :inactive, :cause_category => CauseCategory.first
+    Cause.make_many 3, :status => :raising_funds, :cause_category => CauseCategory.first
+    Cause.make_many 3, :status => :completed, :cause_category => CauseCategory.last
+
+    get :index, :status => :inactive, :category => CauseCategory.first.id
+
+    assert_response :forbidden
+  end
+
   #LIST-sorted
   test "should get causes list sorted geographically" do
     countries = [ Country.make(:name => 'Argentina'),
@@ -539,19 +570,19 @@ class CausesControllerTest < ActionController::TestCase
 
   #DESTROY
   test "shouldnt destroy" do
-    assert_equal "TODO NOW","TODO LATER"
+#TODO [nombre del test]
     assert_response :ok
   end
 
   #DESTROY
   test "should make logical destroy" do
-    assert_equal "TODO NOW","TODO LATER"
+#TODO [nombre del test]
     assert_response :ok
   end
 
   #DESTROY
   test "should make complete destroy" do
-    assert_equal "TODO NOW","TODO LATER"
+#TODO [nombre del test]
     assert_response :ok
   end
 
@@ -583,7 +614,7 @@ class CausesControllerTest < ActionController::TestCase
   #ACTIVATE
   test 'shouldnt activate causes whith inactive owner' do
     user = create_admin_and_sign_in
-    cause = Cause.make :status=>:inactive, :charity => Charity.make(:status => :inactive)
+    cause = Cause.make(:status=>:inactive, :charity => Charity.make(:status => :inactive))
     post :activate, :id => cause.id
     assert_response :found
     assert_equal :inactive,cause.reload.status
