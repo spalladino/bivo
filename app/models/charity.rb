@@ -3,9 +3,9 @@ class Charity < User
 
   class CommentRules
 
-    def self.before_add(comment)
+    def self.before_add(comment,user)
         entity = Charity.find(comment.commentable_id)
-        comment.approved = entity.auto_approve_comments
+        comment.approved = entity.auto_approve_comments  || user == entity
     end
 
     def self.can_approve?(user,entity,comment)
@@ -34,14 +34,14 @@ class Charity < User
       return !user.nil? && (user.is_admin_user || (charity == user && charity.id == news.newsable_id))
     end
   end
-  
+
   class GalleryRules
     def self.can_edit?(user, entity)
       return user == entity
     end
   end
 
-  attr_protected :status
+
 
   UrlFormat = /[a-zA-Z\-_][a-zA-Z0-9\-_]*/
   # Default scope excludes deleted charities
@@ -64,6 +64,7 @@ class Charity < User
   has_one :gallery
   has_many :news, :as => :newsable
   attr_protected :funds_raised
+  attr_protected :status
 
   validates_presence_of :country_id
   validates_presence_of :charity_category
@@ -96,13 +97,6 @@ class Charity < User
   validates_presence_of :description
   validates_length_of :description, :maximum => 255
 
-  #validate :inactive_at_first, :on => :create
-
-  #def inactive_at_first
-  #  if self.status != :inactive
-  #    errors.add(:status, _("the Charity must be inactive") )
-  #  end
-  #end
   enum_attr :status, %w(^inactive active deleted),:nil => false
 
   def self.find_deleted(id)
@@ -174,6 +168,14 @@ class Charity < User
 
   def has_own_comments_to_approve?
     Comment.where(:commentable_id => self.id, :commentable_type => self.class.name, :approved => false).count > 0
+  end
+
+  def causes_to_show(user)
+    if user and (user == self || user.is_admin_user)
+      self.causes
+    else
+      self.causes.where('status != ?',:inactive)
+    end
   end
 
   private

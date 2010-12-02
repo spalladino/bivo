@@ -5,9 +5,9 @@ class Cause < ActiveRecord::Base
   UrlFormat = /[a-zA-Z\-_][a-zA-Z0-9\-_]*/
 
   class CommentRules
-    def self.before_add(comment)
+    def self.before_add(comment,user)
         entity = Cause.find(comment.commentable_id)
-        comment.approved = entity.charity.auto_approve_comments
+        comment.approved = entity.charity.auto_approve_comments || user == entity.charity
     end
 
     def self.can_approve?(user,entity,comment)
@@ -36,7 +36,7 @@ class Cause < ActiveRecord::Base
       return !user.nil? && (user.is_admin_user || (cause.charity == user && cause.id == news.newsable_id))
     end
   end
-  
+
   class GalleryRules
     def self.can_edit?(user, entity)
       return entity.charity == user
@@ -55,6 +55,8 @@ class Cause < ActiveRecord::Base
 
   after_save :ensure_cause_account
   before_validation :ensure_complete_when_funds_raised
+
+  attr_protected :status
 
   validates_presence_of :charity
   validates_presence_of :country
@@ -99,7 +101,7 @@ class Cause < ActiveRecord::Base
 
     case from_status
       when :inactive
-        to_status == :active
+        to_status == :active && self.charity.status != :inactive
       when :active
         if (to_status == :raising_funds)
           Cause.where("status = ? and cause_category_id = ?", :raising_funds, self.cause_category.id).empty?
