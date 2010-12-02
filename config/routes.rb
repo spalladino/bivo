@@ -7,11 +7,11 @@ Bivo::Application.routes.draw do
 
   #gallery
   get "gallery/:entity_type/:entity_id/edit", :to => "galleries#edit", :as=>"edit_gallery"
-  post "gallery/:id/move_up", :to => "galleries#move_up"
-  post "gallery/:id/move_down", :to => "galleries#move_down"
+  post "gallery/:entity_type/:entity_id/:id/move_up", :to => "galleries#move_up"
+  post "gallery/:entity_type/:entity_id/:id/move_down", :to => "galleries#move_down"
+  post "gallery/:entity_type/:entity_id/:id/remove_item", :to => "galleries#remove_item"
   post "gallery/:entity_type/:entity_id/add_photo", :to => "galleries#add_photo"
-  post "gallery/:id/destroy_gallery_item", :to => "galleries#destroy_gallery_item"
-  post "gallery/add_video", :to => "galleries#add_video"
+  post "gallery/:entity_type/:entity_id/add_video", :to => "galleries#add_video"
 
   #comments
   post "comments/:id/destroy", :to => "comments#destroy"

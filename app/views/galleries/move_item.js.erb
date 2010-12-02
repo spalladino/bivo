@@ -1,0 +1,12 @@
+var preview = $('.gallery li[data-item-id="<%=@item_id%>"]');
+
+<% if @preceding_item %>
+var preceding = $('.gallery li[data-item-id="<%=@preceding_item.id%>"]');
+preceding.after(preview);
+<% else %>
+var following = $('.gallery li:first');
+if (following[0] != preview[0]) {
+	following.before(preview);
+}
+<% end %>
+

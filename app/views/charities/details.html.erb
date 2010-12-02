@@ -2,6 +2,7 @@
 <h1><%= link_to_charity @charity %></h1>
 
 <%= gallery @charity %>
+<%= edit_gallery_link @charity %>
 
 <p> <b><%=_('id')%></b>: <%= @charity.id%> </p>
 <p> <b><%=_('email')%></b>: <%= @charity.email%> </p>

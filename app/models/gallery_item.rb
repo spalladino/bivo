@@ -1,5 +1,5 @@
 class GalleryItem < ActiveRecord::Base
-
+  
   validates_presence_of :gallery_id, :type
 
   belongs_to :gallery

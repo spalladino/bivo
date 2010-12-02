@@ -1,6 +1,7 @@
 <h1><%= link_to_cause @cause %></h1>
 
 <%= gallery @cause %>
+<%= edit_gallery_link @cause %>
 
 <p> <b><%=_('Organized by')%>: <%= link_to_charity @cause.charity %>
 <p> <b><%=_('Landing page')%></b>: <%= link_to(url_for(url_cause(@cause).merge({ :only_path => false })), url_cause(@cause)) %> </p>

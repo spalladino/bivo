@@ -1,5 +1,6 @@
 class Gallery < ActiveRecord::Base
-  has_many :items, :foreign_key => 'gallery_id', :class_name => "GalleryItem"
+  has_many :items, :foreign_key => 'gallery_id', :class_name => "GalleryItem", :order => 'relative_order'
+  
   
   def self.for_entity(entity)
     gallery = Gallery.find_by_entity_id_and_entity_type(entity.id, entity.class.name)

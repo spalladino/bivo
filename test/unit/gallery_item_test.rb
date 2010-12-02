@@ -99,5 +99,24 @@ class GalleryItemTest < ActiveSupport::TestCase
     assert_equal 1, second.relative_order
   end
 
+  test 'items are sorted by relative_order by default' do
+    gallery = Gallery.make
+    items = GalleryItem.make_many 4, :gallery => gallery
+    gallery.reload
+    
+    assert_equal 1, gallery.items[0].relative_order
+    assert_equal 2, gallery.items[1].relative_order
+    assert_equal 3, gallery.items[2].relative_order
+    assert_equal 4, gallery.items[3].relative_order
+    
+    gallery.items[1].move_up
+    gallery.reload
+    
+    assert_equal 1, gallery.items[0].relative_order
+    assert_equal 2, gallery.items[1].relative_order
+    assert_equal 3, gallery.items[2].relative_order
+    assert_equal 4, gallery.items[3].relative_order
+    
+  end
 end
 

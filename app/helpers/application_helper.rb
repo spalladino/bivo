@@ -38,7 +38,7 @@ module ApplicationHelper
   end
 
   def gallery(entity)
-    render :partial => 'galleries/view', :locals => { :entity => entity, :gallery => Gallery.for_entity(entity) }
+    render :partial => 'galleries/view', :locals => { :gallery => Gallery.for_entity(entity), :edit => false }
   end
   
   def edit_gallery_link(entity)
