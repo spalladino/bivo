@@ -110,7 +110,7 @@ class CauseTest < ActiveSupport::TestCase
   end
 
   test "should get the most voted cause for each category" do
-    cause_categories = CauseCategory.make_many 3
+    cause_categories = CauseCategory.all
     causes = []
     cause_categories.each { |cat| causes += Cause.make_many(5, :cause_category => cat) }
     causes.each { |c| Vote.make_many(3, :cause => c) }
