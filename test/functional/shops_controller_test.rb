@@ -99,7 +99,7 @@ class ShopsControllerTest < ActionController::TestCase
         :comission_value => 10.0,
         :comission_details => "comission",
         :comission_kind => "percentage"}
-    assert_equal 0, Shop.count
+    assert_equal 1, Shop.count
     assert_response :success
   end
   test "should update shop" do

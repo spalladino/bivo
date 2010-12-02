@@ -36,7 +36,7 @@ class RegistrationsControllerTest < ActionController::TestCase
 
 
 
- test "should create charity inactive disparite status param" do
+ test "should create charity inactive disparite status param if not admin" do
     @controller.stubs(:captcha_valid?).returns(true)
 
     post :create,

@@ -16,7 +16,7 @@ class RegistrationsController < Devise::RegistrationsController
       params["user"]["type"] = "PersonalUser"
     end
 
-    build_resource
+   build_resource
 
     unless captcha_valid?
       resource.set_captcha_invalid
