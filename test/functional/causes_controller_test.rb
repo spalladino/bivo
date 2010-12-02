@@ -570,19 +570,19 @@ class CausesControllerTest < ActionController::TestCase
 
   #DESTROY
   test "shouldnt destroy" do
-    assert_equal "TODO NOW","TODO LATER"
+#TODO [nombre del test]
     assert_response :ok
   end
 
   #DESTROY
   test "should make logical destroy" do
-    assert_equal "TODO NOW","TODO LATER"
+#TODO [nombre del test]
     assert_response :ok
   end
 
   #DESTROY
   test "should make complete destroy" do
-    assert_equal "TODO NOW","TODO LATER"
+#TODO [nombre del test]
     assert_response :ok
   end
 

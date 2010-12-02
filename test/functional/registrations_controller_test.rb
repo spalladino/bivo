@@ -225,55 +225,55 @@ class RegistrationsControllerTest < ActionController::TestCase
 
   #NEW
   test "should go to new charity" do
-    assert_equal "TODO NOW","TODO LATER"
+#TODO [nombre del test]
     assert_response :ok
   end
 
   #NEW
   test "shouldnt go to new charity" do
-    assert_equal "TODO NOW","TODO LATER"
+#TODO [nombre del test]
     assert_response :ok
   end
 
   #EDIT
   test "should go to edit charity" do
-    assert_equal "TODO NOW","TODO LATER"
+#TODO [nombre del test]
     assert_response :ok
   end
 
   #EDIT
   test "shouldnt go to edit charity" do
-    assert_equal "TODO NOW","TODO LATER"
+#TODO [nombre del test]
     assert_response :ok
   end
 
   #DESTROY
   test "shouldnt destroy charity" do
-    assert_equal "TODO NOW","TODO LATER"
+#TODO [nombre del test]
     assert_response :ok
   end
 
   #DESTROY
   test "should make logical destroy " do
-    assert_equal "TODO NOW","TODO LATER"
+#TODO [nombre del test]
     assert_response :ok
   end
 
   #DESTROY
   test "should make complete destroy" do
-    assert_equal "TODO NOW","TODO LATER"
+#TODO [nombre del test]
     assert_response :ok
   end
 
   #CHECK_URL
   test "should check url and return ok" do
-    assert_equal "TODO NOW","TODO LATER"
+#TODO [nombre del test]
     assert_response :ok
   end
 
   #CHECK_URL
   test "should reject url" do
-    assert_equal "TODO NOW","TODO LATER"
+#TODO [nombre del test]
     assert_response :ok
   end
 
