@@ -45,7 +45,13 @@ module Bivo
       g.fixture :false
     end
 
-    config.active_record.observers = [:comment_observer, :cause_observer, :follow_observer, :news_observer]
+    config.active_record.observers = [
+      :cause_observer, 
+      :charity_follow_observer, 
+      :comment_observer, 
+      :follow_observer, 
+      :news_observer
+    ]
 
     config.currencies = {
       :DZD => "Algerian Dinar (DZD)",

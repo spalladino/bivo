@@ -112,9 +112,25 @@ class CauseTest < ActiveSupport::TestCase
   test "should get the most voted cause for each category" do
     cause_categories = CauseCategory.make_many 3
     causes = []
-    cause_categories.each { |cat| causes += Cause.make_many(5, :cause_category => cat) }
+    CauseCategory.all.each { |cat| causes += Cause.make_many(5, :cause_category => cat) }
     causes.each { |c| Vote.make_many(3, :cause => c) }
 
     assert_equal Set.new(CauseCategory.all), Set.new(Cause.most_voted_causes.map(&:cause_category))
+  end
+
+  test "should send an email to the queue if the cause status changed" do
+    assert false
+  end
+
+  test "shouldnt send an email to the queue if the cause status didnt change" do
+    assert false
+  end
+
+  test "should send a different email to the queue if the new status is completed" do
+    assert false
+  end
+
+  test "shouldnt send a funds completed mail if the status didnt change or is not completed" do
+    assert false
   end
 end

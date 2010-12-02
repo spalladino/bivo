@@ -124,7 +124,9 @@ class AdminController < ApplicationController
   end
 
   def tools
+  end
 
+  def send_mails
   end
 end
 

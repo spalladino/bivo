@@ -65,7 +65,7 @@ class Mailer < ActionMailer::Base
     mail :to => @follower.email, :subject => "Cause completed"
   end
 
-  def new_created_to_cause(mail_data)
+  def news_created_to_cause(mail_data)
     @cause = Cause.find(mail_data.cause_id)
     @follower = User.find(mail_data.follower_id)
     @new = News.find(mail_data.new_id)
@@ -73,7 +73,7 @@ class Mailer < ActionMailer::Base
     mail :to => @follower.email, :subject => "News about the cause"
   end
 
-  def new_created_to_charity(mail_data)
+  def news_created_to_charity(mail_data)
     @charity = Charity.find(mail_data.cause_id)
     @follower = User.find(mail_data.follower_id)
     @new = News.find(mail_data.new_id)
