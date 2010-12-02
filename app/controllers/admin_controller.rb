@@ -74,6 +74,7 @@ class AdminController < ApplicationController
 
   def create_charity
     @resource = Charity.new(params["charity"])
+    @resource.status = :active
     @resource.eula_accepted = true
     @type = @resource.type.to_sym
     @referer = params[:referer]

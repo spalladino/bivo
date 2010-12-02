@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class CauseTest < ActiveSupport::TestCase
-  
+
   test "should create voted cause" do
     cause = Cause.make_with_votes :votes_count => 5
     assert_equal 5, cause.votes.count
@@ -10,28 +10,28 @@ class CauseTest < ActiveSupport::TestCase
   test "should increase vote counter" do
     cause = Cause.make :status => :active
     assert_equal 0, cause.votes_count
-    
+
     cause.votes.make
     cause.reload
     assert_equal 1, cause.votes_count
   end
-  
+
   test "should mark as deleted" do
     cause = Cause.make :status => :raising_funds
     cause.destroy
     assert_equal :deleted, cause.reload.status, "Status is not deleted"
   end
-  
+
   test "should delete from database" do
     cause = Cause.make :status => :active
     id = cause.id
     cause.destroy
-    
-    assert_raise ActiveRecord::RecordNotFound do 
+
+    assert_raise ActiveRecord::RecordNotFound do
       Cause.find_deleted(id)
     end
   end
-  
+
   test "should not retrieve deleted causes on default scope" do
     causes = Cause.make_many 2, :status => :raising_funds
     id1 = causes.first.id
@@ -40,7 +40,7 @@ class CauseTest < ActiveSupport::TestCase
     causes.first.destroy
     assert_equal 1, Cause.count, "Deleted cause is retrieved"
     assert_equal id2, Cause.first.id, "Cause id does not match"
-    
+
     assert_not_nil Cause.find_deleted(id1), "Deleted cause is not retrieved with exclusive scope"
   end
 
@@ -75,21 +75,21 @@ class CauseTest < ActiveSupport::TestCase
 
     assert_not_equal Cause.find(cause.id).status, :raising_funds
   end
-  
+
   test "should change status to completed if all funds were raised" do
     cause = Cause.make :status => :raising_funds, :funds_needed => 100, :funds_raised => 0
     assert_equal :raising_funds, cause.status
     cause.funds_raised += 50
     cause.save!
     assert_equal :raising_funds, cause.status
-    
+
     cause.funds_raised += 50
     cause.save!
     assert_equal :completed, cause.status
   end
 
   test "should get the most voted cause (the oldest one from them if there is more than one)" do
-    cause_category = CauseCategory.make    
+    cause_category = CauseCategory.make
     Cause.make_many 5, :cause_category => cause_category
     causes = Cause.order("created_at")
     Vote.make_many 5, :cause => causes[1]
@@ -101,16 +101,16 @@ class CauseTest < ActiveSupport::TestCase
 
   test "should get the most voted cause in date range" do
     cause_category = CauseCategory.make
-    cause = Cause.make :cause_category => cause_category    
+    cause = Cause.make :cause_category => cause_category
     Vote.make_many 3, :created_at => 1.month.ago, :cause => cause
-    
+
     assert_not_nil Cause.most_voted_cause(cause_category, 1.month.ago - 1.day, 1.month.ago + 1.day)
     assert_nil Cause.most_voted_cause(cause_category, 1.month.ago + 1.day, Date.today)
     assert_nil Cause.most_voted_cause(cause_category, 1.year.ago, 1.month.ago - 1.day)
   end
 
   test "should get the most voted cause for each category" do
-    cause_categories = CauseCategory.make_many 3
+    cause_categories = CauseCategory.all
     causes = []
     CauseCategory.all.each { |cat| causes += Cause.make_many(5, :cause_category => cat) }
     causes.each { |c| Vote.make_many(3, :cause => c) }
@@ -134,3 +134,4 @@ class CauseTest < ActiveSupport::TestCase
     assert false
   end
 end
+

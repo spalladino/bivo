@@ -4,7 +4,7 @@ class AdminControllerTest < ActionController::TestCase
   test "should edit a charity from admin" do
     admin = create_admin_and_sign_in
     charity = Charity.make
-    
+
     post :update_user,
     :id => charity.id,
     :user =>
@@ -88,7 +88,7 @@ class AdminControllerTest < ActionController::TestCase
     assert_response :forbidden
   end
 
-  test "should add a charity from admin" do
+  test "should add an active charity from admin " do
     admin = create_admin_and_sign_in
 
     post :create_charity,
@@ -107,8 +107,9 @@ class AdminControllerTest < ActionController::TestCase
       :city                  => "Bs As",
       :description           => "Description test"
     }
-
-    assert_not_nil Charity.find_by_email("char@bivotest.com")
+    charity = Charity.find_by_email("char@bivotest.com")
+    assert_equal :active,charity.status
+    assert_not_nil charity
     assert_response :found
   end
 
@@ -179,3 +180,4 @@ class AdminControllerTest < ActionController::TestCase
     assert_response :forbidden
   end
 end
+

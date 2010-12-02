@@ -1,0 +1,19 @@
+var preview = $('.gallery li[data-item-id="<%=@item_id%>"]');
+
+// if element to remove is current, select next (if exists) or previous (if exists)
+if ($('.current', preview).length > 0) {
+	 $('.gallery .view').empty();
+	
+	var to_select = preview.next('li');
+	
+	if (to_select.length == 0) {
+		to_select = preview.prev('li');
+	}
+			
+	if (to_select.length > 0) {
+		$('img', to_select).click();
+	}
+}
+
+preview.remove();
+

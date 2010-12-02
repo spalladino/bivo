@@ -153,7 +153,7 @@ class CharitiesControllerTest < ActionController::TestCase
 
 
   #DETAILS
-  test "should get details" do
+  test "should get details if active" do
     charity = Charity.make :short_url => "foobar",:status => :active
 
     get :details, :url => "foobar"
@@ -163,17 +163,7 @@ class CharitiesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "shouldnt get details if inactive and not admin or charity" do
-    charity = Charity.make :short_url => "foobar",:status => :inactive
-
-    get :details, :url => "foobar"
-
-    assert_not_nil assigns(:charity)
-    assert_equal assigns(:charity), charity
-    assert_response :forbidden
-  end
-
-
+  #DETAILS
   test "should get details if inactive and admin logged" do
     user = create_admin_and_sign_in
     charity = Charity.make :short_url => "foobar",:status => :inactive
@@ -185,6 +175,7 @@ class CharitiesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  #DETAILS
   test "should get details if inactive and inactive charity is logged" do
 
     charity = create_charity_and_sign_in
@@ -198,6 +189,34 @@ class CharitiesControllerTest < ActionController::TestCase
     assert_equal assigns(:charity), charity
     assert_response :success
   end
+
+
+  #DETAILS
+  test "shouldnt get details if inactive and not admin or charity owner" do
+    user = create_charity_and_sign_in
+    charity = Charity.make :short_url => "foobar",:status => :inactive
+
+    get :details, :url => "foobar"
+
+    assert_not_nil assigns(:charity)
+    assert_equal assigns(:charity), charity
+    assert_response :forbidden
+  end
+
+
+
+  #DETAILS
+ test "shouldnt get details if inactive and not admin or charity with personal user" do
+    user = create_and_sign_in
+    charity = Charity.make :short_url => "foobar",:status => :inactive
+
+    get :details, :url => "foobar"
+
+    assert_not_nil assigns(:charity)
+    assert_equal assigns(:charity), charity
+    assert_response :forbidden
+  end
+
 
   #SHOW
   test "show charity" do

@@ -36,7 +36,7 @@ class RegistrationsControllerTest < ActionController::TestCase
 
 
 
- test "should create charity inactive disparite status param" do
+ test "should create charity inactive disparite status param if not admin" do
     @controller.stubs(:captcha_valid?).returns(true)
 
     post :create,
@@ -160,7 +160,6 @@ class RegistrationsControllerTest < ActionController::TestCase
         :email                 => "char123@bivotest.com",
         :charity_name          => "test",
         :charity_website       => "http://www.test.com",
-        :short_url             => "abc",
         :charity_type          => "def",
         :tax_reg_number        => 123456,
         :country_id            => Country.make.id,
@@ -181,7 +180,6 @@ class RegistrationsControllerTest < ActionController::TestCase
         :email                 => "char456@bivotest.com",
         :charity_name          => "test",
         :charity_website       => "http://www.test.com",
-        :short_url             => nil,
         :charity_type          => "def",
         :tax_reg_number        => 123456,
         :country_id            => nil,

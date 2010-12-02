@@ -38,7 +38,7 @@ module ApplicationHelper
   end
 
   def gallery(entity)
-    render :partial => 'galleries/view', :locals => { :entity => entity, :gallery => Gallery.for_entity(entity) }
+    render :partial => 'galleries/view', :locals => { :gallery => Gallery.for_entity(entity), :edit => false }
   end
   
   def edit_gallery_link(entity)
@@ -111,7 +111,11 @@ module ApplicationHelper
   end
   
   def link_to_cause(cause)
-    link_to cause.name, cause_details_path(cause.url)
+    link_to cause.name, url_cause(cause)
+  end
+
+  def url_cause(cause)
+    { :controller => "causes", :action => "details", :url => cause.url }
   end
   
   def link_to_charity(charity)

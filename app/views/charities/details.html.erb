@@ -1,7 +1,8 @@
 
-<h1><%= @charity.charity_name%></h1>
+<h1><%= link_to_charity @charity %></h1>
 
 <%= gallery @charity %>
+<%= edit_gallery_link @charity %>
 
 <p> <b><%=_('id')%></b>: <%= @charity.id%> </p>
 <p> <b><%=_('email')%></b>: <%= @charity.email%> </p>
@@ -46,12 +47,13 @@
     <th>Progress</th>
   </tr>
 
-  <% @charity.causes.each do |cause|%>
+  <% @charity.causes_to_show(current_user).each do |cause|%>
   <tr>
     <td><%=cause_link cause%></td>
     <td><%=cause.status%></td>
     <td><%=progress_box cause%></td>
   </tr>
+
   <%end%>
 
   </table>

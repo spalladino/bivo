@@ -1,8 +1,10 @@
 class CausesController < ApplicationController
 
   before_filter :authenticate_user!, :except => [ :show, :details, :index ]
-  before_filter :load_cause, :except => [ :details, :index, :new, :check_url, :create ]
+  before_filter :load_cause, :except => [ :index, :new, :check_url, :create ]
 
+  before_filter :inactive_in_list_only_admin, :only => [:index]
+  before_filter :only_owner_or_admin_if_inactive, :only => [:details]
   before_filter :only_owner_or_admin, :only => [:delete, :edit, :update]
   before_filter :only_admin_or_charity, :only => [:create]
   before_filter :only_admin, :only => [:activate, :deactivate, :mark_paid, :mark_unpaid ]
@@ -16,7 +18,7 @@ class CausesController < ApplicationController
   end
 
   def details
-    @cause = Cause.find_by_url! params[:url]
+
   end
 
   def index
@@ -163,6 +165,7 @@ class CausesController < ApplicationController
       ajax_flash[:notice] = _("Activated")
     else
       ajax_flash[:notice] = _("Error activating cause")
+      ajax_flash[:notice] = @cause.errors[:status]
     end
     redirect_to request.referer unless request.xhr?
   end
@@ -200,7 +203,8 @@ class CausesController < ApplicationController
   private
 
   def load_cause
-    @cause = Cause.find params[:id]
+    @cause = (Cause.find params[:id]) if params[:id]
+    @cause = (Cause.find_by_url! params[:url]) if params[:url]
   end
 
   def all_category(count)
@@ -266,6 +270,20 @@ class CausesController < ApplicationController
 
     return sortings
 
+  end
+
+  def only_owner_or_admin_if_inactive
+    if @cause.status == :inactive
+      if !current_user || (!(@cause.charity_id == current_user.id) && !current_user.is_admin_user)
+        render :nothing => true, :status => :forbidden
+      end
+    end
+  end
+
+  def inactive_in_list_only_admin
+    if params[:status] == :inactive && (!current_user || !current_user.is_admin_user)
+      render :nothing => true, :status => :forbidden
+    end
   end
 
 end

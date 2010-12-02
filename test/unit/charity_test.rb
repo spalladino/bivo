@@ -104,5 +104,37 @@ class CharityTest < ActiveSupport::TestCase
     assert_not_nil Charity.find_deleted(id1), "Deleted charity is not retrieved with exclusive scope"
   end
 
+  test 'shouldnt show inactive causes in charity details if not owner nor admin' do
+    user = PersonalUser.make
+    charity = Charity.make
+    Cause.make_many(5,:status => :inactive,:charity => charity)
+    assert_equal 0,charity.causes_to_show(user).count
+    Cause.make_many(5,:status => :active,:charity => charity)
+    assert_equal 5,charity.causes_to_show(user).count
+    c = Cause.make :status => :active,:charity => charity
+    assert_equal c, charity.causes_to_show(user).last
+  end
+
+  test 'should show inactive causes in charity details if owner' do
+    charity = Charity.make
+    Cause.make_many(5,:status => :inactive,:charity => charity)
+    assert_equal 5,charity.causes_to_show(charity).count
+    Cause.make_many(5,:status => :active,:charity => charity)
+    assert_equal 10,charity.causes_to_show(charity).count
+    c = Cause.make :status => :active,:charity => charity
+    assert_equal c, charity.causes_to_show(charity).last
+  end
+
+  test 'should show inactive causes in charity details if admin' do
+    admin = Admin.make
+    charity = Charity.make
+    Cause.make_many(5,:status => :inactive,:charity => charity)
+    assert_equal 5,charity.causes_to_show(admin).count
+    Cause.make_many(5,:status => :active,:charity => charity)
+    assert_equal 10,charity.causes_to_show(admin).count
+    c = Cause.make :status => :active,:charity => charity
+    assert_equal c, charity.causes_to_show(admin).last
+  end
+
 end
 

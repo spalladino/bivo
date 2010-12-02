@@ -60,6 +60,8 @@ class Cause < ActiveRecord::Base
 
   before_validation :ensure_complete_when_funds_raised
 
+  attr_protected :status
+
   validates_presence_of :charity
   validates_presence_of :country
   validates_presence_of :cause_category
@@ -103,7 +105,7 @@ class Cause < ActiveRecord::Base
 
     case from_status
       when :inactive
-        to_status == :active
+        to_status == :active && self.charity.status != :inactive
       when :active
         if (to_status == :raising_funds)
           Cause.where("status = ? and cause_category_id = ?", :raising_funds, self.cause_category.id).empty?

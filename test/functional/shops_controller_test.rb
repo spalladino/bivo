@@ -90,8 +90,7 @@ class ShopsControllerTest < ActionController::TestCase
   test 'should not create shop when name is unavailable' do
     s = Shop.make
     create_admin_and_sign_in
-    assert_difference('Shop.count',0) do
-      post :create, :shop => {
+    post :create, :shop => {
         :name => s.name,
         :description => "Testing shop",
         :short_url => "shop",
@@ -99,10 +98,9 @@ class ShopsControllerTest < ActionController::TestCase
         :redirection => "purchase_button",
         :comission_value => 10.0,
         :comission_details => "comission",
-        :comission_kind => "percentage"
-      }
-    end
-    assert_response :forbidden
+        :comission_kind => "percentage"}
+    assert_equal 1, Shop.count
+    assert_response :success
   end
   test "should update shop" do
     create_admin_and_sign_in

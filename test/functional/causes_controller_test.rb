@@ -3,8 +3,43 @@ require 'test_helper'
 class CausesControllerTest < ActionController::TestCase
 
   #DETAILS
-  test "should get details" do
-    cause = Cause.make :url => "foobar"
+  test "should get details if active cause" do
+    cause = Cause.make :url => "foobar",:status => :active
+
+    get :details, :url => "foobar"
+
+    assert_not_nil assigns(:cause)
+    assert_equal assigns(:cause), cause
+    assert_response :success
+  end
+
+  #DETAILS
+  test "shouldnt get details of inactive cause if not owner nor admin" do
+    cause = Cause.make :url => "foobar",:status => :inactive
+
+    get :details, :url => "foobar"
+
+    assert_not_nil assigns(:cause)
+    assert_equal assigns(:cause), cause
+    assert_response :forbidden
+  end
+
+  #DETAILS
+  test "should get details if inactive and owner" do
+    user = create_charity_and_sign_in
+    cause = Cause.make :url => "foobar",:status => :inactive, :charity_id => user.id
+
+    get :details, :url => "foobar"
+
+    assert_not_nil assigns(:cause)
+    assert_equal assigns(:cause), cause
+    assert_response :success
+  end
+
+ #DETAILS
+  test "should get details if inactive and admin" do
+    user = create_admin_and_sign_in
+    cause = Cause.make :url => "foobar",:status => :inactive
 
     get :details, :url => "foobar"
 
@@ -68,6 +103,37 @@ class CausesControllerTest < ActionController::TestCase
     assert_not_nil assigns(:causes)
     assert_equal 3, assigns(:causes).size
     assert_equal_unordered causes.map(&:id), assigns(:causes).map(&:id)
+  end
+
+#LIST-filter
+  test "should get causes list inactive status filtered by category if admin" do
+    user = create_admin_and_sign_in
+    CauseCategory.make_many 2
+
+    causes = Cause.make_many 3, :status => :inactive, :cause_category => CauseCategory.first
+    Cause.make_many 3, :status => :raising_funds, :cause_category => CauseCategory.first
+    Cause.make_many 3, :status => :completed, :cause_category => CauseCategory.last
+
+    get :index, :status => :inactive, :category => CauseCategory.first.id
+
+    assert_response :success
+    assert_not_nil assigns(:causes)
+    assert_equal 3, assigns(:causes).size
+    assert_equal_unordered causes.map(&:id), assigns(:causes).map(&:id)
+  end
+
+  #LIST-filter
+  test "shouldnt get causes list inactive status filtered by category if not admin" do
+    user = create_and_sign_in
+    CauseCategory.make_many 2
+
+    causes = Cause.make_many 3, :status => :inactive, :cause_category => CauseCategory.first
+    Cause.make_many 3, :status => :raising_funds, :cause_category => CauseCategory.first
+    Cause.make_many 3, :status => :completed, :cause_category => CauseCategory.last
+
+    get :index, :status => :inactive, :category => CauseCategory.first.id
+
+    assert_response :forbidden
   end
 
   #LIST-sorted
@@ -351,6 +417,29 @@ class CausesControllerTest < ActionController::TestCase
   end
 
   #CREATE
+  test "should create inactive causes from inactive charity ignoring params[:status]" do
+    user = create_charity_and_sign_in :status => :inactive
+
+    post :create,
+    :cause =>
+      {
+        :name => 'Hi',
+        :description=>"ss",
+        :city => "cba",
+        :status =>:active,
+        :charity_id =>user.id,
+        :country_id =>Country.make.id,
+        :cause_category_id=>CauseCategory.make.id,
+        :url=> "url",
+        :funds_needed=>100,
+        :funds_raised=>0
+      }
+    assert_equal :inactive,Cause.first.status
+    assert_equal 1,Cause.count
+    assert_redirected_to :action => :details, :url => "url"
+  end
+
+  #CREATE
   test "shouldnt create cause" do
     user = create_charity_and_sign_in
     post :create,
@@ -523,7 +612,16 @@ class CausesControllerTest < ActionController::TestCase
   end
 
   #ACTIVATE
-  test "should not activate" do
+  test 'shouldnt activate causes whith inactive owner' do
+    user = create_admin_and_sign_in
+    cause = Cause.make(:status=>:inactive, :charity => Charity.make(:status => :inactive))
+    post :activate, :id => cause.id
+    assert_response :found
+    assert_equal :inactive,cause.reload.status
+  end
+
+  #ACTIVATE
+  test "should not activate if not admin" do
     user = create_charity_and_sign_in
     cause = Cause.make :status=>:inactive
     post :activate, :id => cause.id

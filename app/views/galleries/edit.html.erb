@@ -21,32 +21,34 @@
 <%= link_to_cause @entity if @entity.class == Cause %> 
 | <%=_('Gallery')%></h1>
 
-<%=add_photo_button%>
-<%= form_for :photo_item, :url => 'add_photo',:method => :post,:html => { :multipart => true, :id => 'photo_form',:class => 'nodisplay' } do |f|%>
+<div style="float: left">
+	<%= render :partial => 'galleries/view', :locals => { :gallery => @gallery, :edit => true }%>
+</div>
+
+<div style="float: left">
+<%= form_for :photo_item, :url => 'add_photo',:method => :post,:html => { :multipart => true, :id => 'photo_form' } do |f|%>
+  <fieldset>
+	<legend><%= _('Add Photo')%></legend>
     <%= f.file_field :image %></p>
-    <%= f.hidden_field :gallery_id,:value => @gallery_id %>
+    <%= f.hidden_field :gallery_id,:value => @gallery.id %>
     <%= cancel_add_button%>
    	<%= submit_tag _('Submit Photo'), :disable_with => _('Submitting...') %>
-  <% end %>
+  </fieldset>
+<% end %>
 <br/>
-<%=add_video_button%>
- <%= form_tag({:controller => 'galleries', :action => "add_video"}, :id => 'video_form',:class => 'nodisplay',:method => "post") do%>
+
+<%= form_tag({:controller => 'galleries', :action => "add_video"}, :id => 'video_form', :method => "post") do%>
+  <fieldset>
+	<legend><%= _('Add Video')%></legend>
     <%= text_field_tag :video_url%>
-    <%= hidden_field_tag :gallery_id, @gallery_id %>
+    <%= hidden_field_tag :gallery_id, @gallery.id %>
     <%= cancel_add_button%>
    	<%= submit_tag _('Submit Video'), :disable_with => _('Submitting...') %>
-  <% end %>
+	<p><%= raw(_('Paste any %s or %s video url') % [link_to('Youtube', 'http://www.youtube.com', :target => :_blank),link_to('Vimeo', 'http://www.vimeo.com', :target => :_blank)])%>
+  </fieldset>
+<% end %>
 
-<table>
-  <tbody>
-   <%@gallery_items.each do |item|%>
-      <tr id = "item_<%=item.relative_order%>">
-        <td> (<%=item.relative_order%>)<%=item.type%>(id:<%=item.id%>)</td>
-        <td><%=move_up_button item.id%></td>
-        <td><%=move_down_button item.id%></td>
-        <td><%=delete_item_button item.id%></td>
-      </tr>
-  <% end %>
-   </tbody>
-</table>
+</div>
+
+<div style="clear: both;" />
 

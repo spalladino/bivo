@@ -2,7 +2,7 @@
 	<div class="view">
 	</div>
 
-	<div class="thumbnails">
+	<ul class="thumbnails">
 		<% gallery.items.each_with_index do |item, index|
 			options = {}		
 			options[:class] = 'current' if index == 0		
@@ -13,9 +13,17 @@
 				options['data-url'] = item.image.url(:normal)
 			end
 		%>
-			<%= image_tag item.thumbnail_url, options %>
+			<li data-item-id="<%=item.id%>">
+				<%= image_tag item.thumbnail_url, options %>
+				<% if edit %>
+				<br/>
+				<div>
+					<%=move_before_button item.id%>
+			        <%=delete_item_button item.id%>
+			        <%=move_after_button item.id%>
+				</div>
+				<% end %>
+			</li>			
 		<% end %>
-	</div>
+	</ul>
 </div>
-
-<%= edit_gallery_link entity %>

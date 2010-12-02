@@ -3,21 +3,23 @@ class GalleriesController < ApplicationController
   before_filter :can_edit
   
   def edit
-    load_gallery_for_entity
+    @gallery = Gallery.for_entity @entity
   end
 
   def move_up
     gallery_item = GalleryItem.find(params[:id])
-    @old_position = gallery_item.relative_order.to_s
+    @item_id = params[:id]
     gallery_item.move_up
-    @new_position = gallery_item.relative_order.to_s
+    @preceding_item = gallery_item.gallery.items.where('relative_order < ?', gallery_item.relative_order).last
+    render 'move_item'
   end
 
   def move_down
     gallery_item = GalleryItem.find(params[:id])
-    @old_position = gallery_item.relative_order.to_s
+    @item_id = params[:id]
     gallery_item.move_down
-    @new_position = gallery_item.relative_order.to_s
+    @preceding_item = gallery_item.gallery.items.where('relative_order < ?', gallery_item.relative_order).last
+    render 'move_item'
   end
 
   def add_video
@@ -43,9 +45,9 @@ class GalleriesController < ApplicationController
     redirect_to request.referer
   end
 
-  def destroy_gallery_item
+  def remove_item
     item = GalleryItem.find(params[:id])
-    @relative_ord = item.relative_order
+    @item_id = item.id
     item.destroy
   end
 
@@ -59,12 +61,6 @@ protected
     if !eval("#{@entity.class}::GalleryRules").can_edit?(current_user, @entity)
       render :nothing => true, :status => :forbidden
     end
-  end
-  
-  def load_gallery_for_entity
-    gallery = Gallery.for_entity @entity
-    @gallery_id = gallery.id
-    @gallery_items = gallery.items.order('relative_order')    
   end
 
 end
