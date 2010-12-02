@@ -188,8 +188,13 @@ class Cause < ActiveRecord::Base
       result = result.group(cause_columns)
     end
 
-
-    result.limit(1).first
+    res = result.limit(1).first
+    
+    if (from.nil? || to.nil?)
+      res if res.votes_count > 0
+    else
+      res if res && res.votes_in_period.to_i > 0
+    end
   end
 
   def self.most_voted_causes(from=nil, to=nil)
