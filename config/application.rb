@@ -2,6 +2,7 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+require './lib/hash'
 
 # If you have a Gemfile, require the gems listed there, including any gems
 # you've limited to :test, :development, or :production.
@@ -15,7 +16,6 @@ module Bivo
 
     # Custom directories with classes and modules you want to be autoloadable.
     config.autoload_paths += %W(#{config.root}/app/models/accounting)
-
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
     # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
@@ -44,6 +44,14 @@ module Bivo
     config.generators do |g|
       g.fixture :false
     end
+
+    config.active_record.observers = [
+      :cause_observer, 
+      :charity_follow_observer, 
+      :comment_observer, 
+      :follow_observer, 
+      :news_observer
+    ]
 
     config.currencies = {
       :DZD => "Algerian Dinar (DZD)",

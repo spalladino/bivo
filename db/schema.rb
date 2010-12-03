@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101125143723) do
+ActiveRecord::Schema.define(:version => 20101130144436) do
 
   create_table "account_movements", :force => true do |t|
     t.integer  "account_id"
@@ -145,6 +145,14 @@ ActiveRecord::Schema.define(:version => 20101125143723) do
     t.string   "newsable_type"
   end
 
+  create_table "pending_mails", :force => true do |t|
+    t.string   "method"
+    t.text     "data"
+    t.integer  "retries"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "shop_categories", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -167,11 +175,11 @@ ActiveRecord::Schema.define(:version => 20101125143723) do
     t.string   "affiliate_code"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "status"
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
+    t.string   "status"
     t.float    "comission_value"
     t.string   "comission_kind"
     t.string   "comission_details"

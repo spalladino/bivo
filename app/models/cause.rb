@@ -53,7 +53,11 @@ class Cause < ActiveRecord::Base
   has_many :news, :as => :newsable
   has_many :votes, :dependent => :destroy
 
+  before_update :status_will_change!, :if => :status_changed?
+  after_update :check_if_status_changed
+
   after_save :ensure_cause_account
+
   before_validation :ensure_complete_when_funds_raised
 
   attr_protected :status
@@ -247,6 +251,14 @@ class Cause < ActiveRecord::Base
         self.status = :completed
       end
     end
+  end
+
+  def status_will_change!
+    @status_change = true
+  end
+
+  def check_if_status_changed
+    notify_observers :status_change_persisted if @status_change
   end
 end
 

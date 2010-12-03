@@ -112,10 +112,61 @@ class CauseTest < ActiveSupport::TestCase
   test "should get the most voted cause for each category" do
     cause_categories = CauseCategory.all
     causes = []
-    cause_categories.each { |cat| causes += Cause.make_many(5, :cause_category => cat) }
+    CauseCategory.all.each { |cat| causes += Cause.make_many(5, :cause_category => cat) }
     causes.each { |c| Vote.make_many(3, :cause => c) }
 
     assert_equal Set.new(CauseCategory.all), Set.new(Cause.most_voted_causes.map(&:cause_category))
+  end
+
+  test "should send emails if the cause status changed" do
+    cause = Cause.make :status => :inactive
+
+    3.times do
+      Follow.create ({
+        :user  => PersonalUser.make,
+        :cause => cause
+      })
+    end
+
+    cause.status = :active
+    cause.save
+
+    assert_equal PendingMail.where(:method => :cause_status_changed_for_follower).count, 3
+    assert_equal PendingMail.where(:method => :cause_status_changed_for_charity).count, 1
+  end
+
+  test "shouldnt send emails if the cause status didnt change" do
+    cause = Cause.make :status => :inactive
+
+    3.times do
+      Follow.create ({
+        :user  => PersonalUser.make,
+        :cause => cause
+      })
+    end
+
+    cause.status = :inactive
+    cause.save
+
+    assert_not_equal PendingMail.where(:method => :cause_status_changed_for_follower).count, 3
+    assert_not_equal PendingMail.where(:method => :cause_status_changed_for_charity).count, 1
+  end
+
+  test "should send a different email if the new status is completed" do
+    cause = Cause.make :status => :raising_funds
+
+    3.times do
+      Follow.create ({
+        :user  => PersonalUser.make,
+        :cause => cause
+      })
+    end
+
+    cause.status = :completed
+    cause.save
+
+    assert_equal PendingMail.where(:method => :funds_completed_for_follower).count, 3
+    assert_equal PendingMail.where(:method => :funds_completed_for_charity).count, 1
   end
   
   test "causes without votes should not be included in most voted" do

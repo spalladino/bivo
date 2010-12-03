@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  method: MyString
+  data: MyText
+  retries: 1
+
+two:
+  method: MyString
+  data: MyText
+  retries: 1
