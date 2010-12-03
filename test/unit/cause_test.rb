@@ -118,20 +118,55 @@ class CauseTest < ActiveSupport::TestCase
     assert_equal Set.new(CauseCategory.all), Set.new(Cause.most_voted_causes.map(&:cause_category))
   end
 
-  test "should send an email to the queue if the cause status changed" do
-    assert false
+  test "should send emails if the cause status changed" do
+    cause = Cause.make :status => :inactive
+
+    3.times do
+      Follow.create ({
+        :user  => PersonalUser.make,
+        :cause => cause
+      })
+    end
+
+    cause.status = :active
+    cause.save
+
+    assert_equal PendingMail.where(:method => :cause_status_changed_for_follower).count, 3
+    assert_equal PendingMail.where(:method => :cause_status_changed_for_charity).count, 1
   end
 
-  test "shouldnt send an email to the queue if the cause status didnt change" do
-    assert false
+  test "shouldnt send emails if the cause status didnt change" do
+    cause = Cause.make :status => :inactive
+
+    3.times do
+      Follow.create ({
+        :user  => PersonalUser.make,
+        :cause => cause
+      })
+    end
+
+    cause.status = :inactive
+    cause.save
+
+    assert_not_equal PendingMail.where(:method => :cause_status_changed_for_follower).count, 3
+    assert_not_equal PendingMail.where(:method => :cause_status_changed_for_charity).count, 1
   end
 
-  test "should send a different email to the queue if the new status is completed" do
-    assert false
-  end
+  test "should send a different email if the new status is completed" do
+    cause = Cause.make :status => :raising_funds
 
-  test "shouldnt send a funds completed mail if the status didnt change or is not completed" do
-    assert false
+    3.times do
+      Follow.create ({
+        :user  => PersonalUser.make,
+        :cause => cause
+      })
+    end
+
+    cause.status = :completed
+    cause.save
+
+    assert_equal PendingMail.where(:method => :funds_completed_for_follower).count, 3
+    assert_equal PendingMail.where(:method => :funds_completed_for_charity).count, 1
   end
 end
 

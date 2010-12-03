@@ -35,7 +35,7 @@ class CommentObserver < ActiveRecord::Observer
 
   def enqueue_charity_comment
     # enqueuing an email for each follower of the charity about the comment
-    Follow.where(:cause_id => @comment.commentable_id).each do |follow|
+    CharityFollow.where(:charity_id => @comment.commentable_id).each do |follow|
       PendingMail.create({
         :method => "charity_commented_for_follower",
         :data => Marshal.dump({
@@ -45,8 +45,6 @@ class CommentObserver < ActiveRecord::Observer
         })
       })
     end
-
-    cause = Cause.find(@comment.commentable_id)
 
     PendingMail.create({
       :method => "charity_commented_for_charity",
