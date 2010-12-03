@@ -9,4 +9,8 @@ class Expense < Transaction
   def detail
     self.paid_to
   end
+  
+  def self.between(from, to)
+    where("transaction_date BETWEEN ? AND ?", from, to)
+  end
 end

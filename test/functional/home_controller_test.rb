@@ -68,4 +68,20 @@ class HomeControllerTest < ActionController::TestCase
     assert_equal @request.session[:locale].to_sym, :fr
     assert_equal Charity.find(user.id).preferred_language.to_sym, :fr    
   end
+  
+  test "should get stats without data" do
+    get :stats
+    assert_response :success
+  end
+  
+  test "should get stats filtering by period" do
+    Expense.make :transaction_date => 2.month.ago
+    e1 = Expense.make
+    e2 = Expense.make
+    
+    get :stats
+    assert_response :success
+    
+    assert_equal [e1, e2], assigns(:expenses)
+  end
 end
