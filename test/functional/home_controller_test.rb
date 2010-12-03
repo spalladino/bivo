@@ -92,4 +92,21 @@ class HomeControllerTest < ActionController::TestCase
     assert_equal e3.amount, assigns(:expense_categories).second.amount
     assert_equal 0, assigns(:expense_categories).third.amount
   end
+  
+  test "should display all expense categories" do
+    ecat = ExpenseCategory.make_many(3).sort { |a,b| a.name <=> b.name }
+
+    Expense.make :transaction_date => 4.month.ago, :expense_category => ecat.first
+    e1 = Expense.make :expense_category => ecat.first
+    e2 = Expense.make :expense_category => ecat.first
+    e3 = Expense.make :expense_category => ecat.second
+    
+    get :stats, :period => 'last_month'
+    assert_response :success
+    
+    assert_equal ecat.map(&:id), assigns(:expense_categories).map(&:id)
+    assert_equal 0, assigns(:expense_categories).first.amount
+    assert_equal 0, assigns(:expense_categories).second.amount
+    assert_equal 0, assigns(:expense_categories).third.amount
+  end
 end

@@ -6,15 +6,16 @@ class ExpenseCategory < ActiveRecord::Base
   has_many :expenses
 
   def self.stats(from, to)
-    # left join and transaction_date IS NULL is required for categories without expenses in that period
-    res = joins("LEFT JOIN #{Expense.table_name} ON #{self.table_name}.id = #{Expense.table_name}.expense_category_id")\
-      .where("#{Expense.table_name}.transaction_date IS NULL OR #{Expense.table_name}.transaction_date BETWEEN ? AND ?", from, to)\
-      .group(self.column_names.map{|c| "#{self.table_name}.#{c}"})\
-      .select("#{self.table_name}.*, SUM(#{Expense.table_name}.amount) AS amount")\
+    # required for categories without expenses in that period
+    categories = all
+    
+    amounts = Expense.between(from, to).group(:expense_category_id)\
+      .select("expense_category_id, SUM(amount) AS amount")\
+      .inject({}) { |res,row| res.merge!({ row.expense_category_id => row.amount.to_f }) }
     
     # fix data type of the SUM, it is a string
-    res.each { |row| row.amount = (row.amount || 0).to_f }
+    categories.each { |row| row.define_accessor :amount, (amounts[row.id] || 0.to_f) }
     
-    res
+    categories
   end
 end
