@@ -18,9 +18,9 @@
        <td><%= transaction.transaction_date %></td>
 	     <td><%= transaction.description %></td>
        <% if transaction.type == "Income"  %>
-          <td><%= (IncomeCategory.find(transaction.income_category_id)).name %></td>
-       <% else  %>
-          <td><%= (ExpenseCategory.find(transaction.expense_category_id)).name %></td>
+          <td><%= transaction.income_category.name rescue nil %></td>
+       <% else %>
+          <td><%= transaction.expense_category.name rescue nil %></td>
        <% end  %>
        <td><%= transaction.detail %></td>
        <td><%= link_to _("Edit"),transaction_edit_path(transaction.id)%></td>
