@@ -191,7 +191,7 @@ class Cause < ActiveRecord::Base
     res = result.limit(1).first
     
     if (from.nil? || to.nil?)
-      res if res.votes_count > 0
+      res if res && res.votes_count > 0
     else
       res if res && res.votes_in_period.to_i > 0
     end
