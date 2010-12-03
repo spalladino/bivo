@@ -42,6 +42,7 @@ class HomeController < ApplicationController
     load_periods
 
     @expenses = Expense.between(@from, @to)
+    @expense_categories = ExpenseCategory.stats(@from, @to)
   end
 
   def change_language
