@@ -168,5 +168,15 @@ class CauseTest < ActiveSupport::TestCase
     assert_equal PendingMail.where(:method => :funds_completed_for_follower).count, 3
     assert_equal PendingMail.where(:method => :funds_completed_for_charity).count, 1
   end
+  
+  test "causes without votes should not be included in most voted" do
+    cause = Cause.make
+    assert_nil Cause.most_voted_cause(cause.cause_category)
+  end
+  
+  test "causes without votes should not be included in most voted in range" do
+     cause = Cause.make
+     assert_nil Cause.most_voted_cause(cause.cause_category, 1.year.ago, 1.month.ago)
+  end
 end
 

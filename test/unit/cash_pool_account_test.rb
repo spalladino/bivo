@@ -10,7 +10,7 @@ class CashPoolAccountTest < ActiveSupport::TestCase
       assert_equal CashPoolAccount::NAME, a.name
     end
   end
-  
+   
   setup do
     CauseCategory.all.map &:destroy
     @cause_categories = CauseCategory.make_many 3
@@ -21,6 +21,7 @@ class CashPoolAccountTest < ActiveSupport::TestCase
     causes_spec.each_with_index do |spec, index|
       result << Cause.make(:cause_category => @cause_categories[index], :status => :active, :funds_needed => 100, :funds_raised => 0)
       Vote.make_many (spec[:votes] || 1), :cause => result.last
+      result.last.reload
     end    
     result
   end
@@ -37,7 +38,7 @@ class CashPoolAccountTest < ActiveSupport::TestCase
   def add_cash_pool_income(amount)    
     Account.transfer Account.make, Account.cash_pool_account, amount.to_d
   end
-      
+    
   test "split funds between raising funds causes" do    
     c1, c2 = make_raising_causes [{}, {}]
     add_cash_pool_income 50
