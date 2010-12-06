@@ -46,7 +46,7 @@ class ExpenseCategoriesController < ApplicationController
 
     respond_to do |format|
       if @expense_category.save
-        format.html { redirect_to(@expense_category, :notice => 'Expense category was successfully created.') }
+        format.html { redirect_to(expense_categories_path, :notice => 'Expense category was successfully created.') }
         format.xml  { render :xml => @expense_category, :status => :created, :location => @expense_category }
       else
         format.html { render :action => "new" }
@@ -88,3 +88,4 @@ class ExpenseCategoriesController < ApplicationController
     render :partial => 'select_categories'
   end
 end
+
