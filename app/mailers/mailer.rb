@@ -1,6 +1,6 @@
 class Mailer < ActionMailer::Base
-  default :from => "admin@bivo.com"
-
+  default :from => Bivo::Application.config.action_mailer_default_from
+  
   def cause_being_followed(mail_data)
     @cause = Cause.find(mail_data.cause_id)
     @follower = User.find(mail_data.follower_id)

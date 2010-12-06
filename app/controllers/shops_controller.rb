@@ -77,7 +77,7 @@ class ShopsController < ApplicationController
   def update
     if save_shop
       flash[:notice] = _("Shop successfully updated")
-      redirect_to root_url
+      redirect_to shop_details_path @shop.short_url
     else
       render :edit
     end
