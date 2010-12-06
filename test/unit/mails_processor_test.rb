@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class MailProcessorTest < ActiveSupport::TestCase
+class MailsProcessorTest < ActiveSupport::TestCase
   test "should send at most BATCH_SIZE emails" do
   end
 end

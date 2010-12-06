@@ -10,7 +10,7 @@ class MailsProcessor
 
     PendingMail.where("retries < ?", MAX_RETRIES).limit(BATCH_SIZE).each { |mail|
       begin
-        Mailer.send(mail.method, Marshal.load(mail.data).to_struct)
+        Mailer.send(mail.method, Marshal.load(mail.data).to_struct).deliver
         to_be_removed << mail.id
       rescue
         to_increase_retries << mail.id
