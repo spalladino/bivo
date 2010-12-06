@@ -1,6 +1,6 @@
 class ShopsController < ApplicationController
 
-  before_filter :authenticate_user!, :except => [:details,:home,:show]
+  before_filter :authenticate_user!, :except => [:details,:home,:show,:search]
   before_filter :only_admin, :only => [:new, :create, :edit, :update, :activate, :deactivate, :edit_categories]
   before_filter :load_shop, :except => [ :details, :new, :create, :home, :index, :search, :edit_categories]
   before_filter :load_places, :only => [ :new, :edit, :create, :update ]
