@@ -11,6 +11,12 @@
 	}
 <% end %>
 
+<p>
+  <%= link_to _("Shop Details"), shop_details_path(@shop.short_url)%> <br /> <br />
+
+</p>
+
+
 
 <h3><%= _("Name") %></h3>
 <p><%= @shop.name %></p>
@@ -23,6 +29,13 @@
 
 <h3><%= _("Description") %></h3>
 <p><%= @shop.description %></p>
+
+<div>
+  <%= @shop.incomes_in_period(1.month.ago, Date.today)%>
+  <b><%=_('Raised this month')%></b>
+</div>
+
+<%= link_to _("See how it works"), how_it_works_url %>
 
 <h3><%= _("Affiliate Code") %></h3>
 <div>

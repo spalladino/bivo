@@ -1,6 +1,6 @@
 class ShopsController < ApplicationController
 
-  before_filter :authenticate_user!, :except => [:details,:home,:show]
+  before_filter :authenticate_user!, :except => [:details,:home,:show,:search]
   before_filter :only_admin, :only => [:new, :create, :edit, :update, :activate, :deactivate, :edit_categories]
   before_filter :load_shop, :except => [ :details, :new, :create, :home, :index, :search, :edit_categories]
   before_filter :load_places, :only => [ :new, :edit, :create, :update ]
@@ -77,7 +77,7 @@ class ShopsController < ApplicationController
   def update
     if save_shop
       flash[:notice] = _("Shop successfully updated")
-      redirect_to root_url
+      redirect_to shop_details_path @shop.short_url
     else
       render :edit
     end
