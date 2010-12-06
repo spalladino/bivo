@@ -23,7 +23,7 @@ class Mailer < ActionMailer::Base
     mail :to => @follower.email, :subject => "Cause status changed"
   end
 
-  def cause_commented_for_charity
+  def cause_commented_for_charity(mail_data)
     @cause = Cause.find(mail_data.cause_id)
     @follower = User.find(mail_data.follower_id)
 
