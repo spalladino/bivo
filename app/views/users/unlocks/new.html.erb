@@ -3,10 +3,11 @@
 <%= form_for(resource, :as => resource_name, :url => unlock_path(resource_name), :html => { :method => :post }) do |f| %>
   <%= render "shared/error_messages", :target => resource %>
 
-  <p><%= f.label :email %><br />
+  <p><%= f.label :email, _("Email") %><br />
   <%= f.text_field :email %></p>
 
-  <p><%= f.submit "Resend unlock instructions" %></p>
+  <p><%= f.submit _("Resend unlock instructions") %></p>
 <% end %>
 
 <%= render :partial => "devise/shared/links" %>
+

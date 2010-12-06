@@ -125,11 +125,12 @@ class AdminController < ApplicationController
   end
 
   def tools
+    @pending_mails = PendingMail.count
   end
 
   def send_mails
-    #MailsProcessor.instance.process
-    @count = PendingMail.count
+    MailsProcessor.instance.process
+    render :text => 'done'
   end
 end
 
