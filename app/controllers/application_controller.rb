@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   before_filter :check_eula_accepted
   before_filter :instantiate_controller_and_action_names
   before_filter :load_languages
+  before_filter :mailer_set_url_options
 
   protected
 
@@ -83,5 +84,10 @@ class ApplicationController < ActionController::Base
     @languages = Language.all
     @language = Language.by_id session[:locale].to_sym    
   end
+
+  def mailer_set_url_options
+    ActionMailer::Base.default_url_options[:host] = request.host_with_port
+  end
+  
 end
 
