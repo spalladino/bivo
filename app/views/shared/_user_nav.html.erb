@@ -12,7 +12,7 @@
 	<%= link_to _("Dashboard"), dashboard_url %> | 
 	<%= link_to _("About Bivo"), about_url %> | 
     <% if user_signed_in? %>
-      <%= _("Signed in as") %> <%= current_user.email %>. <%= link_to _("Not you?"), destroy_user_session_path %> |
+      <%= _("Signed in as") %> <%= current_user.email %>. <%= link_to _("Logout"), destroy_user_session_path %> |
           <% if (current_user.type == "Charity") %>
             <%= link_to _("Settings"), edit_user_registration_path %>
           <% elsif (current_user.type == "PersonalUser") %>
