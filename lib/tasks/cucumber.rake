@@ -48,6 +48,30 @@ begin
     STDERR.puts "*** The 'features' task is deprecated. See rake -T cucumber ***"
   end
   
+  task :cucumber_steps_list do
+    step_definition_dir = "../bivo/features"
+
+    f = File.new("cucumber_steps.htm", "w")
+
+    f << "<table><th>Regex</th><th>Modifiers</th><th>Step Definition Args</th><th>Source file</th>"
+
+    Dir.glob(File.join(step_definition_dir,'**/*.rb')).each do |step_file|
+      File.new(step_file).read.each_line do |line|
+        next unless line =~ /^\s*(?:Given|When|Then)\s+\//
+        matches = /(?:Given|When|Then)\s*\/(.*)\/([imxo]*)\s*do\s*(?:$|\|(.*)\|)/.match(line).captures
+        matches << step_file
+        f << "<tr>"
+        f << "<td>#{matches[0]}</td>"
+        f << "<td>#{matches[1]}</td>"
+        f << "<td>#{matches[2]}</td>"
+        f << "<td><a href=\"#{matches[3]}\">#{matches[3]}</a></td>"
+        f << "</tr>"
+      end
+    end
+
+    f << "</table>"
+  end
+  
 rescue LoadError
   desc 'cucumber rake task not available (cucumber not installed)'
   task :cucumber do
