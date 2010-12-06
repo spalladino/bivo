@@ -24,8 +24,8 @@ class Mailer < ActionMailer::Base
   end
 
   def cause_commented_for_charity(mail_data)
+    @charity = User.find(mail_data.charity_id)
     @cause = Cause.find(mail_data.cause_id)
-    @follower = User.find(mail_data.follower_id)
 
     mail :to => @follower.email, :subject => "New comment in your cause"
   end
