@@ -26,12 +26,20 @@ class Income < Transaction
       shop.name
     end
   end
+  
+  def revenue_amount
+    0.05 * amount
+  end
+
+  def self.between(from, to)
+    where("transaction_date BETWEEN ? AND ?", from, to)
+  end
 
   def self.funds_raised(from, to)
-    where("transaction_date BETWEEN ? AND ?", from, to).sum("amount")
+    between(from, to).sum("amount")
   end
 
   def self.transactions_count(from, to)
-    where("transaction_date BETWEEN ? AND ?", from, to).count
+    between(from, to).count
   end
 end

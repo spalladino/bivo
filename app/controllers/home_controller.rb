@@ -43,6 +43,8 @@ class HomeController < ApplicationController
 
     @expenses = Expense.between(@from, @to)
     @expense_categories = ExpenseCategory.stats(@from, @to)
+    
+    @revenues = Income.between(@from, @to)
   end
 
   def change_language

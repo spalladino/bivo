@@ -42,3 +42,22 @@
 	<% end %>
   </table>
 </div>
+
+<div>
+  <h2><%= _("Revenue Details")%></h2>
+
+  <table border="1"> 
+	<tr>
+		<th>Source</th>
+		<th>Channel</th>
+		<th>Amount</th>
+	</tr>
+	<% for revenue in @revenues %>
+	  <tr>
+		<td><%= revenue.income_category.name rescue nil %></td>
+		<td><%= revenue.detail %></td>
+		<td><%= revenue.revenue_amount %></td>
+	  </tr>
+	<% end %>
+  </table>
+</div>
