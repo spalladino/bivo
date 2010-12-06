@@ -117,6 +117,10 @@ IncomeCategory.blueprint do
   name  { Sham.simple_name }
 end
 
+ExpenseCategory.blueprint do
+  name  { Sham.simple_name }
+end
+
 Gallery.blueprint do
   entity_id {Charity.make.id}
   entity_type {"Charity"}
@@ -142,5 +146,14 @@ end
 
 Income.blueprint(:investment) do
   income_category { IncomeCategory.make }
+end
+
+Expense.blueprint do
+  input_amount { Sham.amount }
+  input_currency { Transaction::DefaultCurrency }
+  user { Admin.make }
+  transaction_date { Date.today }
+  paid_to { Sham.simple_name }
+  expense_category { ExpenseCategory.make_or_get(5) }
 end
 

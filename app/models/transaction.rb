@@ -27,4 +27,5 @@ class Transaction < ActiveRecord::Base
       errors.add(:currency, e.message)
     end
   end
+  
 end

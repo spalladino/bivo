@@ -10,7 +10,8 @@ $(document).ready(function(){
 <% end %>
 
 <h2>
-  <%= edit_transaction_title_for @transaction.type %>
+  <%= link_to _("Transactions"), transaction_list_path %>
+  | <%= edit_transaction_title_for @transaction.type %>
 </h2>
 
 

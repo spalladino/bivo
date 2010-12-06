@@ -1,38 +1,8 @@
-<% content_for(:js) do %>
-  $(function() {
-		setCustomPeriod();
-    $('#period').change(setCustomPeriod);
-
-    function setCustomPeriod() {
-      if ($('#period').attr('value') == "custom") {
-          $('#custom_period').show();
-      } else {
-        $('#custom_period').hide();
-      }
-    }
-	});
-<% end %>
-
 <h1>Dashboard</h1>
 
 <div id="filters">
-  <%= form_tag(dashboard_path, :method => "get") do %>
-    <%= _('Period') %>
-    <%= select_tag :period, options_for_select(@periods, @period) %>
-
-    <div id="custom_period">
-      <br />
-      <%= _('From') %>
-      <%= select_date @from, :prefix => :custom_from, :start_year => 2000, :end_year => 2020 %>
-      <br />
-      <%= _('To') %>
-      <%= select_date @to, :prefix => :custom_to, :start_year => 2000, :end_year => 2020 %>
-    </div>
-    <br />
-    <%= submit_tag _('Search'), :disable_with => _('Searching...') %>
-  <% end %>
+  <%= render 'choose_period' %>
 </div>
-
 
 <div id="funds_raised">
   <h2><%= _("Funds Raised") %></h2>

@@ -55,8 +55,9 @@
 </div>
 
 
-<h2>transactions</h2>
-<%= link_to _("Add"), new_transaction_path%></td>
+<h2><%= link_to _("Transactions"), transaction_list_path %></h2>
+
+<%= link_to _("add transaction"), new_transaction_path%></td>
 <div id="transactions">
   <%= render 'transactions' %>
 </div>

@@ -1,4 +1,5 @@
 class ExpenseCategoriesController < ApplicationController
+  layout 'plain'
   prepend_before_filter :authenticate_user!, :only_admin
   # GET /expense_categories
   # GET /expense_categories.xml

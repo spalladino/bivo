@@ -29,38 +29,20 @@ class HomeController < ApplicationController
   end
 
   def dashboard
-    @periods = [["this month","this_month"],
-                ["last month","last_month"],
-                ["this year", "this_year"],
-                ["last year", "last_year"],
-                ["this quarter", "this_quarter"],
-                ["last quarter", "last_quarter"],
-                ["custom", "custom"]]
-
-    @period = params["period"] || "this_month"
-
-    if (@period.to_sym == :custom)
-        @from = Date.civil(
-          params[:custom_from][:year].to_i,
-          params[:custom_from][:month].to_i,
-          params[:custom_from][:day].to_i
-        )
-
-        @to = Date.civil(
-          params[:custom_to][:year].to_i,
-          params[:custom_to][:month].to_i,
-          params[:custom_to][:day].to_i
-        )
-    else
-      @from = get_period_from(@period.to_sym, Date.today)
-      @to = get_period_to(@period.to_sym, Date.today)
-    end
-
+    load_periods
+    
     @funds_raised = Income.funds_raised(@from, @to)
     @transactions = Income.transactions_count(@from, @to)
     @causes_being_funded = Cause.causes_being_funded(@from, @to)
     @most_voted_causes = Cause.most_voted_causes(@from, @to)
     @shops_to_cloud = Shop.all
+  end
+  
+  def stats
+    load_periods
+
+    @expenses = Expense.between(@from, @to)
+    @expense_categories = ExpenseCategory.stats(@from, @to)
   end
 
   def change_language
@@ -89,6 +71,37 @@ class HomeController < ApplicationController
   end
 
   def about
+  end
+  
+  protected
+  
+  def load_periods
+    @periods = [["this month","this_month"],
+                ["last month","last_month"],
+                ["this year", "this_year"],
+                ["last year", "last_year"],
+                ["this quarter", "this_quarter"],
+                ["last quarter", "last_quarter"],
+                ["custom", "custom"]]
+
+    @period = params["period"] || "this_month"
+
+    if (@period.to_sym == :custom)
+        @from = Date.civil(
+          params[:custom_from][:year].to_i,
+          params[:custom_from][:month].to_i,
+          params[:custom_from][:day].to_i
+        )
+
+        @to = Date.civil(
+          params[:custom_to][:year].to_i,
+          params[:custom_to][:month].to_i,
+          params[:custom_to][:day].to_i
+        )
+    else
+      @from = get_period_from(@period.to_sym, Date.today)
+      @to = get_period_to(@period.to_sym, Date.today)
+    end    
   end
 end
 

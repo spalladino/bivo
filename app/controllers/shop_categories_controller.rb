@@ -1,5 +1,5 @@
 class ShopCategoriesController < ApplicationController
-  layout nil
+  layout 'plain'
   before_filter :only_admin
 
   def edit

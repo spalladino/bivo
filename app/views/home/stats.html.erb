@@ -1,1 +1,40 @@
-Stats should be here.
+<h1>Statistics</h1>
+
+<div id="filters">
+  <%= render 'choose_period' %>
+</div>
+
+<div>
+  <h2><%= _("Expenses")%></h2>
+
+  <table border="1">
+  <% for cat in @expense_categories %>
+    <tr>
+	  <td><%= cat.name %></td>
+	  <td><%= cat.amount %></td>
+	</tr>
+  <% end %>
+  </table>
+
+</div>
+
+<div>
+  <h2><%= _("Expenses Details")%></h2>
+
+  <table border="1"> 
+	<tr>
+		<th>Type</th>
+		<th>Description</th>
+		<th>Paid to</th>
+		<th>Amount</th>
+	</tr>
+	<% for expense in @expenses %>
+	  <tr>
+		<td><%= expense.expense_category.name rescue nil %></td>
+		<td><%= expense.description %></td>
+		<td><%= expense.paid_to %></td>
+		<td><%= expense.amount %></td>
+	  </tr>
+	<% end %>
+  </table>
+</div>
