@@ -1,4 +1,6 @@
 class MailsProcessor
+  include Singleton
+
   BATCH_SIZE = 100
   MAX_RETRIES = 5
   

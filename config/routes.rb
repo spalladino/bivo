@@ -30,6 +30,7 @@ Bivo::Application.routes.draw do
   delete "income_categories/:id", :to => "income_categories#destroy"
 
   #paths for admin manager
+  get "admin/send_mails"
   get "admin/tools"
   get "admin/user_manager"
   get "admin/new_personal_user", :to => "admin#new_personal_user", :as => "admin_new_personal_user"
