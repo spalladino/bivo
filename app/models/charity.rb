@@ -47,7 +47,7 @@ class Charity < User
   # Default scope excludes deleted charities
   default_scope where('users.status != ?', :deleted)
 
-  scope :with_cause_data, proc { where('users.status != ?', :inactive)
+  scope :with_cause_data, proc { where('users.status != ?', :inactive)\
       .joins("LEFT JOIN #{Cause.table_name} ON #{Cause.table_name}.charity_id = #{Charity.table_name}.id")\
       .joins(:country)\
       .group(self.column_names.map{|c| "#{Charity.table_name}.#{c}"})\
