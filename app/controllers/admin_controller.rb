@@ -128,6 +128,8 @@ class AdminController < ApplicationController
   end
 
   def send_mails
+    #MailsProcessor.instance.process
+    @count = PendingMail.count
   end
 end
 
