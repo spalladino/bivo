@@ -9,6 +9,6 @@ class FollowTest < ActiveSupport::TestCase
       :cause => Cause.make
     })
 
-    assert_equal PendingMail.where(:method => :cause_being_followed).count, 1
+    assert PendingMail.where(:method => :cause_being_followed).count >= 1
   end
 end
