@@ -77,6 +77,8 @@ class Cause < ActiveRecord::Base
 
   validates_presence_of :funds_needed
   validates_numericality_of :funds_needed, :greater_than => 0
+  validates :funds_needed, :decimal => true
+  validates :funds_raised, :decimal => true
 
   validates_presence_of :city
   validates_length_of :city, :maximum => 255
