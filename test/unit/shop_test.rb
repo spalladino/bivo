@@ -43,11 +43,35 @@ class ShopTest < ActiveSupport::TestCase
   
   test "shop description should be translated" do
     shop = Shop.make
-#    shop.create_traslation :description => 'Description', :language => 'es'
     
     Translation.create! :translated_type => Shop.name, :translated_id => shop.id, :translated_field => 'description', :language => 'es', :value => "Descripcion", :pending => false
 
-    I18n.locale = :es
+    assert_equal "Descripcion", Shop.translated('es').find_by_id(shop.id).description
+  end
+  
+  test "create translation for shop description" do
+    shop = Shop.make
+    shop.set_translation 'es', :description, 'Descripcion'
+    assert_equal "Descripcion", Shop.translated('es').find_by_id(shop.id).description
+  end
+  
+  test "translation for description should be marked as pending when updated" do
+    shop = Shop.make
+    shop.set_translation 'es', :description, 'Descripcion'
+    assert_equal "Descripcion", Shop.translated('es').find_by_id(shop.id).description
+    
+    shop.description = 'New description'
+    shop.save!
+    assert_equal "New description", Shop.translated('es').find_by_id(shop.id).description
+  end
+  
+  test "translation for description should not be marked as pending when unchanged" do
+    shop = Shop.make
+    shop.set_translation 'es', :description, 'Descripcion'
+    assert_equal "Descripcion", Shop.translated('es').find_by_id(shop.id).description
+    
+    shop.name = 'New name'
+    shop.save!
     assert_equal "Descripcion", Shop.translated('es').find_by_id(shop.id).description
   end
 end

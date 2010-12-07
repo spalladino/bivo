@@ -4,9 +4,14 @@ class Shop < ActiveRecord::Base
   translate :description
 
   acts_as_commentable
+
   index do
     name
     description
+  end
+  
+  index('untranslated') do
+    name
   end
 
   class CommentRules
@@ -26,6 +31,7 @@ class Shop < ActiveRecord::Base
       return !user.nil?
     end
   end
+
   #Every time you modify columns in your index block, or add new index blocks,
   #you should create a new migration to updated the indexes. (rake texticle:migration and rake db:migrate)
   #If you don’t update the indexes, searches will still work as expected, they just might be kind of slow.
@@ -85,6 +91,16 @@ class Shop < ActiveRecord::Base
   #TODO: Validate widget fields
   def incomes_in_period(from, to)
     return Income.where('shop_id = ? and transaction_date BETWEEN ? AND ?',self.id,from,to).sum('amount')
+  end
+
+  def search_translated(term, &block)
+    untranslated = self.search(term)
+    untranslated = block.call(untranslated) if block_given?
+
+    translated = Translation.for_entity(Shop, :description).search(term)
+    translated = block.call(translated) if block_given?
+    
+    untranslated + translated
   end
 
   protected
