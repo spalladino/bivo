@@ -12,7 +12,7 @@
 	<%= link_to _("Dashboard"), dashboard_url %> | 
 	<%= link_to _("About Bivo"), about_url %> | 
     <% if user_signed_in? %>
-      <%= _("Signed in as") %> <%= current_user.email %>. <%= link_to _("Not you?"), destroy_user_session_path %> |
+      <%= _("Signed in as") %> <%= current_user.email %> |
           <% if (current_user.type == "Charity") %>
             <%= link_to _("Settings"), edit_user_registration_path %>
           <% elsif (current_user.type == "PersonalUser") %>
@@ -20,10 +20,9 @@
           <% elsif (current_user.type == "Admin") %>
             <%= link_to _("Admin Tools"), admin_tools_path %>
           <% end %>
+		| <%= link_to _("Logout"), destroy_user_session_path %>
     <% else %>
-      <%= link_to _("Sign up"), new_user_registration_path %> |
-      <%= link_to _("Sign in via bivo"), new_user_session_path %> |
-      <%= link_to _("Sign in via facebook"), "/auth/facebook", :confirm => _("If you are a charity, please use bivo registration and cancel the sign in. Otherwise, click ok.") %>
+	  <%= link_to _("Login"), new_user_session_path %>
     <% end %>
     | <%= _('Language:') %>
   	<%= form_tag(change_language_path, :method => "get", :id => "nav_form", :class => "inline") do %>

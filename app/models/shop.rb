@@ -8,7 +8,7 @@ class Shop < ActiveRecord::Base
   end
 
   class CommentRules
-    def self.before_add(comment)
+    def self.before_add(comment,user)
       comment.approved = true
     end
 

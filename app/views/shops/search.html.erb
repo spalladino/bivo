@@ -5,7 +5,7 @@
 
 <% title "Shops" %>
 
-<%=_("Results found")%> <%=@count%>
+<%=@count%> <%if @count== 1 %> <%=_("result found")%> <%else%> <%=_("results found")%> <%end%>
 <h2>Filters</h2>
 
 <div id="filters">

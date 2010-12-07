@@ -9,7 +9,8 @@ class FacebookAuthenticationsController < ApplicationController
       "first_name" => user_raw_data["user_info"]["first_name"],
       "last_name"  => user_raw_data["user_info"]["last_name"],
       "email"      => user_raw_data["extra"]["user_hash"]["email"],
-      "from_facebook" => true
+      "from_facebook" => true,
+      "preferred_language" => 'en'
     }
 
     user = User.find_by_email(user_info["email"])

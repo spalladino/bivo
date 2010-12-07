@@ -1,17 +1,29 @@
-<h2>Sign in!</h2>
+<h2><%= _("Login") %></h2>
 
 <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-  <p><%= f.label :email %><br />
+  <p><%= f.label :email,_("Email") %><br />
   <%= f.text_field :email %></p>
 
-  <p><%= f.label :password %><br />
+  <p><%= f.label :password,_("Password") %><br />
   <%= f.password_field :password %></p>
 
   <% if devise_mapping.rememberable? -%>
-    <p><%= f.check_box :remember_me %> <%= f.label :remember_me %></p>
+    <p><%= f.check_box :remember_me %> <%= f.label :remember_me,_("Remember Me") %></p>
   <% end -%>
 
-  <p><%= f.submit "Sign in" %></p>
+  <p>
+	<%= f.submit _("Sign in") %> | 
+	<%= link_to _("Sign in via facebook"), "/auth/facebook", :confirm => _("If you are a charity, please use bivo registration and cancel the sign in. Otherwise, click ok.") %>
+  </p>
+
+  <p>
+	<%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
+	  <%= link_to "Forgot your password?", new_password_path(resource_name) %><br />
+	<% end -%>
+  </p>
 <% end %>
 
-<%= render :partial => "devise/shared/links" %>
+<h2><%= _("Don't have an account?") %></h2>
+
+<%= link_to _("Register"), new_user_registration_path %>
+
