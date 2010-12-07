@@ -40,4 +40,14 @@ class ShopTest < ActiveSupport::TestCase
     assert_includes s.categories, @a11
     assert_equal 3, s.categories.count
   end
+  
+  test "shop description should be translated" do
+    shop = Shop.make
+#    shop.create_traslation :description => 'Description', :language => 'es'
+    
+    Translation.create! :translated_type => Shop.name, :translated_id => shop.id, :translated_field => 'description', :language => 'es', :value => "Descripcion", :pending => false
+
+    I18n.locale = :es
+    assert_equal "Descripcion", Shop.translated('es').find_by_id(shop.id).description
+  end
 end

@@ -26,4 +26,13 @@ class ShopCategoryTest < ActiveSupport::TestCase
     a = ShopCategory.make_unsaved :name => ''
     assert !a.save
   end
+  
+  test "category name should be translated" do
+    c = ShopCategory.make
+    Translation.create! :translated_type => ShopCategory.name, :translated_id => c.id, :translated_field => 'name', :language => 'es', :value => "Categoria", :pending => true
+    
+    assert_equal "Categoria", ShopCategory.translated('es').find(c.id).name
+  end
 end
+
+

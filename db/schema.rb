@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101130144436) do
+ActiveRecord::Schema.define(:version => 20101206181540) do
 
   create_table "account_movements", :force => true do |t|
     t.integer  "account_id"
@@ -200,6 +200,17 @@ ActiveRecord::Schema.define(:version => 20101130144436) do
     t.integer  "shop_id"
     t.string   "input_currency"
     t.float    "input_amount"
+  end
+
+  create_table "translations", :force => true do |t|
+    t.string   "translated_type",                    :null => false
+    t.string   "translated_field",                   :null => false
+    t.integer  "translated_id",                      :null => false
+    t.string   "language",                           :null => false
+    t.string   "value"
+    t.boolean  "pending",          :default => true
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", :force => true do |t|
