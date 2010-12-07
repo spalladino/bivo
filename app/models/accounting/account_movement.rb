@@ -4,4 +4,7 @@ class AccountMovement < ActiveRecord::Base
 
   belongs_to :account
   belongs_to :transaction
+  
+  validates :amount, :decimal => true
+  validates :balance, :decimal => true
 end
