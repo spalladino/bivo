@@ -104,4 +104,46 @@ class TransactionsControllerTest < ActionController::TestCase
     assert_nil Expense.first
     assert_response :ok
   end
+  
+  test "should add negative income" do
+    build_income_categories
+    admin = create_admin_and_sign_in
+
+    post :create,
+    :transaction =>
+    {
+      :type               => "Income",
+      :transaction_date   => "2010-10-10",
+      :income_category_id => @shop_category.id,
+      :shop_id            => Shop.make.id,
+      :input_amount       => "-100",
+      :input_currency     => "GBP",
+      :description        => "test"
+    }
+
+    assert_not_nil Income.first
+    assert_equal -100, Income.first.amount
+    assert_response :found    
+  end
+  
+  test "should add negative expense" do
+    build_income_categories
+    admin = create_admin_and_sign_in
+
+    post :create,
+    :transaction =>
+    {
+      :type                => "Expense",
+      :transaction_date    => "2010-10-10",
+      :expense_category_id => @shop_category.id,
+      :paid_to             => "somebody",
+      :input_amount        => "-30",
+      :input_currency      => "GBP",
+      :description         => "test"
+    }
+
+    assert_not_nil Expense.first
+    assert_equal -30, Expense.first.amount
+    assert_response :found
+  end
 end
