@@ -2,12 +2,13 @@ class ShopsController < ApplicationController
 
   before_filter :authenticate_user!, :except => [:details,:home,:show,:search]
   before_filter :only_admin, :only => [:new, :create, :edit, :update, :activate, :deactivate, :edit_categories]
-  before_filter :load_shop, :except => [ :details, :new, :create, :home, :index, :search, :edit_categories]
+  before_filter :load_shop, :except => [  :new, :create, :index, :search, :edit_categories]
   before_filter :load_places, :only => [ :new, :edit, :create, :update ]
   before_filter :load_categories, :only => [ :new, :edit, :create, :update, :edit_categories, :index ]
+  before_filter :valid_transition, :only => [:activate,:deactivate]
+  before_filter :only_admin_if_inactive_or_deleted, :only => [:home,:details]
 
   def details
-    @shop = Shop.find_by_short_url! params[:short_url]
   end
 
   def new
@@ -43,7 +44,7 @@ class ShopsController < ApplicationController
     @search_word = params[:search_word]
     if @search_word.blank?
       @shops = Shop.includes(:countries) unless admin_is_logged_in
-      @shops = Shop.all_with_inactive.includes(:countries) if admin_is_logged_in
+      @shops = Shop.all_with_inactive.includes(:countries)if admin_is_logged_in
     else
       @shops = Shop.all_with_inactive.includes(:countries).search(@search_word) if admin_is_logged_in
       @shops = Shop.includes(:countries).search(@search_word) unless admin_is_logged_in
@@ -90,7 +91,6 @@ class ShopsController < ApplicationController
   end
 
   def home
-    @shop = Shop.find_by_short_url! params[:short_url]
     if @shop.redirection == :custom_html
       redirect_to @shop.affiliate_code
     end
@@ -117,6 +117,7 @@ class ShopsController < ApplicationController
     else
       ajax_flash[:error] = _("Error deactivating shop")
     end
+
     redirect_to request.referer unless request.xhr?
   end
 
@@ -152,12 +153,28 @@ private
   end
 
   def load_shop
-    @shop = Shop.find params[:id]
+    @shop = Shop.find_with_inactives_and_deleted params[:id] if params[:id]
+    @shop = Shop.all_with_inactive.find_by_short_url! params[:short_url] if params[:short_url]
   end
 
   def load_categories
     # TODO should query all categories is a way the view is able to render the whole tree
     @categories = ShopCategory.roots
   end
+
+  def valid_transition
+    if @shop.status == :deleted
+      ajax_flash[:error] = _("Error, deleted shop")
+      redirect_to request.referer unless request.xhr?
+    end
+  end
+
+  def only_admin_if_inactive_or_deleted
+    if !admin_is_logged_in && (@shop.status == :deleted || @shop.status ==:inactive)
+      render :nothing => true, :status => :forbidden
+    end
+  end
+
+
 end
 

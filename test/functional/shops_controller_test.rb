@@ -218,7 +218,7 @@ class ShopsControllerTest < ActionController::TestCase
   end
 
   #DELETE
-  test "should not compelte delete shop with raising founds, it must be logical" do
+  test "should not complete delete shop with raising founds, it must be logical" do
     shop = Shop.make
     Income.make(:shop => shop,:input_amount => 100.0,:income_category => IncomeCategory.get_shop_category)
 
@@ -316,16 +316,12 @@ class ShopsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-
-
   #SHOW
   test "show shop" do
     shop = Shop.make
     get :show, :id => shop.id
     assert_response :ok
   end
-
-
 
   #ACTIVATE
   test "should activate" do
@@ -442,9 +438,7 @@ class ShopsControllerTest < ActionController::TestCase
 
     assert_not_nil assigns(:shops)
     assert_equal 3, assigns(:shops).size
-
   end
-
 
 end
 

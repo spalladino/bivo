@@ -82,6 +82,7 @@ class Shop < ActiveRecord::Base
 
   validates_length_of :comission_details, :maximum => 255
 
+
   #TODO: Validate widget fields
   def incomes_in_period(from, to)
     return Income.where('shop_id = ? and transaction_date BETWEEN ? AND ?',self.id,from,to).sum('amount')
@@ -107,7 +108,7 @@ class Shop < ActiveRecord::Base
 
 
   def self.all_with_inactive()
-    self.with_exclusive_scope { where('shops.status != ?', :deleted).all }
+    self.with_exclusive_scope { where('shops.status != ?', :deleted) }
   end
 
   def self.find_with_inactives_and_deleted(id)
