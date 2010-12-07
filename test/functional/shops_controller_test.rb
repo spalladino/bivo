@@ -342,7 +342,7 @@ class ShopsControllerTest < ActionController::TestCase
     id = Shop.make(:status=>:inactive).id
     post :activate, :id => id
     assert_response :forbidden
-    assert_equal :inactive,Shop.find(id).status
+    assert_equal :inactive,Shop.find_with_inactives_and_deleted(id).status
   end
 
   #ACTIVATE
@@ -351,22 +351,22 @@ class ShopsControllerTest < ActionController::TestCase
     id = Shop.make(:status=>:deleted).id
     post :activate, :id => id
     assert_response :forbidden
-    assert_equal :deleted,Shop.find(id).status
+    assert_equal :deleted,Shop.find_with_inactives_and_deleted(id).status
   end
 
   #DEACTIVATE
   test "should deactivate" do
     user = create_admin_and_sign_in
-    id = Shop.make(:status=>:active).id
+    id = Shop.make.id
     post :deactivate, :id => id
     assert_response :found
-    assert_equal :inactive,Shop.find(id).status
+    assert_equal :inactive,Shop.find_with_inactives_and_deleted(id).status
    end
 
   #DEACTIVATE
   test "should not deactivate" do
     user = create_and_sign_in
-    id = Shop.make(:status=>:active).id
+    id = Shop.make.id
     post :deactivate, :id => id
     assert_response :forbidden
     assert_equal :active,Shop.find(id).status
@@ -378,7 +378,7 @@ class ShopsControllerTest < ActionController::TestCase
     id = Shop.make(:status=>:deleted).id
     post :deactivate, :id => id
     assert_response :forbidden
-    assert_equal :deleted,Shop.find(id).status
+    assert_equal :deleted,Shop.find_with_inactives_and_deleted(id).status
   end
 
 
@@ -395,7 +395,7 @@ class ShopsControllerTest < ActionController::TestCase
     user = create_and_sign_in
 
     Shop.make_many 3, :status => :inactive
-    Shop.make_many 3, :status => :active
+    Shop.make_many 3
 
     get :index
 
@@ -409,8 +409,7 @@ class ShopsControllerTest < ActionController::TestCase
     user = create_and_sign_in
 
     Shop.make_many 3, :status => :inactive
-    Shop.make_many 3, :status => :active
-
+    Shop.make_many 3
     get :search
 
     assert_not_nil assigns(:shops)
@@ -423,7 +422,7 @@ class ShopsControllerTest < ActionController::TestCase
     user = create_admin_and_sign_in
 
     Shop.make_many 3, :status => :deleted
-    Shop.make_many 3, :status => :active
+    Shop.make_many 3
 
     get :index
 
@@ -437,7 +436,7 @@ class ShopsControllerTest < ActionController::TestCase
     user = create_admin_and_sign_in
 
     Shop.make_many 3, :status => :deleted
-    Shop.make_many 3, :status => :active
+    Shop.make_many 3
 
     get :search
 

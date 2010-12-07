@@ -47,7 +47,7 @@ class Shop < ActiveRecord::Base
     labels :percentage => _("percentage"), :fixed_amount => _("fixed amount")
   end
 
-  enum_attr :status, %w(^inactive active deleted)
+  enum_attr :status, %w(^active inactive deleted)
 
   enum_attr :redirection, %w(^search_box purchase_button custom_widget custom_html) do
     labels :search_box =>      _("Use a search box"),
@@ -56,6 +56,8 @@ class Shop < ActiveRecord::Base
            :custom_html =>     _("Use custom HTML")
   end
 
+  attr_protected :status
+  default_scope where('shops.status != ? and shops.status != ?', :deleted,:inactive)
   validates_attachment_size :image, :less_than => 1.megabytes
   validates_attachment_content_type :image, :content_type => ['image/jpeg', 'image/png']
 
@@ -102,5 +104,18 @@ class Shop < ActiveRecord::Base
   def ensure_shop_account
     Account.shop_account self
   end
+
+
+  def self.all_with_inactive()
+    self.with_exclusive_scope { where('shops.status != ?', :deleted).all }
+  end
+
+  def self.find_with_inactives_and_deleted(id)
+    self.with_exclusive_scope {find(id)}
+  end
+
+
+
+
 end
 

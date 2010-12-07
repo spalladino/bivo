@@ -1,6 +1,6 @@
 class ShopsController < ApplicationController
 
-  before_filter :authenticate_user!, :except => [:details,:home,:show]
+  before_filter :authenticate_user!, :except => [:details,:home,:show,:search]
   before_filter :only_admin, :only => [:new, :create, :edit, :update, :activate, :deactivate, :edit_categories]
   before_filter :load_shop, :except => [ :details, :new, :create, :home, :index, :search, :edit_categories]
   before_filter :load_places, :only => [ :new, :edit, :create, :update ]
@@ -21,14 +21,18 @@ class ShopsController < ApplicationController
     @is_shop_list = true
     if params[:category_field]
       @category = ShopCategory.find(params[:category_field])
-      @shops = @category.shops
+      @shops = @category.shops unless admin_is_logged_in
+      @shops = @category.shops.all_with_inactive if admin_is_logged_in
       @path = @category.ancestors
     else
-      @shops = Shop.all
+      @shops = Shop.all unless admin_is_logged_in
+      @shops = Shop.all_with_inactive if admin_is_logged_in
     end
     # Set pagination
     @per_page = (params[:per_page] || 20).to_i
-    @count = Shop.count
+    @count = Shop.where('shops.status != ?',:inactive).count unless admin_is_logged_in
+    @count = Shop.count if admin_is_logged_in
+
     @shops = @shops.paginate(:per_page => @per_page, :page => params[:page])
     @page_sizes = [5,10,20,50]
 
@@ -38,9 +42,11 @@ class ShopsController < ApplicationController
     # Filter by text
     @search_word = params[:search_word]
     if @search_word.blank?
-      @shops = Shop.includes(:countries)
+      @shops = Shop.includes(:countries) unless admin_is_logged_in
+      @shops = Shop.all_with_inactive.includes(:countries) if admin_is_logged_in
     else
-      @shops = Shop.includes(:countries).search(@search_word)
+      @shops = Shop.all_with_inactive.includes(:countries).search(@search_word) if admin_is_logged_in
+      @shops = Shop.includes(:countries).search(@search_word) unless admin_is_logged_in
     end
 
     # Handle sorting options
@@ -77,7 +83,7 @@ class ShopsController < ApplicationController
   def update
     if save_shop
       flash[:notice] = _("Shop successfully updated")
-      redirect_to root_url
+      redirect_to shop_details_path @shop.short_url
     else
       render :edit
     end

@@ -15,6 +15,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def admin_is_logged_in
+    current_user && current_user.is_admin_user
+  end
+
   def ajax_flash
     if request.xhr?
       flash.now
@@ -36,7 +40,7 @@ class ApplicationController < ActionController::Base
 
   def get_browser_accept_languages
     request.accept_language
-  end  
+  end
 
   def check_eula_accepted
     if (user_signed_in? && !current_user.eula_accepted)
@@ -78,10 +82,10 @@ class ApplicationController < ActionController::Base
   def render_not_found
     render :file => "#{Rails.root.to_s}/public/404.html", :layout => false, :status => :not_found
   end
-  
+
   def load_languages
     @languages = Language.all
-    @language = Language.by_id session[:locale].to_sym    
+    @language = Language.by_id session[:locale].to_sym
   end
 end
 
