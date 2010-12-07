@@ -1,7 +1,7 @@
 class ShopsController < ApplicationController
 
   before_filter :authenticate_user!, :except => [:details,:home,:show,:search]
-  before_filter :only_admin, :only => [:new, :create, :edit, :update, :activate, :deactivate, :edit_categories]
+  before_filter :only_admin, :only => [:new, :create, :edit, :update, :destroy,:activate, :deactivate, :edit_categories]
   before_filter :load_shop, :except => [  :new, :create, :index, :search, :edit_categories]
   before_filter :load_places, :only => [ :new, :edit, :create, :update ]
   before_filter :load_categories, :only => [ :new, :edit, :create, :update, :edit_categories, :index ]
@@ -9,6 +9,12 @@ class ShopsController < ApplicationController
   before_filter :only_admin_if_inactive_or_deleted, :only => [:home,:details]
 
   def details
+  end
+
+  def home
+    if @shop.redirection == :custom_html
+      redirect_to @shop.affiliate_code
+    end
   end
 
   def new
@@ -90,11 +96,6 @@ class ShopsController < ApplicationController
     end
   end
 
-  def home
-    if @shop.redirection == :custom_html
-      redirect_to @shop.affiliate_code
-    end
-  end
 
   def show
     render 'details'
@@ -154,7 +155,7 @@ private
 
   def load_shop
     @shop = Shop.find_with_inactives_and_deleted params[:id] if params[:id]
-    @shop = Shop.all_with_inactive.find_by_short_url! params[:short_url] if params[:short_url]
+    @shop = Shop.all_with_inactive_and_deleted.find_by_short_url! params[:short_url] if params[:short_url]
   end
 
   def load_categories
@@ -170,7 +171,7 @@ private
   end
 
   def only_admin_if_inactive_or_deleted
-    if !admin_is_logged_in && (@shop.status == :deleted || @shop.status ==:inactive)
+    if (@shop.status == :deleted || @shop.status ==:inactive) && !admin_is_logged_in
       render :nothing => true, :status => :forbidden
     end
   end

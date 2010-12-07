@@ -115,6 +115,9 @@ class Shop < ActiveRecord::Base
     self.with_exclusive_scope {find(id)}
   end
 
+  def self.all_with_inactive_and_deleted()
+    self.with_exclusive_scope { self.scoped }
+  end
 
 
 
