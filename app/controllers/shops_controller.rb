@@ -40,7 +40,7 @@ class ShopsController < ApplicationController
     if @search_word.blank?
       @shops = Shop.includes(:countries)
     else
-      @shops = Shop.includes(:countries).search(@search_word)
+      @shops = Shop.includes(:countries).search(@search_word.gsub(/\\/, '\&\&').gsub(/'/, "''"))
     end
 
     # Handle sorting options
