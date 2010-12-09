@@ -338,7 +338,6 @@ end
 
   #LIST-filter
   test "shouldnt get inactive shops in list if not admin" do
-    user = create_and_sign_in
 
     Shop.make_many 3, :status => :inactive
     Shop.make_many 3
@@ -365,7 +364,6 @@ end
 
   #LIST-search
   test "shouldnt get inactive shops in search" do
-    user = create_admin_and_sign_in
 
     Shop.make_many 3, :status => :inactive
     Shop.make_many 3
