@@ -1,6 +1,6 @@
 # Observer for follows. It sends mails when a charity is being followed.
 class CharityFollowObserver < ActiveRecord::Observer
-  def after_create(charity_follow)
+  def after_save(charity_follow)
     PendingMail.create({
       :method => "charity_being_followed",
       :data => Marshal.dump({

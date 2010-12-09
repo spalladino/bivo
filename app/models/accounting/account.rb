@@ -2,6 +2,8 @@ class Account < ActiveRecord::Base
 
   has_many :movements, :class_name => "AccountMovement"
 
+  validates :balance, :decimal => true
+  
   def self.cash_reserves_account
     CashReservesAccount.find_or_create_by_name(CashReservesAccount::NAME)
   end
