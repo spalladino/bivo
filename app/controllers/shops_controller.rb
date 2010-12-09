@@ -1,13 +1,20 @@
 class ShopsController < ApplicationController
 
   before_filter :authenticate_user!, :except => [:details,:home,:show,:search]
-  before_filter :only_admin, :only => [:new, :create, :edit, :update, :activate, :deactivate, :edit_categories]
-  before_filter :load_shop, :except => [ :details, :new, :create, :home, :index, :search, :edit_categories]
+  before_filter :only_admin, :only => [:new, :create, :edit, :update, :destroy,:activate, :deactivate, :edit_categories]
+  before_filter :load_shop, :except => [  :new, :create, :index, :search, :edit_categories]
   before_filter :load_places, :only => [ :new, :edit, :create, :update ]
   before_filter :load_categories, :only => [ :new, :edit, :create, :update, :edit_categories, :index ]
+  before_filter :ensure_active_if_not_admin, :only => [:home,:details]
+
 
   def details
-    @shop = Shop.find_by_short_url! params[:short_url]
+  end
+
+  def home
+    if @shop.redirection == :custom_html
+      redirect_to @shop.affiliate_code
+    end
   end
 
   def new
@@ -21,14 +28,18 @@ class ShopsController < ApplicationController
     @is_shop_list = true
     if params[:category_field]
       @category = ShopCategory.find(params[:category_field])
-      @shops = @category.shops
+      @shops = @category.shops unless admin_is_logged_in
+      @shops = @category.shops.all_with_inactives if admin_is_logged_in
       @path = @category.ancestors
     else
-      @shops = Shop.all
+      @shops = Shop.all unless admin_is_logged_in
+      @shops = Shop.all_with_inactives if admin_is_logged_in
     end
     # Set pagination
     @per_page = (params[:per_page] || 20).to_i
-    @count = Shop.count
+    @count = Shop.where('shops.status != ?',:inactive).count unless admin_is_logged_in
+    @count = Shop.count if admin_is_logged_in
+
     @shops = @shops.paginate(:per_page => @per_page, :page => params[:page])
     @page_sizes = [5,10,20,50]
 
@@ -83,12 +94,6 @@ class ShopsController < ApplicationController
     end
   end
 
-  def home
-    @shop = Shop.find_by_short_url! params[:short_url]
-    if @shop.redirection == :custom_html
-      redirect_to @shop.affiliate_code
-    end
-  end
 
   def show
     render 'details'
@@ -111,6 +116,7 @@ class ShopsController < ApplicationController
     else
       ajax_flash[:error] = _("Error deactivating shop")
     end
+
     redirect_to request.referer unless request.xhr?
   end
 
@@ -146,12 +152,20 @@ private
   end
 
   def load_shop
-    @shop = Shop.find params[:id]
+    @shop = Shop.find_with_inactives params[:id] if params[:id]
+    @shop = Shop.all_with_inactives.find_by_short_url! params[:short_url] if params[:short_url]
+    render :status => :not_found unless @shop
   end
 
   def load_categories
     # TODO should query all categories is a way the view is able to render the whole tree
     @categories = ShopCategory.roots
   end
+
+  def ensure_active_if_not_admin
+    render :nothing => true, :status => :not_found if (@shop.status == :inactive && !admin_is_logged_in)
+  end
+
+
 end
 
