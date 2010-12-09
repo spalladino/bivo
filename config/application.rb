@@ -151,9 +151,9 @@ module Bivo
     }
 
     config.languages = {
-      :en => "English (EN)", 
-      :es => "Español (ES)", 
-      :fr => "Français (FR)"
+      :en => {:name => "English (EN)",  :english_name => "english"}, 
+      :es => {:name => "Español (ES)",  :english_name =>  "spanish"}, 
+      :fr => {:name => "Français (FR)", :english_name =>  "french"}
     }
   end
 end

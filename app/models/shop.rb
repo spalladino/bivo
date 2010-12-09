@@ -1,18 +1,9 @@
 require 'enumerated_attribute'
 
 class Shop < ActiveRecord::Base
-  translate :description
+  translate :translate => [:description], :index => [:name, :description]
 
   acts_as_commentable
-
-  index do
-    name
-    description
-  end
-  
-  index('untranslated') do
-    name
-  end
 
   class CommentRules
     def self.before_add(comment)
