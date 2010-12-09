@@ -52,8 +52,8 @@ class ShopsController < ApplicationController
       @shops = Shop.includes(:countries) unless admin_is_logged_in
       @shops = Shop.all_with_inactive.includes(:countries)if admin_is_logged_in
     else
-      @shops = Shop.all_with_inactive.includes(:countries).search(@search_word) if admin_is_logged_in
-      @shops = Shop.includes(:countries).search(@search_word) unless admin_is_logged_in
+      @shops = Shop.all_with_inactive.includes(:countries).search(@search_word.gsub(/\\/, '\&\&').gsub(/'/, "''")) if admin_is_logged_in
+      @shops = Shop.includes(:countries).search(@search_word.gsub(/\\/, '\&\&').gsub(/'/, "''")) unless admin_is_logged_in
     end
 
     # Handle sorting options
