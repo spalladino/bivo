@@ -42,7 +42,6 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def edit
-
     @path = registration_path(resource_name)
 
     if (resource.type == "PersonalUser")
@@ -67,7 +66,8 @@ class RegistrationsController < Devise::RegistrationsController
 
   protected
     def allow_edit
-      render :status => :forbidden if current_user == @resource
+      render :nothing => true, :status => :forbidden if current_user == @resource
+      return false
     end
 
     def load_resource
