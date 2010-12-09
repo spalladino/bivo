@@ -29,7 +29,6 @@ GEM
       activesupport (= 3.0.0)
     activesupport (3.0.0)
     addressable (2.2.2)
-    archive-tar-minitar (0.5.2)
     arel (1.0.1)
       activesupport (~> 3.0.0)
     aws-s3 (0.6.2)
@@ -50,7 +49,6 @@ GEM
     celerity (0.8.4)
     childprocess (0.1.4)
       ffi (~> 0.6.3)
-    columnize (0.3.2)
     configuration (1.2.0)
     cucumber (0.9.4)
       builder (~> 2.1.2)
@@ -103,8 +101,6 @@ GEM
     launchy (0.3.7)
       configuration (>= 0.0.5)
       rake (>= 0.8.1)
-    linecache19 (0.5.11)
-      ruby_core_source (>= 0.1.4)
     locale (2.0.5)
     machinist (1.0.6)
     mail (2.2.7)
@@ -204,19 +200,9 @@ GEM
     rspec-rails (2.2.0)
       rails (~> 3.0.0)
       rspec (~> 2.2)
-    ruby-debug-base19 (0.11.24)
-      columnize (>= 0.3.1)
-      linecache19 (>= 0.5.11)
-      ruby_core_source (>= 0.1.4)
-    ruby-debug19 (0.11.6)
-      columnize (>= 0.3.1)
-      linecache19 (>= 0.5.11)
-      ruby-debug-base19 (>= 0.11.19)
     ruby-openid (2.1.8)
     ruby-openid-apps-discovery (1.2.0)
       ruby-openid (>= 2.1.7)
-    ruby_core_source (0.1.4)
-      archive-tar-minitar (>= 0.5.2)
     rubyntlm (0.1.1)
     rubyzip (0.9.4)
     selenium-webdriver (0.1.0)
@@ -271,7 +257,6 @@ DEPENDENCIES
   rails (>= 3.0.0)
   rails3-generators
   rspec-rails
-  ruby-debug19
   selenium-webdriver
   single_test
   spork
