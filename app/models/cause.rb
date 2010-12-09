@@ -53,8 +53,13 @@ class Cause < ActiveRecord::Base
   has_many :news, :as => :newsable
   has_many :votes, :dependent => :destroy
 
-  before_update :status_will_change!, :if => :status_changed?
-  after_update :check_if_status_changed
+  before_update do
+    @status_change = true if status_changed?
+  end
+
+  after_update do
+    CauseObserver.instance.status_change_persisted(self) if @status_change
+  end
 
   after_save :ensure_cause_account
 
@@ -77,6 +82,8 @@ class Cause < ActiveRecord::Base
 
   validates_presence_of :funds_needed
   validates_numericality_of :funds_needed, :greater_than => 0
+  validates :funds_needed, :decimal => true
+  validates :funds_raised, :decimal => true
 
   validates_presence_of :city
   validates_length_of :city, :maximum => 255
@@ -251,14 +258,6 @@ class Cause < ActiveRecord::Base
         self.status = :completed
       end
     end
-  end
-
-  def status_will_change!
-    @status_change = true
-  end
-
-  def check_if_status_changed
-    notify_observers :status_change_persisted if @status_change
   end
 end
 

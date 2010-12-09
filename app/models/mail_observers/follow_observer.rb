@@ -1,6 +1,6 @@
 # Observer for follows. It sends mails when a cause is being followed.
 class FollowObserver < ActiveRecord::Observer
-  def after_create(follow)
+  def after_save(follow)
     PendingMail.create({
       :method => "cause_being_followed",
       :data => Marshal.dump({

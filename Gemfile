@@ -39,6 +39,7 @@ group :development do
   gem 'rails3-generators'
   gem 'gettext', '>=1.9.3', :require => false
   gem 'mongrel_cluster'
+  gem "ruby-debug19"
 end
 
 # Use unicorn as the web server

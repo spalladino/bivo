@@ -9,13 +9,15 @@ class MailerTest < ActionMailer::TestCase
       :charity_id  => Charity.make
     }.to_struct
 
-    email = Mailer.cause_being_followed(mail_data)
+    Mailer.cause_being_followed(mail_data).deliver
 
-    #assert !ActionMailer::Base.deliveries.empty?
+    assert ActionMailer::Base.deliveries.any?
   end
 
   test 'should send cause status changed for charity email' do
-    #assert false
+    mail_data = {
+      
+    }
   end
 
   test 'should send cause status changed for follower email' do
