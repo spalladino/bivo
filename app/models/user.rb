@@ -37,6 +37,14 @@ class User < ActiveRecord::Base
     false
   end
 
+  def destroyed?
+    self.status == :deleted
+  end
+
+  def destroy
+    self.status = :deleted
+  end
+
   # Had to overwrite it from devise because if not it asks for password every time you want to update and it's very annoying.
   def update_with_password(params={})
     if params[:password].blank?

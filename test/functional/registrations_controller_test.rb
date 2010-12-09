@@ -224,60 +224,119 @@ class RegistrationsControllerTest < ActionController::TestCase
 
 
   #NEW
-  test "should go to new charity" do
-#TODO [nombre del test]
-    assert_response :ok
-  end
-
-  #NEW
-  test "shouldnt go to new charity" do
-#TODO [nombre del test]
-    assert_response :ok
+  test "can go to new user page" do
+    user = create_and_sign_in
+    get :new
+    assert_response :found
   end
 
   #EDIT
-  test "should go to edit charity" do
-#TODO [nombre del test]
+  test "can go to edit charity" do
+    user = create_charity_and_sign_in
+    get :edit, :id => user.id
+
+    assert_not_nil assigns(:resource)
+    assert_equal assigns(:resource), user
     assert_response :ok
   end
 
-  #EDIT
-  test "shouldnt go to edit charity" do
-#TODO [nombre del test]
+ #EDIT
+  test "can go to edit personal user" do
+    user = create_and_sign_in
+    get :edit, :id => user.id
+
+    assert_not_nil assigns(:resource)
+    assert_equal assigns(:resource), user
     assert_response :ok
   end
 
-  #DESTROY
-  test "shouldnt destroy charity" do
-#TODO [nombre del test]
+ #EDIT
+  test "cant go to edit charity becouse is another charity" do
+    user = create_charity_and_sign_in
+    user_to_edit = Charity.make
+    get :edit, :id => user_to_edit.id
+
+    assert_response :forbidden
+  end
+
+ #EDIT
+  test "cant go to edit user becouse is another user" do
+    user = create_charity_and_sign_in
+    user_to_edit = PersonalUser.make
+    get :edit, :id => user_to_edit.id
+
+    assert_response :forbidden
+  end
+
+  #DELETE
+  test "should not delete if not admin" do
+    user = PersonalUser.make
+    create_and_sign_in
+
+    assert_difference('User.count', 0) do
+      post :destroy, :id => user.id
+    end
+
+    assert_response :forbidden
+  end
+
+  #DELETE
+  test "should not delete if not admin (charity)" do
+    user = Charity.make
+    create_and_sign_in
+
+    assert_difference('User.count', 0) do
+      post :destroy, :id => user.id
+    end
+
+    assert_response :forbidden
+  end
+
+  #DELETE
+  test "should always make logical destroy, personal user,  beeing admin" do
+    user = PersonalUser.make
+    create_admin_and_sign_in
+
+    assert_difference('User.count', -1) do
+      post :destroy, :id => user.id
+    end
+    assert_equal 0,User.count
+    assert_equal 1,User.with_deleted.count
     assert_response :ok
   end
 
-  #DESTROY
-  test "should make logical destroy " do
-#TODO [nombre del test]
+  #DELETE
+  test "should always make logical destroy, charity,  beeing admin" do
+    user = Charity.make
+    create_admin_and_sign_in
+
+    assert_difference('User.count', -1) do
+      post :destroy, :id => user.id
+    end
+    assert_equal 0,User.count
+    assert_equal 1,User.with_deleted.count
     assert_response :ok
   end
 
-  #DESTROY
-  test "should make complete destroy" do
-#TODO [nombre del test]
+  #DELETE
+  test "should always make logical destroy beeing admin for charity and cascade delete on causes" do
+    user = Charity.make
+    Cause.make(:charity => user,:status => :active)
+    Cause.make(:charity => user,:status => :inactive)
+    Cause.make(:charity => user,:status => :raising_funds)
+    Cause.make(:charity => user,:status => :completed)
+    Cause.make(:charity => user,:status => :paid)
+    Cause.make(:charity => user,:status => :deleted)
+    create_admin_and_sign_in
+
+    assert_difference('User.count', -1) do
+      post :destroy, :id => user.id
+    end
+    assert_equal 0,Cause.count
+    assert_equal 0,User.count
+    assert_equal 1,User.with_deleted.count
     assert_response :ok
   end
-
-  #CHECK_URL
-  test "should check url and return ok" do
-#TODO [nombre del test]
-    assert_response :ok
-  end
-
-  #CHECK_URL
-  test "should reject url" do
-#TODO [nombre del test]
-    assert_response :ok
-  end
-
-
 
 end
 

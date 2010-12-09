@@ -1,4 +1,7 @@
 class RegistrationsController < Devise::RegistrationsController
+  before_filter :load_resource, :only => [:edit]
+  before_filter :allow_edit , :only => [:edit, :update]
+
 
   def new
     @countries = Country.all
@@ -39,8 +42,7 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def edit
-    @resource = resource
-    @resource_name = resource_name
+
     @path = registration_path(resource_name)
 
     if (resource.type == "PersonalUser")
@@ -64,6 +66,15 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   protected
+    def allow_edit
+      render :status => :forbidden if current_user == @resource
+    end
+
+    def load_resource
+      @resource = resource
+      @resource_name = resource_name
+    end
+
     def build_resource(*args)
       super
 

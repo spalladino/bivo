@@ -2,8 +2,71 @@ require 'test_helper'
 
 class CharitiesControllerTest < ActionController::TestCase
 
+  #DETAILS
+  test "should get details if active" do
+    charity = Charity.make :short_url => "foobar",:status => :active
+
+    get :details, :url => "foobar"
+
+    assert_not_nil assigns(:charity)
+    assert_equal assigns(:charity), charity
+    assert_response :success
+  end
+
+  #DETAILS
+  test "should get details if inactive and admin logged" do
+    user = create_admin_and_sign_in
+    charity = Charity.make :short_url => "foobar",:status => :inactive
+
+    get :details, :url => "foobar"
+
+    assert_not_nil assigns(:charity)
+    assert_equal assigns(:charity), charity
+    assert_response :success
+  end
+
+  #DETAILS
+  test "should get details if inactive and inactive charity is logged" do
+
+    charity = create_charity_and_sign_in
+    charity.short_url = "foobar"
+    charity.status = :inactive
+    charity.save!
+
+    get :details, :url => "foobar"
+
+    assert_not_nil assigns(:charity)
+    assert_equal assigns(:charity), charity
+    assert_response :success
+  end
+
+
+  #DETAILS
+  test "shouldnt get details if inactive and not admin or charity owner" do
+    user = create_charity_and_sign_in
+    charity = Charity.make :short_url => "foobar",:status => :inactive
+
+    get :details, :url => "foobar"
+
+    assert_not_nil assigns(:charity)
+    assert_equal assigns(:charity), charity
+    assert_response :not_found
+  end
+
+  #DETAILS
+ test "shouldnt get details if inactive and not admin or charity, personal user logged in" do
+    user = create_and_sign_in
+    charity = Charity.make :short_url => "foobar",:status => :inactive
+
+    get :details, :url => "foobar"
+
+    assert_not_nil assigns(:charity)
+    assert_equal assigns(:charity), charity
+    assert_response :not_found
+  end
+
   #LIST
-  test "should get charities list" do
+  test "should get active charities in list" do
     Charity.make_many 10
 
     get :index
@@ -11,7 +74,7 @@ class CharitiesControllerTest < ActionController::TestCase
     assert_charities_unsorted Charity.all
   end
 
-  test "shouldnt get inactive charities on the list" do
+  test "should not get inactive charities on the list" do
     Charity.make_many 5
     Charity.make :status => :inactive
 
@@ -20,7 +83,7 @@ class CharitiesControllerTest < ActionController::TestCase
     assert_charities_unsorted Charity.where('users.status != ?', :inactive)
   end
 
-  test "shoulnt get inactive charities on the list beeing admin" do
+  test "should not get inactive charities on the list despite beeing admin" do
     user = create_admin_and_sign_in
     Charity.make_many 5
     Charity.make :status => :inactive
@@ -30,9 +93,9 @@ class CharitiesControllerTest < ActionController::TestCase
     assert_charities_unsorted Charity.where('users.status != ?', :inactive)
   end
 
-
-  test "shoulnt get inactive charities on the list beeing the inactive charity" do
+  test "shoul not get inactive charities on the list beeing the inactive charity" do
     Charity.make_many 5
+    Charity.make :status => :inactive
     user = create_charity_and_sign_in
     user.status = :inactive
     user.save!
@@ -151,73 +214,6 @@ class CharitiesControllerTest < ActionController::TestCase
     assert_charities charities.reverse
   end
 
-
-  #DETAILS
-  test "should get details if active" do
-    charity = Charity.make :short_url => "foobar",:status => :active
-
-    get :details, :url => "foobar"
-
-    assert_not_nil assigns(:charity)
-    assert_equal assigns(:charity), charity
-    assert_response :success
-  end
-
-  #DETAILS
-  test "should get details if inactive and admin logged" do
-    user = create_admin_and_sign_in
-    charity = Charity.make :short_url => "foobar",:status => :inactive
-
-    get :details, :url => "foobar"
-
-    assert_not_nil assigns(:charity)
-    assert_equal assigns(:charity), charity
-    assert_response :success
-  end
-
-  #DETAILS
-  test "should get details if inactive and inactive charity is logged" do
-
-    charity = create_charity_and_sign_in
-    charity.short_url = "foobar"
-    charity.status = :inactive
-    charity.save!
-
-    get :details, :url => "foobar"
-
-    assert_not_nil assigns(:charity)
-    assert_equal assigns(:charity), charity
-    assert_response :success
-  end
-
-
-  #DETAILS
-  test "shouldnt get details if inactive and not admin or charity owner" do
-    user = create_charity_and_sign_in
-    charity = Charity.make :short_url => "foobar",:status => :inactive
-
-    get :details, :url => "foobar"
-
-    assert_not_nil assigns(:charity)
-    assert_equal assigns(:charity), charity
-    assert_response :forbidden
-  end
-
-
-
-  #DETAILS
- test "shouldnt get details if inactive and not admin or charity with personal user" do
-    user = create_and_sign_in
-    charity = Charity.make :short_url => "foobar",:status => :inactive
-
-    get :details, :url => "foobar"
-
-    assert_not_nil assigns(:charity)
-    assert_equal assigns(:charity), charity
-    assert_response :forbidden
-  end
-
-
   #SHOW
   test "show charity" do
     charity = Charity.make
@@ -247,6 +243,41 @@ class CharitiesControllerTest < ActionController::TestCase
     assert_response :ok
   end
 
+  #FOLLOW
+  test "shouldnt follow if inactive and not admin or self" do
+    user = create_and_sign_in
+    charity = Charity.make(:status => :inactive)
+    xhr :post, :follow, :id => charity.id
+    assert_equal 0,CharityFollow.count
+    assert_response :ok
+  end
+
+  #FOLLOW
+  test "shouldnt follow if not logged" do
+    charity = Charity.make
+    xhr :post, :follow, :id => charity.id
+    assert_equal 0,CharityFollow.count
+    assert_response :forbidden
+  end
+
+  #FOLLOW
+  test "should follow if inactive admin" do
+    user = create_and_sign_in
+    charity = Charity.make(:status => :inactive)
+    xhr :post, :follow, :id => charity.id
+    assert_equal 0,CharityFollow.count
+    assert_response :ok
+  end
+
+  #FOLLOW
+  test "should follow if inactive (self)" do
+    user = create_and_sign_in
+    charity = Charity.make(:status => :inactive)
+    xhr :post, :follow, :id => charity.id
+    assert_equal 0,CharityFollow.count
+    assert_response :ok
+  end
+
   #UNFOLLOW
   test "can unfollow" do
     user = create_and_sign_in
@@ -266,6 +297,14 @@ class CharitiesControllerTest < ActionController::TestCase
     xhr :post, :unfollow, :id => charity.id
     assert_equal CharityFollow.count,0
     assert_response :method_not_allowed
+  end
+
+  #UNFOLLOW
+  test "shouldnt unfollow if not logged" do
+    charity = Charity.make
+    xhr :post, :unfollow, :id => charity.id
+
+    assert_response :forbidden
   end
 
   #ACTIVATE
@@ -296,6 +335,39 @@ class CharitiesControllerTest < ActionController::TestCase
     assert_response :found
     assert_equal :inactive,Charity.find(id).status
     assert_equal :inactive,cause.reload.status
+  end
+
+  #DEACTIVATE
+  test "should not deactivate becouse of children status(raising_funds)" do
+    user = create_admin_and_sign_in
+    id = Charity.make(:status=>:active).id
+    cause = Cause.make :status =>:raising_funds,:charity_id => id
+    post :deactivate, :id => id
+    assert_response :forbidden
+    assert_equal :active,Charity.find(id).status
+    assert_equal :raising_funds,cause.reload.status
+  end
+
+  #DEACTIVATE
+  test "should not deactivate becouse of children status (completed)" do
+    user = create_admin_and_sign_in
+    id = Charity.make(:status=>:active).id
+    cause = Cause.make :status =>:completed,:charity_id => id
+    post :deactivate, :id => id
+    assert_response :forbidden
+    assert_equal :active,Charity.find(id).status
+    assert_equal :completed,cause.reload.status
+  end
+
+  #DEACTIVATE
+  test "should not deactivate becouse of children status (paid)" do
+    user = create_admin_and_sign_in
+    id = Charity.make(:status=>:active).id
+    cause = Cause.make :status =>:paid,:charity_id => id
+    post :deactivate, :id => id
+    assert_response :forbidden
+    assert_equal :active,Charity.find(id).status
+    assert_equal :paid,cause.reload.status
   end
 
   #DEACTIVATE
