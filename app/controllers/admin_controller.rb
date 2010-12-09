@@ -94,12 +94,13 @@ class AdminController < ApplicationController
     @resource = User.find(params[:id])
     @type = @resource.type.to_sym
     @referer = request.referer
+    @path = admin_update_user_path
 
     if (@type == :Charity)
       @countries = Country.all
     end
 
-    render "edit_user"
+    render "users/registrations/edit"
   end
 
   def update_user
@@ -107,6 +108,7 @@ class AdminController < ApplicationController
     @resource = User.find(@id)
     @type = @resource.type.to_sym
     @referer = params[:referer]
+    @path = admin_update_user_path
 
     if (@type == :Charity)
       @countries = Country.all
@@ -115,7 +117,7 @@ class AdminController < ApplicationController
     if @resource.update_attributes(params[:user])
       redirect_to @referer || admin_user_manager_path
     else
-      render "edit_user"
+      render "users/registrations/edit"
     end
   end
 

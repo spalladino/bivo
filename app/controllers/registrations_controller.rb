@@ -45,19 +45,23 @@ class RegistrationsController < Devise::RegistrationsController
     @path = registration_path(resource_name)
 
     if (resource.type == "PersonalUser")
-      @type = :personal
+      @type = :PersonalUser
     elsif (resource.type == "Charity")
-      @type = :charity
+      @type = :Charity
       @countries = Country.all
     end
     render_with_scope :edit
   end
 
   def update
+    @resource = resource
+    @resource_name = resource_name
+    @path = registration_path(resource_name)
+
     if (resource.type == "PersonalUser")
-      @type = :personal
+      @type = :PersonalUser
     elsif (resource.type == "Charity")
-      @type = :charity
+      @type = :Charity
       @countries = Country.all
     end
 

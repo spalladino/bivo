@@ -13,7 +13,7 @@ Feature: Visitors can register as charities
 		
 		When I choose charity sign up
 			Then I should not see "First Name"
-		
+			
 		When I fill in "Charity Name" with "Charity One"
 		And I fill in "Charity Website" with "wwww.charityone.com"
 		And I fill in "short_url" with "charityone"
