@@ -12,3 +12,12 @@ Feature: Search shops page
 		Then I should be on search page
 		And I should see "1 result found"
 		And I should see "First One"
+	
+	Scenario: Show shops per page
+		Given 20 registered shops
+		
+		When I go to the search page
+		And I fill in "Search" with "Shop"
+		And I press "Search"
+				
+		Then I should see "20 results found"
