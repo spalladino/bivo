@@ -64,13 +64,14 @@ class ShopsController < ApplicationController
     else
       @shops = @shops.order 'name ASC, description ASC'
     end
+    
+    @count = @shops.count
 
     # Set pagination
     @per_page = (params[:per_page] || 20).to_i
     @shops = @shops.paginate(:per_page => @per_page, :page => params[:page])
     @page_sizes = [5,10,20,50]
 
-    @count = @shops.count
     @sortings = [
       [_('alphabetically'), :alphabetical],
       [_('proximity'), :proximity],
