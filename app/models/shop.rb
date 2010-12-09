@@ -98,6 +98,14 @@ class Shop < ActiveRecord::Base
     return Income.where('shop_id = ? and transaction_date BETWEEN ? AND ?',self.id,from,to).sum('amount')
   end
 
+  def display_name
+    if status == :inactive
+      _("%s (Inactive)") % [name] 
+    else
+      name
+    end
+  end
+
   protected
 
   def add_parent_categories(category)
