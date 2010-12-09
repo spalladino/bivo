@@ -31,7 +31,7 @@
 
 <% for shop in @shops %>
   <div class="shop">
-	  <h3><%= link_to shop.name, shop_path(shop.id) %></h3>
+	  <h3><%= link_to shop.display_name, shop_path(shop.id) %></h3>
     <p><b><%=_('Website:')%></b> <%=shop.url%></p>
     <p><%=shop.description%></p>
     <p><b><%=_('Shop at:')%></b> <a href= "<%=shop.url %>"> <%=shop.url %></a></p>
