@@ -1,6 +1,6 @@
 # Observer for comments.
 class CommentObserver < ActiveRecord::Observer
-  def after_create(comment)
+  def after_save(comment)
     @comment = comment
 
     enqueue_cause_comment   if (comment.commentable_type.to_sym == :Cause)

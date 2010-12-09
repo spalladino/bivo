@@ -10,13 +10,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101130144436) do
+ActiveRecord::Schema.define(:version => 20101207135647) do
 
   create_table "account_movements", :force => true do |t|
     t.integer  "account_id"
     t.string   "description"
-    t.decimal  "amount"
-    t.decimal  "balance"
+    t.decimal  "amount",         :precision => 12, :scale => 3, :default => 0.0
+    t.decimal  "balance",        :precision => 12, :scale => 3, :default => 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "transaction_id"
@@ -42,15 +42,15 @@ ActiveRecord::Schema.define(:version => 20101130144436) do
     t.string   "name"
     t.string   "url"
     t.integer  "cause_category_id"
-    t.float    "funds_needed"
+    t.decimal  "funds_needed",      :precision => 12, :scale => 3, :default => 0.0
     t.integer  "country_id"
     t.string   "city"
     t.string   "description"
-    t.float    "funds_raised"
+    t.decimal  "funds_raised",      :precision => 12, :scale => 3, :default => 0.0
     t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "votes_count",       :default => 0
+    t.integer  "votes_count",                                      :default => 0
     t.integer  "charity_id"
   end
 
@@ -189,7 +189,7 @@ ActiveRecord::Schema.define(:version => 20101130144436) do
   create_table "transactions", :force => true do |t|
     t.integer  "user_id"
     t.date     "transaction_date"
-    t.float    "amount"
+    t.decimal  "amount",              :precision => 12, :scale => 3, :default => 0.0
     t.string   "description"
     t.integer  "income_category_id"
     t.integer  "expense_category_id"
@@ -199,7 +199,7 @@ ActiveRecord::Schema.define(:version => 20101130144436) do
     t.string   "type"
     t.integer  "shop_id"
     t.string   "input_currency"
-    t.float    "input_amount"
+    t.decimal  "input_amount",        :precision => 12, :scale => 3, :default => 0.0
   end
 
   create_table "users", :force => true do |t|
