@@ -47,7 +47,7 @@ class Shop < ActiveRecord::Base
     labels :percentage => _("percentage"), :fixed_amount => _("fixed amount")
   end
 
-  enum_attr :status, %w(^active inactive deleted)
+  enum_attr :status, %w(^active inactive)
 
   enum_attr :redirection, %w(^search_box purchase_button custom_widget custom_html) do
     labels :search_box =>      _("Use a search box"),
@@ -57,7 +57,8 @@ class Shop < ActiveRecord::Base
   end
 
   attr_protected :status
-  default_scope where('shops.status != ? and shops.status != ?', :deleted,:inactive)
+  default_scope where('shops.status != ?',:inactive)
+
   validates_attachment_size :image, :less_than => 1.megabytes
   validates_attachment_content_type :image, :content_type => ['image/jpeg', 'image/png']
 
@@ -81,6 +82,15 @@ class Shop < ActiveRecord::Base
   validates_numericality_of :comission_value, :less_than_or_equal_to => 100, :if => :comission_kind_percentage?
 
   validates_length_of :comission_details, :maximum => 255
+
+  before_destroy :check_funds_on_delete
+
+  def check_funds_on_delete
+    if self.incomes.count > 0
+      errors.add(:incomes, _("Can't delete shop with incomes"))
+      return false
+    end
+  end
 
 
   #TODO: Validate widget fields
@@ -107,17 +117,14 @@ class Shop < ActiveRecord::Base
   end
 
 
-  def self.all_with_inactive()
-    self.with_exclusive_scope { where('shops.status != ?', :deleted) }
+  def self.all_with_inactives()
+    self.with_exclusive_scope {self.scoped}
   end
 
-  def self.find_with_inactives_and_deleted(id)
-    self.with_exclusive_scope {find(id)}
+  def self.find_with_inactives(id)
+    self.all_with_inactives.find(id)
   end
 
-  def self.all_with_inactive_and_deleted()
-    self.with_exclusive_scope { self.scoped }
-  end
 
 
 

@@ -102,6 +102,7 @@ class ShopsControllerTest < ActionController::TestCase
     assert_equal 1, Shop.count
     assert_response :success
   end
+
   test "should update shop" do
     create_admin_and_sign_in
     shop = Shop.make
@@ -218,103 +219,71 @@ class ShopsControllerTest < ActionController::TestCase
   end
 
   #DELETE
-  test "should not complete delete shop with raising founds, it must be logical" do
-    shop = Shop.make
-    Income.make(:shop => shop,:input_amount => 100.0,:income_category => IncomeCategory.get_shop_category)
+  [:active, :inactive].each do |status|
+    test "should not delete shop that is #{status} with raising founds" do
+      shop = Shop.make :status => status
 
-    create_admin_and_sign_in
-    assert_difference('Shop.count', 0) do
-      post :destroy, :id => shop.id
+      income = Income.make(:shop => shop,:input_amount => 100.0,:income_category => IncomeCategory.get_shop_category)
+
+      create_admin_and_sign_in
+      assert_difference('Shop.count', 0) do
+        post :destroy, :id => shop.id
+      end
+
+      assert_equal status, shop.reload.status
+      assert_response :found
+      assert_match /not be deleted/, flash[:error]
     end
-
-    assert_equal :deleted,shop.reload.status
-    assert_response :found
   end
 
-  #DESTROY
-  test "shouldnt destroy if not admin" do
+  #DELETE
+  test "should not delete if not admin" do
     shop = Shop.make
     create_and_sign_in
-    Income.make(:shop => shop,:input_amount => 100.0,:income_category => IncomeCategory.get_shop_category)
 
     assert_difference('Shop.count', 0) do
       post :destroy, :id => shop.id
     end
 
     assert_equal :active,shop.reload.status
-    assert_response :found
-  end
-
-
-
-  #DESTROY
-  test "should make complete destroy" do
-    shop = Shop.make
-    create_admin_and_sign_in
-
-    assert_difference('Shop.count', -1) do
-      post :destroy, :id => shop.id
-    end
-
-    assert_response :found
-  end
-
-  #DETAILS
-  test "should get details" do
-    shop = Shop.make :short_url => "foobar"
-
-    get :details, :short_url => "foobar"
-
-    assert_not_nil assigns(:shop)
-    assert_equal assigns(:shop), shop
-    assert_response :success
-  end
-
-  #DETAILS
-  test "should get details of inactive if admin" do
-    create_admin_and_sign_in
-    shop = Shop.make :short_url => "foobar", :status => :inactive
-
-    get :details, :short_url => "foobar"
-
-    assert_not_nil assigns(:shop)
-    assert_equal assigns(:shop), shop
-    assert_response :success
-  end
-
-  #DETAILS
-  test "should not get details of inactive if not admin" do
-    create_and_sign_in
-    shop = Shop.make :short_url => "foobar", :status => :inactive
-
-    get :details, :short_url => "foobar"
-
     assert_response :forbidden
   end
 
 
-  #DETAILS
-  test "should not get details of deleted shop if not admin" do
-    create_and_sign_in
-    shop = Shop.make :short_url => "foobar", :status => :deleted
+  #HOME/DETAILS
 
-    get :details, :short_url => "foobar"
+[:home,:details].each do |action|
+  test "should get #{action}" do
+    shop = Shop.make :short_url => "foobar", :redirection => :search_box
 
-    assert_response :forbidden
-  end
-
-
-  #DETAILS
-  test "should get details of deleted if admin" do
-    create_admin_and_sign_in
-    shop = Shop.make :short_url => "foobar", :status => :deleted
-
-    get :details, :short_url => "foobar"
+    get action, :short_url => "foobar"
 
     assert_not_nil assigns(:shop)
     assert_equal assigns(:shop), shop
     assert_response :success
   end
+
+
+  test "should get #{action} of inactive if admin" do
+    create_admin_and_sign_in
+    shop = Shop.make :short_url => "foobar", :status => :inactive, :redirection => :search_box
+
+    get action, :short_url => "foobar"
+
+    assert_not_nil assigns(:shop)
+    assert_equal assigns(:shop), shop
+    assert_response :success
+  end
+
+  test "should not get #{action} of inactive if not admin" do
+    create_and_sign_in
+    shop = Shop.make :short_url => "foobar", :status => :inactive
+
+    get action, :short_url => "foobar"
+
+    assert_response :not_found
+  end
+end
 
   #SHOW
   test "show shop" do
@@ -333,30 +302,21 @@ class ShopsControllerTest < ActionController::TestCase
   end
 
   #ACTIVATE
-  test "should not activate" do
+  test "should not activate because not admin" do
     user = create_and_sign_in
     id = Shop.make(:status=>:inactive).id
     post :activate, :id => id
     assert_response :forbidden
-    assert_equal :inactive,Shop.find_with_inactives_and_deleted(id).status
+    assert_equal :inactive,Shop.find_with_inactives(id).status
   end
 
-  #ACTIVATE
-  test "should not activate if deleted" do
-    user = create_admin_and_sign_in
-    id = Shop.make(:status=>:deleted).id
-    post :activate, :id => id
-    assert_response :forbidden
-    assert_equal :deleted,Shop.find_with_inactives_and_deleted(id).status
-  end
-
-  #DEACTIVATE
+    #DEACTIVATE
   test "should deactivate" do
     user = create_admin_and_sign_in
     id = Shop.make.id
     post :deactivate, :id => id
     assert_response :found
-    assert_equal :inactive,Shop.find_with_inactives_and_deleted(id).status
+    assert_equal :inactive,Shop.find_with_inactives(id).status
    end
 
   #DEACTIVATE
@@ -367,16 +327,6 @@ class ShopsControllerTest < ActionController::TestCase
     assert_response :forbidden
     assert_equal :active,Shop.find(id).status
   end
-
-  #DEACTIVATE
-  test "should not deactivate if deleted" do
-    user = create_admin_and_sign_in
-    id = Shop.make(:status=>:deleted).id
-    post :deactivate, :id => id
-    assert_response :forbidden
-    assert_equal :deleted,Shop.find_with_inactives_and_deleted(id).status
-  end
-
 
 
   test "should render edit categories partial" do
@@ -397,43 +347,28 @@ class ShopsControllerTest < ActionController::TestCase
 
     assert_not_nil assigns(:shops)
     assert_equal 3, assigns(:shops).size
-
-  end
-
-  #LIST-search
-  test "shouldnt get inactive shops in search if not admin" do
-    user = create_and_sign_in
-
-    Shop.make_many 3, :status => :inactive
-    Shop.make_many 3
-    get :search
-
-    assert_not_nil assigns(:shops)
-    assert_equal 3, assigns(:shops).size
-
   end
 
   #LIST-filter
-  test "shouldnt get logical deleted shops in list" do
+  test "should get inactive shops in list if admin" do
     user = create_admin_and_sign_in
 
-    Shop.make_many 3, :status => :deleted
+    Shop.make_many 3, :status => :inactive
     Shop.make_many 3
 
     get :index
 
     assert_not_nil assigns(:shops)
-    assert_equal 3, assigns(:shops).size
+    assert_equal 6, assigns(:shops).size
 
   end
 
   #LIST-search
-  test "shouldnt get logical deleted shops in search " do
+  test "shouldnt get inactive shops in search" do
     user = create_admin_and_sign_in
 
-    Shop.make_many 3, :status => :deleted
+    Shop.make_many 3, :status => :inactive
     Shop.make_many 3
-
     get :search
 
     assert_not_nil assigns(:shops)

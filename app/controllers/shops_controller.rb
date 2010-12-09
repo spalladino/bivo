@@ -5,8 +5,8 @@ class ShopsController < ApplicationController
   before_filter :load_shop, :except => [  :new, :create, :index, :search, :edit_categories]
   before_filter :load_places, :only => [ :new, :edit, :create, :update ]
   before_filter :load_categories, :only => [ :new, :edit, :create, :update, :edit_categories, :index ]
-  before_filter :valid_transition, :only => [:activate,:deactivate]
-  before_filter :only_admin_if_inactive_or_deleted, :only => [:home,:details]
+  before_filter :ensure_active_if_not_admin, :only => [:home,:details]
+
 
   def details
   end
@@ -29,11 +29,11 @@ class ShopsController < ApplicationController
     if params[:category_field]
       @category = ShopCategory.find(params[:category_field])
       @shops = @category.shops unless admin_is_logged_in
-      @shops = @category.shops.all_with_inactive if admin_is_logged_in
+      @shops = @category.shops.all_with_inactives if admin_is_logged_in
       @path = @category.ancestors
     else
       @shops = Shop.all unless admin_is_logged_in
-      @shops = Shop.all_with_inactive if admin_is_logged_in
+      @shops = Shop.all_with_inactives if admin_is_logged_in
     end
     # Set pagination
     @per_page = (params[:per_page] || 20).to_i
@@ -49,11 +49,9 @@ class ShopsController < ApplicationController
     # Filter by text
     @search_word = params[:search_word]
     if @search_word.blank?
-      @shops = Shop.includes(:countries) unless admin_is_logged_in
-      @shops = Shop.all_with_inactive.includes(:countries)if admin_is_logged_in
+      @shops = Shop.includes(:countries)
     else
-      @shops = Shop.all_with_inactive.includes(:countries).search(@search_word.gsub(/\\/, '\&\&').gsub(/'/, "''")) if admin_is_logged_in
-      @shops = Shop.includes(:countries).search(@search_word.gsub(/\\/, '\&\&').gsub(/'/, "''")) unless admin_is_logged_in
+      @shops = Shop.includes(:countries).search(@search_word.gsub(/\\/, '\&\&').gsub(/'/, "''"))
     end
 
     # Handle sorting options
@@ -154,8 +152,9 @@ private
   end
 
   def load_shop
-    @shop = Shop.find_with_inactives_and_deleted params[:id] if params[:id]
-    @shop = Shop.all_with_inactive_and_deleted.find_by_short_url! params[:short_url] if params[:short_url]
+    @shop = Shop.find_with_inactives params[:id] if params[:id]
+    @shop = Shop.all_with_inactives.find_by_short_url! params[:short_url] if params[:short_url]
+    render :status => :not_found unless @shop
   end
 
   def load_categories
@@ -163,17 +162,8 @@ private
     @categories = ShopCategory.roots
   end
 
-  def valid_transition
-    if @shop.status == :deleted
-      ajax_flash[:error] = _("Error, deleted shop")
-      redirect_to request.referer unless request.xhr?
-    end
-  end
-
-  def only_admin_if_inactive_or_deleted
-    if (@shop.status == :deleted || @shop.status ==:inactive) && !admin_is_logged_in
-      render :nothing => true, :status => :forbidden
-    end
+  def ensure_active_if_not_admin
+    render :nothing => true, :status => :not_found if (@shop.status == :inactive && !admin_is_logged_in)
   end
 
 
