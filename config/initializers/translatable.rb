@@ -2,19 +2,22 @@ class ActiveRecord::Base
 
   def self.translate(fields)
   
-    translate_fields = fields[:translate] || []
-    search_fields = fields[:index] || []
-    all_fields = fields[:all] = translate_fields | search_fields
+    # Initialize fields
+    fields = fields.clone
+    translate_fields = (fields[:translate] || []).clone
+    search_fields = (fields[:index] || []).clone
+    all_fields = (fields[:all] = translate_fields | search_fields).clone
     
     # Setup search index
     eval("self.index do
       #{search_fields.join('; ')}
     end") unless search_fields.empty?
+    
+    cattr_accessor :translated_fields
+    self.translated_fields = fields
   
     # Create class getter for fields to be translated or searched and translation classes
     (class << self; self; end).instance_eval do
-      cattr_accessor :translated_fields
-      
       define_method 'translation_class' do |lang_id|
         "::#{self.name}Translation#{lang_id.capitalize.to_s}".constantize
       end
@@ -23,17 +26,10 @@ class ActiveRecord::Base
         Language.non_defaults.map { |lang| self.translation_class(lang.id) }
       end
     end
-    
-    # Set translated fields
-    self.translated_fields = fields
-    
+        
     # Create classes for translations
     Language.non_defaults.each do |lang|
-      str = "
-        class ::#{self.name}Translation#{lang.id.capitalize.to_s} < ActiveRecord::Base
-          set_table_name '#{self.table_name.singularize}_translations_#{lang.id.to_s}'
-          belongs_to :#{self.table_name.singularize}
-          
+      indxs = "
           index('#{lang.id}', '#{lang.english_name}') do
             #{search_fields.join("; ")}
           end
@@ -41,7 +37,15 @@ class ActiveRecord::Base
           index(nil, 'english') do
             #{search_fields.join("; ")}
           end
+      "
+      
+      str = "
+        class ::#{self.name}Translation#{lang.id.capitalize.to_s} < ActiveRecord::Base
+          set_table_name '#{self.table_name.singularize}_translations_#{lang.id.to_s}'
+          belongs_to :#{self.table_name.singularize}
           
+          #{indxs unless search_fields.empty?}
+                    
           def self.create_for(referenced)
             self.create :referenced_id => referenced.id, #{all_fields.map{|f| ':' + f.to_s + ' => referenced[:' + f.to_s + ']'}.join(', ')}
           end
@@ -73,45 +77,29 @@ class ActiveRecord::Base
       self.joins("LEFT JOIN #{table} ON #{table}.referenced_id = #{self.table_name}.id").where("#{table}.pending = true")  
     }
     
-    # Search translated fields using english dictionary
-    self.scope :search_translated, lambda { |*args|
-      term = args.flatten.first
-      lang = args.flatten.second || I18n.locale
-      return self.search(term) if not Language.non_defaults.map(&:id).include? lang
-      
-      table = "#{self.table_name.singularize}_translations_#{lang}"
-      index_name = self.translation_class(lang).full_text_indexes.second.to_s
-      
-      term = term.scan(/"([^"]+)"|(\S+)/).flatten.compact.map do |lex|
-        lex =~ /(.+)\*\s*$/ ? "'#{$1}':*" : "'#{lex}'"
-      end.join(' & ') # Code duplicated from texticle gem :(
-      
-      fields = translate_fields.map{|f| "#{table}.#{f} AS #{f}"}.insert(0, "#{self.table_name}.*").push("ts_rank_cd((#{index_name}), to_tsquery(#{connection.quote(term)})) as rank")
-      
-      s = self.joins("LEFT JOIN #{table} ON #{table}.referenced_id = #{self.table_name}.id")
-      s = s.select(fields.join(', '))
-      s = s.where("#{index_name} @@ to_tsquery(?)", term)
-    }
-    
-    # Search translated fields using a specific locale 
-    self.scope :search_localized, lambda { |*args|
-      term = args.flatten.first
-      lang = args.flatten.second || I18n.locale
-      return self.search(term) if not Language.non_defaults.map(&:id).include? lang
-      
-      table = "#{self.table_name.singularize}_translations_#{lang}"
-      index_name = self.translation_class(lang).full_text_indexes.first.to_s
-      
-      term = term.scan(/"([^"]+)"|(\S+)/).flatten.compact.map do |lex|
-        lex =~ /(.+)\*\s*$/ ? "'#{$1}':*" : "'#{lex}'"
-      end.join(' & ') # Code duplicated from texticle gem :(
-      
-      fields = translate_fields.map{|f| "#{table}.#{f} AS #{f}"}.insert(0, "#{self.table_name}.*").push("ts_rank_cd((#{index_name}), to_tsquery(#{connection.quote(term)})) as rank")
-      
-      s = self.joins("LEFT JOIN #{table} ON #{table}.referenced_id = #{self.table_name}.id")
-      s = s.select(fields.join(', '))
-      s = s.where("#{index_name} @@ to_tsquery(?)", term)
-    }
+    # Search translated fields using english and localized dictionary
+    unless search_fields.empty?
+      [[:search_translated, 1], [:search_localized, 0]].each do |scope_name, idx|
+        self.scope scope_name, lambda { |*args|
+          term = args.flatten.first
+          lang = args.flatten.second || I18n.locale
+          return self.search(term) if not Language.non_defaults.map(&:id).include? lang
+          
+          table = "#{self.table_name.singularize}_translations_#{lang}"
+          index_name = self.translation_class(lang).full_text_indexes[idx].to_s
+          
+          term = term.scan(/"([^"]+)"|(\S+)/).flatten.compact.map do |lex|
+            lex =~ /(.+)\*\s*$/ ? "'#{$1}':*" : "'#{lex}'"
+          end.join(' & ') # Code duplicated from texticle gem :(
+          
+          fields = translate_fields.map{|f| "#{table}.#{f} AS #{f}"}.insert(0, "#{self.table_name}.*").push("ts_rank_cd((#{index_name}), to_tsquery(#{connection.quote(term)})) as rank")
+          
+          s = self.joins("LEFT JOIN #{table} ON #{table}.referenced_id = #{self.table_name}.id")
+          s = s.select(fields.join(', '))
+          s = s.where("#{index_name} @@ to_tsquery(?)", term)
+        }
+      end
+    end
     
     # Save translation instance method
     define_method 'save_translation' do |lang, args|
