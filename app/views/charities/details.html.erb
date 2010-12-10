@@ -17,7 +17,7 @@
 <p> <b><%=_('city')%></b>: <%= @charity.city%> </p>
 <p> <b><%=_('description')%></b>: <%=raw @charity.description%> </p>
 
-
+<p><a href="#cause_list"><%=@charity.causes.length%> <%=@charity.causes.length == 1 ? _('cause') :  _('causes')%></a></p>
 
 <div id="follow_charity_button">
   <%= follow_charity_button @charity %>
