@@ -66,7 +66,8 @@ class ActiveRecord::Base
     }
     
     # Scope for obtaining entities pending translation
-    self.scope :translation_pending, lambda { |lang| 
+    self.scope :translation_pending, lambda { |*optlang| 
+      lang = optlang.flatten.first || I18n.locale
       table = "#{self.table_name.singularize}_translations_#{lang}"
       self.joins("LEFT JOIN #{table} ON #{table}.referenced_id = #{self.table_name}.id").where("#{table}.pending = true")  
     }
@@ -79,10 +80,16 @@ class ActiveRecord::Base
       
       table = "#{self.table_name.singularize}_translations_#{lang}"
       index_name = self.translation_class(lang).full_text_indexes.first.to_s
+      
       term = term.scan(/"([^"]+)"|(\S+)/).flatten.compact.map do |lex|
         lex =~ /(.+)\*\s*$/ ? "'#{$1}':*" : "'#{lex}'"
       end.join(' & ') # Code duplicated from texticle gem :(
-      self.joins("LEFT JOIN #{table} ON #{table}.referenced_id = #{self.table_name}.id").select(translate_fields.map{|f| "#{table}.#{f} AS #{f}"}.insert(0, "#{self.table_name}.*").join(', ')).where("#{index_name} @@ to_tsquery(?)", term)
+      
+      fields = translate_fields.map{|f| "#{table}.#{f} AS #{f}"}.insert(0, "#{self.table_name}.*").append("ts_rank_cd((#{index_name}), to_tsquery(#{connection.quote(term)})) as rank")
+      
+      s = self.joins("LEFT JOIN #{table} ON #{table}.referenced_id = #{self.table_name}.id")
+      s = s.select(fields.join(', '))
+      s = s.where("#{index_name} @@ to_tsquery(?)", term)
     }
     
     # Save translation instance method
@@ -108,18 +115,18 @@ class ActiveRecord::Base
     
     # Mark translation as pending in all languages for updated item
     after_update do |obj|
-      ts = Language.non_defaults.map { |lang| obj.translation(lang.id) }
+      ts = obj.translations
       
-      translated_fields[:all].each do |field|
+      obj.class.translated_fields[:all].each do |field|
         ts.each do |t|
           t[field] = self[field]
         end if eval("#{field}_changed?")
       end
       
-      ts.select(&:changed?).each {|t| 
+      ts.select(&:changed?).each do |t| 
         t.pending = true
         t.save
-      }
+      end
     end
     
   end  

@@ -42,36 +42,51 @@ class ShopTest < ActiveSupport::TestCase
   end
   
   test "shop description should be translated" do
-    shop = Shop.make
+    shop = Shop.make :description => 'Description'
+    shop.save_translation :es, :description => 'Descripcion'
     
-    Translation.create! :translated_type => Shop.name, :translated_id => shop.id, :translated_field => 'description', :language => 'es', :value => "Descripcion", :pending => false
-
-    assert_equal "Descripcion", Shop.translated('es').find_by_id(shop.id).description
+    assert_equal "Description", Shop.find_by_id(shop.id).description
+    assert_equal "Descripcion", Shop.translated(:es).find(shop.id).description
   end
   
-  test "create translation for shop description" do
-    shop = Shop.make
-    shop.set_translation 'es', :description, 'Descripcion'
-    assert_equal "Descripcion", Shop.translated('es').find_by_id(shop.id).description
+  test "new shop description must be marked as pending" do
+    shop = Shop.make :description => 'Description'
+    
+    assert_equal 1, Shop.translation_pending(:es).count
+    assert_equal shop.id, Shop.translation_pending(:es).first.id
   end
   
   test "translation for description should be marked as pending when updated" do
     shop = Shop.make
-    shop.set_translation 'es', :description, 'Descripcion'
-    assert_equal "Descripcion", Shop.translated('es').find_by_id(shop.id).description
+    shop.save_translation 'es', :description => 'Descripcion'
+
+    assert_equal "Descripcion", Shop.translated(:es).find_by_id(shop.id).description
+    assert_equal 0, Shop.translation_pending(:es).count
     
     shop.description = 'New description'
     shop.save!
-    assert_equal "New description", Shop.translated('es').find_by_id(shop.id).description
+
+    assert_equal "New description", Shop.translated(:es).find_by_id(shop.id).description
+    assert_equal 1, Shop.translation_pending(:es).count
   end
   
   test "translation for description should not be marked as pending when unchanged" do
     shop = Shop.make
-    shop.set_translation 'es', :description, 'Descripcion'
-    assert_equal "Descripcion", Shop.translated('es').find_by_id(shop.id).description
+    shop.save_translation 'es', :description => 'Descripcion'
+
+    assert_equal "Descripcion", Shop.translated(:es).find_by_id(shop.id).description
+    assert_equal 0, Shop.translation_pending(:es).count
     
-    shop.name = 'New name'
+    shop.url = 'http://example.com.ar'
     shop.save!
-    assert_equal "Descripcion", Shop.translated('es').find_by_id(shop.id).description
+
+    assert_equal "Descripcion", Shop.translated(:es).find_by_id(shop.id).description
+    assert_equal 0, Shop.translation_pending(:es).count
+  end
+  
+  test "should return shop translated fields" do
+    assert_equal [:description], Shop.translated_fields[:translate]
+    assert_equal [:name, :description], Shop.translated_fields[:index]
+    assert_equal [:description, :name], Shop.translated_fields[:all]
   end
 end
