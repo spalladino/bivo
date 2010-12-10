@@ -250,6 +250,7 @@ class RegistrationsControllerTest < ActionController::TestCase
 
  #EDIT
   test "cant go to edit charity becouse is another charity" do
+    puts "cant go to edit charity becouse is another charity -------===--- "
     user = create_charity_and_sign_in
     user_to_edit = Charity.make
     get :edit, :id => user_to_edit.id
@@ -334,6 +335,28 @@ class RegistrationsControllerTest < ActionController::TestCase
     assert_equal 0,User.count
     assert_equal 1,User.with_deleted.count
     assert_response :ok
+  end
+
+  test "should edit a charity from admin" do
+    admin = create_admin_and_sign_in
+    charity = Charity.make
+
+    post :update,
+      :id => charity.id,
+      :user =>
+      {
+        :email                 => "char123@bivotest.com",
+        :charity_name          => "test",
+        :charity_website       => "http://www.test.com",
+        :charity_type          => "def",
+        :tax_reg_number        => 123456,
+        :country_id            => Country.make.id,
+        :city                  => "Bs As"
+      }
+
+    assert_equal Charity.find(charity.id).email, "char123@bivotest.com"
+
+    assert_redirected_to :controller => :admin, :action => :user_manager
   end
 
 end
