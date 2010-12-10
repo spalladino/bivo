@@ -12,16 +12,16 @@
 	<%= form_tag({:controller => :shops, :action => :search, :id => "filter_form" },{ :method => :get }) do %>
 		<table cellspacing="5">
 			<tr>
-				<td><%= _("Show per page")%></td>
+				<td><%= label_tag :per_page, _("Show per page")%></td>
 				<td><%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page)%></td>
 			</tr>
 			<tr>
-				<td><%= _('Sort by') %></td>
+				<td><%= label_tag :sorting, _('Sort by')%></td>
 				<td><%= select_tag :sorting, options_for_select(@sortings, @sorting) %></td>
 			</tr>
 			<tr>
-				<td><%= _('Search') %></td>
-				<td><%= text_field_tag :search_word, @search_word, :id => 'search_word_filter' %> <%= link_to_function(_('clear'), "$('#search_word_filter').val('').change();") if @search_word %></td>
+				<td><%= label_tag :search_word, _('Search')%></td>
+				<td><%= text_field_tag :search_word, @search_word %> <%= link_to_function(_('clear'), "$('#search_word_filter').val('').change();") if @search_word %></td>
 			</tr>
 		</table>
 		<p>
