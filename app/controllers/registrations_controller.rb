@@ -70,7 +70,7 @@ class RegistrationsController < Devise::RegistrationsController
 
   protected
     def allow_edit
-      render :nothing => true, :status => :forbidden if current_user == @resource
+      render :nothing => true, :status => :forbidden if current_user != @resource
       return false
     end
 
