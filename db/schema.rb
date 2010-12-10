@@ -168,15 +168,15 @@ ActiveRecord::Schema.define(:version => 20101207175855) do
   create_table "shop_translations_es", :force => true do |t|
     t.string  "name"
     t.string  "description"
-    t.integer "shop_id"
-    t.boolean "pending",     :default => true
+    t.integer "referenced_id"
+    t.boolean "pending",       :default => true
   end
 
   create_table "shop_translations_fr", :force => true do |t|
     t.string  "name"
     t.string  "description"
-    t.integer "shop_id"
-    t.boolean "pending",     :default => true
+    t.integer "referenced_id"
+    t.boolean "pending",       :default => true
   end
 
   create_table "shops", :force => true do |t|

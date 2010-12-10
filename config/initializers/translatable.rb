@@ -11,7 +11,7 @@ class ActiveRecord::Base
       #{search_fields.join('; ')}
     end") unless search_fields.empty?
   
-    # Create class getter for fields to be translated or searched
+    # Create class getter for fields to be translated or searched and translation classes
     (class << self; self; end).instance_eval do
       define_method 'translated_fields' do
         fields
@@ -19,6 +19,10 @@ class ActiveRecord::Base
       
       define_method 'translation_class' do |lang_id|
         "ActiveRecord::Base::#{self.name}Translation#{lang_id.capitalize.to_s}".constantize
+      end
+      
+      define_method 'translation_classes' do
+        Language.non_defaults.map { |lang| self.translation_class(lang.id) }
       end
     end
     
@@ -33,6 +37,18 @@ class ActiveRecord::Base
             #{search_fields.join("; ")}
           end
           
+          index('untranslated', 'english') do
+            #{search_fields.join("; ")}
+          end
+          
+          def self.create_for(referenced)
+            self.create :referenced_id => referenced.id, #{all_fields.map{|f| ':' + f.to_s + ' => referenced[:' + f.to_s + ']'}.join(', ')}
+          end
+          
+          def self.language
+            return '#{lang.id.to_s}'
+          end
+          
           def language
             return '#{lang.id.to_s}'
           end
@@ -43,24 +59,68 @@ class ActiveRecord::Base
     # Create translated scope that overrides all of this class fields with their translated values    
     self.scope :translated, lambda { |*args|
       lang = args.flatten.first || I18n.locale
-      return self.scoped if not lang in Language.non_defaults.map(&:id)
+      return self.scoped if not Language.non_defaults.map(&:id).include? lang
+      
       table = "#{self.table_name.singularize}_translations_#{lang}"
-      self.joins("LEFT JOIN #{table} ON #{table}.#{self.table_name.singularize}_id = #{self.table_name}.id").select(translate_fields.map{|f| "#{table}.#{f} AS #{f}"}.insert(0, "#{self.table_name}.*").join(', '))
+      self.joins("LEFT JOIN #{table} ON #{table}.referenced_id = #{self.table_name}.id").select(translate_fields.map{|f| "#{table}.#{f} AS #{f}"}.insert(0, "#{self.table_name}.*").join(', '))
+    }
+    
+    # Scope for obtaining entities pending translation
+    self.scope :translation_pending, lambda { |lang| 
+      table = "#{self.table_name.singularize}_translations_#{lang}"
+      self.joins("LEFT JOIN #{table} ON #{table}.referenced_id = #{self.table_name}.id").where("#{table}.pending = true")  
     }
     
     # Search using a specific locale 
     self.scope :search_translated, lambda { |*args|
       term = args.flatten.first
       lang = args.flatten.second || I18n.locale
-      return self.search(term) if not lang in Language.non_defaults.map(&:id)
+      return self.search(term) if not Language.non_defaults.map(&:id).include? lang
       
       table = "#{self.table_name.singularize}_translations_#{lang}"
       index_name = self.translation_class(lang).full_text_indexes.first.to_s
       term = term.scan(/"([^"]+)"|(\S+)/).flatten.compact.map do |lex|
         lex =~ /(.+)\*\s*$/ ? "'#{$1}':*" : "'#{lex}'"
       end.join(' & ') # Code duplicated from texticle gem :(
-      self.joins("LEFT JOIN #{table} ON #{table}.#{self.table_name.singularize}_id = #{self.table_name}.id").select(translate_fields.map{|f| "#{table}.#{f} AS #{f}"}.insert(0, "#{self.table_name}.*").join(', ')).where("#{index_name} @@ to_tsquery(?)", term)
+      self.joins("LEFT JOIN #{table} ON #{table}.referenced_id = #{self.table_name}.id").select(translate_fields.map{|f| "#{table}.#{f} AS #{f}"}.insert(0, "#{self.table_name}.*").join(', ')).where("#{index_name} @@ to_tsquery(?)", term)
     }
+    
+    # Save translation instance method
+    define_method 'save_translation' do |lang, args|
+      translation = self.class.translation_class(lang).find_by_referenced_id(self.id)
+      translation.update_attributes(args.merge(:pending => false))
+    end
+    
+    # Return translation instance
+    define_method 'translation' do |lang_id|
+      self.class.translation_class(lang_id).find_by_referenced_id(self.id)
+    end
+    
+    # Return all translation instances
+    define_method 'translations' do
+      Language.non_defaults.map { |lang| self.translation(lang.id) }
+    end
+   
+    # Create translation in all languages for new item
+    after_create do |obj|
+      obj.class.translation_classes.each{|c| c.create_for(obj)}
+    end
+    
+    # Mark translation as pending in all languages for updated item
+    after_update do |obj|
+      ts = Language.non_defaults.map { |lang| obj.translation(lang.id) }
+      
+      translated_fields[:all].each do |field|
+        ts.each do |t|
+          t[field] = self[field]
+        end if eval("#{field}_changed?")
+      end
+      
+      ts.select(&:changed?).each {|t| 
+        t.pending = true
+        t.save
+      }
+    end
     
   end  
 end
