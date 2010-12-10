@@ -105,6 +105,16 @@ class Shop < ActiveRecord::Base
       name
     end
   end
+  
+  # this are overriden w.r.t. enum_attr since inactive and active clash
+  def status_inactive?
+    status == :inactive
+  end
+  
+  def inactive?
+    status == :inactive
+  end
+  #
 
   protected
 
@@ -124,7 +134,6 @@ class Shop < ActiveRecord::Base
     Account.shop_account self
   end
 
-
   def self.all_with_inactives()
     self.with_exclusive_scope {self.scoped}
   end
@@ -132,9 +141,6 @@ class Shop < ActiveRecord::Base
   def self.find_with_inactives(id)
     self.all_with_inactives.find(id)
   end
-
-
-
 
 end
 
