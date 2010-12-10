@@ -1,4 +1,6 @@
 Feature: Visitors can register as personal users
+	Background:
+		Given I fill seed data
 	
 	Scenario: Personal Users sign up
 		When I go to the home page

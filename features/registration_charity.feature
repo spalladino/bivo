@@ -1,4 +1,6 @@
 Feature: Visitors can register as charities
+	Background:
+		Given I fill seed data
 
 	Scenario: Visitors can access to registration form
 		When I go to the home page

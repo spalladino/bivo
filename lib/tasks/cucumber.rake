@@ -14,7 +14,7 @@ begin
   require 'cucumber/rake/task'
 
   namespace :cucumber do
-    Cucumber::Rake::Task.new({:ok => ['db:test:prepare','cucumber:load_seed_data']}, 'Run features that should pass') do |t|
+    Cucumber::Rake::Task.new({:ok => 'db:test:prepare'}, 'Run features that should pass') do |t|
       t.binary = vendored_cucumber_bin # If nil, the gem's binary is used.
       t.fork = true # You may get faster startup if you set this to false
       t.profile = 'default'
@@ -35,9 +35,6 @@ begin
     desc 'Run all features'
     task :all => [:ok, :wip]
     
-    task :load_seed_data => :environment do
-      Rake::Task["db:seed"].invoke
-    end
   end
   desc 'Alias for cucumber:ok'
   task :cucumber => 'cucumber:ok'
