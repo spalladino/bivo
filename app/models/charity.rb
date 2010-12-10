@@ -143,9 +143,6 @@ class Charity < User
     true
   end
 
-  def destroyed?
-    super || self.status == :deleted
-  end
 
   def destroy
     if can_delete?

@@ -1,16 +1,14 @@
 class RegistrationsController < Devise::RegistrationsController
+  before_filter :load_resource, :only => [:edit,:update]
+  before_filter :allow_edit , :only => [:edit, :update]
+  before_filter :load_countries_and_categories, :only => [:create,:new]
+  before_filter :allow_destroy, :only => [:destroy]
 
   def new
-    @countries = Country.all
-    @categories = CharityCategory.all
-
     super
   end
 
   def create
-    @countries = Country.all
-    @categories = CharityCategory.all
-
     if ((params["user"]["type"] != "PersonalUser") &&
         (params["user"]["type"] != "Charity"))
       params["user"]["type"] = "PersonalUser"
@@ -39,35 +37,46 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def edit
-    @resource = resource
-    @resource_name = resource_name
-    @path = registration_path(resource_name)
-
-    if (resource.type == "PersonalUser")
-      @type = :PersonalUser
-    elsif (resource.type == "Charity")
-      @type = :Charity
-      @countries = Country.all
-    end
     render_with_scope :edit
   end
 
   def update
-    @resource = resource
-    @resource_name = resource_name
-    @path = registration_path(resource_name)
-
-    if (resource.type == "PersonalUser")
-      @type = :PersonalUser
-    elsif (resource.type == "Charity")
-      @type = :Charity
-      @countries = Country.all
-    end
-
     super
   end
 
   protected
+    def allow_edit
+      if  !((current_user && current_user == @resource) || admin_is_logged_in)
+        render :nothing => true, :status => :forbidden
+        return false
+      end
+    end
+
+    def allow_destroy
+      if  !(admin_is_logged_in)
+        render :nothing => true, :status => :forbidden
+        return false
+      end
+    end
+
+    def load_resource
+      @resource = resource
+      @resource_name = resource_name
+      @path = registration_path(resource_name)
+
+      if (resource.type == "PersonalUser")
+        @type = :PersonalUser
+      elsif (resource.type == "Charity")
+        @type = :Charity
+        @countries = Country.all
+      end
+    end
+
+    def load_countries_and_categories
+      @countries = Country.all
+      @categories = CharityCategory.all
+    end
+
     def build_resource(*args)
       super
 

@@ -3,7 +3,6 @@ class CharitiesController < ApplicationController
   before_filter :authenticate_user!, :except => [:show, :details, :index, :check_url, :destroy]
   before_filter :load_charity, :except => [:index, :new, :create, :check_url,:destroy]
   before_filter :only_owner_or_admin_if_inactive, :only => [:details]
-  before_filter :only_owner_or_admin, :only => [:edit, :update]
   before_filter :only_admin, :only => [:activate, :deactivate, :create,:delete,:destroy]
   before_filter :follows_exist, :only => [:unfollow]
 
@@ -146,11 +145,6 @@ class CharitiesController < ApplicationController
     @charity = Charity.find_by_short_url(params[:url]) if params[:url]
   end
 
-  def only_owner_or_admin
-    if not (@charity.id == current_user.id || current_user.is_admin_user)
-      render :nothing => true, :status => :forbidden
-    end
-  end
 
    def all_category(count)
     c = CharityCategory.new :name => _("All")

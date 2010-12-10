@@ -253,8 +253,7 @@ class CausesControllerTest < ActionController::TestCase
     user = create_charity_and_sign_in
     cause = Cause.make :charity_id => Charity.make.id
     get :edit, :id => cause.id
-    assert_not_nil assigns(:cause)
-    assert_equal assigns(:cause), cause
+
     assert_response :forbidden
   end
 
@@ -263,7 +262,7 @@ class CausesControllerTest < ActionController::TestCase
     user = create_charity_and_sign_in
    cause = Cause.make :charity_id => user.id, :status=>:completed
     get :edit, :id => cause.id
-    assert_equal assigns(:cause), cause
+
     assert_response :forbidden
   end
 
@@ -417,7 +416,7 @@ class CausesControllerTest < ActionController::TestCase
   end
 
   #CREATE
-  test "should create inactive causes from inactive charity ignoring params[:status]" do
+  test "should not create causes from inactive charity" do
     user = create_charity_and_sign_in :status => :inactive
 
     post :create,
@@ -434,9 +433,8 @@ class CausesControllerTest < ActionController::TestCase
         :funds_needed=>100,
         :funds_raised=>0
       }
-    assert_equal :inactive,Cause.first.status
-    assert_equal 1,Cause.count
-    assert_redirected_to :action => :details, :url => "url"
+    assert_equal 0,Cause.count
+    assert_response :forbidden
   end
 
   #CREATE
