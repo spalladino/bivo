@@ -22,8 +22,14 @@ class User < ActiveRecord::Base
 
   attr_accessor_with_default :captcha_valid, true
 
+  default_scope where('users.status != ?',:deleted)
+
   has_many :votes
   has_many :follows
+
+  def self.with_deleted
+    self.with_exclusive_scope {self.scoped}
+  end
 
   def is_charity_user
     false

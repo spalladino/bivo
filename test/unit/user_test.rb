@@ -7,7 +7,7 @@ class UserTest < ActiveSupport::TestCase
     user2 = PersonalUser.make(:status => :deleted)
 
     assert_equal 0, User.all.count
-    assert_equal 2, User.with_exclusive_scope.all.count
+    assert_equal 2, User.with_deleted.count
   end
 end
 

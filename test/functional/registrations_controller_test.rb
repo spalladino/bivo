@@ -209,7 +209,6 @@ class RegistrationsControllerTest < ActionController::TestCase
   #UPDATE
   test "shouldnt update personal user" do
     personal = create_and_sign_in
-
     put :update,
       :user =>
       {
@@ -217,7 +216,6 @@ class RegistrationsControllerTest < ActionController::TestCase
         :first_name            => "juan",
         :last_name             => nil
       }
-
     assert_not_equal PersonalUser.find(personal.id).email, "dd@ee.com"
     assert_response :ok
   end
@@ -310,9 +308,9 @@ class RegistrationsControllerTest < ActionController::TestCase
     user = Charity.make
     create_admin_and_sign_in
 
-    assert_difference('User.count', -1) do
-      post :destroy, :id => user.id
-    end
+
+    post :destroy, :id => user.id
+
     assert_equal 0,User.count
     assert_equal 1,User.with_deleted.count
     assert_response :ok
