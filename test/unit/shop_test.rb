@@ -117,6 +117,16 @@ class ShopTest < ActiveSupport::TestCase
     assert_equal [], Shop.search_translated('libros', :es).map(&:id)
     assert_equal [shop.id], Shop.search_translated('car', :es).map(&:id)
   end
+  
+  test "should destroy translations when shop is destroyed" do
+    shop = Shop.make
+    shop.save_translation 'es', :name => 'libro'
+    
+    assert_equal 1, Shop.translation_class(:es).count
+
+    shop.destroy
+    assert_equal 0, Shop.translation_class(:es).count
+  end
 
   test "status test methods when active" do
     s = Shop.make_unsaved :status => :active

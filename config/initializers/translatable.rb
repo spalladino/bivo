@@ -137,5 +137,12 @@ class ActiveRecord::Base
       end
     end
     
+    # Delete all translations on delete
+    after_destroy do |obj|
+      obj.translations.each do |t|
+        t.destroy
+      end
+    end
+    
   end  
 end
