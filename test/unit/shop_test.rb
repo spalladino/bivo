@@ -89,4 +89,32 @@ class ShopTest < ActiveSupport::TestCase
     assert_equal [:name, :description], Shop.translated_fields[:index]
     assert_equal [:description, :name], Shop.translated_fields[:all]
   end
+  
+  test "should search in name" do
+    shop = Shop.make :name => 'book'
+    assert_equal [shop.id], Shop.search('books').map(&:id)
+  end
+  
+  test "should search in description" do
+    shop = Shop.make :description => 'book'
+    assert_equal [shop.id], Shop.search('books').map(&:id)
+  end
+  
+  test "should search in translated fields" do
+    shop = Shop.make :description => 'book'
+    shop.save_translation 'es', :description => 'libro'
+
+    assert_equal [], Shop.search('libro').map(&:id)
+    assert_equal [shop.id], Shop.search_translated('libro', :es).map(&:id)
+  end
+  
+  test "should search in untranslated fields if translation is pending" do
+    shop = Shop.make :name => 'book'
+    shop.save_translation 'es', :name => 'libro'
+    shop.name = 'car'
+    shop.save!
+
+    assert_equal [], Shop.search_translated('libros', :es).map(&:id)
+    assert_equal [shop.id], Shop.search_translated('car', :es).map(&:id)
+  end
 end
