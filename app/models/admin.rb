@@ -10,5 +10,7 @@ class Admin < User
     true
   end
 
+  enum_attr :status, %w(^active deleted),:nil => false
+
 end
 
