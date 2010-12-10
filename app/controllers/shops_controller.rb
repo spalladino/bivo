@@ -46,9 +46,7 @@ class ShopsController < ApplicationController
   end
 
    def search
-    p "Controller"
-    p Shop.connection.execute('select current_database()')[0]
-    p Shop.connection.execute('select count(*) from shops')[0]
+
     # Filter by text
     @search_word = params[:search_word]
     if @search_word.blank?
