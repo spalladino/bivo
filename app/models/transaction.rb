@@ -2,9 +2,10 @@ class Transaction < ActiveRecord::Base
   DefaultCurrency = :GBP
   belongs_to :user
 
-  validates_numericality_of :input_amount
-  
+  validates_numericality_of :input_amount  
   validates_presence_of :user_id, :input_amount, :transaction_date, :type
+  validates :input_amount, :decimal => true
+  validates :amount, :decimal => true
   
   validates_length_of :description, :maximum => 255
   

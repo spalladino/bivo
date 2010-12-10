@@ -6,7 +6,7 @@ class Shop < ActiveRecord::Base
   acts_as_commentable
 
   class CommentRules
-    def self.before_add(comment)
+    def self.before_add(comment,user)
       comment.approved = true
     end
 
@@ -46,7 +46,7 @@ class Shop < ActiveRecord::Base
     labels :percentage => _("percentage"), :fixed_amount => _("fixed amount")
   end
 
-  enum_attr :status, %w(^inactive active deleted)
+  enum_attr :status, %w(^active inactive)
 
   enum_attr :redirection, %w(^search_box purchase_button custom_widget custom_html) do
     labels :search_box =>      _("Use a search box"),
@@ -54,6 +54,9 @@ class Shop < ActiveRecord::Base
            :custom_widget =>   _("Use a custom widget"),
            :custom_html =>     _("Use custom HTML")
   end
+
+  attr_protected :status
+  default_scope where('shops.status != ?',:inactive)
 
   validates_attachment_size :image, :less_than => 1.megabytes
   validates_attachment_content_type :image, :content_type => ['image/jpeg', 'image/png']
@@ -79,19 +82,36 @@ class Shop < ActiveRecord::Base
 
   validates_length_of :comission_details, :maximum => 255
 
+  before_destroy :check_funds_on_delete
+
+  def check_funds_on_delete
+    if self.incomes.count > 0
+      errors.add(:incomes, _("Can't delete shop with incomes"))
+      return false
+    end
+  end
+
+
   #TODO: Validate widget fields
   def incomes_in_period(from, to)
     return Income.where('shop_id = ? and transaction_date BETWEEN ? AND ?',self.id,from,to).sum('amount')
   end
 
-  def search_translated(term, &block)
-    untranslated = self.search(term)
-    untranslated = block.call(untranslated) if block_given?
-
-    translated = Translation.for_entity(Shop, :description).search(term)
-    translated = block.call(translated) if block_given?
-    
-    untranslated + translated
+  def display_name
+    if status == :inactive
+      _("%s (Inactive)") % [name] 
+    else
+      name
+    end
+  end
+  
+  # this are overriden w.r.t. enum_attr since inactive and active clash
+  def status_inactive?
+    status == :inactive
+  end
+  
+  def inactive?
+    status == :inactive
   end
 
   protected
@@ -111,5 +131,14 @@ class Shop < ActiveRecord::Base
   def ensure_shop_account
     Account.shop_account self
   end
+
+  def self.all_with_inactives()
+    self.with_exclusive_scope {self.scoped}
+  end
+
+  def self.find_with_inactives(id)
+    self.all_with_inactives.find(id)
+  end
+
 end
 

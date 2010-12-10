@@ -22,8 +22,14 @@ class User < ActiveRecord::Base
 
   attr_accessor_with_default :captcha_valid, true
 
+  default_scope where('users.status != ?',:deleted)
+
   has_many :votes
   has_many :follows
+
+  def self.with_deleted
+    self.with_exclusive_scope {self.scoped}
+  end
 
   def is_charity_user
     false
@@ -35,6 +41,14 @@ class User < ActiveRecord::Base
 
   def is_admin_user
     false
+  end
+
+  def destroyed?
+    self.status == :deleted
+  end
+
+  def destroy
+    self.status = :deleted
   end
 
   # Had to overwrite it from devise because if not it asks for password every time you want to update and it's very annoying.

@@ -1,6 +1,6 @@
 class Mailer < ActionMailer::Base
-  default :from => "admin@bivo.com"
-
+  default :from => Bivo::Application.config.action_mailer_default_from
+  
   def cause_being_followed(mail_data)
     @cause = Cause.find(mail_data.cause_id)
     @follower = User.find(mail_data.follower_id)
@@ -11,7 +11,7 @@ class Mailer < ActionMailer::Base
 
   def cause_status_changed_for_charity(mail_data)
     @cause = Cause.find(mail_data.cause_id)
-    @follower = User.find(mail_data.follower_id)
+    @follower = User.find(mail_data.charity_id)
 
     mail :to => @follower.email, :subject => "Cause status changed"
   end
@@ -23,11 +23,11 @@ class Mailer < ActionMailer::Base
     mail :to => @follower.email, :subject => "Cause status changed"
   end
 
-  def cause_commented_for_charity
+  def cause_commented_for_charity(mail_data)
+    @charity = User.find(mail_data.charity_id)
     @cause = Cause.find(mail_data.cause_id)
-    @follower = User.find(mail_data.follower_id)
 
-    mail :to => @follower.email, :subject => "New comment in your cause"
+    mail :to => @charity.email, :subject => "New comment in your cause"
   end
 
   def cause_commented_for_follower(mail_data)

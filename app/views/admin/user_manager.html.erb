@@ -32,7 +32,8 @@
       <td><%= format_date user.last_sign_in_at %></td>
       <td><%= format_date user.created_at %></td>
       <td id="activate_deactivate_charity_btn_<%=user.id%>"><%= active_deactive_charity_button(user) if user.is_charity_user%></td>
-      <td><%= link_to _("Edit"), admin_edit_user_path(user.id) %></td>
+      <td><%= link_to _("Edit"), edit_user_registration_path(:id => user.id) %></td>
+
     </tr>
   <% end %>
   </table>

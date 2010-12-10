@@ -2,16 +2,18 @@ Feature: Visitors can register as charities
 
 	Scenario: Visitors can access to registration form
 		When I go to the home page
-			And I follow "Sign up"
+			And I follow "Login"
+			Then I follow "Register"
 			Then I should be on sign up page
 	
 	Scenario: A charity fill the registration form
 		When I go to the home page
-			And I follow "Sign up"
+			And I follow "Login"
+			Then I follow "Register"
 		
 		When I choose charity sign up
 			Then I should not see "First Name"
-		
+			
 		When I fill in "Charity Name" with "Charity One"
 		And I fill in "Charity Website" with "wwww.charityone.com"
 		And I fill in "short_url" with "charityone"
@@ -23,7 +25,7 @@ Feature: Visitors can register as charities
 		And I fill in "user[description]" with "Charity one description"
 		And I fill in "user_email" with "charityone@mail.com"
 		And I fill in "Password" with "password"
-		And I fill in "Password confirmation" with "password"
+		And I fill in "Password Confirmation" with "password"
 		And I agree terms and conditions
 		
 		And I press "Create Account"

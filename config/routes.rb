@@ -30,14 +30,17 @@ Bivo::Application.routes.draw do
   delete "income_categories/:id", :to => "income_categories#destroy"
 
   #paths for admin manager
+  get "admin/send_mails"
   get "admin/tools"
-  get "admin/user_manager"
+  get "admin/user_manager", :as => "admin_user_manager"
   get "admin/new_personal_user", :to => "admin#new_personal_user", :as => "admin_new_personal_user"
   post "admin/create_personal_user", :to => "admin#create_personal_user", :as => "admin_create_personal_user"
   get "admin/new_charity", :to => "admin#new_charity", :as => "admin_new_charity"
   post "admin/create_charity", :to => "admin#create_charity", :as => "admin_create_charity"
-  get "admin/:id/edit_user", :to => "admin#edit_user", :as => "admin_edit_user"
-  post "admin/update_user", :to => "admin#update_user", :as => "admin_update_user"
+
+#  post "admin/update_user", :to => "admin#update_user", :as => "admin_update_user"
+#  put "admin/update_user", :to => "admin#update_user", :as => "admin_update_user"
+
   post "admin/delete_user/:id", :to => "admin#delete_user", :as => "admin_delete_user"
 
   get 'admin/shop/categories', :to => 'shop_categories#edit', :as => 'admin_edit_shop_categories'
@@ -70,8 +73,8 @@ Bivo::Application.routes.draw do
   end
 
   get "shop/search/", :controller => "shops", :action => "search"
-  get "shop/h/:short_url", :controller => "shops", :action => "home", :constraints => { :short_url => Shop::UrlFormat }
-  get "shop/c/:short_url", :controller => "shops", :action => "details", :constraints => { :short_url => Shop::UrlFormat }
+  get "shop/h/:short_url", :controller => "shops", :action => "home",:as => "shop_home", :constraints => { :short_url => Shop::UrlFormat }
+  get "shop/c/:short_url", :controller => "shops", :action => "details",:as => "shop_details", :constraints => { :short_url => Shop::UrlFormat }
 
   resources :shops, :path => 'shop' do
     member do

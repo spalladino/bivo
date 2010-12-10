@@ -16,9 +16,9 @@ module RegistrationsHelper
   end
   
   def title_for(type)
-    if (type == :personal)
+    if (type == :PersonalUser)
       "Personal Account Settings"
-    elsif (type == :charity)
+    elsif (type == :Charity)
       "Charity Account Settings"
     else
       ""

@@ -89,35 +89,7 @@ class AdminController < ApplicationController
     end
   end
 
-  def edit_user
-    @id = params[:id]
-    @resource = User.find(params[:id])
-    @type = @resource.type.to_sym
-    @referer = request.referer
 
-    if (@type == :Charity)
-      @countries = Country.all
-    end
-
-    render "edit_user"
-  end
-
-  def update_user
-    @id = params[:id]
-    @resource = User.find(@id)
-    @type = @resource.type.to_sym
-    @referer = params[:referer]
-
-    if (@type == :Charity)
-      @countries = Country.all
-    end
-
-    if @resource.update_attributes(params[:user])
-      redirect_to @referer || admin_user_manager_path
-    else
-      render "edit_user"
-    end
-  end
 
   def delete_user
     User.delete(params["id"]) unless params["id"].blank?
@@ -125,9 +97,12 @@ class AdminController < ApplicationController
   end
 
   def tools
+    @pending_mails = PendingMail.count
   end
 
   def send_mails
+    MailsProcessor.instance.process
+    render :text => 'done'
   end
 end
 

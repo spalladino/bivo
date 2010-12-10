@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   before_filter :check_eula_accepted
   before_filter :instantiate_controller_and_action_names
   before_filter :load_languages
+  before_filter :mailer_set_url_options
 
   protected
 
@@ -13,6 +14,10 @@ class ApplicationController < ActionController::Base
     if not (current_user && current_user.is_admin_user)
       render_forbidden
     end
+  end
+
+  def admin_is_logged_in
+    current_user && current_user.is_admin_user
   end
 
   def ajax_flash
@@ -25,7 +30,11 @@ class ApplicationController < ActionController::Base
 
   def set_gettext_locale
     if user_signed_in?
-      session[:locale] = current_user.preferred_language.to_sym
+      if !current_user.preferred_language.nil?
+        session[:locale] = current_user.preferred_language.to_sym
+      else
+        session[:locale] = Language.preferred(get_browser_accept_languages).id
+      end
     else
       if (session[:locale].nil?)
         session[:locale] = Language.preferred(get_browser_accept_languages).id
@@ -36,7 +45,7 @@ class ApplicationController < ActionController::Base
 
   def get_browser_accept_languages
     request.accept_language
-  end  
+  end
 
   def check_eula_accepted
     if (user_signed_in? && !current_user.eula_accepted)
@@ -78,10 +87,15 @@ class ApplicationController < ActionController::Base
   def render_not_found
     render :file => "#{Rails.root.to_s}/public/404.html", :layout => false, :status => :not_found
   end
-  
+
   def load_languages
     @languages = Language.all
-    @language = Language.by_id session[:locale].to_sym    
+    @language = Language.by_id session[:locale].to_sym
   end
+
+  def mailer_set_url_options
+    ActionMailer::Base.default_url_options[:host] = request.host_with_port
+  end
+  
 end
 

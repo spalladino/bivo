@@ -117,4 +117,21 @@ class ShopTest < ActiveSupport::TestCase
     assert_equal [], Shop.search_translated('libros', :es).map(&:id)
     assert_equal [shop.id], Shop.search_translated('car', :es).map(&:id)
   end
+
+  test "status test methods when active" do
+    s = Shop.make_unsaved :status => :active
+    assert s.active?
+    assert s.status_active?
+    assert !s.inactive?
+    assert !s.status_inactive?    
+  end
+
+  test "status test methods when inactive" do
+    s = Shop.make_unsaved :status => :inactive
+    assert s.inactive?
+    assert s.status_inactive?
+    assert !s.active?
+    assert !s.status_active?    
+  end
+
 end

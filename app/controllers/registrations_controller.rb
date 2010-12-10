@@ -1,22 +1,20 @@
 class RegistrationsController < Devise::RegistrationsController
+  before_filter :load_resource, :only => [:edit,:update]
+  before_filter :allow_edit , :only => [:edit, :update]
+  before_filter :load_countries_and_categories, :only => [:create,:new]
+  before_filter :allow_destroy, :only => [:destroy]
 
   def new
-    @countries = Country.all
-    @categories = CharityCategory.all
-
     super
   end
 
   def create
-    @countries = Country.all
-    @categories = CharityCategory.all
-
     if ((params["user"]["type"] != "PersonalUser") &&
         (params["user"]["type"] != "Charity"))
       params["user"]["type"] = "PersonalUser"
     end
 
-   build_resource
+    build_resource
 
     unless captcha_valid?
       resource.set_captcha_invalid
@@ -39,31 +37,70 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def edit
-    @resource = resource
-    @resource_name = resource_name
-    @path = registration_path(resource_name)
-
-    if (resource.type == "PersonalUser")
-      @type = :personal
-    elsif (resource.type == "Charity")
-      @type = :charity
-      @countries = Country.all
-    end
     render_with_scope :edit
   end
 
   def update
-    if (resource.type == "PersonalUser")
-      @type = :personal
-    elsif (resource.type == "Charity")
-      @type = :charity
-      @countries = Country.all
-    end
-
     super
   end
 
+
+  def update
+
+    if @resource.update_with_password(params[resource_name])
+
+      set_flash_message :notice, :updated
+      if admin_is_logged_in
+        redirect_to admin_user_manager_path
+      else
+        redirect_to after_update_path_for(@resource)
+      end
+    else
+      clean_up_passwords(resource)
+      render_with_scope :edit
+    end
+  end
+
   protected
+
+
+
+    def allow_edit
+      if  !((current_user && current_user == @resource) || admin_is_logged_in)
+        render :nothing => true, :status => :forbidden
+        return false
+      end
+    end
+
+    def allow_destroy
+      if  !(admin_is_logged_in)
+        render :nothing => true, :status => :forbidden
+        return false
+      end
+    end
+
+    def load_resource
+      if admin_is_logged_in
+        @id = params[:id]
+        @resource = User.find(params[:id])
+      else
+        @resource = resource
+      end
+
+      @type = @resource.type.to_sym
+      if (@type == :Charity)
+        @countries = Country.all
+      end
+
+      @path = registration_path(@resource)
+
+    end
+
+    def load_countries_and_categories
+      @countries = Country.all
+      @categories = CharityCategory.all
+    end
+
     def build_resource(*args)
       super
 

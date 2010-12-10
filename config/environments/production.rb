@@ -36,7 +36,8 @@ Bivo::Application.configure do
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
-
+  config.action_mailer_default_from = "no-reply-bivo-stg <bivo-stg@gmail.com>"
+  
   # Enable threaded mode
   # config.threadsafe!
 
