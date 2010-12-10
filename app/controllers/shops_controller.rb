@@ -167,7 +167,11 @@ private
   end
 
   def ensure_active_if_not_admin
-    render :nothing => true, :status => :not_found if (@shop.status == :inactive && !admin_is_logged_in)
+    if @shop.status_inactive? && !admin_is_logged_in
+      @kind = _('shop')
+      @name = @shop.name
+      render('shared/inactive')
+    end
   end
 
 

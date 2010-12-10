@@ -15,13 +15,15 @@ class CausesControllerTest < ActionController::TestCase
 
   #DETAILS
   test "shouldnt get details of inactive cause if not owner nor admin" do
-    cause = Cause.make :url => "foobar",:status => :inactive
+    cause = Cause.make :url => "foobar",:status => :inactive, :name => 'cause name'
 
     get :details, :url => "foobar"
 
     assert_not_nil assigns(:cause)
     assert_equal assigns(:cause), cause
-    assert_response :forbidden
+    assert_equal assigns(:kind), 'cause'
+    assert_equal assigns(:name), 'cause name'
+    assert_response :success
   end
 
   #DETAILS

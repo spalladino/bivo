@@ -18,7 +18,6 @@ class CausesController < ApplicationController
   end
 
   def details
-
   end
 
   def index
@@ -273,10 +272,10 @@ class CausesController < ApplicationController
   end
 
   def only_owner_or_admin_if_inactive
-    if @cause.status == :inactive
-      if !current_user || (!(@cause.charity_id == current_user.id) && !current_user.is_admin_user)
-        render :nothing => true, :status => :forbidden
-      end
+    if @cause.status_inactive? && (!current_user || (!(@cause.charity_id == current_user.id) && !current_user.is_admin_user))
+      @kind = _('cause')
+      @name = @cause.name
+      render('shared/inactive')
     end
   end
 

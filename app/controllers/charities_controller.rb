@@ -81,6 +81,7 @@ class CharitiesController < ApplicationController
   end
 
   def details
+
   end
 
   def activate
@@ -161,10 +162,10 @@ class CharitiesController < ApplicationController
   end
 
   def only_owner_or_admin_if_inactive
-    if @charity.status == :inactive
-      if !current_user || (!(@charity.id == current_user.id) && !current_user.is_admin_user)
-              render :nothing => true, :status => :forbidden
-      end
+    if @charity.status_inactive? && (!current_user || (!(@charity.id == current_user.id) && !current_user.is_admin_user))
+      @kind = _('charity')
+      @name = @charity.name
+      render('shared/inactive')
     end
   end
 
