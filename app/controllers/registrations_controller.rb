@@ -1,5 +1,5 @@
 class RegistrationsController < Devise::RegistrationsController
-  before_filter :load_resource, :only => [:edit,:update]
+  before_filter :load_resource, :only => [:edit,:update,:destroy]
   before_filter :allow_edit , :only => [:edit, :update]
   before_filter :load_countries_and_categories, :only => [:create,:new]
   before_filter :allow_destroy, :only => [:destroy]
@@ -59,6 +59,12 @@ class RegistrationsController < Devise::RegistrationsController
       clean_up_passwords(resource)
       render_with_scope :edit
     end
+  end
+
+  def destroy
+    @resource.destroy
+    set_flash_message :notice, :destroyed
+    redirect_to admin_user_manager_path
   end
 
   protected

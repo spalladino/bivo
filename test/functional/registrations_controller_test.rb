@@ -250,7 +250,6 @@ class RegistrationsControllerTest < ActionController::TestCase
 
  #EDIT
   test "cant go to edit charity becouse is another charity" do
-    puts "cant go to edit charity becouse is another charity -------===--- "
     user = create_charity_and_sign_in
     user_to_edit = Charity.make
     get :edit, :id => user_to_edit.id
@@ -296,12 +295,11 @@ class RegistrationsControllerTest < ActionController::TestCase
     user = PersonalUser.make
     create_admin_and_sign_in
 
-    assert_difference('User.count', -1) do
-      post :destroy, :id => user.id
-    end
-    assert_equal 0,User.count
-    assert_equal 1,User.with_deleted.count
-    assert_response :ok
+    post :destroy, :id => user.id
+
+    user.reload
+    assert user.destroyed?
+    assert_redirected_to admin_user_manager_path
   end
 
   #DELETE
@@ -309,12 +307,11 @@ class RegistrationsControllerTest < ActionController::TestCase
     user = Charity.make
     create_admin_and_sign_in
 
-
     post :destroy, :id => user.id
 
-    assert_equal 0,User.count
-    assert_equal 1,User.with_deleted.count
-    assert_response :ok
+    user.reload
+    assert user.destroyed?
+    assert_redirected_to admin_user_manager_path
   end
 
   #DELETE
@@ -328,13 +325,12 @@ class RegistrationsControllerTest < ActionController::TestCase
     Cause.make(:charity => user,:status => :deleted)
     create_admin_and_sign_in
 
-    assert_difference('User.count', -1) do
-      post :destroy, :id => user.id
-    end
-    assert_equal 0,Cause.count
-    assert_equal 0,User.count
-    assert_equal 1,User.with_deleted.count
-    assert_response :ok
+    post :destroy, :id => user.id
+
+    user.reload
+    assert user.destroyed?
+    # TODO test cascade delete on causes
+    assert_redirected_to admin_user_manager_path
   end
 
   test "should edit a charity from admin" do
