@@ -50,7 +50,8 @@ class CharitiesControllerTest < ActionController::TestCase
 
     assert_not_nil assigns(:charity)
     assert_equal assigns(:charity), charity
-    assert_response :not_found
+    assert_equal assigns(:kind), 'charity'
+    assert_response :success
   end
 
   #DETAILS
@@ -62,7 +63,8 @@ class CharitiesControllerTest < ActionController::TestCase
 
     assert_not_nil assigns(:charity)
     assert_equal assigns(:charity), charity
-    assert_response :not_found
+    assert_equal assigns(:kind), 'charity'
+    assert_response :success
   end
 
   #LIST

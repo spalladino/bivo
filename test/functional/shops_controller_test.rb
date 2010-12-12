@@ -277,11 +277,15 @@ class ShopsControllerTest < ActionController::TestCase
 
   test "should not get #{action} of inactive if not admin" do
     create_and_sign_in
-    shop = Shop.make :short_url => "foobar", :status => :inactive
+    shop = Shop.make :short_url => "foobar", :status => :inactive, :name => 'shop name'
 
     get action, :short_url => "foobar"
 
-    assert_response :not_found
+    assert_not_nil assigns(:shop)
+    assert_equal assigns(:shop), shop
+    assert_equal assigns(:kind), 'shop'
+    assert_equal assigns(:name), 'shop name'
+    assert_response :success
   end
 end
 
