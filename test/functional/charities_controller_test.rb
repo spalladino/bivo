@@ -259,24 +259,23 @@ class CharitiesControllerTest < ActionController::TestCase
     charity = Charity.make
     xhr :post, :follow, :id => charity.id
     assert_equal 0,CharityFollow.count
-    assert_response :forbidden
+    assert_response :unauthorized
   end
 
   #FOLLOW
   test "should follow if inactive admin" do
-    user = create_and_sign_in
+    user = create_admin_and_sign_in
     charity = Charity.make(:status => :inactive)
     xhr :post, :follow, :id => charity.id
-    assert_equal 0,CharityFollow.count
+    assert_equal 1,CharityFollow.count
     assert_response :ok
   end
 
   #FOLLOW
   test "should follow if inactive (self)" do
-    user = create_and_sign_in
-    charity = Charity.make(:status => :inactive)
+    charity = create_charity_and_sign_in :status => :inactive
     xhr :post, :follow, :id => charity.id
-    assert_equal 0,CharityFollow.count
+    assert_equal 1,CharityFollow.count
     assert_response :ok
   end
 
@@ -306,7 +305,7 @@ class CharitiesControllerTest < ActionController::TestCase
     charity = Charity.make
     xhr :post, :unfollow, :id => charity.id
 
-    assert_response :forbidden
+    assert_response :unauthorized
   end
 
   #ACTIVATE
