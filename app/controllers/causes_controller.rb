@@ -117,7 +117,7 @@ class CausesController < ApplicationController
     @cause.funds_raised = 0
     if !current_user.is_admin_user
       @cause.charity_id = current_user.id
-    end
+    end  
     if !@cause.save
       render 'new'
     else
