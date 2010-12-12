@@ -131,27 +131,15 @@ class Charity < User
     return true
   end
 
-  def raising_funds
-    return !self.causes.where('causes.status IN (?,?,?)', :raising_funds, :completed, :paid).first.nil? || Cause.count_deleted(self.id) > 0
-  end
-
-  def can_delete?
-    return (not raising_funds)
-  end
-
   def can_add_causes?
     true
   end
 
 
   def destroy
-    if can_delete?
-      super
-    else
-      update_attribute :status, :deleted
-      self.causes.each do |cause|
-        cause.destroy
-      end
+    super
+    self.causes.each do |cause|
+      cause.destroy
     end
   end
 

@@ -354,6 +354,58 @@ class RegistrationsControllerTest < ActionController::TestCase
 
     assert_redirected_to :controller => :admin, :action => :user_manager
   end
+  
+  test "guest should not be able to edit charity" do
+    charity = Charity.make
 
+    post :update,
+      :id => charity.id,
+      :user =>
+      {
+        :email                 => "char123@bivotest.com",
+        :charity_name          => "test",
+        :charity_website       => "http://www.test.com",
+        :charity_type          => "def",
+        :tax_reg_number        => 123456,
+        :country_id            => Country.make.id,
+        :city                  => "Bs As"
+      }
+
+    assert_not_equal Charity.find(charity.id).email, "char123@bivotest.com"    
+    assert_response :forbidden
+  end
+
+  test "should update personal user from admin" do
+    create_admin_and_sign_in
+    personal = create_and_sign_in
+
+    post :update,
+      :id => personal.id,
+      :user =>
+      {
+        :email                 => "aa@bb.com",
+        :first_name            => "juan",
+        :last_name             => "rodriguez"
+      }
+
+    assert_equal PersonalUser.find(personal.id).email, "aa@bb.com"
+    assert_response :found
+  end
+  
+  test "guest should not be able to update personal user" do
+    personal = create_and_sign_in
+
+    post :update,
+      :id => personal.id,
+      :user =>
+      {
+        :email                 => "aa@bb.com",
+        :first_name            => "juan",
+        :last_name             => "rodriguez"
+      }
+
+    assert_equal PersonalUser.find(personal.id).email, "aa@bb.com"
+    assert_response :found
+  end
 end
 

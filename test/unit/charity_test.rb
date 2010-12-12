@@ -65,30 +65,6 @@ class CharityTest < ActiveSupport::TestCase
 
   end
 
-  test "should delete from database and related causes" do
-    charity = Charity.make :status => :active
-    charity_id = charity.id
-    #causes status: inactive active raising_funds completed paid deleted
-    inactive_cause_id =  Cause.make(:status => :inactive, :charity_id => charity_id).id
-    active_cause_id = Cause.make(:status => :active, :charity_id => charity_id).id
-
-    charity.destroy
-
-    assert_raise ActiveRecord::RecordNotFound do
-      Cause.find_deleted(active_cause_id)
-    end
-
-    assert_raise ActiveRecord::RecordNotFound do
-      Cause.find_deleted(inactive_cause_id)
-    end
-
-    assert_raise ActiveRecord::RecordNotFound do
-      Charity.find_deleted(charity_id)
-    end
-
-  end
-
-
   test "should not retrieve deleted charities on default scope" do
     charities = Charity.make_many 2, :status => :active
 
