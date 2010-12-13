@@ -151,5 +151,15 @@ class ActiveRecord::Base
       end
     end
     
-  end  
+  end
+  
+  def self.translated_classes
+    # Load all models
+    Dir.glob("#{Rails.root}/app/models/**/*.rb").each do |file|
+      eval(ActiveSupport::Inflector.camelize(file[file.rindex('/') + 1 .. -4]))
+    end
+    
+    # Return models that have translations
+    ActiveRecord::Base.subclasses.select{|x| x.respond_to? :translated_fields}
+  end
 end

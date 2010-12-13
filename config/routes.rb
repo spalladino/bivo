@@ -46,7 +46,7 @@ Bivo::Application.routes.draw do
   match 'admin/shop/categories/delete', :to => 'shop_categories#destroy'
   
   get 'admin/language', :to => "admin#choose_language", :as => 'translation'
-  post 'admin/language', :to => "admin#set_language"
+  match 'admin/translate', :to => "admin#translate"
 
   #paths for handling eula
   get "eula", :to => "home#eula", :as => "eula"
