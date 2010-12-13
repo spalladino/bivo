@@ -1,5 +1,5 @@
 class RegistrationsController < Devise::RegistrationsController
-  before_filter :load_resource, :only => [:edit,:update]
+  before_filter :load_resource, :only => [:edit,:update,:destroy]
   before_filter :allow_edit , :only => [:edit, :update]
   before_filter :load_countries_and_categories, :only => [:create,:new]
   before_filter :allow_destroy, :only => [:destroy]
@@ -14,7 +14,7 @@ class RegistrationsController < Devise::RegistrationsController
       params["user"]["type"] = "PersonalUser"
     end
 
-   build_resource
+    build_resource
 
     unless captcha_valid?
       resource.set_captcha_invalid
@@ -44,7 +44,33 @@ class RegistrationsController < Devise::RegistrationsController
     super
   end
 
+
+  def update
+
+    if @resource.update_with_password(params[resource_name])
+
+      set_flash_message :notice, :updated
+      if admin_is_logged_in
+        redirect_to admin_user_manager_path
+      else
+        redirect_to after_update_path_for(@resource)
+      end
+    else
+      clean_up_passwords(resource)
+      render_with_scope :edit
+    end
+  end
+
+  def destroy
+    @resource.destroy
+    set_flash_message :notice, :destroyed
+    redirect_to admin_user_manager_path
+  end
+
   protected
+
+
+
     def allow_edit
       if  !((current_user && current_user == @resource) || admin_is_logged_in)
         render :nothing => true, :status => :forbidden
@@ -60,16 +86,20 @@ class RegistrationsController < Devise::RegistrationsController
     end
 
     def load_resource
-      @resource = resource
-      @resource_name = resource_name
-      @path = registration_path(resource_name)
+      if params[:id]
+        @id = params[:id]
+        @resource = User.find(params[:id])
+      else
+        @resource = resource
+      end
 
-      if (resource.type == "PersonalUser")
-        @type = :PersonalUser
-      elsif (resource.type == "Charity")
-        @type = :Charity
+      @type = @resource.type.to_sym
+      if (@type == :Charity)
         @countries = Country.all
       end
+
+      @path = registration_path(@resource)
+
     end
 
     def load_countries_and_categories

@@ -50,7 +50,8 @@ class CharitiesControllerTest < ActionController::TestCase
 
     assert_not_nil assigns(:charity)
     assert_equal assigns(:charity), charity
-    assert_response :not_found
+    assert_equal assigns(:kind), 'charity'
+    assert_response :success
   end
 
   #DETAILS
@@ -62,7 +63,8 @@ class CharitiesControllerTest < ActionController::TestCase
 
     assert_not_nil assigns(:charity)
     assert_equal assigns(:charity), charity
-    assert_response :not_found
+    assert_equal assigns(:kind), 'charity'
+    assert_response :success
   end
 
   #LIST
@@ -257,24 +259,23 @@ class CharitiesControllerTest < ActionController::TestCase
     charity = Charity.make
     xhr :post, :follow, :id => charity.id
     assert_equal 0,CharityFollow.count
-    assert_response :forbidden
+    assert_response :unauthorized
   end
 
   #FOLLOW
   test "should follow if inactive admin" do
-    user = create_and_sign_in
+    user = create_admin_and_sign_in
     charity = Charity.make(:status => :inactive)
     xhr :post, :follow, :id => charity.id
-    assert_equal 0,CharityFollow.count
+    assert_equal 1,CharityFollow.count
     assert_response :ok
   end
 
   #FOLLOW
   test "should follow if inactive (self)" do
-    user = create_and_sign_in
-    charity = Charity.make(:status => :inactive)
+    charity = create_charity_and_sign_in :status => :inactive
     xhr :post, :follow, :id => charity.id
-    assert_equal 0,CharityFollow.count
+    assert_equal 1,CharityFollow.count
     assert_response :ok
   end
 
@@ -304,7 +305,7 @@ class CharitiesControllerTest < ActionController::TestCase
     charity = Charity.make
     xhr :post, :unfollow, :id => charity.id
 
-    assert_response :forbidden
+    assert_response :unauthorized
   end
 
   #ACTIVATE
@@ -338,36 +339,18 @@ class CharitiesControllerTest < ActionController::TestCase
   end
 
   #DEACTIVATE
-  test "should not deactivate becouse of children status(raising_funds)" do
-    user = create_admin_and_sign_in
-    id = Charity.make(:status=>:active).id
-    cause = Cause.make :status =>:raising_funds,:charity_id => id
-    post :deactivate, :id => id
-    assert_response :forbidden
-    assert_equal :active,Charity.find(id).status
-    assert_equal :raising_funds,cause.reload.status
-  end
+  [:raising_funds, :completed, :paid].each do |status|
+    test "should not deactivate because of children status(#{status})" do
+      user = create_admin_and_sign_in
+      id = Charity.make(:status=>:active).id
+      cause = Cause.make :status => status, :charity_id => id
+      post :deactivate, :id => id
 
-  #DEACTIVATE
-  test "should not deactivate becouse of children status (completed)" do
-    user = create_admin_and_sign_in
-    id = Charity.make(:status=>:active).id
-    cause = Cause.make :status =>:completed,:charity_id => id
-    post :deactivate, :id => id
-    assert_response :forbidden
-    assert_equal :active,Charity.find(id).status
-    assert_equal :completed,cause.reload.status
-  end
-
-  #DEACTIVATE
-  test "should not deactivate becouse of children status (paid)" do
-    user = create_admin_and_sign_in
-    id = Charity.make(:status=>:active).id
-    cause = Cause.make :status =>:paid,:charity_id => id
-    post :deactivate, :id => id
-    assert_response :forbidden
-    assert_equal :active,Charity.find(id).status
-    assert_equal :paid,cause.reload.status
+      assert_response :redirect
+      assert_equal "Error deactivating charity", flash[:notice]
+      assert_equal :active, Charity.find(id).status
+      assert_equal status, cause.reload.status
+    end
   end
 
   #DEACTIVATE

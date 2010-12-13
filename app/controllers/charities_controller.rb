@@ -1,8 +1,9 @@
 class CharitiesController < ApplicationController
 
   before_filter :authenticate_user!, :except => [:show, :details, :index, :check_url, :destroy]
+  before_filter :user_required, :only => [:follow, :unfollow]
   before_filter :load_charity, :except => [:index, :new, :create, :check_url,:destroy]
-  before_filter :only_owner_or_admin_if_inactive, :only => [:details]
+  before_filter :only_owner_or_admin_if_inactive, :only => [:details, :follow]
   before_filter :only_admin, :only => [:activate, :deactivate, :create,:delete,:destroy]
   before_filter :follows_exist, :only => [:unfollow]
 
@@ -81,6 +82,7 @@ class CharitiesController < ApplicationController
   end
 
   def details
+
   end
 
   def activate
@@ -95,12 +97,6 @@ class CharitiesController < ApplicationController
 
   def deactivate
     @charity.status = :inactive
-
-    # TODO: Use cascade update so charity save fails if any cause save fails as well
-    @charity.causes.each do |cause|
-      cause.status = :inactive
-      cause.save
-    end
 
     ajax_flash[:notice] = if @charity.save then _("Deactivated") else _("Error deactivating charity") end
     redirect_to request.referer unless request.xhr?
@@ -161,13 +157,15 @@ class CharitiesController < ApplicationController
   end
 
   def only_owner_or_admin_if_inactive
-    if @charity.status == :inactive
-      if !current_user || (!(@charity.id == current_user.id) && !current_user.is_admin_user)
-              render :nothing => true, :status => :forbidden
-      end
+    if @charity.status_inactive? && (!current_user || (!(@charity.id == current_user.id) && !current_user.is_admin_user))
+      @kind = _('charity')
+      @name = @charity.name
+      render('shared/inactive')
     end
   end
 
-
+  def user_required
+    render :nothing => true, :status => :forbidden unless current_user
+  end
 end
 

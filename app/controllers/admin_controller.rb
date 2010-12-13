@@ -89,38 +89,6 @@ class AdminController < ApplicationController
     end
   end
 
-  def edit_user
-    @id = params[:id]
-    @resource = User.find(params[:id])
-    @type = @resource.type.to_sym
-    @referer = request.referer
-    @path = admin_update_user_path
-
-    if (@type == :Charity)
-      @countries = Country.all
-    end
-
-    render "users/registrations/edit"
-  end
-
-  def update_user
-    @id = params[:id]
-    @resource = User.find(@id)
-    @type = @resource.type.to_sym
-    @referer = params[:referer]
-    @path = admin_update_user_path
-
-    if (@type == :Charity)
-      @countries = Country.all
-    end
-
-    if @resource.update_attributes(params[:user])
-      redirect_to @referer || admin_user_manager_path
-    else
-      render "users/registrations/edit"
-    end
-  end
-
   def delete_user
     User.delete(params["id"]) unless params["id"].blank?
     redirect_to admin_user_manager_path
