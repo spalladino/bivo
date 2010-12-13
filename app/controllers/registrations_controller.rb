@@ -1,5 +1,5 @@
 class RegistrationsController < Devise::RegistrationsController
-  before_filter :load_resource, :only => [:edit,:update]
+  before_filter :load_resource, :only => [:edit,:update,:destroy]
   before_filter :allow_edit , :only => [:edit, :update]
   before_filter :load_countries_and_categories, :only => [:create,:new]
   before_filter :allow_destroy, :only => [:destroy]
@@ -61,6 +61,12 @@ class RegistrationsController < Devise::RegistrationsController
     end
   end
 
+  def destroy
+    @resource.destroy
+    set_flash_message :notice, :destroyed
+    redirect_to admin_user_manager_path
+  end
+
   protected
 
 
@@ -80,7 +86,7 @@ class RegistrationsController < Devise::RegistrationsController
     end
 
     def load_resource
-      if admin_is_logged_in
+      if params[:id]
         @id = params[:id]
         @resource = User.find(params[:id])
       else

@@ -55,6 +55,7 @@ class Charity < User
       .select("#{Charity.table_name}.*, SUM(#{Cause.table_name}.votes_count) AS votes_count, COUNT(#{Cause.table_name}.id) AS causes_count, SUM(#{Cause.table_name}.funds_raised) AS total_funds_raised, #{Country.table_name}.name AS country_name") }
 
   before_save :check_presence_of_protocol_in_website
+  validate :inactivate_causes_on_inactivate, :on => :update
 
   belongs_to :charity_category
   belongs_to :country
@@ -131,27 +132,15 @@ class Charity < User
     return true
   end
 
-  def raising_funds
-    return !self.causes.where('causes.status IN (?,?,?)', :raising_funds, :completed, :paid).first.nil? || Cause.count_deleted(self.id) > 0
-  end
-
-  def can_delete?
-    return (not raising_funds)
-  end
-
   def can_add_causes?
     true
   end
 
 
   def destroy
-    if can_delete?
-      super
-    else
-      update_attribute :status, :deleted
-      self.causes.each do |cause|
-        cause.destroy
-      end
+    super
+    self.causes.each do |cause|
+      cause.destroy
     end
   end
 
@@ -182,5 +171,18 @@ class Charity < User
       self.charity_website = "http://" + self.charity_website
     end
   end
+  
+  def inactivate_causes_on_inactivate
+    if ((self.status_changed?) && (self.status == :inactive))
+      self.causes.each do |cause|
+        cause.status = :inactive
+        if !cause.save
+          errors.add(:status, "can't inactivate charity due to causes")
+          return false
+        end
+      end
+    end
+  end
+  
 end
 

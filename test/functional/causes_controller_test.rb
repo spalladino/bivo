@@ -15,13 +15,15 @@ class CausesControllerTest < ActionController::TestCase
 
   #DETAILS
   test "shouldnt get details of inactive cause if not owner nor admin" do
-    cause = Cause.make :url => "foobar",:status => :inactive
+    cause = Cause.make :url => "foobar",:status => :inactive, :name => 'cause name'
 
     get :details, :url => "foobar"
 
     assert_not_nil assigns(:cause)
     assert_equal assigns(:cause), cause
-    assert_response :forbidden
+    assert_equal assigns(:kind), 'cause'
+    assert_equal assigns(:name), 'cause name'
+    assert_response :success
   end
 
   #DETAILS
@@ -434,7 +436,7 @@ class CausesControllerTest < ActionController::TestCase
         :funds_raised=>0
       }
     assert_equal 0,Cause.count
-    assert_response :forbidden
+    assert_template 'new'
   end
 
   #CREATE
@@ -612,7 +614,11 @@ class CausesControllerTest < ActionController::TestCase
   #ACTIVATE
   test 'shouldnt activate causes whith inactive owner' do
     user = create_admin_and_sign_in
-    cause = Cause.make(:status=>:inactive, :charity => Charity.make(:status => :inactive))
+    charity = Charity.make
+    cause = Cause.make(:status=>:inactive, :charity => charity)
+    charity.status = :inactive
+    charity.save!
+    
     post :activate, :id => cause.id
     assert_response :found
     assert_equal :inactive,cause.reload.status

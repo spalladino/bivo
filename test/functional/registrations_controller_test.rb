@@ -295,12 +295,11 @@ class RegistrationsControllerTest < ActionController::TestCase
     user = PersonalUser.make
     create_admin_and_sign_in
 
-    assert_difference('User.count', -1) do
-      post :destroy, :id => user.id
-    end
-    assert_equal 0,User.count
-    assert_equal 1,User.with_deleted.count
-    assert_response :ok
+    post :destroy, :id => user.id
+
+    user.reload
+    assert user.destroyed?
+    assert_redirected_to admin_user_manager_path
   end
 
   #DELETE
@@ -308,12 +307,11 @@ class RegistrationsControllerTest < ActionController::TestCase
     user = Charity.make
     create_admin_and_sign_in
 
-
     post :destroy, :id => user.id
 
-    assert_equal 0,User.count
-    assert_equal 1,User.with_deleted.count
-    assert_response :ok
+    user.reload
+    assert user.destroyed?
+    assert_redirected_to admin_user_manager_path
   end
 
   #DELETE
@@ -327,14 +325,93 @@ class RegistrationsControllerTest < ActionController::TestCase
     Cause.make(:charity => user,:status => :deleted)
     create_admin_and_sign_in
 
-    assert_difference('User.count', -1) do
-      post :destroy, :id => user.id
-    end
-    assert_equal 0,Cause.count
-    assert_equal 0,User.count
-    assert_equal 1,User.with_deleted.count
-    assert_response :ok
+    post :destroy, :id => user.id
+
+    user.reload
+    assert user.destroyed?
+    # TODO test cascade delete on causes
+    assert_redirected_to admin_user_manager_path
   end
 
+  test "should edit a charity from admin" do
+    admin = create_admin_and_sign_in
+    charity = Charity.make
+
+    post :update,
+      :id => charity.id,
+      :user =>
+      {
+        :email                 => "char123@bivotest.com",
+        :charity_name          => "test",
+        :charity_website       => "http://www.test.com",
+        :charity_type          => "def",
+        :tax_reg_number        => 123456,
+        :country_id            => Country.make.id,
+        :city                  => "Bs As"
+      }
+
+    assert_equal Charity.find(charity.id).email, "char123@bivotest.com"
+
+    assert_redirected_to :controller => :admin, :action => :user_manager
+  end
+  
+  test "guest should not be able to edit charity" do
+    # Would be better if a :forbidden status is returned but
+    # update action is inaccesible for guest due to authenticate_scope!
+    charity = Charity.make
+
+    assert_raise RuntimeError do
+      post :update,
+        :id => charity.id,
+        :user =>
+        {
+          :email                 => "char123@bivotest.com",
+          :charity_name          => "test",
+          :charity_website       => "http://www.test.com",
+          :charity_type          => "def",
+          :tax_reg_number        => 123456,
+          :country_id            => Country.make.id,
+          :city                  => "Bs As"
+        }
+    end
+
+    assert_not_equal Charity.find(charity.id).email, "char123@bivotest.com"    
+  end
+
+  test "should update personal user from admin" do
+    create_admin_and_sign_in
+    personal = PersonalUser.make
+
+    post :update,
+      :id => personal.id,
+      :user =>
+      {
+        :email                 => "aa@bb.com",
+        :first_name            => "juan",
+        :last_name             => "rodriguez"
+      }
+
+    assert_equal PersonalUser.find(personal.id).email, "aa@bb.com"
+    assert_response :found
+  end
+  
+  test "guest should not be able to update personal user" do
+    # Would be better if a :forbidden status is returned but
+    # update action is inaccesible for guest due to authenticate_scope!
+    personal = PersonalUser.make
+
+    assert_raise RuntimeError do
+      post :update,
+        :id => personal.id,
+        :user =>
+        {
+          :email                 => "aa@bb.com",
+          :first_name            => "juan",
+          :last_name             => "rodriguez"
+        }
+    end
+    
+    assert_not_equal PersonalUser.find(personal.id).email, "aa@bb.com"
+  end
 end
 
