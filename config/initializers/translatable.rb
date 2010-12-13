@@ -20,13 +20,13 @@ class ActiveRecord::Base
     (class << self; self; end).instance_eval do
       define_method 'translation_class' do |*lang_id|
         lang_id = lang_id.flatten.first || I18n.locale
-        "::#{self.name}Translation#{lang_id.capitalize.to_s}".constantize
+        "::#{self.name}Translation#{lang_id.to_s.capitalize}".constantize
       end
       
       define_method 'translation_table' do |*lang_id|
         lang_id = lang_id.flatten.first || I18n.locale
         return self.table_name if lang_id == :en
-        "::#{self.name}Translation#{lang_id.capitalize.to_s}".constantize.table_name
+        "::#{self.name}Translation#{lang_id.to_s.capitalize}".constantize.table_name
       end
       
       define_method 'translation_classes' do
@@ -47,7 +47,7 @@ class ActiveRecord::Base
       "
       
       str = "
-        class ::#{self.name}Translation#{lang.id.capitalize.to_s} < ActiveRecord::Base
+        class ::#{self.name}Translation#{lang.id.to_s.capitalize} < ActiveRecord::Base
           set_table_name '#{self.table_name.singularize}_translations_#{lang.id.to_s}'
           belongs_to :#{self.table_name.singularize}
           
@@ -74,7 +74,7 @@ class ActiveRecord::Base
       return self.scoped if not Language.non_defaults.map(&:id).include? lang
       
       table = "#{self.table_name.singularize}_translations_#{lang}"
-      self.joins("LEFT JOIN #{table} ON #{table}.referenced_id = #{self.table_name}.id").select(translate_fields.map{|f| "#{table}.#{f} AS #{f}"}.insert(0, "#{self.table_name}.*").join(', '))
+      self.joins("LEFT JOIN #{table} ON #{table}.referenced_id = #{self.table_name}.id").select(translate_fields.map{|f| "#{table}.#{f} AS #{f}"}.insert(0, "#{self.table_name}.*").push("not #{table}.pending AS is_translated").join(', '))
     }
     
     # Scope for obtaining entities pending translation
@@ -95,11 +95,10 @@ class ActiveRecord::Base
           table = "#{self.table_name.singularize}_translations_#{lang}"
           index_name = self.translation_class(lang).full_text_indexes[idx].to_s
           
-          term = term.scan(/"([^"]+)"|(\S+)/).flatten.compact.map do |lex|
-            lex =~ /(.+)\*\s*$/ ? "'#{$1}':*" : "'#{lex}'"
-          end.join(' & ') # Code duplicated from texticle gem :(
+          term = term.scan(/"([^"]+)"|(\S+)/).flatten.compact.map { |lex| \
+            lex =~ /(.+)\*\s*$/ ? "'#{$1}':*" : "'#{lex}'"}.join(' & ') # Code duplicated from texticle gem :(
           
-          fields = translate_fields.map{|f| "#{table}.#{f} AS #{f}"}.insert(0, "#{self.table_name}.*").push("ts_rank_cd((#{index_name}), to_tsquery(#{connection.quote(term)})) as rank")
+          fields = translate_fields.map{|f| "#{table}.#{f} AS #{f}"}.insert(0, "#{self.table_name}.*").push("ts_rank_cd((#{index_name}), to_tsquery(#{connection.quote(term)})) as rank").push("not #{table}.pending AS is_translated")
           
           s = self.joins("LEFT JOIN #{table} ON #{table}.referenced_id = #{self.table_name}.id")
           s = s.select(fields.join(', '))
@@ -151,5 +150,15 @@ class ActiveRecord::Base
       end
     end
     
-  end  
+  end
+  
+  def self.translated_classes
+    # Load all models
+    Dir.glob("#{Rails.root}/app/models/**/*.rb").each do |file|
+      eval(ActiveSupport::Inflector.camelize(file[file.rindex('/') + 1 .. -4]))
+    end
+    
+    # Return models that have translations
+    ActiveRecord::Base.subclasses.select{|x| x.respond_to? :translated_fields}
+  end
 end

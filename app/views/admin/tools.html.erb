@@ -8,4 +8,5 @@
   <li><%= link_to _("Stats"), stats_path %></li>
   <li><%= link_to _("Dashboard"), dashboard_path %> </li>
   <li>There are <%= @pending_mails %> pending mails. <%= link_to "Run processor", :action => 'send_mails' %></li>
+  <li><%= link_to _("Translation manager"), translation_path %> </li>
 </ul>

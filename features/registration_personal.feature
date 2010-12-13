@@ -1,4 +1,6 @@
 Feature: Visitors can register as personal users
+	Background:
+		Given I fill seed data
 	
 	Scenario: Personal Users sign up
 		When I go to the home page
@@ -10,7 +12,7 @@ Feature: Visitors can register as personal users
 		
 		When I fill in "First Name" with "John"
 		And I fill in "Last Name" with "Doe"
-		And I fill in "user_email" with "jhondoe@mail.com"
+		And I fill in "E-Mail" with "jhondoe@mail.com"
 		And I fill in "Password" with "password"
 		And I fill in "Password Confirmation" with "password"
 		And I agree terms and conditions

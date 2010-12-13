@@ -17,3 +17,11 @@ Given /^(\d+) registered shops$/ do |count|
   end
 end
 
+Then /^I should see "([^"]*)" pages$/ do |count|
+  1.upto(count.to_i) do |i|
+    Then %(I should see "#{i}" within ".pagination")
+  end
+  Then %(I should not see "#{count.to_i + 1}" within ".pagination")
+end
+
+

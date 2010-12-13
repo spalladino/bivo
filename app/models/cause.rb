@@ -164,6 +164,10 @@ class Cause < ActiveRecord::Base
   def can_edit?
     [:inactive, :active, :raising_funds].include? self.status
   end
+  
+  def can_edit_sensitive_data?(user)
+    user && self.status == :inactive
+  end
 
   def can_mark_as_paid?
     self.status == :completed && self.funds_raised >= self.funds_needed
