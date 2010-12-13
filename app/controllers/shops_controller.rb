@@ -49,12 +49,15 @@ class ShopsController < ApplicationController
     p "Controller"
     p Shop.connection.execute('select current_database()')[0]
     p Shop.connection.execute('select count(*) from shops')[0]
+    
     # Filter by text
     @search_word = params[:search_word]
     if @search_word.blank?
       @shops = Shop.includes(:countries)
     else
-      @shops = Shop.includes(:countries).search(@search_word.gsub(/\\/, '\&\&').gsub(/'/, "''"))
+      term = @search_word.gsub(/\\/, '\&\&').gsub(/'/, "''")
+      @shops = Shop.includes(:countries).search_localized(term)
+      @shops = Shop.includes(:countries).search_translated(term) if @shops.count == 0
     end
 
     # Handle sorting options
