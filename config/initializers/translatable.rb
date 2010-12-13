@@ -95,8 +95,8 @@ class ActiveRecord::Base
           table = "#{self.table_name.singularize}_translations_#{lang}"
           index_name = self.translation_class(lang).full_text_indexes[idx].to_s
           
-          term = term.scan(/"([^"]+)"|(\S+)/).flatten.compact.map({ |lex|
-            lex =~ /(.+)\*\s*$/ ? "'#{$1}':*" : "'#{lex}'"}).join(' & ') # Code duplicated from texticle gem :(
+          term = term.scan(/"([^"]+)"|(\S+)/).flatten.compact.map { |lex| \
+            lex =~ /(.+)\*\s*$/ ? "'#{$1}':*" : "'#{lex}'"}.join(' & ') # Code duplicated from texticle gem :(
           
           fields = translate_fields.map{|f| "#{table}.#{f} AS #{f}"}.insert(0, "#{self.table_name}.*").push("ts_rank_cd((#{index_name}), to_tsquery(#{connection.quote(term)})) as rank")
           
