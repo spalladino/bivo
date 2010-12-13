@@ -46,14 +46,10 @@ class ShopsController < ApplicationController
   end
 
    def search
-    p "Controller"
-    p Shop.connection.execute('select current_database()')[0]
-    p Shop.connection.execute('select count(*) from shops')[0]
-    
     # Filter by text
     @search_word = params[:search_word]
     if @search_word.blank?
-      @shops = Shop.includes(:countries)
+      @shops = Shop.translated.includes(:countries)
     else
       term = @search_word.gsub(/\\/, '\&\&').gsub(/'/, "''")
       @shops = Shop.includes(:countries).search_localized(term)
@@ -65,7 +61,7 @@ class ShopsController < ApplicationController
     if @sorting == :proximity && !current_user.country_id.nil?
       @shops = @shops.where("exists (select * from country_shops where country_id = ? and shop_id = Shops.id)",current_user.country_id) + @shops.where("not exists (select * from country_shops where country_id = ? and shop_id = Shops.id)",current_user.country_id)
     else
-      @shops = @shops.order 'name ASC, description ASC'
+      @shops = @shops.order "#{Shop.translation_table}.name ASC, #{Shop.translation_table}.description ASC"
     end
     
     @count = @shops.count

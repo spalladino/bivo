@@ -18,8 +18,15 @@ class ActiveRecord::Base
   
     # Create class getter for fields to be translated or searched and translation classes
     (class << self; self; end).instance_eval do
-      define_method 'translation_class' do |lang_id|
+      define_method 'translation_class' do |*lang_id|
+        lang_id = lang_id.flatten.first || I18n.locale
         "::#{self.name}Translation#{lang_id.capitalize.to_s}".constantize
+      end
+      
+      define_method 'translation_table' do |*lang_id|
+        lang_id = lang_id.flatten.first || I18n.locale
+        return self.table_name if lang_id == :en
+        "::#{self.name}Translation#{lang_id.capitalize.to_s}".constantize.table_name
       end
       
       define_method 'translation_classes' do

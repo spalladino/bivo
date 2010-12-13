@@ -49,5 +49,9 @@ class ActionController::TestCase
     (1..count).each { |i| Cause.make_with_votes attributes.merge({:votes_count => i, :status => :active}) }
   end
 
+  def set_locale(locale)
+    session[:locale] = locale
+  end
+
 end
 
