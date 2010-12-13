@@ -127,6 +127,11 @@ class CausesController < ApplicationController
   end
 
   def update
+    if !@cause.can_edit_sensitive_data?(current_user)
+      params[:cause].delete :name
+      params[:cause].delete :url
+      params[:cause].delete :funds_needed
+    end
     @cause.attributes = params[:cause]
     if !@cause.save
       redirect_to request.referer

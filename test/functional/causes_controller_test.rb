@@ -283,7 +283,7 @@ class CausesControllerTest < ActionController::TestCase
   #UPDATE
   test "should update" do
     user = create_charity_and_sign_in
-    cause_old = Cause.make :charity_id => user.id
+    cause_old = Cause.make :charity_id => user.id, :status => :inactive
     post :update,
       :id=>cause_old.id,
       :cause =>
@@ -291,7 +291,7 @@ class CausesControllerTest < ActionController::TestCase
         :name => 'Hi',
         :description=>"ss",
         :city => "cba",
-        :status =>:active,
+        :status => :inactive,
         :charity_id =>user.id,
         :country_id =>Country.make.id,
         :cause_category_id=>CauseCategory.make.id,
@@ -516,7 +516,7 @@ class CausesControllerTest < ActionController::TestCase
     get :edit, :id => cause.id
 
     assert_edit_sensitve_data
-    assert_can_update_name cause
+    assert_can_update_sensitive_data cause
   end
   
   [:active, :raising_funds, :completed, :paid].each do |status|
@@ -527,7 +527,7 @@ class CausesControllerTest < ActionController::TestCase
       get :edit, :id => cause.id
 
       assert_readonly_sensitve_data
-      assert_cant_update_name cause
+      assert_cant_update_sensitive_data cause
     end
   end
   
@@ -538,7 +538,7 @@ class CausesControllerTest < ActionController::TestCase
     get :edit, :id => cause.id
 
     assert_edit_sensitve_data
-    assert_can_update_name cause
+    assert_can_update_sensitive_data cause
   end
   
   [:active, :raising_funds].each do |status|
@@ -549,7 +549,7 @@ class CausesControllerTest < ActionController::TestCase
       get :edit, :id => cause.id
 
       assert_readonly_sensitve_data
-      assert_cant_update_name cause
+      assert_cant_update_sensitive_data cause
     end
   end
   
@@ -560,7 +560,7 @@ class CausesControllerTest < ActionController::TestCase
        get :edit, :id => cause.id
 
        assert_response :forbidden
-       assert_cant_update_name cause
+       assert_cant_update_sensitive_data cause
     end
   end
   
@@ -584,7 +584,7 @@ class CausesControllerTest < ActionController::TestCase
     assert_equal 1, css_select('textarea').count # description field
   end
   
-  def assert_can_update_name(cause)
+  def assert_can_update_sensitive_data(cause)
     post :update,
       :id => cause.id,
       :cause =>
@@ -596,17 +596,21 @@ class CausesControllerTest < ActionController::TestCase
         :charity_id => cause.charity_id,
         :country_id => cause.country_id,
         :cause_category_id=> cause.cause_category_id,
-        :url=> cause.url,
-        :funds_needed=> cause.funds_needed,
+        :url=> 'changed_url',
+        :funds_needed=> 230,
         :funds_raised=> cause.funds_raised
       }   
       
     cause.reload
     assert_equal 'changed', cause.name
+    assert_equal 230, cause.funds_needed
+    assert_equal 'changed_url', cause.url
   end
   
-  def assert_cant_update_name(cause)
+  def assert_cant_update_sensitive_data(cause)
     old_name = cause.name
+    old_funds_needed = cause.funds_needed
+    old_url = cause.url
     
     post :update,
       :id => cause.id,
@@ -619,13 +623,15 @@ class CausesControllerTest < ActionController::TestCase
         :charity_id => cause.charity_id,
         :country_id => cause.country_id,
         :cause_category_id=> cause.cause_category_id,
-        :url=> cause.url,
-        :funds_needed=> cause.funds_needed,
+        :url=> 'changed_url',
+        :funds_needed=> '101',
         :funds_raised=> cause.funds_raised
       }   
       
     cause.reload
     assert_equal old_name, cause.name
+    assert_equal old_funds_needed, cause.funds_needed
+    assert_equal old_url, cause.url
   end
 end
 
