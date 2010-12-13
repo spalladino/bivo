@@ -40,6 +40,9 @@ class ApplicationController < ActionController::Base
         session[:locale] = Language.preferred(get_browser_accept_languages).id
       end
     end
+    
+    # Set request locale
+    I18n.locale = session[:locale]
     super
   end
 
