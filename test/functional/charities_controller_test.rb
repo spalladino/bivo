@@ -44,26 +44,36 @@ class CharitiesControllerTest < ActionController::TestCase
   #DETAILS
   test "shouldnt get details if inactive and not admin or charity owner" do
     user = create_charity_and_sign_in
-    charity = Charity.make :short_url => "foobar",:status => :inactive
+    charity = Charity.make :short_url => "foobar",:status => :inactive, :charity_name => 'charity name'
 
     get :details, :url => "foobar"
 
     assert_not_nil assigns(:charity)
     assert_equal assigns(:charity), charity
     assert_equal assigns(:kind), 'charity'
+    assert_equal assigns(:name), 'charity name'
+
+    assert_select '#page_inactive', _('The') + ' charity charity name ' + _('is inactive.')
+    assert_select '#doubts_contact', _('For any doubts, please contact') + ' info@bivo.org'
+
     assert_response :success
   end
 
   #DETAILS
  test "shouldnt get details if inactive and not admin or charity, personal user logged in" do
     user = create_and_sign_in
-    charity = Charity.make :short_url => "foobar",:status => :inactive
+    charity = Charity.make :short_url => "foobar",:status => :inactive, :charity_name => 'charity name'
 
     get :details, :url => "foobar"
 
     assert_not_nil assigns(:charity)
     assert_equal assigns(:charity), charity
     assert_equal assigns(:kind), 'charity'
+    assert_equal assigns(:name), 'charity name'
+
+    assert_select '#page_inactive', _('The') + ' charity charity name ' + _('is inactive.')
+    assert_select '#doubts_contact', _('For any doubts, please contact') + ' info@bivo.org'
+
     assert_response :success
   end
 
