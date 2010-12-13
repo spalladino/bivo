@@ -1,4 +1,17 @@
 <h1><%= @t_language%></h1>
+
 <% @translated_classes.each do |clazz|%>
- <%= clazz.name%>
+	<%clazz.translated_fields[:translate].each do |field|%>
+		<h2><%= clazz.name%> <%=field.to_s%></h2>
+			<ul>
+				<% clazz.translation_pending(@t_language).each do |instance|%>
+					<%= form_for instance do |f| %>
+						<li><%= f.label field, instance.send(field)%>
+					    <%= f.text_field field %>
+					    <%= f.submit "Translate"%></li>
+					  <% end %>		
+				<%end%>
+			</ul>
+	<%end%>
+	
 <%end%>
