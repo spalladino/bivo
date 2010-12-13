@@ -285,6 +285,10 @@ class ShopsControllerTest < ActionController::TestCase
     assert_equal assigns(:shop), shop
     assert_equal assigns(:kind), 'shop'
     assert_equal assigns(:name), 'shop name'
+
+    assert_select '#page_inactive', _('The') + ' shop shop name ' + _('is inactive.')
+    assert_select '#doubts_contact', _('For any doubts, please contact') + ' info@bivo.org'
+
     assert_response :success
   end
 end
