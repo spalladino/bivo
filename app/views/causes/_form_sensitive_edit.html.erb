@@ -1,0 +1,15 @@
+<%= f.label _("Cause Name")%>
+<%= f.text_field :name %><br/>
+
+<%= f.label _("Short Url")%><br/>
+http://www.bivo.org/cause/<%= f.text_field :url, :id => 'short_url', :onfocus => "javascript:$('#available').html('');"%>
+<%= tag 'input', {:type => 'button', :value => _('Check Url'), :onclick => "javascript:checkUrl();"} %>
+&nbsp;
+<span id="available"></span>
+<br/>
+
+<%= f.label _('Category')%><br/>
+<%= collection_select('cause', 'cause_category_id', CauseCategory.all, :id, :name) %><br/>
+
+<%= f.label _('Funds needed')%><br/>
+<%= f.text_field :funds_needed %><br/>

@@ -16,19 +16,23 @@ class CauseTest < ActiveSupport::TestCase
     assert_equal 1, cause.votes_count
   end
 
-  test "should mark as deleted" do
-    cause = Cause.make :status => :raising_funds
-    cause.destroy
-    assert_equal :deleted, cause.reload.status, "Status is not deleted"
+  [:raising_funds, :completed, :paid].each do |status|
+    test "should mark as deleted if #{status}" do
+      cause = Cause.make :status => :raising_funds
+      cause.destroy
+      assert_equal :deleted, cause.reload.status, "Status is not deleted"
+    end
   end
 
-  test "should delete from database" do
-    cause = Cause.make :status => :active
-    id = cause.id
-    cause.destroy
+  [:inactive, :active].each do |status|
+    test "should delete from database if #{status}" do
+      cause = Cause.make :status => status
+      id = cause.id
+      cause.destroy
 
-    assert_raise ActiveRecord::RecordNotFound do
-      Cause.find_deleted(id)
+      assert_raise ActiveRecord::RecordNotFound do
+        Cause.find_deleted(id)
+      end
     end
   end
 
