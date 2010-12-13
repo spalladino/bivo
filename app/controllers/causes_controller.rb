@@ -110,6 +110,7 @@ class CausesController < ApplicationController
   end
 
   def edit
+    @partial_cause_edit = @cause.can_edit_sensitive_data?(current_user) ? 'form_sensitive_edit' : 'form_sensitive_readonly'
   end
 
   def create
