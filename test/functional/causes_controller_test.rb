@@ -512,6 +512,7 @@ class CausesControllerTest < ActionController::TestCase
     get :edit, :id => cause.id
 
     assert_edit_sensitve_data
+    assert_can_update_name cause
   end
   
   [:active, :raising_funds, :completed, :paid].each do |status|
@@ -522,6 +523,7 @@ class CausesControllerTest < ActionController::TestCase
       get :edit, :id => cause.id
 
       assert_readonly_sensitve_data
+      assert_cant_update_name cause
     end
   end
   
@@ -532,6 +534,7 @@ class CausesControllerTest < ActionController::TestCase
     get :edit, :id => cause.id
 
     assert_edit_sensitve_data
+    assert_can_update_name cause
   end
   
   [:active, :raising_funds].each do |status|
@@ -542,6 +545,7 @@ class CausesControllerTest < ActionController::TestCase
       get :edit, :id => cause.id
 
       assert_readonly_sensitve_data
+      assert_cant_update_name cause
     end
   end
   
@@ -551,7 +555,8 @@ class CausesControllerTest < ActionController::TestCase
        cause = Cause.make :charity_id => user.id, :status=> status
        get :edit, :id => cause.id
 
-       assert_response :forbidden      
+       assert_response :forbidden
+       assert_cant_update_name cause
     end
   end
   
@@ -573,6 +578,50 @@ class CausesControllerTest < ActionController::TestCase
     assert_equal 0, css_select('#short_Url').count
     assert_equal 0, css_select('#cause_funds_needed').count
     assert_equal 1, css_select('textarea').count # description field
+  end
+  
+  def assert_can_update_name(cause)
+    post :update,
+      :id => cause.id,
+      :cause =>
+      {
+        :name => 'changed',
+        :description=> cause.description,
+        :city => cause.city,
+        :status => cause.status,
+        :charity_id => cause.charity_id,
+        :country_id => cause.country_id,
+        :cause_category_id=> cause.cause_category_id,
+        :url=> cause.url,
+        :funds_needed=> cause.funds_needed,
+        :funds_raised=> cause.funds_raised
+      }   
+      
+    cause.reload
+    assert_equal 'changed', cause.name
+  end
+  
+  def assert_cant_update_name(cause)
+    old_name = cause.name
+    
+    post :update,
+      :id => cause.id,
+      :cause =>
+      {
+        :name => 'changed',
+        :description=> cause.description,
+        :city => cause.city,
+        :status => cause.status,
+        :charity_id => cause.charity_id,
+        :country_id => cause.country_id,
+        :cause_category_id=> cause.cause_category_id,
+        :url=> cause.url,
+        :funds_needed=> cause.funds_needed,
+        :funds_raised=> cause.funds_raised
+      }   
+      
+    cause.reload
+    assert_equal old_name, cause.name
   end
 end
 
