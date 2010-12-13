@@ -13,6 +13,15 @@ module BlueprintsClassMethods
     return list
   end
   
+  def make_translated(attributes = {})
+    translations = attributes.delete(:translations)
+    obj = self.make(attributes)
+    translations.each do |lang,data|
+      obj.save_translation lang, data
+    end if translations
+    obj
+  end
+  
 end
 
 class << Cause

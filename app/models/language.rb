@@ -1,18 +1,23 @@
 class Language
   DefaultLanguage = :en
-  attr_accessor :id, :name
+  attr_accessor :id, :name, :english_name
 
-  def initialize(id, name)
+  def initialize(id, data)
     self.id = id
-    self.name = name
+    self.name = data[:name]
+    self.english_name = data[:english_name]
   end
 
   def self.all
     result = []
-    Bivo::Application.config.languages.each_pair { |key, value|
+    Bivo::Application.config.languages.each_pair do |key, value|
       result << new(key, value)
-    }
+    end
     result
+  end
+
+  def self.non_defaults
+    self.all.reject{|l| l.id == DefaultLanguage}
   end
 
   def self.by_id(id)
@@ -22,6 +27,7 @@ class Language
       nil
     end
   end
+  
   #get the first language from the accepted languages that is available.
   #if there isnt one, it use the default language
   #note: may be its convenient to extend the module for request.

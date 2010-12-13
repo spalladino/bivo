@@ -17,13 +17,13 @@
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
   <%= render "shared/error_messages", :target => resource %>
 
-  <%= f.radio_button :type, _("PersonalUser"), :checked => true %> <%= f.label :personal, _("Personal") %> <br />
-  <%= f.radio_button :type, _("Charity") %>  <%= f.label :charity, _("Charity")  %>
+  <%= f.radio_button :type, _("PersonalUser"), :id => "user_type_personaluser", :checked => true %> <%= f.label :personal, _("Personal"), :for => "user_type_personaluser" %> <br />
+  <%= f.radio_button :type, _("Charity"), :id => "user_type_charity" %>  <%= f.label :charity, _("Charity"), :for => "user_type_charity"  %>
 
   <p><%= f.label :email, _("E-Mail") %><br />
   <%= f.text_field :email %></p>
 
-  <p><%= f.label :password,_("Password") %><br />
+  <p><%= f.label :password, _("Password") %><br />
   <%= f.password_field :password %></p>
 
   <p><%= f.label :password_confirmation,_("Password Confirmation") %><br />

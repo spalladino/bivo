@@ -102,5 +102,14 @@ class AdminController < ApplicationController
     MailsProcessor.instance.process
     render :text => 'done'
   end
+  
+  def choose_language
+    @languages = Language.non_defaults
+  end
+  
+  def translate
+    @t_language = params[:language_for_transalte]
+    @translated_classes = ActiveRecord::Base.translated_classes
+  end
 end
 

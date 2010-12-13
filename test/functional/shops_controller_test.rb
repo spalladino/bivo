@@ -285,6 +285,10 @@ class ShopsControllerTest < ActionController::TestCase
     assert_equal assigns(:shop), shop
     assert_equal assigns(:kind), 'shop'
     assert_equal assigns(:name), 'shop name'
+
+    assert_select '#page_inactive', _('The') + ' shop shop name ' + _('is inactive.')
+    assert_select '#doubts_contact', _('For any doubts, please contact') + ' info@bivo.org'
+
     assert_response :success
   end
 end
@@ -376,6 +380,45 @@ end
     assert_not_nil assigns(:shops)
     assert_equal 3, assigns(:shops).size
   end
+
+  #LIST-localized
+  test "should list shops using current locale" do
+    s = Shop.make_translated :description => "description", :translations => {:es => {:description => "descripcion"}}
+    
+    set_locale :es
+    get :search
+    
+    assert_not_nil assigns(:shops)
+    assert_equal "descripcion", assigns(:shops).first.description
+  end
+
+  #LIST-search-localized
+  test "should search shops using current locale" do
+    s1 = Shop.make_translated :description => "books", :translations => {:es => {:description => "libros"}}
+    s2 = Shop.make_translated :description => "cars", :translations => {:es => {:description => "autos"}}
+
+    set_locale :es
+    get :search, :search_word => 'libro'
+
+    assert_not_nil assigns(:shops)
+    assert_equal 1, assigns(:shops).size
+    assert_equal 'libros', assigns(:shops).first.description
+  end
+  
+  #LIST-search-localized
+  test "should search shops using default locale if no valid translation is present" do
+    s1 = Shop.make_translated :description => "books", :translations => {:es => {:description => "libros"}}
+    s1.description = "cars"
+    s1.save!
+
+    set_locale :es
+    get :search, :search_word => 'car'
+
+    assert_not_nil assigns(:shops)
+    assert_equal 1, assigns(:shops).size
+    assert_equal 'cars', assigns(:shops).first.description
+  end
+
 
 end
 

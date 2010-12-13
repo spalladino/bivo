@@ -5,13 +5,13 @@
   <%= f.text_field :charity_website %></p>
 
   <%= f.label :short_url, _("Short Url")%><br/>
-  http://www.bivo.org/ng/<%= f.text_field :short_url, :id => 'short_url', :onfocus => "javascript:$('#available').html('');"%>
+  http://www.bivo.org/ng/<%= f.text_field :short_url, :onfocus => "javascript:$('#available').html('');"%>
   <%= tag 'input', {:type => 'button', :value => _('Check Url'), :onclick => "javascript:checkUrl();"} %>
   &nbsp;
   <span id="available"></span>
   <br/>
 
-  <p><%= f.label :category, _("Category") %>
+  <p><%= f.label :charity_category_id, _("Category") %>
   <%= f.select :charity_category_id, @categories.collect{ |c| [c.name, c.id] }, :include_blank => true %></p>
 
   <p><%= f.label :charity_type, _("Charity Type") %><br />
@@ -20,13 +20,13 @@
   <p><%= f.label :tax_reg_number, _("Tax Registration Number") %><br />
   <%= f.text_field :tax_reg_number %></p>
 
-  <p><%= f.label :country, _("Country") %>
+  <p><%= f.label :country_id, _("Country") %>
   <%= f.select :country_id, @countries.collect{ |c| [c.name, c.id] }, :include_blank => true %></p>
 
   <p><%= f.label :city, _("City") %><br />
   <%= f.text_field :city %></p>
 
-  <p><%= f.label _("Description") %><br />
+  <p><%= f.label :description,  _("Description"), :for => "wysiwyg" %><br />
   <%= f.text_area :description , :id => "wysiwyg", :rows=>"5", :cols=>"47"%></p>
 
   <% content_for :js do %> <!-- javascript code to run, for this view only -->
