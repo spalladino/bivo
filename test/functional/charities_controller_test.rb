@@ -354,7 +354,7 @@ class CharitiesControllerTest < ActionController::TestCase
   end
 
   #DEACTIVATE
-  test "should not deactivate" do
+  test "should not deactivate self" do
     user = create_charity_and_sign_in
     id = Charity.make(:status=>:active).id
     cause = Cause.make :status =>:active,:charity_id => id

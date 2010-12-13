@@ -151,23 +151,27 @@ class RegistrationsControllerTest < ActionController::TestCase
   end
 
   #UPDATE
-  test "should update charity" do
-    charity = create_charity_and_sign_in
+  [:active,:inactive].each do |status|
+    test "should update #{status} charity" do
+      charity = create_charity_and_sign_in :status => status
 
-    post :update,
-      :user =>
-      {
-        :email                 => "char123@bivotest.com",
-        :charity_name          => "test",
-        :charity_website       => "http://www.test.com",
-        :charity_type          => "def",
-        :tax_reg_number        => 123456,
-        :country_id            => Country.make.id,
-        :city                  => "Bs As"
-      }
+      post :update,
+        :user =>
+        {
+          :email                 => "char123@bivotest.com",
+          :charity_name          => "test",
+          :charity_website       => "http://www.test.com",
+          :charity_type          => "def",
+          :tax_reg_number        => 123456,
+          :country_id            => Country.make.id,
+          :city                  => "Bs As"
+        }
 
-    assert_equal Charity.find(charity.id).email, "char123@bivotest.com"
-    assert_response :found
+      charity.reload
+      assert_equal "char123@bivotest.com", charity.email
+      assert_equal status, charity.status
+      assert_response :found
+    end
   end
 
   #UPDATE
@@ -267,7 +271,7 @@ class RegistrationsControllerTest < ActionController::TestCase
   end
 
   #DELETE
-  test "should not delete if not admin" do
+  test "should not delete PersonalUser if not admin" do
     user = PersonalUser.make
     create_and_sign_in
 
@@ -279,9 +283,31 @@ class RegistrationsControllerTest < ActionController::TestCase
   end
 
   #DELETE
-  test "should not delete if not admin (charity)" do
+  test "should not delete PersonalUser if self" do
+    user = create_and_sign_in
+
+    assert_difference('User.count', 0) do
+      post :destroy, :id => user.id
+    end
+
+    assert_response :forbidden
+  end
+
+  #DELETE
+  test "should not delete Charity if not admin" do
     user = Charity.make
     create_and_sign_in
+
+    assert_difference('User.count', 0) do
+      post :destroy, :id => user.id
+    end
+
+    assert_response :forbidden
+  end
+  
+  #DELETE
+  test "should not delete Charity if self" do
+    user = create_charity_and_sign_in
 
     assert_difference('User.count', 0) do
       post :destroy, :id => user.id
