@@ -23,6 +23,10 @@ class CausesControllerTest < ActionController::TestCase
     assert_equal assigns(:cause), cause
     assert_equal assigns(:kind), 'cause'
     assert_equal assigns(:name), 'cause name'
+
+    assert_select '#page_inactive', _('The') + ' cause cause name ' + _('is inactive.')
+    assert_select '#doubts_contact', _('For any doubts, please contact') + ' info@bivo.org'
+
     assert_response :success
   end
 
