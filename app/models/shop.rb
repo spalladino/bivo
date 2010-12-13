@@ -1,11 +1,9 @@
 require 'enumerated_attribute'
 
 class Shop < ActiveRecord::Base
+  translate :translate => [:description], :index => [:name, :description]
+  
   acts_as_commentable
-  index do
-    name
-    description
-  end
 
   class CommentRules
     def self.before_add(comment,user)
@@ -24,6 +22,7 @@ class Shop < ActiveRecord::Base
       return !user.nil?
     end
   end
+
   #Every time you modify columns in your index block, or add new index blocks,
   #you should create a new migration to updated the indexes. (rake texticle:migration and rake db:migrate)
   #If you don’t update the indexes, searches will still work as expected, they just might be kind of slow.
@@ -114,7 +113,6 @@ class Shop < ActiveRecord::Base
   def inactive?
     status == :inactive
   end
-  #
 
   protected
 

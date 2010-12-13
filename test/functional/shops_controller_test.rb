@@ -381,5 +381,44 @@ end
     assert_equal 3, assigns(:shops).size
   end
 
+  #LIST-localized
+  test "should list shops using current locale" do
+    s = Shop.make_translated :description => "description", :translations => {:es => {:description => "descripcion"}}
+    
+    set_locale :es
+    get :search
+    
+    assert_not_nil assigns(:shops)
+    assert_equal "descripcion", assigns(:shops).first.description
+  end
+
+  #LIST-search-localized
+  test "should search shops using current locale" do
+    s1 = Shop.make_translated :description => "books", :translations => {:es => {:description => "libros"}}
+    s2 = Shop.make_translated :description => "cars", :translations => {:es => {:description => "autos"}}
+
+    set_locale :es
+    get :search, :search_word => 'libro'
+
+    assert_not_nil assigns(:shops)
+    assert_equal 1, assigns(:shops).size
+    assert_equal 'libros', assigns(:shops).first.description
+  end
+  
+  #LIST-search-localized
+  test "should search shops using default locale if no valid translation is present" do
+    s1 = Shop.make_translated :description => "books", :translations => {:es => {:description => "libros"}}
+    s1.description = "cars"
+    s1.save!
+
+    set_locale :es
+    get :search, :search_word => 'car'
+
+    assert_not_nil assigns(:shops)
+    assert_equal 1, assigns(:shops).size
+    assert_equal 'cars', assigns(:shops).first.description
+  end
+
+
 end
 
