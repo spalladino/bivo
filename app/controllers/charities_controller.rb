@@ -98,12 +98,6 @@ class CharitiesController < ApplicationController
   def deactivate
     @charity.status = :inactive
 
-    # TODO: Use cascade update so charity save fails if any cause save fails as well
-    @charity.causes.each do |cause|
-      cause.status = :inactive
-      cause.save
-    end
-
     ajax_flash[:notice] = if @charity.save then _("Deactivated") else _("Error deactivating charity") end
     redirect_to request.referer unless request.xhr?
   end

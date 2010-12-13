@@ -339,36 +339,18 @@ class CharitiesControllerTest < ActionController::TestCase
   end
 
   #DEACTIVATE
-  test "should not deactivate becouse of children status(raising_funds)" do
-    user = create_admin_and_sign_in
-    id = Charity.make(:status=>:active).id
-    cause = Cause.make :status =>:raising_funds,:charity_id => id
-    post :deactivate, :id => id
-    assert_response :forbidden
-    assert_equal :active,Charity.find(id).status
-    assert_equal :raising_funds,cause.reload.status
-  end
+  [:raising_funds, :completed, :paid].each do |status|
+    test "should not deactivate because of children status(#{status})" do
+      user = create_admin_and_sign_in
+      id = Charity.make(:status=>:active).id
+      cause = Cause.make :status => status, :charity_id => id
+      post :deactivate, :id => id
 
-  #DEACTIVATE
-  test "should not deactivate becouse of children status (completed)" do
-    user = create_admin_and_sign_in
-    id = Charity.make(:status=>:active).id
-    cause = Cause.make :status =>:completed,:charity_id => id
-    post :deactivate, :id => id
-    assert_response :forbidden
-    assert_equal :active,Charity.find(id).status
-    assert_equal :completed,cause.reload.status
-  end
-
-  #DEACTIVATE
-  test "should not deactivate becouse of children status (paid)" do
-    user = create_admin_and_sign_in
-    id = Charity.make(:status=>:active).id
-    cause = Cause.make :status =>:paid,:charity_id => id
-    post :deactivate, :id => id
-    assert_response :forbidden
-    assert_equal :active,Charity.find(id).status
-    assert_equal :paid,cause.reload.status
+      assert_response :redirect
+      assert_equal "Error deactivating charity", flash[:notice]
+      assert_equal :active, Charity.find(id).status
+      assert_equal status, cause.reload.status
+    end
   end
 
   #DEACTIVATE
