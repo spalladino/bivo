@@ -9,6 +9,7 @@
   <%= javascript_include_tag 'jquery-ui.min' %>
   <%= javascript_include_tag 'jquery.wysiwyg' %>
   <%= javascript_include_tag 'jquery.treeview' %>
+  <%= javascript_include_tag 'jquery.updnWatermark' %>
 
   <%= csrf_meta_tag %>
 
@@ -23,11 +24,11 @@
 <body>
 
 
-<%= render :partial => "shared/user_nav", :locals => { :language => @language, :languages => @languages } %>
+<%= render :partial => "shared/user_nav", :locals => { :language => @language, :languages => @languages, :all_currencies => @all_currencies, :current_currency => @current_currency } %>
 
 <%= yield %>
 
-<%= render 'shared/footer' %>
+<%= render 'shared/footer', :locals => { :languages => @languages } %>
 
 </body>
 </html>

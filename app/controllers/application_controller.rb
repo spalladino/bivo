@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   before_filter :check_eula_accepted
   before_filter :instantiate_controller_and_action_names
   before_filter :load_languages
+  before_filter :load_currencies
   before_filter :mailer_set_url_options
 
   protected
@@ -94,6 +95,11 @@ class ApplicationController < ActionController::Base
   def load_languages
     @languages = Language.all
     @language = Language.by_id session[:locale].to_sym
+  end
+
+  def load_currencies
+    @all_currencies = Currency.all
+    @current_currency = Currency.all.first
   end
 
   def mailer_set_url_options

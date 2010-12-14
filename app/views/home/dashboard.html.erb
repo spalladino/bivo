@@ -1,49 +1,82 @@
-<h1>Dashboard</h1>
-
-<div id="filters">
-  <%= render 'choose_period' %>
-</div>
-
-<div id="funds_raised">
-  <h2><%= _("Funds Raised") %></h2>
-  <strong><%= @funds_raised %></strong>
-</div>
-
-<div id="transactions">
-  <h2><%= _("Transactions") %></h2>
-  <strong><%= @transactions %></strong>
-</div>
-
-<div id="fully_funded_causes">
-
-</div>
 
 
-<div id="fundraising_sources">
-  <h2><%= _("Fundraising Sources") %></h2>
+<div class="inbodyM">
+	<div class="bodyInner">
+    	<div class="statGrT"><h2><%=_("Dashboard")%></h2></div>
+        <div class="boxMain">
+
+
+        <%= render 'choose_period' %>
+
+            <br class="spacer" />
+
+            <div class="dashBoxL">
+
+            	<div class="dashBoxLBox"><span class="dashBoxLNo"><%= number_to_currency(@funds_raised,:precision => 0) %></span><span class="dashBoxLTxt"><%=_("funds raised")%></span></div>
+
+               <div class="dashBoxLBox"><span class="dashBoxLNo"><%=number_with_delimiter  @transactions %></span><span class="dashBoxLTxt"><%=_("transactions")%></span></div>
+               <div class="dashBoxLBox"><span class="dashBoxLNo"><%=number_with_delimiter  @fully_funded_causes %></span><span class="dashBoxLTxt"><%=_("fully funded causes")%></span></div>
+            </div>
+
+        	<div class="dashBoxR">
+            	<div class="dashBoxRin">
+                	<h3><%= _("Fundraising Sources") %></h3>
+                    <div class="cloud">
+
   <% @shops_to_cloud.each do |shop| %>
-    <%= shop.name %>: <%= shop.incomes_in_period @from,@to%> <br />
+    <%var = shop.incomes_in_period_rank @from, @to%>
+    <%= link_to(shop.display_name, shop_path(shop.id),:class => var) %>
+
   <% end %>
-</div>
+           <br class="spacer" />
 
-<div id="causes_being_funded">
-	<h2><%= _("Causes being funded")%></h2>
+                    </div>
+                </div>
 
-  <%= _("No causes with votes in the current period") if @causes_being_funded.empty? %>
 
-	<% @causes_being_funded.each do |cause| %>
-	  <%= cause.cause_category.name %>: <%= cause.name %>
-	  (<%= cause.funds_raised %> of <%= cause.funds_needed %>, <%= cause.funds_raised_in_period %> <%= _("in this period") %>)
-	<% end %>
-</div>
+                <div class="dashBoxRin">
+                  <h3><%=_("Causes being funded")%></h3>
+                  <p class="clickTxt"><%= _("No causes with votes in the current period") if @causes_being_funded.empty? %></p>
+                  <div class="boxRIn">
+                    <% @causes_being_funded.each do |cause| %>
+                    	<div class="boxHu">
+                        	<h3><%= cause.cause_category.name %></h3>
+                           <p class="boxHuTxt"><%= cause.name %></p>
+                           <div class="loadMain">
+                             <img src="images/loader.jpg" width="138" height="20" alt="" class="load" /><p class="loadTxt"><%= cause.funds_raised_in_period.to_i/cause.funds_needed*100 %>% of <%= cause.funds_needed %></p>
+                           </div>
+                      </div>
+                    <% end %>
+                    <br class="spacer" />
+                  </div>
 
-<div id="most_voted_causes">
-  <h2><%= _("Most voted causes") %></h2>
+                </div>
 
-  <%= _("No causes in the current period") if @most_voted_causes.empty? %>
 
-  <% @most_voted_causes.each do |cause| %>
-    <%= cause.cause_category.name %>: <%= cause.name %> <br />
-  <% end %>
+                <div class="dashBoxRin">
+                	<h3><%=_("Most voted causes queued for funding")%></h3>
+                  <p class="clickTxt"><%= _("No causes in the current period") if @most_voted_causes.empty? %></p>
+
+                  <div class="boxRIn">
+
+                  <% @most_voted_causes.each do |cause| %>
+                      <div class="boxHu">
+                        	<h3><%=cause.cause_category.name%></h3>
+                            <p class="boxHuTxt boxHuTxt2"><%=cause.name%></p>
+
+                            <p class="ghanaTxt"><%=cause.funds_needed%></p>
+                            <p class="ghanaTxt2"><%=_("to be raised")%></p>
+                        </div>
+                    <%end%>
+                    <br class="spacer" />
+                    </div>
+                </div>
+
+            </div><br class="spacer" />
+
+        </div>
+
+     </div>
+	 <div class="bodyBot"></div>
 </div>
 

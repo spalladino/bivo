@@ -164,7 +164,7 @@ class Cause < ActiveRecord::Base
   def can_edit?
     [:inactive, :active, :raising_funds].include? self.status
   end
-  
+
   def can_edit_sensitive_data?(user)
     user && self.status == :inactive
   end
@@ -210,7 +210,7 @@ class Cause < ActiveRecord::Base
     end
 
     res = result.limit(1).first
-    
+
     if (from.nil? || to.nil?)
       res if res && res.votes_count > 0
     else
@@ -227,6 +227,7 @@ class Cause < ActiveRecord::Base
     end
 
     most_voted_causes
+
   end
 
 
@@ -239,6 +240,7 @@ class Cause < ActiveRecord::Base
     result = result.order("cause_category_id ASC, funds_raised_in_period DESC")
     result = result.group(cause_columns)
     result.all
+
   end
 
 

@@ -1,29 +1,61 @@
-<h2><%= _("Login") %></h2>
+<% content_for(:js) do %>
 
-<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-  <p><%= f.label :email,_("Email") %><br />
-  <%= f.text_field :email %></p>
+	$.updnWatermark.attachAll({ cssClass: "watermark" });
 
-  <p><%= f.label :password,_("Password") %><br />
-  <%= f.password_field :password %></p>
-
-  <% if devise_mapping.rememberable? -%>
-    <p><%= f.check_box :remember_me %> <%= f.label :remember_me,_("Remember Me") %></p>
-  <% end -%>
-
-  <p>
-	<%= f.submit _("Sign in") %> | 
-	<%= link_to _("Sign in via facebook"), "/auth/facebook", :confirm => _("If you are a charity, please use bivo registration and cancel the sign in. Otherwise, click ok.") %>
-  </p>
-
-  <p>
-	<%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
-	  <%= link_to "Forgot your password?", new_password_path(resource_name) %><br />
-	<% end -%>
-  </p>
 <% end %>
 
-<h2><%= _("Don't have an account?") %></h2>
 
-<%= link_to _("Register"), new_user_registration_path %>
+
+<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+
+  <div class="inbodyM">
+	  <div class="bodyInner logM">
+      	<div class="logL">
+          	<h2><%=_("Login")%></h2>
+
+            <%= f.text_field :email,:title=>_('Email :'),:class=>"logfil watermark" %></p>
+
+             <div id="pass_fld_1"> <%= f.password_field :password, :title=>_("Password :"),:class=>"logfil watermark"%></div>
+ <br class="spacer" />
+            <% if devise_mapping.rememberable? -%>
+             <p> <%= f.check_box :remember_me,:class=>"logchk" %><%= f.label :remember_me,_("Remember Me"),:class=>"logchkTxt" %></p>
+              <br class="spacer" />
+            <% end -%>
+
+          <div class="buttonMainLog">
+				  <div class="logBtnSt"></div>
+            <%= f.submit _("Sign in"),:class=>"buttonMidlog"%>
+            <div class="logBtnEn"></div><br class="spacer" />
+            </div>
+
+              <div class="buttonMainLog">
+				  <div class="logBtnSt"></div>
+            <%= link_to _("Login using"), "/auth/facebook", :confirm => _("If you are a charity, please use bivo registration and cancel the sign in. Otherwise, click ok."),:class=>"buttonMidlog" %>
+
+                  <div class="logBtnEnFace"></div><br class="spacer" />
+             	</div>
+          <p></p>
+          <%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
+              <%= link_to _("Forgot your password?"), new_password_path(resource_name),:class =>"clickTxt" %>
+	        <% end -%>
+
+
+              <br class="spacer" />
+          </div>
+          <div class="logR">
+          	<h2><%=_("Don't have an account ?")%></h2>
+              <p class="clickTxt"><%=_("Click below to create an account")%></p>
+
+              <div class="buttonMainReg">
+				  <div class="logBtnSt"></div>
+            <%= link_to _("Register"), new_user_registration_path, :class=>"buttonMidlog" %>
+
+                  <div class="logBtnEn"></div><br class="spacer" />
+             	</div>
+
+          </div>
+       </div>
+	   <div class="bodyBot"></div>
+  </div>
+<% end %>
 
