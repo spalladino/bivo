@@ -185,7 +185,13 @@ class Cause < ActiveRecord::Base
     if can_delete?
       super
     else
+      transfer_funds = self.status != :paid      
       update_attribute :status, :deleted
+      
+      if transfer_funds
+        account = Account.cause_account self
+        Account.transfer account, Account.cash_pool_account, account.balance
+      end
     end
   end
 
