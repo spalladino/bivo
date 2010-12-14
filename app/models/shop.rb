@@ -2,7 +2,7 @@ require 'enumerated_attribute'
 
 class Shop < ActiveRecord::Base
   translate :translate => [:description], :index => [:name, :description]
-  
+
   acts_as_commentable
 
   class CommentRules
@@ -91,25 +91,32 @@ class Shop < ActiveRecord::Base
     end
   end
 
-
   #TODO: Validate widget fields
   def incomes_in_period(from, to)
     return Income.where('shop_id = ? and transaction_date BETWEEN ? AND ?',self.id,from,to).sum('amount')
   end
 
+  def incomes_in_period_rank(from,to)
+ #TODO: DEFINE HOW IT RANKS
+    return "" if self.incomes_in_period(from,to) <= 100
+    return "cloud3" if (100..1000) === self.incomes_in_period(from,to)
+    return "cloud2" if (1001..10000) === self.incomes_in_period(from,to)
+    return "cloud1"
+  end
+
   def display_name
     if status == :inactive
-      _("%s (Inactive)") % [name] 
+      _("%s (Inactive)") % [name]
     else
       name
     end
   end
-  
+
   # this are overriden w.r.t. enum_attr since inactive and active clash
   def status_inactive?
     status == :inactive
   end
-  
+
   def inactive?
     status == :inactive
   end
