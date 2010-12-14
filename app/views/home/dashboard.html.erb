@@ -4,27 +4,7 @@
   <%= render 'choose_period' %>
 </div>
 
-<div id="funds_raised">
-  <h2><%= _("Funds Raised") %></h2>
-  <strong><%= @funds_raised %></strong>
-</div>
 
-<div id="transactions">
-  <h2><%= _("Transactions") %></h2>
-  <strong><%= @transactions %></strong>
-</div>
-
-<div id="fully_funded_causes">
-
-</div>
-
-
-<div id="fundraising_sources">
-  <h2><%= _("Fundraising Sources") %></h2>
-  <% @shops_to_cloud.each do |shop| %>
-    <%= shop.name %>: <%= shop.incomes_in_period @from,@to%> <br />
-  <% end %>
-</div>
 
 <div id="causes_being_funded">
 	<h2><%= _("Causes being funded")%></h2>
@@ -45,5 +25,94 @@
   <% @most_voted_causes.each do |cause| %>
     <%= cause.cause_category.name %>: <%= cause.name %> <br />
   <% end %>
+</div>
+
+
+<div class="inbodyM">
+	<div class="bodyInner">
+    	<div class="statGrT"><h2>Dashboard</h2></div>
+        <div class="boxMain">
+        	<p class="genFilTxt dashFilTxt">Show this month</p><select class="genChoo dashChoo"><option></option><option></option></select><br class="spacer" />
+
+            <div class="dashBoxL">
+
+            	<div class="dashBoxLBox"><span class="dashBoxLNo"><%= number_to_currency(@funds_raised,:precision => 0) %></span><span class="dashBoxLTxt">funds raised</span></div>
+
+               <div class="dashBoxLBox"><span class="dashBoxLNo"><%=number_with_delimiter  @transactions %></span><span class="dashBoxLTxt">transactions</span></div>
+               <div class="dashBoxLBox"><span class="dashBoxLNo"><%=number_with_delimiter  @fully_funded_causes %></span><span class="dashBoxLTxt">fully funded causes</span></div>
+            </div>
+
+        	<div class="dashBoxR">
+            	<div class="dashBoxRin">
+                	<h3><%= _("Fundraising Sources") %></h3>
+                    <div class="cloud">
+
+  <% @shops_to_cloud.each do |shop| %>
+    <%var = shop.incomes_in_period_rank @from, @to%>
+    <%= link_to(shop.display_name, shop_path(shop.id),:class => var) %>
+
+  <% end %>
+           <br class="spacer" />
+
+                    </div>
+                </div>
+
+                <div class="dashBoxRin">
+                	<h3>Causes being funded</h3>
+                    <div class="boxRIn">
+                    	<div class="boxHu">
+                        	<h3>Human aid</h3>
+                            <p class="boxHuTxt">Help <strong>Haiti</strong></p>
+
+                            <div class="loadMain"><img src="images/loader.jpg" width="138" height="20" alt="" class="load" /><p class="loadTxt">52% of $5,058</p></div>
+                        </div>
+                        <div class="boxHu">
+                        	<h3 class="boxHuhead2">Animal welfare</h3>
+                            <p class="boxHuTxt">Help <strong>Haiti</strong></p>
+                            <div class="loadMain"><img src="images/loader.jpg" width="138" height="20" alt="" class="load" /><p class="loadTxt">52% of $5,058</p></div>
+
+                        </div>
+                        <div class="boxHu noMarg">
+                        	<h3 class="boxHuhead3">Environment</h3>
+                            <p class="boxHuTxt">Help <strong>Haiti</strong></p>
+                            <div class="loadMain"><img src="images/loader.jpg" width="138" height="20" alt="" class="load" /><p class="loadTxt">52% of $5,058</p></div>
+                        </div><br class="spacer" />
+                    </div>
+
+                </div>
+
+                <div class="dashBoxRin">
+                	<h3>Most voted causes queued for funding</h3>
+					<div class="boxRIn">
+                    	<div class="boxHu">
+                        	<h3>Human aid</h3>
+                            <p class="boxHuTxt boxHuTxt2">Send food to <strong>Ghana</strong></p>
+
+                            <p class="ghanaTxt">$1,344</p>
+                            <p class="ghanaTxt2">to be raised</p>
+                        </div>
+                        <div class="boxHu">
+                        	<h3>Human aid</h3>
+                            <p class="boxHuTxt boxHuTxt2">Send food to <strong>Ghana</strong></p>
+
+                            <p class="ghanaTxt">$1,344</p>
+                            <p class="ghanaTxt2">to be raised</p>
+                        </div>
+                        <div class="boxHu noMarg">
+                        	<h3>Human aid</h3>
+                            <p class="boxHuTxt boxHuTxt2">Send food to <strong>Ghana</strong></p>
+
+                            <p class="ghanaTxt">$1,344</p>
+                            <p class="ghanaTxt2">to be raised</p>
+                        </div><br class="spacer" />
+                    </div>
+                </div>
+
+            </div><br class="spacer" />
+
+        </div>
+
+     </div>
+	 <div class="bodyBot"></div>
 </div>
 

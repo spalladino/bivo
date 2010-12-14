@@ -60,6 +60,9 @@ class HomeController < ApplicationController
     redirect_to root_path
   end
 
+  def change_currency
+  end
+
   def how_it_works
   end
 
