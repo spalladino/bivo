@@ -65,7 +65,7 @@ class Cause < ActiveRecord::Base
 
   before_validation :ensure_complete_when_funds_raised
 
-  attr_protected :status
+  attr_protected :status, :charity_id, :funds_raised
 
   validates_presence_of :charity
   validates_presence_of :country
