@@ -2,9 +2,12 @@ class ShopsController < ApplicationController
 
   before_filter :authenticate_user!, :except => [:details,:home,:show,:search,:index]
   before_filter :only_admin, :only => [:new, :create, :edit, :update, :destroy,:activate, :deactivate, :edit_categories]
-  before_filter :load_shop, :except => [  :new, :create, :index, :search, :edit_categories]
+
+  around_filter :translate_categories, :except => [ :edit_categories ]
+  before_filter :load_shop, :except => [ :new, :create, :index, :search, :edit_categories]
   before_filter :load_places, :only => [ :new, :edit, :create, :update ]
   before_filter :load_categories, :only => [ :new, :edit, :create, :update, :edit_categories, :index ]
+  
   before_filter :ensure_active_if_not_admin, :only => [:home,:details]
 
 
@@ -28,24 +31,23 @@ class ShopsController < ApplicationController
     @is_shop_list = true
     if params[:category_field]
       @category = ShopCategory.find(params[:category_field])
-      @shops = @category.shops unless admin_is_logged_in
-      @shops = @category.shops.all_with_inactives if admin_is_logged_in
+      @shops = if admin_is_logged_in then @category.shops.all_translated_with_inactives else @category.shops.translated end
       @path = @category.ancestors
     else
-      @shops = Shop.all unless admin_is_logged_in
-      @shops = Shop.all_with_inactives if admin_is_logged_in
+      @shops = if admin_is_logged_in then Shop.translated else Shop.all_translated_with_inactives end
     end
     # Set pagination
     @per_page = (params[:per_page] || 20).to_i
-    @count = Shop.where('shops.status != ?',:inactive).count unless admin_is_logged_in
-    @count = Shop.count if admin_is_logged_in
+    
+    #TODO: Count shouldn't be filtered by category as well?
+    @count = if admin_is_logged_in then Shop.count else Shop.where('shops.status != ?',:inactive).count end
 
     @shops = @shops.paginate(:per_page => @per_page, :page => params[:page])
     @page_sizes = [5,10,20,50]
-
   end
 
-   def search
+  def search
+  
     # Filter by text
     @search_word = params[:search_word]
     if @search_word.blank?
@@ -96,7 +98,6 @@ class ShopsController < ApplicationController
       render :edit
     end
   end
-
 
   def show
     render 'details'
@@ -155,13 +156,13 @@ private
   end
 
   def load_shop
-    @shop = Shop.find_with_inactives params[:id] if params[:id]
-    @shop = Shop.all_with_inactives.find_by_short_url! params[:short_url] if params[:short_url]
+    @shop = Shop.find_translated_with_inactives params[:id] if params[:id]
+    @shop = Shop.all_translated_with_inactives.find_by_short_url! params[:short_url] if params[:short_url]
     render :status => :not_found unless @shop
   end
 
   def load_categories
-    # TODO should query all categories is a way the view is able to render the whole tree
+    # TODO should query all categories in a way the view is able to render the whole tree
     @categories = ShopCategory.roots
   end
 
@@ -173,6 +174,9 @@ private
     end
   end
 
+  def translate_categories
+    ShopCategory.with_lazy_translation { yield }
+  end
 
 end
 

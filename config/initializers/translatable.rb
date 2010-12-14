@@ -1,6 +1,48 @@
+module Translatable
+  extend ActiveSupport::Concern
+  
+  included do
+    class_attribute :translated_fields
+    class_attribute :lazy_translation
+  end
+  
+  module ClassMethods
+  
+    def translation_class(lang_id=nil)
+      lang_id ||= I18n.locale
+      return self if lang_id == :en
+      "::#{self.name}Translation#{lang_id.to_s.capitalize}".constantize
+    end
+
+    def translation_classes
+      Language.non_defaults.map do |lang| 
+        self.translation_class(lang.id)
+      end
+    end
+    
+    def translation_table(lang_id=nil)
+      self.translation_class(lang_id).table_name
+    end
+    
+    def with_lazy_translation(&block)
+      old_value = self.lazy_translation
+      self.lazy_translation = true
+      yield ensure self.lazy_translation = old_value
+    end
+  
+  end
+  
+  module InstanceMethods
+    
+  end
+
+end
+
 class ActiveRecord::Base
 
   def self.translate(fields)
+  
+    self.send :include, Translatable
   
     # Initialize fields
     fields = fields.clone
@@ -8,32 +50,13 @@ class ActiveRecord::Base
     search_fields = (fields[:index] || []).clone
     all_fields = (fields[:all] = translate_fields | search_fields).clone
     
+    self.translated_fields = fields
+    
     # Setup search index
     eval("self.index do
       #{search_fields.join('; ')}
     end") unless search_fields.empty?
     
-    cattr_accessor :translated_fields
-    self.translated_fields = fields
-  
-    # Create class getter for fields to be translated or searched and translation classes
-    (class << self; self; end).instance_eval do
-      define_method 'translation_class' do |*lang_id|
-        lang_id = lang_id.flatten.first || I18n.locale
-        "::#{self.name}Translation#{lang_id.to_s.capitalize}".constantize
-      end
-      
-      define_method 'translation_table' do |*lang_id|
-        lang_id = lang_id.flatten.first || I18n.locale
-        return self.table_name if lang_id == :en
-        "::#{self.name}Translation#{lang_id.to_s.capitalize}".constantize.table_name
-      end
-      
-      define_method 'translation_classes' do
-        Language.non_defaults.map { |lang| self.translation_class(lang.id) }
-      end
-    end
-        
     # Create classes for translations
     Language.non_defaults.each do |lang|
       indxs = "
@@ -115,13 +138,26 @@ class ActiveRecord::Base
     end
     
     # Return translation instance
-    define_method 'translation' do |lang_id|
+    define_method 'translation' do |*lang_id|
+      lang_id = lang_id.flatten.first || I18n.locale
+      return self if lang_id == :en
       self.class.translation_class(lang_id).find_by_referenced_id(self.id)
     end
     
     # Return all translation instances
     define_method 'translations' do
       Language.non_defaults.map { |lang| self.translation(lang.id) }
+    end
+    
+    # Lazy translate
+    translate_fields.each do |field|
+      define_method field do
+        if self.class.lazy_translation && I18n.locale != :en
+          self.translation.send(field.intern) 
+        else 
+          read_attribute(field) 
+        end
+      end
     end
    
     # Create translation in all languages for new item
@@ -156,7 +192,7 @@ class ActiveRecord::Base
   def self.translated_classes
     # Load all models
     Dir.glob("#{Rails.root}/app/models/**/*.rb").each do |file|
-      eval(ActiveSupport::Inflector.camelize(file[file.rindex('/') + 1 .. -4]))
+      eval(ActiveSupport::Inflector.camelize(file[file.rindex('/') + 1 .. -4])) rescue nil
     end
     
     # Return models that have translations
