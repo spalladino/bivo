@@ -164,7 +164,7 @@ class Cause < ActiveRecord::Base
   def can_edit?
     [:inactive, :active, :raising_funds].include? self.status
   end
-  
+
   def can_edit_sensitive_data?(user)
     user && self.status == :inactive
   end
@@ -204,7 +204,7 @@ class Cause < ActiveRecord::Base
     end
 
     res = result.limit(1).first
-    
+
     if (from.nil? || to.nil?)
       res if res && res.votes_count > 0
     else
@@ -220,7 +220,8 @@ class Cause < ActiveRecord::Base
       most_voted_causes << cause unless cause.nil?
     end
 
-    most_voted_causes
+    most_voted_causes.first(3)
+  #TODO:FIRST 3?
   end
 
 
@@ -232,7 +233,8 @@ class Cause < ActiveRecord::Base
     result = result.where("account_movements.created_at BETWEEN ? AND ?", from, to)
     result = result.order("cause_category_id ASC, funds_raised_in_period DESC")
     result = result.group(cause_columns)
-    result.all
+    result.first(3)
+#TODO: first 3?
   end
 
 
