@@ -1,12 +1,41 @@
-<div style="text-align: center">
-	
-<%= link_to _("About Bivo"), about_url %> | 
-<%= link_to _("How does it works"), how_it_works_url %> |
-<%= link_to _("Charities"), charities_url %> |
-<%= link_to _("Shops"), shops_url %> |
-<%= link_to _("Other Fundraisers"), fund_raisers_url %>
-<br/>
-&copy; 2010 Bivo. All rights reserved. Bivo is a Community Interest Company registered in England.
-
+<div class="infootM">
+  <div class="infootIn">
+    <ul>
+      <li>
+        <strong><%=_("About Bivo")%></strong>	
+        <%= link_to _("Who We Are?"), about_url %>
+        <%= link_to _("How Does it Work?"), how_it_works_url %>
+        <%= link_to _("FAQ"), "#" %>
+        <%= link_to _("Our Team"), "#" %>
+        <%= link_to _("Charities We Help"), charities_url %>
+        <%= link_to _("Statistics"), '#' %>
+        <%= link_to _("Contact Us"), '#' %>
+      </li>
+      <li>
+        <strong><%=_("Bivo Ideas")%></strong>
+        <%= link_to _("Fund Raisers"), fund_raisers_url %>
+        <%= link_to _("Social Initiatives"), '#' %>
+      </li>
+      <li>
+        <strong><%=_("Help Bivo")%></strong>
+        <%= link_to _("Spread the Word"), '#' %>
+        <%= link_to _("Volunteer"), '#' %>
+        <%= link_to _("Send Feedback"), '#' %>
+      </li>
+      <li>
+        <strong><%=_("International")%></strong>
+      </li>
+<!--<%= link_to _("Shops"), shops_url %>-->
+      <li class="infootcopyM noBg">
+        <span class="infootcopy">
+          &copy; <%=_("2010 Bivo. All Rights Reserved.")%>
+          <br />
+          <%=_("Bivo is a Community Interest Company")%>
+          <br />
+          <%=_("Registered in England")%>
+        </span>
+      </li>
+    </ul>
+  </div>
 </div>
 
