@@ -6,26 +6,32 @@
 	});
 <% end %>
 
-<div id="user_nav">
-  	<%= link_to _("Home"), root_path %> | 
-	<%= link_to _("Vote Causes"), causes_url %> | 
-	<%= link_to _("Dashboard"), dashboard_url %> | 
-	<%= link_to _("About Bivo"), about_url %> | 
-    <% if user_signed_in? %>
-      <%= _("Signed in as") %> <%= current_user.email %> |
-          <% if (current_user.type == "Charity") %>
-            <%= link_to _("Settings"), edit_user_registration_path %>
-          <% elsif (current_user.type == "PersonalUser") %>
-            <%= link_to _("Settings"), edit_user_registration_path %>
-          <% elsif (current_user.type == "Admin") %>
-            <%= link_to _("Admin Tools"), admin_tools_path %>
-          <% end %>
-		| <%= link_to _("Logout"), destroy_user_session_path %>
-    <% else %>
-	  <%= link_to _("Login"), new_user_session_path %>
-    <% end %>
-    | <%= _('Language:') %>
+<div id="user_nav" class="innheaderFull">
+  <div class="main">
+    <a href="#" class="logo"><%= image_tag "logo.png", :size => "211x77", :alt => "Bivo", :title => "Bivo" %></a>
+    <div class="topDrop">
   	<%= form_tag(change_language_path, :method => "get", :id => "nav_form", :class => "inline") do %>
     	<%= select_tag :language, options_for_select(languages.collect { |l| [l.name, l.id] }, language.id ) %>
   	<% end %>
+    </div><br class="spacer" />
+    <ul class="nav">
+  	<li><%= link_to _("Home"), root_path %></li><li class="navPipe"><%= image_tag "navPipe.png", :size => "2x19"%></li>
+	<li><%= link_to _("Vote Causes"), causes_url %></li><li class="navPipe"><%= image_tag "navPipe.png", :size => "2x19"%></li>
+	<li><%= link_to _("Dashboard"), dashboard_url %><li class="navPipe"><%= image_tag "navPipe.png", :size => "2x19"%></li>
+	<li><%= link_to _("About Bivo"), about_url %><li class="navPipe"><%= image_tag "navPipe.png", :size => "2x19"%></li>
+          <% if user_signed_in? %>
+      	    <li><%= _("Signed in as") %> <%= current_user.email %><li class="navPipe"><%= image_tag "navPipe.png", :size => "2x19"%></li>
+            <% if (current_user.type == "Charity") %>
+              <li><%= link_to _("Settings"), edit_user_registration_path %></li>
+            <% elsif (current_user.type == "PersonalUser") %>
+              <li><%= link_to _("Settings"), edit_user_registration_path %></li>
+            <% elsif (current_user.type == "Admin") %>
+              <li><%= link_to _("Admin Tools"), admin_tools_path %></li>
+          <% end %>
+	      <li class="navPipe"><%= image_tag "navPipe.png", :size => "2x19"%></li><li><%= link_to _("Logout"), destroy_user_session_path %></li>
+          <% else %>
+	    <li><%= link_to _("Login"), new_user_session_path %></li><br class="spacer" />
+          <% end %>
+    </ul>
+  </div>
 </div>

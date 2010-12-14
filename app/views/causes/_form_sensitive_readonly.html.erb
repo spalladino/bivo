@@ -1,0 +1,11 @@
+<%= f.label _("Cause Name")%>
+<%= @cause.name %><br/>
+
+<%= f.label _("Short Url")%><br/>
+<%= link_to(url_for(url_cause(@cause).merge({ :only_path => false })), url_cause(@cause)) %><br/>
+
+<%= f.label _('Category')%><br/>
+<%= @cause.cause_category.name %><br/>
+
+<%= f.label _('Funds needed')%><br/>
+<%= @cause.funds_needed %><br/>
