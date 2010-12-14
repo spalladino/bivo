@@ -1,25 +1,7 @@
 <% content_for(:js) do %>
 
-  $(function() {
-    $('.watermark').each(function(){ activateWatermark($(this)); });
-	});
+	$.updnWatermark.attachAll({ cssClass: "watermark" });
 
-  function activateWatermark(element) {
-    var text = element.attr('title');
-	  element.addClass("watermarkOn").val(text);
-
-	  element.focus(function() {
-		  $(this).filter(function() {
-			  return $(this).val() == "" || $(this).val() == text;
-	      }).removeClass("watermarkOn").val("");
-	  });
-
-	  element.blur(function() {
-		  $(this).filter(function() {
-			  return $(this).val() == "";
-	      }).addClass("watermarkOn").val(text);
-	  });
-  }
 <% end %>
 
 

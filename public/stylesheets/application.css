@@ -55,6 +55,7 @@ form.inline {
 	height: 26px;
 }
 
+
 .gallery .thumbnails img { width: 60px; height: 45px; cursor: pointer; border: 1px solid transparent; }
 .gallery .thumbnails .current { border: 1px solid red; }
 .gallery .view { width: 425px; height: 349px; }
@@ -62,3 +63,4 @@ form.inline {
 .gallery .thumbnails { list-style-type: none; padding: 0px; }
 .gallery .thumbnails li, .gallery .thumbnails li div, .gallery .thumbnails li div form { display: inline-block; }
 .gallery .thumbnails li { text-align: center; }
+

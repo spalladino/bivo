@@ -1,0 +1,27 @@
+/* watermark positioning container */
+.updnWatermark
+{
+	position: relative;	/* positioning container */
+	width: 0;
+	height: 1.25em;	/* must specify height for consistent vertical alignment */
+	vertical-align: middle;
+}
+/* IE7/6 hasLayout hack */
+.updnWatermark
+{
+	*zoom: 1;
+}
+
+/* watermark label styling */
+.updnWatermark label
+{
+	position: absolute;
+	left: 0;
+	top: 0;
+	white-space: nowrap;
+	color: #999;
+	padding-left: 4px;
+	height: 1.25em;	/* must specify height for consistent vertical alignment */
+	vertical-align: middle;
+}
+
