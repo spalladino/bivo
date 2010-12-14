@@ -345,6 +345,26 @@ end
   end
 
   #LIST-filter
+  test "should translate category in index" do
+
+    categ = ShopCategory.make_translated :name => 'books', :translations => {:es => { :name => 'libros' } }
+    other = ShopCategory.make
+    
+    Shop.make_many 3, :categories => [categ]
+    Shop.make_many 2, :categories => [other]
+
+    set_locale :es
+
+    get :index, :category_field => categ.id
+
+    assert_not_nil assigns(:shops)
+    assert_equal 3, assigns(:shops).size
+
+    assert_not_nil assigns(:category)
+    assert_select "a[href='javascript:filterByCategory(#{categ.id})']", 'libros'
+  end
+  
+  #LIST-filter
   test "shouldnt get inactive shops in list if not admin" do
 
     Shop.make_many 3, :status => :inactive
@@ -369,6 +389,18 @@ end
     assert_equal 6, assigns(:shops).size
 
   end
+  
+  #LIST-filter-localized
+  test "should list shops using current locale in index" do
+    s = Shop.make_translated :description => "description", :translations => {:es => {:description => "descripcion"}}
+    
+    set_locale :es
+    get :index
+    
+    assert_not_nil assigns(:shops)
+    assert_equal "descripcion", assigns(:shops).first.description
+  end
+
 
   #LIST-search
   test "shouldnt get inactive shops in search" do
@@ -381,8 +413,8 @@ end
     assert_equal 3, assigns(:shops).size
   end
 
-  #LIST-localized
-  test "should list shops using current locale" do
+  #LIST-search-localized
+  test "should list shops using current locale in search" do
     s = Shop.make_translated :description => "description", :translations => {:es => {:description => "descripcion"}}
     
     set_locale :es

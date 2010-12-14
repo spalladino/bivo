@@ -143,8 +143,16 @@ class Shop < ActiveRecord::Base
     self.with_exclusive_scope {self.scoped}
   end
 
+  def self.all_translated_with_inactives()
+    self.with_exclusive_scope {self.translated}
+  end
+
   def self.find_with_inactives(id)
     self.all_with_inactives.find(id)
+  end
+  
+  def self.find_translated_with_inactives(id)
+    self.all_translated_with_inactives.find(id)
   end
 
 end
