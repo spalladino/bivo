@@ -1,26 +1,42 @@
+<% content_for(:js) do %>
+
+  $(function() {
+    $('.watermark').each(function(){ activateWatermark($(this)); });
+	});
+
+  function activateWatermark(element) {
+    var text = element.attr('title');
+	  element.addClass("watermarkOn").val(text);
+
+	  element.focus(function() {
+		  $(this).filter(function() {
+			  return $(this).val() == "" || $(this).val() == text;
+	      }).removeClass("watermarkOn").val("");
+	  });
+
+	  element.blur(function() {
+		  $(this).filter(function() {
+			  return $(this).val() == "";
+	      }).addClass("watermarkOn").val(text);
+	  });
+  }
+<% end %>
 
 
 
-
-
-
-
-
-
-<!--***********************************************Body-start*****************************************-->
 <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
 
   <div class="inbodyM">
 	  <div class="bodyInner logM">
       	<div class="logL">
-          	<h2>Login</h2>
+          	<h2><%=_("Login")%></h2>
 
-            <%= f.text_field :email,:value=>"Email :", :onfocus=>"if(value=='Email :') value='';",:onblur=>"if(value=='') value='Email :';",:class=>"logfil" %></p>
+            <%= f.text_field :email,:title=>_('Email :'),:class=>"logfil watermark" %></p>
 
-             <div id="pass_fld_1"> <%= f.password_field :password,:class=>"logfil"%></div>
-
+             <div id="pass_fld_1"> <%= f.password_field :password, :title=>_("Password :"),:class=>"logfil watermark"%></div>
+ <br class="spacer" />
             <% if devise_mapping.rememberable? -%>
-              <%= f.check_box :remember_me,:class=>"logchk" %> <%= f.label :remember_me,_("Remember Me"),:class=>"logchkTxt" %>
+             <p> <%= f.check_box :remember_me,:class=>"logchk" %><%= f.label :remember_me,_("Remember Me"),:class=>"logchkTxt" %></p>
               <br class="spacer" />
             <% end -%>
 
@@ -38,17 +54,15 @@
              	</div>
           <p></p>
           <%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
-              <%= link_to "Forgot your password?", new_password_path(resource_name),:class =>"clickTxt" %>
+              <%= link_to _("Forgot your password?"), new_password_path(resource_name),:class =>"clickTxt" %>
 	        <% end -%>
 
 
               <br class="spacer" />
           </div>
           <div class="logR">
-          	<h2>Don't have an account ?</h2>
-              <p class="clickTxt">Click below to create an account</p>
-              <!--<input type="button" name="register" id="register" value="Register" class="regisBtn" />-->
-
+          	<h2><%=_("Don't have an account ?")%></h2>
+              <p class="clickTxt"><%=_("Click below to create an account")%></p>
 
               <div class="buttonMainReg">
 				  <div class="logBtnSt"></div>
