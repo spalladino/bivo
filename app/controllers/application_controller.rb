@@ -98,8 +98,8 @@ class ApplicationController < ActionController::Base
   end
 
   def load_currencies
-    @currencies = Currency.all
-    @currency = Currency.all.first
+    @all_currencies = Currency.all
+    @current_currency = Currency.all.first
   end
 
   def mailer_set_url_options
