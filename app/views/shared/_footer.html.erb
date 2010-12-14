@@ -23,7 +23,8 @@
         <%= link_to _("Send Feedback"), '#' %>
       </li>
       <li>
-        <strong><%=_("International")%></strong>
+        <strong><%=_("International")%></strong><%@languages.each do |l| %>
+        <a href="#" onclick="$('#language').val('<%=l.id%>'); $('#language').change(); return false;"><%=l.name%></a><%end%>
       </li>
 <!--<%= link_to _("Shops"), shops_url %>-->
       <li class="infootcopyM noBg">
