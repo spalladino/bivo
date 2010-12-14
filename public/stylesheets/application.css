@@ -64,3 +64,28 @@ form.inline {
 .gallery .thumbnails li, .gallery .thumbnails li div, .gallery .thumbnails li div form { display: inline-block; }
 .gallery .thumbnails li { text-align: center; }
 
+.topnav{
+	height:74px;
+	position:absolute;
+	z-index:1000;
+	top:30px;
+  width: 100%;
+	font:bold 16px/54px Arial, Helvetica, sans-serif;
+}
+.topnav li{
+	float:right;
+}
+.topnav li a, .topnav li a.selected{
+	display:block;
+	width:101px;
+	height:74px;
+	padding:0 0 0 0;
+	color:#4b4a4a;
+	text-align:center;
+}
+.topnav li a:hover, .topnav li a.selected{
+	height:74px;
+	background:url(../images/navHo.png) 50% 0 no-repeat;
+	behavior:url(iepngfix.htc);
+}
+
