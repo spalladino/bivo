@@ -5,10 +5,10 @@
 		<h2><%= clazz.name%> <%=field.to_s%></h2>
 			<ul>
 				<% clazz.translation_pending(@t_language).each do |instance|%>
-					<%= form_for instance do |f| %>
-						<li><%= f.label field, instance.send(field)%>
-					    <%= f.text_field field %>
-					    <%= f.submit "Translate"%></li>
+					<%= form_tag({:action => "save_translation", :id => instance.id, :clazz => clazz.name, :t_field => field, :lang => @t_language}, {:remote => true}) do %>
+						<li><%= label_tag :translation, instance.send(field)%>
+					    <%= text_field_tag :translation %>
+					    <%= submit_tag "Translate"%></li>
 					  <% end %>		
 				<%end%>
 			</ul>

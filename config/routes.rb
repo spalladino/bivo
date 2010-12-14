@@ -47,6 +47,8 @@ Bivo::Application.routes.draw do
   
   get 'admin/language', :to => "admin#choose_language", :as => 'translation'
   get 'admin/translate', :to => "admin#translate"
+  
+  post 'admin/save_translation', :to => "admin#save_translation"
 
   #paths for handling eula
   get "eula", :to => "home#eula", :as => "eula"
