@@ -2,7 +2,7 @@
 
 <div class="inbodyM">
 	<div class="bodyInner">
-    	<div class="statGrT"><h2>Dashboard</h2></div>
+    	<div class="statGrT"><h2><%=_("Dashboard")%></h2></div>
         <div class="boxMain">
 
 
@@ -12,10 +12,10 @@
 
             <div class="dashBoxL">
 
-            	<div class="dashBoxLBox"><span class="dashBoxLNo"><%= number_to_currency(@funds_raised,:precision => 0) %></span><span class="dashBoxLTxt">funds raised</span></div>
+            	<div class="dashBoxLBox"><span class="dashBoxLNo"><%= number_to_currency(@funds_raised,:precision => 0) %></span><span class="dashBoxLTxt"><%=_("funds raised")%></span></div>
 
-               <div class="dashBoxLBox"><span class="dashBoxLNo"><%=number_with_delimiter  @transactions %></span><span class="dashBoxLTxt">transactions</span></div>
-               <div class="dashBoxLBox"><span class="dashBoxLNo"><%=number_with_delimiter  @fully_funded_causes %></span><span class="dashBoxLTxt">fully funded causes</span></div>
+               <div class="dashBoxLBox"><span class="dashBoxLNo"><%=number_with_delimiter  @transactions %></span><span class="dashBoxLTxt"><%=_("transactions")%></span></div>
+               <div class="dashBoxLBox"><span class="dashBoxLNo"><%=number_with_delimiter  @fully_funded_causes %></span><span class="dashBoxLTxt"><%=_("fully funded causes")%></span></div>
             </div>
 
         	<div class="dashBoxR">
@@ -35,8 +35,8 @@
 
 
                 <div class="dashBoxRin">
-                  <h3>Causes being funded</h3>
-                  <%= _("No causes with votes in the current period") if @causes_being_funded.empty? %>
+                  <h3><%=_("Causes being funded")%></h3>
+                  <p class="clickTxt"><%= _("No causes with votes in the current period") if @causes_being_funded.empty? %></p>
                   <div class="boxRIn">
                     <% @causes_being_funded.each do |cause| %>
                     	<div class="boxHu">
@@ -54,8 +54,9 @@
 
 
                 <div class="dashBoxRin">
-                	<h3>Most voted causes queued for funding</h3>
-                  <%= _("No causes in the current period") if @most_voted_causes.empty? %>
+                	<h3><%=_("Most voted causes queued for funding")%></h3>
+                  <p class="clickTxt"><%= _("No causes in the current period") if @most_voted_causes.empty? %></p>
+
                   <div class="boxRIn">
 
                   <% @most_voted_causes.each do |cause| %>
@@ -64,7 +65,7 @@
                             <p class="boxHuTxt boxHuTxt2"><%=cause.name%></p>
 
                             <p class="ghanaTxt"><%=cause.funds_needed%></p>
-                            <p class="ghanaTxt2">to be raised</p>
+                            <p class="ghanaTxt2"><%=_("to be raised")%></p>
                         </div>
                     <%end%>
                     <br class="spacer" />
