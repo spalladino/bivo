@@ -13,6 +13,9 @@
   	<%= form_tag(change_language_path, :method => "get", :id => "nav_form", :class => "inline") do %>
     	<%= select_tag :language, options_for_select(languages.collect { |l| [l.name, l.id] }, language.id ) %>
   	<% end %>
+  	<%= form_tag(change_currency_path, :method => "get", :id => "curr_form", :class => "inline") do %>
+    	<%= select_tag :currency, options_for_select(currencies.collect { |c| [c.name, c.id] }, currency.id ) %>
+  	<% end %>
     </div><br class="spacer" />
     <ul class="nav">
   	<li><%= link_to _("Home"), root_path %></li><li class="navPipe"><%= image_tag "navPipe.png", :size => "2x19"%></li>
