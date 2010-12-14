@@ -220,8 +220,8 @@ class Cause < ActiveRecord::Base
       most_voted_causes << cause unless cause.nil?
     end
 
-    most_voted_causes.first(3)
-  #TODO:FIRST 3?
+    most_voted_causes
+
   end
 
 
@@ -233,8 +233,8 @@ class Cause < ActiveRecord::Base
     result = result.where("account_movements.created_at BETWEEN ? AND ?", from, to)
     result = result.order("cause_category_id ASC, funds_raised_in_period DESC")
     result = result.group(cause_columns)
-    result.first(3)
-#TODO: first 3?
+    result.all
+
   end
 
 

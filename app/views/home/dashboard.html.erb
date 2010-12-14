@@ -1,38 +1,14 @@
-<h1>Dashboard</h1>
-
-<div id="filters">
-  <%= render 'choose_period' %>
-</div>
-
-
-
-<div id="causes_being_funded">
-	<h2><%= _("Causes being funded")%></h2>
-
-  <%= _("No causes with votes in the current period") if @causes_being_funded.empty? %>
-
-	<% @causes_being_funded.each do |cause| %>
-	  <%= cause.cause_category.name %>: <%= cause.name %>
-	  (<%= cause.funds_raised %> of <%= cause.funds_needed %>, <%= cause.funds_raised_in_period %> <%= _("in this period") %>)
-	<% end %>
-</div>
-
-<div id="most_voted_causes">
-  <h2><%= _("Most voted causes") %></h2>
-
-  <%= _("No causes in the current period") if @most_voted_causes.empty? %>
-
-  <% @most_voted_causes.each do |cause| %>
-    <%= cause.cause_category.name %>: <%= cause.name %> <br />
-  <% end %>
-</div>
 
 
 <div class="inbodyM">
 	<div class="bodyInner">
     	<div class="statGrT"><h2>Dashboard</h2></div>
         <div class="boxMain">
-        	<p class="genFilTxt dashFilTxt">Show this month</p><select class="genChoo dashChoo"><option></option><option></option></select><br class="spacer" />
+
+
+        <%= render 'choose_period' %>
+
+            <br class="spacer" />
 
             <div class="dashBoxL">
 
@@ -57,54 +33,41 @@
                     </div>
                 </div>
 
+
                 <div class="dashBoxRin">
-                	<h3>Causes being funded</h3>
-                    <div class="boxRIn">
+                  <h3>Causes being funded</h3>
+                  <%= _("No causes with votes in the current period") if @causes_being_funded.empty? %>
+                  <div class="boxRIn">
+                    <% @causes_being_funded.each do |cause| %>
                     	<div class="boxHu">
-                        	<h3>Human aid</h3>
-                            <p class="boxHuTxt">Help <strong>Haiti</strong></p>
-
-                            <div class="loadMain"><img src="images/loader.jpg" width="138" height="20" alt="" class="load" /><p class="loadTxt">52% of $5,058</p></div>
-                        </div>
-                        <div class="boxHu">
-                        	<h3 class="boxHuhead2">Animal welfare</h3>
-                            <p class="boxHuTxt">Help <strong>Haiti</strong></p>
-                            <div class="loadMain"><img src="images/loader.jpg" width="138" height="20" alt="" class="load" /><p class="loadTxt">52% of $5,058</p></div>
-
-                        </div>
-                        <div class="boxHu noMarg">
-                        	<h3 class="boxHuhead3">Environment</h3>
-                            <p class="boxHuTxt">Help <strong>Haiti</strong></p>
-                            <div class="loadMain"><img src="images/loader.jpg" width="138" height="20" alt="" class="load" /><p class="loadTxt">52% of $5,058</p></div>
-                        </div><br class="spacer" />
-                    </div>
+                        	<h3><%= cause.cause_category.name %></h3>
+                           <p class="boxHuTxt"><%= cause.name %></p>
+                           <div class="loadMain">
+                             <img src="images/loader.jpg" width="138" height="20" alt="" class="load" /><p class="loadTxt"><%= cause.funds_raised_in_period.to_i/cause.funds_needed*100 %>% of <%= cause.funds_needed %></p>
+                           </div>
+                      </div>
+                    <% end %>
+                    <br class="spacer" />
+                  </div>
 
                 </div>
 
+
                 <div class="dashBoxRin">
                 	<h3>Most voted causes queued for funding</h3>
-					<div class="boxRIn">
-                    	<div class="boxHu">
-                        	<h3>Human aid</h3>
-                            <p class="boxHuTxt boxHuTxt2">Send food to <strong>Ghana</strong></p>
+                  <%= _("No causes in the current period") if @most_voted_causes.empty? %>
+                  <div class="boxRIn">
 
-                            <p class="ghanaTxt">$1,344</p>
+                  <% @most_voted_causes.each do |cause| %>
+                      <div class="boxHu">
+                        	<h3><%=cause.cause_category.name%></h3>
+                            <p class="boxHuTxt boxHuTxt2"><%=cause.name%></p>
+
+                            <p class="ghanaTxt"><%=cause.funds_needed%></p>
                             <p class="ghanaTxt2">to be raised</p>
                         </div>
-                        <div class="boxHu">
-                        	<h3>Human aid</h3>
-                            <p class="boxHuTxt boxHuTxt2">Send food to <strong>Ghana</strong></p>
-
-                            <p class="ghanaTxt">$1,344</p>
-                            <p class="ghanaTxt2">to be raised</p>
-                        </div>
-                        <div class="boxHu noMarg">
-                        	<h3>Human aid</h3>
-                            <p class="boxHuTxt boxHuTxt2">Send food to <strong>Ghana</strong></p>
-
-                            <p class="ghanaTxt">$1,344</p>
-                            <p class="ghanaTxt2">to be raised</p>
-                        </div><br class="spacer" />
+                    <%end%>
+                    <br class="spacer" />
                     </div>
                 </div>
 
