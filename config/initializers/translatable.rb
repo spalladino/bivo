@@ -4,6 +4,7 @@ module Translatable
   included do
     class_attribute :translated_fields
     class_attribute :lazy_translation
+    class_attribute :lazy_translation_language
   end
   
   module ClassMethods
@@ -24,9 +25,10 @@ module Translatable
       self.translation_class(lang_id).table_name
     end
     
-    def with_lazy_translation(&block)
+    def with_lazy_translation(lang_id=nil, &block)
       old_value = self.lazy_translation
       self.lazy_translation = true
+      self.lazy_translation_language = lang_id
       yield ensure self.lazy_translation = old_value
     end
   
@@ -151,8 +153,9 @@ class ActiveRecord::Base
     # Lazy translate
     translate_fields.each do |field|
       define_method field do
-        if self.class.lazy_translation && I18n.locale != :en
-          self.translation.send(field.intern) 
+        locale = self.class.lazy_translation_language || I18n.locale
+        if self.class.lazy_translation && locale != :en
+          self.translation(locale).send(field.intern) 
         else 
           read_attribute(field) 
         end

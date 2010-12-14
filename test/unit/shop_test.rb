@@ -41,12 +41,23 @@ class ShopTest < ActiveSupport::TestCase
     assert_equal 3, s.categories.count
   end
   
-  test "shop description should be translated" do
+  test "shop description should be translated with scope" do
     shop = Shop.make :description => 'Description'
     shop.save_translation :es, :description => 'Descripcion'
     
     assert_equal "Description", Shop.find_by_id(shop.id).description
     assert_equal "Descripcion", Shop.translated(:es).find(shop.id).description
+  end
+  
+  test "shop description should be translated lazily" do
+    shop = Shop.make :description => 'Description'
+    shop.save_translation :es, :description => 'Descripcion'
+    
+    assert_equal "Description", Shop.find_by_id(shop.id).description
+    
+    Shop.with_lazy_translation(:es) do
+      assert_equal "Descripcion", Shop.find(shop.id).description
+    end
   end
   
   test "new shop description must be marked as pending" do

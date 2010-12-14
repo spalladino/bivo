@@ -34,7 +34,7 @@ class ShopsController < ApplicationController
       @shops = if admin_is_logged_in then @category.shops.all_translated_with_inactives else @category.shops.translated end
       @path = @category.ancestors
     else
-      @shops = if admin_is_logged_in then Shop.translated else Shop.all_translated_with_inactives end
+      @shops = if admin_is_logged_in then Shop.all_translated_with_inactives else Shop.translated end
     end
     # Set pagination
     @per_page = (params[:per_page] || 20).to_i
