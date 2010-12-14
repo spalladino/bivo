@@ -28,7 +28,7 @@
 
 <%= yield %>
 
-<%= render 'shared/footer' %>
+<%= render 'shared/footer', :locals => { :languages => @languages } %>
 
 </body>
 </html>
