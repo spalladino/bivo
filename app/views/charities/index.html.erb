@@ -12,46 +12,40 @@
 
 <% title "Charities" %>
 
-<h2>Filters</h2>
-
-<div id="filters">
-	<%= form_tag charities_path, :method => :get, :id => "filter_form" do %>
-		<table cellspacing="5">
-			<tr>
-				<td><%= _("Categories: ") %></td>
-				<td>
-					<% @categories.each do |category| %>
-						<%= link_to "#{category.name} (#{category.charities_count})", category_filter_url(category)%>
-					<% end%>
-				</td>
-			<tr>
-				<td><%= _('Filter by region') %></td>
-				<td><%= select_tag :region, options_from_collection_for_select(@regions, 'id', 'name', @region), {:include_blank => _('All countries')}%></td>
-			</tr>
-			<tr>
-				<td><%= _("Show per page")%></td>
-				<td><%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page)%></td>
-			</tr>
-			<tr>
-				<td><%= _('Sort by') %></td>
-				<td><%= select_tag :sorting, options_for_select(@sortings, @sorting) %></td>
-			</tr>
-			<tr>
-				<td><%= _('Filter by') %></td>
-				<td><%= text_field_tag :name, @name, :id => 'name_filter' %> <%= link_to_function(_('clear'), "$('#name_filter').val('').change();") if @name %></td>
-			</tr>
-		</table>
-		<p>
-			<%= submit_tag _('Search'), :disable_with => _('Searching...') %>
-		</p>
-	<% end %>
-</div>
-
-<br/>
-
-<h2>Charities</h2>
-
-<div id="charities">
-  <%= render 'charities' %>
-</div>
+<div class="inbodyM">
+  <div class="bodyInner">
+    <%= form_tag charities_path, :method => :get, :id => "filter_form" do %>
+      <div class="statGrT">
+        <h2>Charity List</h2>
+        <div id="filters" class="grNav">
+            <ul>
+					    <% @categories.each do |category| %>
+						    <li><%= link_to "#{category.name} (#{category.charities_count})", category_filter_url(category)%></li>
+                <li class="grPipe">|</li>
+					    <% end%>
+            </ul>
+        </div>
+      </div>
+      <div class="boxMain">
+     	  <div class="gnFilMain">
+			    <p class="genFilTxt"><%= _('Sort by') %></p>
+          <%= select_tag :sorting, options_for_select(@sortings, @sorting), {:class => 'genChoo'} %>
+				  <p class="genFilTxt chariMidTxt"><%= _('Show region') %></p>
+				  <%= select_tag :region, options_from_collection_for_select(@regions, 'id', 'name', @region), {:include_blank => _('All countries'), :class => 'genChoo'}%>
+				  <p class="genFilTxt"><%= _('Filter by') %></p>
+				  <%= text_field_tag :name, @name, :id => 'name_filter', :class => "genChoo" %> <%= link_to_function(_('clear'), "$('#name_filter').val('').change();") if @name %>
+          <!-- PUT PAGE SELECTOR HERE-->
+        </div><!-- /gnFilMain -->
+        <div id="charities">
+          <%= render 'charities' %>
+        </div>
+        <div class="rgtFilmarg">
+          <%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page), :class => 'showChoo'%>
+          <p class="showTxt"><%= _("Show per page")%></p><br class="spacer" />
+        </div>            
+      </div><!-- /boxMain -->
+	  <% end %><!-- /form -->
+  </div><!-- /bodyInner -->
+  <div class="bodyBot"></div>
+</div><!-- /inbodyM -->
 
