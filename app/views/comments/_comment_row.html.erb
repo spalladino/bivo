@@ -25,7 +25,7 @@
       <%= render(:partial => 'comments/comment_row', :locals => {:comment => c, :entity => entity})%>
     <% end %>
 
-    <div class="add_form_container"> </div>
+    <div class="add_form_container" id="<%="container_" + comment.id.to_s%>"> </div>
 
 
   </div>

@@ -74,12 +74,15 @@
       <%= render(:partial => 'comments/comment_row', :locals => { :comment => comm, :entity => entity})%>
       <%end%>
 
-      <%=add_comment_button entity%>
-
-      <div class="add_form_container">
-      <%= render(:partial => 'comments/add_form', :locals => {:entity => entity, :action => action})%>
-      </div>
     </div>
-  </div>
+    <div class="comment_row">
+        <%=add_comment_button entity%>
+
+        <div class="add_form_container">
+        <%= render(:partial => 'comments/add_form', :locals => {:entity => entity, :action => action})%>
+        </div>
+      </div>
+
+    </div>
 </div>
 
