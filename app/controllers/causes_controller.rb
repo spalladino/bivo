@@ -21,7 +21,7 @@ class CausesController < ApplicationController
   end
 
   def index
-    @causes = Cause.all_with_deleted.limit(50)
+    @causes = Cause.includes(:country).includes(:charity)
     @categories = CauseCategory.sorted_by_causes_count
 
     def apply_filters(&block)
@@ -47,7 +47,13 @@ class CausesController < ApplicationController
 
     # Filter by status
     @status = params[:status] || :active
-    apply_filters { |c| c.where('causes.status = ?', @status) }
+    apply_filters do |c|
+      if @status != :completed
+        c.where('causes.status = ?', @status)
+      else
+        c.where('causes.status = ? OR causes.status = ?', :completed, :paid)
+      end
+    end
 
     # Filter by text
     @name = params[:name]
@@ -61,15 +67,19 @@ class CausesController < ApplicationController
     @causes = @causes.where('causes.cause_category_id = ?', @category.to_i) unless @category.blank?
 
     # Set pagination
+    
     @per_page = (params[:per_page] || 5).to_i
-    @causes = @causes.first(50).paginate(:per_page => @per_page, :page => params[:page])
+    if !current_user || !current_user.is_admin_user
+      @causes = @causes.first(50) if @status == :active
+    end
+    @causes = @causes.paginate(:per_page => @per_page, :page => params[:page])
 
     # Fill filters fields
     @regions = Country.all
     if !current_user || !current_user.is_admin_user
       @statuses = [:active, :raising_funds, :completed]
     else
-      @statuses = [:active, :raising_funds, :completed, :inactive, :deleted]
+      @statuses = [:active, :raising_funds, :completed, :inactive]
     end
     @categories = @categories.first(6).to_a.insert(0, all_category(all_causes_count))
     @page_sizes = [5,10,20,50]
@@ -106,7 +116,7 @@ class CausesController < ApplicationController
 
 
   def new
-    @cause = Cause.new
+    @cause = Cause.new :charity_id => params[:charity_id]
   end
 
   def edit
@@ -116,8 +126,12 @@ class CausesController < ApplicationController
   def create
     @cause = Cause.new params[:cause]
     @cause.funds_raised = 0
+    # charity is protected so we need to assign it manually
+    # depending if the user is admin or not, obey the charity_id param
     if !current_user.is_admin_user
       @cause.charity_id = current_user.id
+    else
+      @cause.charity_id = params[:cause][:charity_id]
     end  
     if !@cause.save
       render 'new'

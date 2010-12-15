@@ -564,8 +564,47 @@ class CausesControllerTest < ActionController::TestCase
     end
   end
   
+  test "some field are not editable on update" do
+    create_admin_and_sign_in
+    otherCharity = Charity.make
+    cause = Cause.make :status => :active
+    
+    post :update,
+      :id => cause.id,
+      :cause =>
+      {
+        :name => cause.name,
+        :description=> cause.description,
+        :city => cause.city,
+        :status => :raising_funds,
+        :charity_id => otherCharity.id,
+        :country_id => cause.country_id,
+        :cause_category_id=> cause.cause_category_id,
+        :url=> cause.url,
+        :funds_needed=> 270,
+        :funds_raised=> 200
+      }   
+      
+    cause.reload
+    assert_not_equal :raising_funds, cause.status
+    assert_not_equal otherCharity.id, cause.charity_id
+    assert_not_equal 270, cause.funds_needed
+    assert_not_equal 200, cause.funds_raised
+  end
+
+  #LIST-limit
+  test "should get completed or paid causes if filtering by completed" do
+    Cause.make :status => :completed
+    Cause.make :status => :paid
+
+    get :index, :status => :completed
+
+    assert_not_nil assigns(:causes)
+    assert_equal 2, assigns(:causes).size
+  end
+
   private
-  
+
   def assert_edit_sensitve_data
     assert_response :success
 

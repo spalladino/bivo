@@ -58,7 +58,7 @@ Cucumber::Rails::World.use_transactional_fixtures = false
 if defined?(ActiveRecord::Base)
   begin
     require 'database_cleaner'
-    DatabaseCleaner.strategy = :truncation
+    DatabaseCleaner.strategy = :deletion
   rescue LoadError => ignore_if_database_cleaner_not_present
   end
 end

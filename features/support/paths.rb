@@ -17,6 +17,15 @@ module NavigationHelpers
     when /search page/
       '/shop/search'
 
+    when /the logout page/
+      '/users/sign_out'
+
+    when /the login page/
+      '/users/sign_in'
+      
+    when /cause view (.*) page/
+      "/cause/#{$1}"
+
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

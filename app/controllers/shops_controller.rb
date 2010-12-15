@@ -29,7 +29,7 @@ class ShopsController < ApplicationController
 
   def index
     @is_shop_list = true
-    if params[:category_field]
+    if !params[:category_field].blank?
       @category = ShopCategory.find(params[:category_field])
       @shops = if admin_is_logged_in then @category.shops.all_translated_with_inactives else @category.shops.translated end
       @path = @category.ancestors
@@ -46,16 +46,21 @@ class ShopsController < ApplicationController
     @page_sizes = [5,10,20,50]
   end
 
+
   def search
   
     # Filter by text
     @search_word = params[:search_word]
+    
     if @search_word.blank?
       @shops = Shop.translated.includes(:countries)
     else
       term = @search_word.gsub(/\\/, '\&\&').gsub(/'/, "''")
-      @shops = Shop.includes(:countries).search_localized(term)
-      @shops = Shop.includes(:countries).search_translated(term) if @shops.count == 0
+      
+      # Return all shops that match the search and that have categories that match the search
+      categories = ShopCategory.search_translated(term)
+      categories_filter = "OR EXISTS (SELECT * FROM shop_categories_shops WHERE shop_categories_shops.shop_category_id IN (#{categories.map(&:id).join(',')}) AND shop_categories_shops.shop_id = shops.id)" if categories.count > 0
+      @shops = Shop.includes(:countries).search_translated(term, nil, categories_filter)
     end
 
     # Handle sorting options

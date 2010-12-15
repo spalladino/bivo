@@ -89,3 +89,11 @@ form.inline {
 	behavior:url(iepngfix.htc);
 }
 
+.updnWatermark label {
+	width:164px !important;
+	height:35px !important;	
+	font:normal 16px/17px Arial, Helvetica, sans-serif;
+	color:#4c4c4c !important;
+	padding-top: 10px;
+	margin-left: 8px;
+}

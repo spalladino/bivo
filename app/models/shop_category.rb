@@ -1,7 +1,8 @@
 class ShopCategory < ActiveRecord::Base
   default_scope :order => "lower(#{ShopCategory.table_name}.name)"
   
-  translate :translate => [:name]
+  translate :translate => [:name], \
+            :index => [:name]
   
   acts_as_tree :order => 'lower(name)'
   

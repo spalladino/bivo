@@ -2,6 +2,7 @@
 
   <%= render "shared/error_messages", :target => @cause %>
 
+  <%= f.hidden_field :charity_id %>
   <br/>  <br/>
 
   <%= render :partial => @partial_cause_edit, :locals => { :f => f }  %>

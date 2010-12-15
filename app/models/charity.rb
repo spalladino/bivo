@@ -138,10 +138,20 @@ class Charity < User
 
 
   def destroy
-    super
+    # destroy causes. without spreading the collected funds
+    # until all of the causes that belongs to the charity
+    # are destroyed 
+    cash_pool = Account.cash_pool_account
+    cash_pool.freeze_processing    
     self.causes.each do |cause|
       cause.destroy
     end
+    
+    # destroy self
+    super
+    
+    # spread the collected funds
+    cash_pool.process_balance
   end
 
   def comments_to_approve_count

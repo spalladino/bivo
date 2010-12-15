@@ -8,7 +8,7 @@
 
 <div id="user_nav" class="innheaderFull">
   <div class="main">
-    <a href="#" class="logo"><%= image_tag "logo.png", :size => "211x77", :alt => "Bivo", :title => "Bivo" %></a>
+	<%= link_to image_tag("logo.png", :size => "211x77", :alt => "Bivo", :title => "Bivo"), root_url %>
       <% if user_signed_in? %>
         <ul class="topnav">
           <% if (current_user.type == "Charity") %>

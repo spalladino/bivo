@@ -89,11 +89,6 @@ class AdminController < ApplicationController
     end
   end
 
-  def delete_user
-    User.delete(params["id"]) unless params["id"].blank?
-    redirect_to admin_user_manager_path
-  end
-
   def tools
     @pending_mails = PendingMail.count
   end

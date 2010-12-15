@@ -35,8 +35,8 @@ module CharitiesHelper
 
   # Redirects to the “Add Cause” page.
   def add_cause_button(charity)
-    if current_user && (current_user.is_admin_user ||  (current_user.is_charity_user && charity.id == current_user.id))
-      return content_tag :div, link_to(_("Add"), :controller => "causes", :action => "new", :id => charity.id)
+    if current_user && (current_user.is_admin_user || (current_user.is_charity_user && charity.id == current_user.id))
+      return content_tag :div, link_to(_("Add"), :controller => "causes", :action => "new", :charity_id => charity.id)
     end
   end
 

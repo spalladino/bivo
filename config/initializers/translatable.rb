@@ -9,6 +9,23 @@ module Translatable
   
   module ClassMethods
   
+    def create_translation_classes
+      base_table_name = self.table_name.singularize
+      base_class_name = self.name
+      Language.non_defaults.map do |lang| 
+        
+        c = Class.new(ActiveRecord::Base) do
+          set_table_name "#{base_table_name}_translations_#{lang.id.to_s}"
+          belongs_to base_table_name.to_sym
+          cattr_accessor :language
+        end
+        
+        c.language = lang
+        class_name = "#{base_class_name}Translation#{lang.id.to_s.capitalize}"
+        Kernel.const_set class_name, c
+      end
+    end
+  
     def translation_class(lang_id=nil)
       lang_id ||= I18n.locale
       return self if lang_id == :en
@@ -36,6 +53,67 @@ module Translatable
   
   module InstanceMethods
     
+    def create_translation(lang)
+      translation = self.class.translation_class(lang).new :referenced_id => self.id
+      fields = self.class.translated_fields[:all]
+      fields.each do |field|
+        translation.send "#{field}=".intern, read_attribute(field)
+      end
+      translation.save!
+      translation
+    end
+    
+    def save_translation(lang, args)
+      translation = self.class.translation_class(lang).find_by_referenced_id(self.id)
+      translation.update_attributes(args.merge(:pending => false))
+    end
+    
+    def translation (lang_id=nil)
+      lang_id ||= I18n.locale
+      return self if lang_id == :en
+      self.class.translation_class(lang_id).find_by_referenced_id(self.id)
+    end
+    
+    def translations
+      Language.non_defaults.map { |lang| self.translation(lang.id) }
+    end
+    
+  end
+
+end
+
+module TranslatableSearch
+
+  extend ActiveSupport::Concern
+
+  included do
+    fields = self.translated_fields[:index]
+    self.index do
+      fields.each do |field|
+        self.send field
+      end
+    end
+    
+    self.translation_classes.each do |clazz|
+      clazz.index(clazz.language.id, clazz.language.english_name) do
+        fields.each do |field|
+          send field
+        end
+      end
+      
+      clazz.index(nil, 'english') do
+        fields.each do |field|
+          send field
+        end
+      end
+    end
+    
+  end
+  
+  module ClassMethods
+  end
+
+  module InstanceMethods
   end
 
 end
@@ -45,7 +123,7 @@ class ActiveRecord::Base
   def self.translate(fields)
   
     self.send :include, Translatable
-  
+    
     # Initialize fields
     fields = fields.clone
     translate_fields = (fields[:translate] || []).clone
@@ -53,46 +131,10 @@ class ActiveRecord::Base
     all_fields = (fields[:all] = translate_fields | search_fields).clone
     
     self.translated_fields = fields
+    self.create_translation_classes
     
-    # Setup search index
-    eval("self.index do
-      #{search_fields.join('; ')}
-    end") unless search_fields.empty?
+    self.send(:include, TranslatableSearch) if fields[:index]
     
-    # Create classes for translations
-    Language.non_defaults.each do |lang|
-      indxs = "
-          index('#{lang.id}', '#{lang.english_name}') do
-            #{search_fields.join("; ")}
-          end
-          
-          index(nil, 'english') do
-            #{search_fields.join("; ")}
-          end
-      "
-      
-      str = "
-        class ::#{self.name}Translation#{lang.id.to_s.capitalize} < ActiveRecord::Base
-          set_table_name '#{self.table_name.singularize}_translations_#{lang.id.to_s}'
-          belongs_to :#{self.table_name.singularize}
-          
-          #{indxs unless search_fields.empty?}
-                    
-          def self.create_for(referenced)
-            self.create :referenced_id => referenced.id, #{all_fields.map{|f| ':' + f.to_s + ' => referenced[:' + f.to_s + ']'}.join(', ')}
-          end
-          
-          def self.language
-            return '#{lang.id.to_s}'
-          end
-          
-          def language
-            return '#{lang.id.to_s}'
-          end
-        end"
-      eval(str)
-    end
-   
     # Create translated scope that overrides all of this class fields with their translated values    
     self.scope :translated, lambda { |*args|
       lang = args.flatten.first || I18n.locale
@@ -110,44 +152,42 @@ class ActiveRecord::Base
     }
     
     # Search translated fields using english and localized dictionary
+    # Most of the code duplicated from texticle gem :(
+    # Arguments: 
+    # - term
+    # - language (optional, default I18n.locale)
+    # - additional_filter (optional, extra filter added to where clause, use for OR conditions)
     unless search_fields.empty?
-      [[:search_translated, 1], [:search_localized, 0]].each do |scope_name, idx|
-        self.scope scope_name, lambda { |*args|
-          term = args.flatten.first
-          lang = args.flatten.second || I18n.locale
-          return self.search(term) if not Language.non_defaults.map(&:id).include? lang
-          
+      self.scope :search_translated, lambda { |*args|
+        term = args.flatten.first
+        lang = args.flatten.second || I18n.locale
+        additional_filter = args.flatten.third || ''
+        
+        term = term.scan(/"([^"]+)"|(\S+)/).flatten.compact.map { |lex| \
+          lex =~ /(.+)\*\s*$/ ? "'#{$1}':*" : "'#{lex}'" \
+        }.join(' & ') 
+
+        if Language.non_defaults.map(&:id).include?(lang)
+        
           table = "#{self.table_name.singularize}_translations_#{lang}"
-          index_name = self.translation_class(lang).full_text_indexes[idx].to_s
+          index_localized, index_english = self.translation_class(lang).full_text_indexes.map{|idx| idx.to_s}
           
-          term = term.scan(/"([^"]+)"|(\S+)/).flatten.compact.map { |lex| \
-            lex =~ /(.+)\*\s*$/ ? "'#{$1}':*" : "'#{lex}'"}.join(' & ') # Code duplicated from texticle gem :(
-          
-          fields = translate_fields.map{|f| "#{table}.#{f} AS #{f}"}.insert(0, "#{self.table_name}.*").push("ts_rank_cd((#{index_name}), to_tsquery(#{connection.quote(term)})) as rank").push("not #{table}.pending AS is_translated")
+          fields = translate_fields.map{|f| "#{table}.#{f} AS #{f}"}\
+              .insert(0, "#{self.table_name}.*")\
+              .push("(ts_rank_cd((#{index_localized}), to_tsquery(#{connection.quote(term)})) + ts_rank_cd((#{index_english}), to_tsquery(#{connection.quote(term)})))as rank")\
+              .push("not #{table}.pending AS is_translated")
           
           s = self.joins("LEFT JOIN #{table} ON #{table}.referenced_id = #{self.table_name}.id")
           s = s.select(fields.join(', '))
-          s = s.where("#{index_name} @@ to_tsquery(?)", term)
-        }
-      end
-    end
-    
-    # Save translation instance method
-    define_method 'save_translation' do |lang, args|
-      translation = self.class.translation_class(lang).find_by_referenced_id(self.id)
-      translation.update_attributes(args.merge(:pending => false))
-    end
-    
-    # Return translation instance
-    define_method 'translation' do |*lang_id|
-      lang_id = lang_id.flatten.first || I18n.locale
-      return self if lang_id == :en
-      self.class.translation_class(lang_id).find_by_referenced_id(self.id)
-    end
-    
-    # Return all translation instances
-    define_method 'translations' do
-      Language.non_defaults.map { |lang| self.translation(lang.id) }
+          s = s.where("((#{index_localized} @@ to_tsquery(?)) OR (#{index_english} @@ to_tsquery(?))) #{additional_filter}", term, term)
+
+        else
+          
+          index_name = full_text_indexes.first.to_s
+          s = self.select("#{self.table_name}.*, ts_rank_cd((#{index_name}), to_tsquery(#{connection.quote(term)})) as rank").where("#{index_name} @@ to_tsquery(?) #{additional_filter}", term)
+        
+        end
+      }
     end
     
     # Lazy translate
@@ -164,7 +204,9 @@ class ActiveRecord::Base
    
     # Create translation in all languages for new item
     after_create do |obj|
-      obj.class.translation_classes.each{|c| c.create_for(obj)}
+      Language.non_defaults.each do |lang|
+        obj.create_translation(lang.id)
+      end
     end
     
     # Mark translation as pending in all languages for updated item
