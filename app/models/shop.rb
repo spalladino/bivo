@@ -1,7 +1,8 @@
 require 'enumerated_attribute'
 
 class Shop < ActiveRecord::Base
-  translate :translate => [:description], :index => [:name, :description]
+  translate :translate => [:description], \
+            :index => [:name, :description, :url, :short_url]
 
   acts_as_commentable
 

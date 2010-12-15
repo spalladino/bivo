@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101210185639) do
+ActiveRecord::Schema.define(:version => 20101214204220) do
 
   create_table "account_movements", :force => true do |t|
     t.integer  "account_id"
@@ -182,6 +182,8 @@ ActiveRecord::Schema.define(:version => 20101210185639) do
     t.string  "description"
     t.integer "referenced_id"
     t.boolean "pending",       :default => true
+    t.string  "url"
+    t.string  "short_url"
   end
 
   create_table "shop_translations_fr", :force => true do |t|
@@ -189,6 +191,8 @@ ActiveRecord::Schema.define(:version => 20101210185639) do
     t.string  "description"
     t.integer "referenced_id"
     t.boolean "pending",       :default => true
+    t.string  "url"
+    t.string  "short_url"
   end
 
   create_table "shops", :force => true do |t|
@@ -201,11 +205,11 @@ ActiveRecord::Schema.define(:version => 20101210185639) do
     t.string   "affiliate_code"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "status"
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
+    t.string   "status"
     t.float    "comission_value"
     t.string   "comission_kind"
     t.string   "comission_details"
