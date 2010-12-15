@@ -22,15 +22,14 @@
     <%= render(:partial => 'comments/edit_form', :locals => {:comment => comment, :entity =>entity})%>
 
     <% children(comment).each do |c| %>
-    <%= render(:partial => 'comments/comment_row', :locals => {:comment => c, :entity => entity})%>
+      <%= render(:partial => 'comments/comment_row', :locals => {:comment => c, :entity => entity})%>
     <% end %>
-
-    <ul class="rpLink"><li><%=reply_comment_button comment.id, entity%></li><li class="rpPipe">|</li><li> <%=edit_comment_button comment.id, entity, comment.body%></li><li class="rpPipe">|</li><li><%=delete_comment_button comment.id, entity%></li></ul>
-
 
     <div class="add_form_container"> </div>
 
+
   </div>
+  <ul class="rpLink"><li><%=reply_comment_button comment.id, entity%></li><li class="rpPipe">|</li><li> <%=edit_comment_button comment.id, entity, comment.body%></li><li class="rpPipe">|</li><li><%=delete_comment_button comment.id, entity%></li></ul>
 
 </div> <!--    <div class="cvComBox"> -->
 <br class="spacer" />

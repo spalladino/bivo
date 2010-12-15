@@ -67,8 +67,9 @@
 
 <div id="comments" class="cvNews"><h2>Comments</h2></div>
 
-  <div class="cvNewsBox cvNewsBox2" id="comments_list" >
-    <div class="cvNewsBoxIn cvNewsBox2 flexcroll">
+<div class="cvNewsBox cvNewsBox2" >
+  <div class="cvNewsBoxIn cvNewsBox2 flexcroll">
+    <div id="comments_list">
       <% comments_roots_by_date(entity).each do |comm|%>
       <%= render(:partial => 'comments/comment_row', :locals => { :comment => comm, :entity => entity})%>
       <%end%>
@@ -76,9 +77,9 @@
       <%=add_comment_button entity%>
 
       <div class="add_form_container">
-        <%= render(:partial => 'comments/add_form', :locals => {:entity => entity, :action => action})%>
+      <%= render(:partial => 'comments/add_form', :locals => {:entity => entity, :action => action})%>
       </div>
-   </div>
-
+    </div>
+  </div>
 </div>
 
