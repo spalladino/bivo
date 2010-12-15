@@ -1,9 +1,8 @@
 <% content_for(:js) do %>
-
-	$.updnWatermark.attachAll({ cssClass: "watermark" });
-
+$(function(){
+	$('.watermark').updnWatermark();
+});
 <% end %>
-
 
 
 <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
@@ -35,12 +34,14 @@
                   <div class="logBtnEnFace"></div><br class="spacer" />
              	</div>
           <p></p>
+          <br class="spacer" />
+          <br class="spacer" />
           <%- if devise_mapping.recoverable? && controller_name != 'passwords' %>
-              <%= link_to _("Forgot your password?"), new_password_path(resource_name),:class =>"clickTxt" %>
-	        <% end -%>
+            <%= link_to _("Forgot your password?"), new_password_path(resource_name),:class =>"clickTxt" %>
+	      <% end -%>
+          <br class="spacer" />
 
 
-              <br class="spacer" />
           </div>
           <div class="logR">
           	<h2><%=_("Don't have an account ?")%></h2>

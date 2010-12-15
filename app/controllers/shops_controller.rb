@@ -29,7 +29,7 @@ class ShopsController < ApplicationController
 
   def index
     @is_shop_list = true
-    if params[:category_field]
+    if !params[:category_field].blank?
       @category = ShopCategory.find(params[:category_field])
       @shops = if admin_is_logged_in then @category.shops.all_translated_with_inactives else @category.shops.translated end
       @path = @category.ancestors

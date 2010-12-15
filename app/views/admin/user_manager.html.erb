@@ -26,7 +26,7 @@
     </tr>
   <% for user in @users %>
     <tr>
-      <td><%= link_to _("Delete"), admin_delete_user_path(user.id), :confirm => "are you sure you want to delete the user?", :method => :post %></td>
+      <td><%= link_to _("Delete"), { :action => "destroy", :controller => "registrations", :id => user.id }, :confirm => "are you sure you want to delete the user?", :method => :delete %></td>
       <td><%= user.name %></td>
       <td><%= user.type %></td>
       <td><%= format_date user.last_sign_in_at %></td>

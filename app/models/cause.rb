@@ -65,7 +65,7 @@ class Cause < ActiveRecord::Base
 
   before_validation :ensure_complete_when_funds_raised
 
-  attr_protected :status
+  attr_protected :status, :charity_id, :funds_raised
 
   validates_presence_of :charity
   validates_presence_of :country
@@ -185,7 +185,13 @@ class Cause < ActiveRecord::Base
     if can_delete?
       super
     else
+      transfer_funds = self.status != :paid      
       update_attribute :status, :deleted
+      
+      if transfer_funds
+        account = Account.cause_account self
+        Account.transfer account, Account.cash_pool_account, account.balance
+      end
     end
   end
 
@@ -220,8 +226,8 @@ class Cause < ActiveRecord::Base
       most_voted_causes << cause unless cause.nil?
     end
 
-    most_voted_causes.first(3)
-  #TODO:FIRST 3?
+    most_voted_causes
+
   end
 
 
@@ -233,8 +239,8 @@ class Cause < ActiveRecord::Base
     result = result.where("account_movements.created_at BETWEEN ? AND ?", from, to)
     result = result.order("cause_category_id ASC, funds_raised_in_period DESC")
     result = result.group(cause_columns)
-    result.first(3)
-#TODO: first 3?
+    result.all
+
   end
 
 

@@ -321,7 +321,9 @@ class RegistrationsControllerTest < ActionController::TestCase
     user = PersonalUser.make
     create_admin_and_sign_in
 
-    post :destroy, :id => user.id
+    assert_no_difference('User.with_deleted.count') do
+      post :destroy, :id => user.id
+    end
 
     user.reload
     assert user.destroyed?
@@ -333,7 +335,9 @@ class RegistrationsControllerTest < ActionController::TestCase
     user = Charity.make
     create_admin_and_sign_in
 
-    post :destroy, :id => user.id
+    assert_no_difference('User.with_deleted.count') do
+      post :destroy, :id => user.id
+    end
 
     user.reload
     assert user.destroyed?
@@ -351,8 +355,10 @@ class RegistrationsControllerTest < ActionController::TestCase
     Cause.make(:charity => user,:status => :deleted)
     create_admin_and_sign_in
 
-    post :destroy, :id => user.id
-
+    assert_no_difference('User.with_deleted.count') do
+      post :destroy, :id => user.id
+    end
+    
     user.reload
     assert user.destroyed?
     # TODO test cascade delete on causes

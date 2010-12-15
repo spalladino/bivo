@@ -1,47 +1,5 @@
 <%= inactive_shop_notification @shop %>
 
- <p>
-  <%= link_to _("Shop Home"), shop_home_path(@shop.short_url)%> <br /> <br />
- </p>
-
-
-<p>
-    <b><%=_('Name:')%></b>
-    <%= @shop.name %>
-</p>
-<p>
-    <b><%=_('Short_Url')%>:</b>
-    <%= @shop.short_url %>
-</p>
-<p>
-    <b><%=_('Shop at:')%></b> <a href= "<%=@shop.url %>"> <%=@shop.url %></a>
-</p>
-<p>
-	<b><%=_('Categories:')%></b>
-	<%= @shop.categories.map(&:name).to_sentence %>
-</p>
-<p>
-    <b><%=_('Description:')%></b>
-    <%= @shop.description %>
-</p>
-
-<p>
-    <b><%=_('Comission')%>:</b>
-    <%= @shop.comission_value%><%if @shop.comission_kind == :percentage%>%<% end%> <%=_("will be donated for your purchase")%>
-
-</p>
-<p>
-<b><%=_('Comission details')%>:</b>
-  <%= @shop.comission_details%>
-</p>
-<div>
-
-  <%= @shop.incomes_in_period(1.month.ago, Date.today)%>
-  <b><%=_('Raised this month')%></b>
-</div>
-<p>
-  <%= image_tag @shop.image.url(:small) if @shop.image_file_name %>
-</p>
 
 
 <br/>
@@ -63,5 +21,132 @@
 
 <div id="comments">
   <%= comments @shop %>
+</div>
+
+
+
+
+<div class="inbodyM">
+	<div class="bodyInner">
+
+    	<div class="statGrT"><h2><%= @shop.name %></h2></div>
+        <div class="boxMain">
+            <div class="cauVMain">
+            	<div class="shopVL">
+            	  <div class="cauVLpic shopVLpic"><%= image_tag @shop.image.url if @shop.image_file_name %></div>
+              	</div>
+
+                <div class="chariMid shopVMid">
+
+                   <p class="shopMidTxt"><strong>Website:</strong> <a href= "<%=@shop.url %>"> <%=@shop.url %></a><br /> <%= @shop.description %></p>
+
+
+                   <p class="shopMidTxt"><strong>Affiliate program details:</strong>
+                    <%= @shop.comission_details%>
+                   </p>
+
+
+                   <p class="shopMidTxt"><strong>Categories:</strong>
+                    <%= @shop.categories.map(&:name).to_sentence %>
+                    </p>
+
+
+
+
+
+                   <p class="shopMidTxt"><strong>Keywords:</strong> </p>
+                </div>
+                <div class="shopListBoxRi">
+
+                	<div class="shopListGr"><span class="shopBoxNo"><%= @shop.comission_value%><%if @shop.comission_kind == :percentage%>%<% end%></span><span class="shopBoxTxt"> <%=_("of your purchase will be donated")%></span></div>
+
+					<div class="shopListGr"><span class="shopBoxNo shopBoxNo2"><%= @shop.incomes_in_period(1.month.ago, Date.today)%></span><span class="shopBoxTxt">raised this month</span></div>
+
+                    <div class="buttonMainVote29">
+						<div class="buttonSideRec recBtnStS"></div>
+                		<%= link_to(_("Shop at") + @shop.name,shop_home_path(@shop.short_url),:class=>"buttonMidRec")%>
+                		<div class="buttonSideRec recBtnEn"></div><br class="spacer" />
+           			</div>
+
+                </div><br class="spacer" />
+
+
+          	</div>
+
+            <div class="cvNews"><h2>Affiliate Program Performance</h2></div>
+            <div class="cvNewsBox chriCABox">
+            	<div class="cvNewsBoxIn chriCABox flexcroll">
+                    <ul class="statInmainT2">
+               		  <li class="chariTy">Period<a class="statInTLArr"><img src="images/tabBullet.png" width="7" height="4" alt="" /></a></li>
+                        <li class="chariPro noBord">Funds Raised</li><br class="spacer" />
+
+
+                 <%10.times do %>
+                  </ul>
+                    <ul class="statInmainT3">
+                    	<li class="chariTy">September 2010</li>
+                        <li class="chariPro noBord">$1000</li><br class="spacer" />
+                    </ul>
+                 <% end %>
+                </div>
+            </div>
+
+            <div class="cvNews"><h2>Comments</h2></div>
+
+            <div class="cvNewsBox cvNewsBox2">
+            	<div class="cvNewsBoxIn cvNewsBox2 flexcroll">
+                	<div class="cvComBox">
+                    	<div class="cvComBoxLPic"><img src="images/comPic.jpg" width="50" height="50" alt="" /></div>
+                        <div class="cvComBoxR">
+                        	<p class="cvComBoxRTxt"><strong>Sed nisi libero</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Post: 03:11:10</p>
+                            <p class="cvComBoxRTxt">Nec viverra nisl. Praesent felis sapien, suscipit vel volutpat sed, fermentum ut lacus. Maecenas nemi mi. Proin a purus quis mauris condimentum iaculis. Fusce ornare lacus nec nunc consequat imperdiet. Quisque nonisi libero, nec viverra nisl posuere elit.</p>
+
+
+                            <div class="cvComReply">
+                            	<div class="cvComBoxLPic cvComBoxLPic2"><img src="images/comPic2.jpg" width="50" height="50" alt="" /></div>
+                                <div class="cvReBoxR">
+                                	<p class="cvComBoxRTxt"><strong class="cvRplOr">Libero toyta</strong>    Post: 04:11:10</p>
+                                    <p class="cvComBoxRTxt">Sapien, suscipit vel volutpat sed, fermentum ut lacus. Maecenas nemi mi. Proin a purus quis mauris condimentum iaculis. Fusce ornare lacus nec nunc consequat imperdiet. Quisqnec viverra nisl posuere elit.</p>
+                                    <ul class="rpLink"><li><a href="#">Reply</a></li><li class="rpPipe">|</li><li><a href="#">Report</a></li><li class="rpPipe">|</li><li><a href="#">Delete</a></li></ul>
+
+                                </div>
+                            </div>
+
+                        </div><br class="spacer" />
+
+                        <a href="#" class="leav leav2">50</a><a href="#" class="leav">Leave a comment</a><br class="spacer" />
+
+                  </div>
+
+
+                  <div class="cvComBox">
+                    	<div class="cvComBoxLPic"><img src="images/comPic.jpg" width="50" height="50" alt="" /></div>
+
+                        <div class="cvComBoxR">
+                        	<p class="cvComBoxRTxt"><strong>Sed nisi libero</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Post: 03:11:10</p>
+                            <p class="cvComBoxRTxt">Nec viverra nisl. Praesent felis sapien, suscipit vel volutpat sed, fermentum ut lacus. Maecenas nemi mi. Proin a purus quis mauris condimentum iaculis. Fusce ornare lacus nec nunc consequat imperdiet. Quisque nonisi libero, nec viverra nisl posuere elit.</p>
+
+                            <div class="cvComReply">
+                            	<div class="cvComBoxLPic cvComBoxLPic2"><img src="images/comPic2.jpg" width="50" height="50" alt="" /></div>
+                                <div class="cvReBoxR">
+                                	<p class="cvComBoxRTxt"><strong class="cvRplOr">Libero toyta</strong>    Post: 04:11:10</p>
+
+                                    <p class="cvComBoxRTxt">Sapien, suscipit vel volutpat sed, fermentum ut lacus. Maecenas nemi mi. Proin a purus quis mauris condimentum iaculis. Fusce ornare lacus nec nunc consequat imperdiet. Quisqnec viverra nisl posuere elit.</p>
+                                    <ul class="rpLink"><li><a href="#">Reply</a></li><li class="rpPipe">|</li><li><a href="#">Report</a></li><li class="rpPipe">|</li><li><a href="#">Delete</a></li></ul>
+                                </div>
+                            </div>
+
+                        </div><br class="spacer" />
+
+
+                        <a href="#" class="leav leav2">50</a><a href="#" class="leav">Leave a comment</a><br class="spacer" />
+
+                  </div>
+                </div>
+            </div>
+
+        </div>
+     </div>
+	 <div class="bodyBot"></div>
 </div>
 

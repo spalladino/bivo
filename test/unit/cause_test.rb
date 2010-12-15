@@ -182,5 +182,44 @@ class CauseTest < ActiveSupport::TestCase
      cause = Cause.make
      assert_nil Cause.most_voted_cause(cause.cause_category, 1.year.ago, 1.month.ago)
   end
+  
+  
+  [:raising_funds, :completed].each do |status|
+    test "should transfer funds to cash pool when deleteting from #{status}" do
+      cause = Cause.make :status => status, :funds_needed => 100
+      account = Account.cause_account cause    
+      
+      Account.transfer Account.make, account, 40.to_d
+      cause.reload
+      assert_equal 40, cause.funds_raised
+      
+      cause.destroy
+      cause.reload
+      
+      assert_movement 40, 40, Account.cash_pool_account.movements.first
+      assert_equal 0, cause.funds_raised
+    end
+  end
+  
+  test "should ont transfer funds to cash pool when deleteting paid cause" do
+    cause = Cause.make :status => :raising_funds, :funds_needed => 100
+    account = Account.cause_account cause
+    Account.transfer Account.make, account, 100.to_d    
+    cause.reload
+    cause.status = :paid
+    cause.save!
+    
+    assert_equal :paid, cause.status 
+    assert_equal 100, cause.funds_raised
+    
+    cause.destroy
+    cause.reload
+    account.reload
+    
+    assert_equal 0, Account.cash_pool_account.movements.count
+    assert_equal 100, cause.funds_raised
+    assert_equal 100, account.balance
+  end
+
 end
 
