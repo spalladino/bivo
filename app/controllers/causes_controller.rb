@@ -47,7 +47,13 @@ class CausesController < ApplicationController
 
     # Filter by status
     @status = params[:status] || :active
-    apply_filters { |c| c.where('causes.status = ?', @status) }
+    apply_filters do |c|
+      if @status != :completed
+        c.where('causes.status = ?', @status)
+      else
+        c.where('causes.status = ? OR causes.status = ?', :completed, :paid)
+      end
+    end
 
     # Filter by text
     @name = params[:name]

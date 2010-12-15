@@ -591,9 +591,20 @@ class CausesControllerTest < ActionController::TestCase
     assert_not_equal 270, cause.funds_needed
     assert_not_equal 200, cause.funds_raised
   end
-  
+
+  #LIST-limit
+  test "should get completed or paid causes if filtering by completed" do
+    Cause.make :status => :completed
+    Cause.make :status => :paid
+
+    get :index, :status => :completed
+
+    assert_not_nil assigns(:causes)
+    assert_equal 2, assigns(:causes).size
+  end
+
   private
-  
+
   def assert_edit_sensitve_data
     assert_response :success
 
