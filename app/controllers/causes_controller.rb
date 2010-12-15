@@ -116,7 +116,7 @@ class CausesController < ApplicationController
 
 
   def new
-    @cause = Cause.new
+    @cause = Cause.new :charity_id => params[:charity_id]
   end
 
   def edit
@@ -126,8 +126,12 @@ class CausesController < ApplicationController
   def create
     @cause = Cause.new params[:cause]
     @cause.funds_raised = 0
+    # charity is protected so we need to assign it manually
+    # depending if the user is admin or not, obey the charity_id param
     if !current_user.is_admin_user
       @cause.charity_id = current_user.id
+    else
+      @cause.charity_id = params[:cause][:charity_id]
     end  
     if !@cause.save
       render 'new'
