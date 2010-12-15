@@ -36,6 +36,21 @@ module Translatable
   
   module InstanceMethods
     
+    def save_translation(lang, args)
+      translation = self.class.translation_class(lang).find_by_referenced_id(self.id)
+      translation.update_attributes(args.merge(:pending => false))
+    end
+    
+    def translation (lang_id=nil)
+      lang_id ||= I18n.locale
+      return self if lang_id == :en
+      self.class.translation_class(lang_id).find_by_referenced_id(self.id)
+    end
+    
+    def translations
+      Language.non_defaults.map { |lang| self.translation(lang.id) }
+    end
+    
   end
 
 end
@@ -90,6 +105,7 @@ class ActiveRecord::Base
             return '#{lang.id.to_s}'
           end
         end"
+
       eval(str)
     end
    
@@ -110,44 +126,42 @@ class ActiveRecord::Base
     }
     
     # Search translated fields using english and localized dictionary
+    # Most of the code duplicated from texticle gem :(
+    # Arguments: 
+    # - term
+    # - language (optional, default I18n.locale)
+    # - additional_filter (optional, extra filter added to where clause, use for OR conditions)
     unless search_fields.empty?
-      [[:search_translated, 1], [:search_localized, 0]].each do |scope_name, idx|
-        self.scope scope_name, lambda { |*args|
-          term = args.flatten.first
-          lang = args.flatten.second || I18n.locale
-          return self.search(term) if not Language.non_defaults.map(&:id).include? lang
-          
+      self.scope :search_translated, lambda { |*args|
+        term = args.flatten.first
+        lang = args.flatten.second || I18n.locale
+        additional_filter = args.flatten.third || ''
+        
+        term = term.scan(/"([^"]+)"|(\S+)/).flatten.compact.map { |lex| \
+          lex =~ /(.+)\*\s*$/ ? "'#{$1}':*" : "'#{lex}'" \
+        }.join(' & ') 
+
+        if Language.non_defaults.map(&:id).include?(lang)
+        
           table = "#{self.table_name.singularize}_translations_#{lang}"
-          index_name = self.translation_class(lang).full_text_indexes[idx].to_s
+          index_localized, index_english = self.translation_class(lang).full_text_indexes.map{|idx| idx.to_s}
           
-          term = term.scan(/"([^"]+)"|(\S+)/).flatten.compact.map { |lex| \
-            lex =~ /(.+)\*\s*$/ ? "'#{$1}':*" : "'#{lex}'"}.join(' & ') # Code duplicated from texticle gem :(
-          
-          fields = translate_fields.map{|f| "#{table}.#{f} AS #{f}"}.insert(0, "#{self.table_name}.*").push("ts_rank_cd((#{index_name}), to_tsquery(#{connection.quote(term)})) as rank").push("not #{table}.pending AS is_translated")
+          fields = translate_fields.map{|f| "#{table}.#{f} AS #{f}"}\
+              .insert(0, "#{self.table_name}.*")\
+              .push("(ts_rank_cd((#{index_localized}), to_tsquery(#{connection.quote(term)})) + ts_rank_cd((#{index_english}), to_tsquery(#{connection.quote(term)})))as rank")\
+              .push("not #{table}.pending AS is_translated")
           
           s = self.joins("LEFT JOIN #{table} ON #{table}.referenced_id = #{self.table_name}.id")
           s = s.select(fields.join(', '))
-          s = s.where("#{index_name} @@ to_tsquery(?)", term)
-        }
-      end
-    end
-    
-    # Save translation instance method
-    define_method 'save_translation' do |lang, args|
-      translation = self.class.translation_class(lang).find_by_referenced_id(self.id)
-      translation.update_attributes(args.merge(:pending => false))
-    end
-    
-    # Return translation instance
-    define_method 'translation' do |*lang_id|
-      lang_id = lang_id.flatten.first || I18n.locale
-      return self if lang_id == :en
-      self.class.translation_class(lang_id).find_by_referenced_id(self.id)
-    end
-    
-    # Return all translation instances
-    define_method 'translations' do
-      Language.non_defaults.map { |lang| self.translation(lang.id) }
+          s = s.where("((#{index_localized} @@ to_tsquery(?)) OR (#{index_english} @@ to_tsquery(?))) #{additional_filter}", term, term)
+
+        else
+          
+          index_name = full_text_indexes.first.to_s
+          s = self.select("#{self.table_name}.*, ts_rank_cd((#{index_name}), to_tsquery(#{connection.quote(term)})) as rank").where("#{index_name} @@ to_tsquery(?) #{additional_filter}", term)
+        
+        end
+      }
     end
     
     # Lazy translate
