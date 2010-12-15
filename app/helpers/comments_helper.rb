@@ -21,9 +21,10 @@ module CommentsHelper
 
   def add_comment_button(entity)
     if rules(entity).can_add?(current_user)
-      return raw("<input type=\"button\" name = \"reply_or_add_button\" value=\"#{_("Add Comment")}\" onclick=\"showComments(this, null);\"/>")
+      return raw("<input type=\"button\" class = \"leav\" name = \"reply_or_add_button\" value=\"#{_("Add Comment")}\" onclick=\"showComments(this, null);\"/>")
     end
   end
+
 
   def save_comment_button(id)
     return raw("<input type=\"button\" id =\"save_button_#{id}\" class=\"nodisplay\" value=\"#{_("Save")}\" onclick=\"saveEdit(#{id})\"/>")

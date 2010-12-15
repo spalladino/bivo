@@ -1,6 +1,8 @@
+<% content_for(:head) do %>
+	<%= javascript_include_tag "flexcroll" %>
+<% end %>
+
 <%= inactive_shop_notification @shop %>
-
-
 
 <br/>
 <div id="delete_shop_button">
@@ -17,11 +19,6 @@
   <%= active_deactive_shop_button @shop %>
 </div>
 
-
-
-<div id="comments">
-  <%= comments @shop %>
-</div>
 
 
 
@@ -91,59 +88,11 @@
                 </div>
             </div>
 
-            <div class="cvNews"><h2>Comments</h2></div>
 
-            <div class="cvNewsBox cvNewsBox2">
-            	<div class="cvNewsBoxIn cvNewsBox2 flexcroll">
-                	<div class="cvComBox">
-                    	<div class="cvComBoxLPic"><img src="images/comPic.jpg" width="50" height="50" alt="" /></div>
-                        <div class="cvComBoxR">
-                        	<p class="cvComBoxRTxt"><strong>Sed nisi libero</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Post: 03:11:10</p>
-                            <p class="cvComBoxRTxt">Nec viverra nisl. Praesent felis sapien, suscipit vel volutpat sed, fermentum ut lacus. Maecenas nemi mi. Proin a purus quis mauris condimentum iaculis. Fusce ornare lacus nec nunc consequat imperdiet. Quisque nonisi libero, nec viverra nisl posuere elit.</p>
-
-
-                            <div class="cvComReply">
-                            	<div class="cvComBoxLPic cvComBoxLPic2"><img src="images/comPic2.jpg" width="50" height="50" alt="" /></div>
-                                <div class="cvReBoxR">
-                                	<p class="cvComBoxRTxt"><strong class="cvRplOr">Libero toyta</strong>    Post: 04:11:10</p>
-                                    <p class="cvComBoxRTxt">Sapien, suscipit vel volutpat sed, fermentum ut lacus. Maecenas nemi mi. Proin a purus quis mauris condimentum iaculis. Fusce ornare lacus nec nunc consequat imperdiet. Quisqnec viverra nisl posuere elit.</p>
-                                    <ul class="rpLink"><li><a href="#">Reply</a></li><li class="rpPipe">|</li><li><a href="#">Report</a></li><li class="rpPipe">|</li><li><a href="#">Delete</a></li></ul>
-
-                                </div>
-                            </div>
-
-                        </div><br class="spacer" />
-
-                        <a href="#" class="leav leav2">50</a><a href="#" class="leav">Leave a comment</a><br class="spacer" />
-
-                  </div>
-
-
-                  <div class="cvComBox">
-                    	<div class="cvComBoxLPic"><img src="images/comPic.jpg" width="50" height="50" alt="" /></div>
-
-                        <div class="cvComBoxR">
-                        	<p class="cvComBoxRTxt"><strong>Sed nisi libero</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Post: 03:11:10</p>
-                            <p class="cvComBoxRTxt">Nec viverra nisl. Praesent felis sapien, suscipit vel volutpat sed, fermentum ut lacus. Maecenas nemi mi. Proin a purus quis mauris condimentum iaculis. Fusce ornare lacus nec nunc consequat imperdiet. Quisque nonisi libero, nec viverra nisl posuere elit.</p>
-
-                            <div class="cvComReply">
-                            	<div class="cvComBoxLPic cvComBoxLPic2"><img src="images/comPic2.jpg" width="50" height="50" alt="" /></div>
-                                <div class="cvReBoxR">
-                                	<p class="cvComBoxRTxt"><strong class="cvRplOr">Libero toyta</strong>    Post: 04:11:10</p>
-
-                                    <p class="cvComBoxRTxt">Sapien, suscipit vel volutpat sed, fermentum ut lacus. Maecenas nemi mi. Proin a purus quis mauris condimentum iaculis. Fusce ornare lacus nec nunc consequat imperdiet. Quisqnec viverra nisl posuere elit.</p>
-                                    <ul class="rpLink"><li><a href="#">Reply</a></li><li class="rpPipe">|</li><li><a href="#">Report</a></li><li class="rpPipe">|</li><li><a href="#">Delete</a></li></ul>
-                                </div>
-                            </div>
-
-                        </div><br class="spacer" />
-
-
-                        <a href="#" class="leav leav2">50</a><a href="#" class="leav">Leave a comment</a><br class="spacer" />
-
-                  </div>
-                </div>
+            <div id="comments">
+              <%= comments @shop %>
             </div>
+
 
         </div>
      </div>

@@ -1,25 +1,37 @@
+<% if !comment.parent%>
+<div class="cvComBox comment_row" id="<%="row_" + comment.id.to_s%>">
+<% else %>
+<div class="cvComReply comment_row" id="<%="row_" + comment.id.to_s%>">
+<% end %>
 
-<div id="<%="row_" + comment.id.to_s%>" class="comment_row">
-  <div>
-    <span>
-       <b><%=_("by")%></b> <%=owner_of(comment)%> <b><%=_("on")%></b> <%= l comment.created_at, :format => :short %>
-    </span>
-    <br/>
-    <span id="comment_body_<%=comment.id%>">
-      <%=raw nl2br(comment.body)%>
-    </span>
-    <%= render(:partial => 'comments/edit_form', :locals => {:comment => comment, :entity =>entity})%>
-    <br/>
-      <%=reply_comment_button comment.id, entity%>
-      <%=edit_comment_button comment.id, entity, comment.body%>
-      <%=delete_comment_button comment.id, entity%>
+  <div class="cvComBoxLPic"><img src="images/comPic.jpg" width="50" height="50" alt="" />
+  </div>
 
- </div>
-  <% children(comment).each do |c| %>
-    <ul>
-    <%= render(:partial => 'comments/comment_row', :locals => {:comment => c, :entity => entity})%>
-    </ul>
+  <% if !comment.parent%>
+  <div class="cvComBoxR">
+  <% else %>
+  <div class="cvReBoxR">
   <% end %>
-   <ul><div class="add_form_container"> </div></ul>
-</div>
+
+    <p class="cvComBoxRTxt"><strong class="cvRplOr"><%=owner_of(comment)%></strong>    Post: <%= l comment.created_at, :format => :short %>
+    </p>
+
+    <p class="cvComBoxRTxt" id="comment_body_<%=comment.id%>"><%=raw nl2br(comment.body)%>
+    </p>
+
+    <%= render(:partial => 'comments/edit_form', :locals => {:comment => comment, :entity =>entity})%>
+
+    <% children(comment).each do |c| %>
+    <%= render(:partial => 'comments/comment_row', :locals => {:comment => c, :entity => entity})%>
+    <% end %>
+
+    <ul class="rpLink"><li><%=reply_comment_button comment.id, entity%></li><li class="rpPipe">|</li><li> <%=edit_comment_button comment.id, entity, comment.body%></li><li class="rpPipe">|</li><li><%=delete_comment_button comment.id, entity%></li></ul>
+
+
+    <div class="add_form_container"> </div>
+
+  </div>
+
+</div> <!--    <div class="cvComBox"> -->
+<br class="spacer" />
 
