@@ -451,6 +451,5 @@ end
     assert_equal 'cars', assigns(:shops).first.description
   end
 
-
 end
 
