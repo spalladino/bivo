@@ -1,20 +1,37 @@
+<% if !comment.parent%>
+<div class="cvComBox comment_row" id="<%="row_" + comment.id.to_s%>">
+<% else %>
+<div class="cvComReply comment_row" id="<%="row_" + comment.id.to_s%>">
+<% end %>
 
-        <div class="cvComReply comment_row" id="<%="row_" + comment.id.to_s%>">
-          <div class="cvReBoxR">
-            	<p class="cvComBoxRTxt"><strong class="cvRplOr"><%=owner_of(comment)%></strong>    Post: <%= l comment.created_at, :format => :short %></p>
-                <p class="cvComBoxRTxt" id="comment_body_<%=comment.id%>"><%=raw nl2br(comment.body)%></p><%= render(:partial => 'comments/edit_form', :locals => {:comment => comment, :entity =>entity})%>
-                <ul class="rpLink"><li><%=reply_comment_button comment.id, entity%></li><li class="rpPipe">|</li><li> <%=edit_comment_button comment.id, entity, comment.body%></li><li class="rpPipe">|</li><li><%=delete_comment_button comment.id, entity%></li></ul>
-               </div>
-                <% children(comment).each do |c| %>
-                  <ul>
-                  <%= render(:partial => 'comments/comment_row', :locals => {:comment => c, :entity => entity})%>
-                  </ul>
-                <% end %>
-                 <ul><div class="add_form_container"> </div></ul>
-              </div>
-            </div>
-        </div>
+  <div class="cvComBoxLPic"><img src="images/comPic.jpg" width="50" height="50" alt="" />
+  </div>
+
+  <% if !comment.parent%>
+  <div class="cvComBoxR">
+  <% else %>
+  <div class="cvReBoxR">
+  <% end %>
+
+    <p class="cvComBoxRTxt"><strong class="cvRplOr"><%=owner_of(comment)%></strong>    Post: <%= l comment.created_at, :format => :short %>
+    </p>
+
+    <p class="cvComBoxRTxt" id="comment_body_<%=comment.id%>"><%=raw nl2br(comment.body)%>
+    </p>
+
+    <%= render(:partial => 'comments/edit_form', :locals => {:comment => comment, :entity =>entity})%>
+
+    <% children(comment).each do |c| %>
+    <%= render(:partial => 'comments/comment_row', :locals => {:comment => c, :entity => entity})%>
+    <% end %>
+
+    <ul class="rpLink"><li><%=reply_comment_button comment.id, entity%></li><li class="rpPipe">|</li><li> <%=edit_comment_button comment.id, entity, comment.body%></li><li class="rpPipe">|</li><li><%=delete_comment_button comment.id, entity%></li></ul>
 
 
-</div>
+    <div class="add_form_container"> </div>
+
+  </div>
+
+</div> <!--    <div class="cvComBox"> -->
+<br class="spacer" />
 
