@@ -1,7 +1,21 @@
 class CashPoolAccount < Account
   NAME = 'Cash Pool'
-    
+  @@freeze_processing = false
+  
   def process(movement)
+    self.process_balance(movement) unless @@freeze_processing
+  end
+  
+  def freeze_processing
+    @@freeze_processing = true
+  end
+  
+  def process_balance(movement = nil)
+    if @@freeze_processing
+      self.reload
+      @@freeze_processing = false
+    end
+    
     while self.balance > 0
       Cause.ensure_raising_funds
       causes = Cause.where(:status => :raising_funds).all
@@ -29,7 +43,7 @@ protected
       
       amount_for_cause = [amount_for_cause, cause.funds_pending].min
       
-      Account.transfer_no_callback_from self, Account.cause_account(cause), amount_for_cause, "", due_to_movement.transaction
+      Account.transfer_no_callback_from self, Account.cause_account(cause), amount_for_cause, "", due_to_movement.nil? ? nil : due_to_movement.transaction
     end    
   end
   

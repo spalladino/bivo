@@ -8,30 +8,37 @@
 
 <div id="user_nav" class="innheaderFull">
   <div class="main">
-    <a href="#" class="logo"><%= image_tag "logo.png", :size => "211x77", :alt => "Bivo", :title => "Bivo" %></a>
+	<%= link_to image_tag("logo.png", :size => "211x77", :alt => "Bivo", :title => "Bivo"), root_url %>
+      <% if user_signed_in? %>
+        <ul class="topnav">
+          <% if (current_user.type == "Charity") %>
+            <li><%= link_to _("Settings"), edit_user_registration_path %></li>
+          <% elsif (current_user.type == "PersonalUser") %>
+            <li><%= link_to _("Settings"), edit_user_registration_path %></li>
+          <% elsif (current_user.type == "Admin") %>
+            <li><%= link_to _("Admin Tools"), admin_tools_path %></li>
+          <% end %>
+          <li class="navPipe"><%= image_tag "navPipe.png", :size => "2x19"%></li><li><%= _("Signed in as") %> <%= current_user.email %></li>
+        </ul>
+      <% end %>
     <div class="topDrop">
-  	<%= form_tag(change_language_path, :method => "get", :id => "nav_form", :class => "inline") do %>
-    	<%= select_tag :language, options_for_select(languages.collect { |l| [l.name, l.id] }, language.id ) %>
-  	<% end %>
+	    <%= form_tag(change_language_path, :method => "get", :id => "nav_form", :class => "inline") do %>
+      	<%= select_tag :language, options_for_select(languages.collect { |l| [l.name, l.id] }, language.id ) %>
+	    <% end %>
+	    <%= form_tag(change_currency_path, :method => "get", :id => "curr_form", :class => "inline") do %>
+      	<%= select_tag :currency, options_for_select(all_currencies.collect { |c| [c.name, c.id] }, current_currency.id ) %>
+	    <% end %>
     </div><br class="spacer" />
     <ul class="nav">
-  	<li><%= link_to _("Home"), root_path %></li><li class="navPipe"><%= image_tag "navPipe.png", :size => "2x19"%></li>
-	<li><%= link_to _("Vote Causes"), causes_url %></li><li class="navPipe"><%= image_tag "navPipe.png", :size => "2x19"%></li>
-	<li><%= link_to _("Dashboard"), dashboard_url %><li class="navPipe"><%= image_tag "navPipe.png", :size => "2x19"%></li>
-	<li><%= link_to _("About Bivo"), about_url %><li class="navPipe"><%= image_tag "navPipe.png", :size => "2x19"%></li>
-          <% if user_signed_in? %>
-      	    <li><%= _("Signed in as") %> <%= current_user.email %><li class="navPipe"><%= image_tag "navPipe.png", :size => "2x19"%></li>
-            <% if (current_user.type == "Charity") %>
-              <li><%= link_to _("Settings"), edit_user_registration_path %></li>
-            <% elsif (current_user.type == "PersonalUser") %>
-              <li><%= link_to _("Settings"), edit_user_registration_path %></li>
-            <% elsif (current_user.type == "Admin") %>
-              <li><%= link_to _("Admin Tools"), admin_tools_path %></li>
-          <% end %>
-	      <li class="navPipe"><%= image_tag "navPipe.png", :size => "2x19"%></li><li><%= link_to _("Logout"), destroy_user_session_path %></li>
-          <% else %>
-	    <li><%= link_to _("Login"), new_user_session_path %></li><br class="spacer" />
-          <% end %>
+  	  <li><%= link_to _("Home"), root_path %></li><li class="navPipe"><%= image_tag "navPipe.png", :size => "2x19"%></li>
+	    <li><%= link_to _("Vote Causes"), causes_url %></li><li class="navPipe"><%= image_tag "navPipe.png", :size => "2x19"%></li>
+	    <li><%= link_to _("Dashboard"), dashboard_url %><li class="navPipe"><%= image_tag "navPipe.png", :size => "2x19"%></li>
+	    <li><%= link_to _("About Bivo"), about_url %><li class="navPipe"><%= image_tag "navPipe.png", :size => "2x19"%></li>
+      <% if user_signed_in? %>
+        <li><%= link_to _("Logout"), destroy_user_session_path %></li><br class="spacer" />
+      <% else %>
+	      <li><%= link_to _("Login"), new_user_session_path %></li><br class="spacer" />
+      <% end %>
     </ul>
   </div>
 </div>

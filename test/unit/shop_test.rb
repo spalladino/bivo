@@ -41,12 +41,23 @@ class ShopTest < ActiveSupport::TestCase
     assert_equal 3, s.categories.count
   end
   
-  test "shop description should be translated" do
+  test "shop description should be translated with scope" do
     shop = Shop.make :description => 'Description'
     shop.save_translation :es, :description => 'Descripcion'
     
     assert_equal "Description", Shop.find_by_id(shop.id).description
     assert_equal "Descripcion", Shop.translated(:es).find(shop.id).description
+  end
+  
+  test "shop description should be translated lazily" do
+    shop = Shop.make :description => 'Description'
+    shop.save_translation :es, :description => 'Descripcion'
+    
+    assert_equal "Description", Shop.find_by_id(shop.id).description
+    
+    Shop.with_lazy_translation(:es) do
+      assert_equal "Descripcion", Shop.find(shop.id).description
+    end
   end
   
   test "new shop description must be marked as pending" do
@@ -77,7 +88,7 @@ class ShopTest < ActiveSupport::TestCase
     assert_equal "Descripcion", Shop.translated(:es).find_by_id(shop.id).description
     assert_equal 0, Shop.translation_pending(:es).count
     
-    shop.url = 'http://example.com.ar'
+    shop.worldwide = !shop.worldwide
     shop.save!
 
     assert_equal "Descripcion", Shop.translated(:es).find_by_id(shop.id).description
@@ -86,8 +97,8 @@ class ShopTest < ActiveSupport::TestCase
   
   test "should return shop translated fields" do
     assert_equal [:description], Shop.translated_fields[:translate]
-    assert_equal [:name, :description], Shop.translated_fields[:index]
-    assert_equal [:description, :name], Shop.translated_fields[:all]
+    assert_equal [:name, :description, :url, :short_url], Shop.translated_fields[:index]
+    assert_equal [:description, :name, :url, :short_url], Shop.translated_fields[:all]
   end
   
   test "should search in name" do

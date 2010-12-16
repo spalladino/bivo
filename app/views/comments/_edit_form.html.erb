@@ -9,7 +9,8 @@
               :body,
               :size => "30x5",
               :id => "text_area_" + comment.id.to_s,
-              :style => "display:none")
+              :style => "display:none",
+              :class => "accfil accMess")
            %>
           <%= hidden_field_tag(:entity_id, entity.id) %>
           <%= hidden_field_tag(:class, entity.class) %>

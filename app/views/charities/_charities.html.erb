@@ -1,17 +1,44 @@
-<%= will_paginate @charities %>
+<%= will_paginate @charities, :prev_label => image_tag('pegiarL.png'), :next_label => image_tag('pegiarR.png'), :class => 'pegi' %>
 
 <div id="charities-list">
 <% for charity in @charities %>
-  <div class="charity">
-
-	  <h3><%= link_to charity.name, charity_path(charity.id) %></h3>
-	  <p><%= charity.charity_category.name rescue nil %></p>
-	  <p><%= charity.country_name rescue nil %></p>
-	  <p><%= read_more(raw(charity.description), charity_path(charity.id), 20) %></p>
-	  <p><%= link_to (charity.total_funds_raised.to_s + _(' raised')), charity_path(charity.id) %></p>
-	  <p><%= link_to (charity.causes_count.to_s + _(' causes')), charity_path(charity.id) %></p>
-
+  <div class="chariIn">
+    <div class="chariLpic"><a href="#"><img src="images/pic.jpg" width="150" height="110" alt="" /></a></div> <!-- TODO: deshardcodear foto-->
+    <div class="chariMid">
+      <h3><%= link_to charity.name, charity_path(charity.id) %></h3>
+      <div class="chariLoca">
+      	<p><%=_("Location")%>:</p><strong><%=charity.city%>, <%= charity.country_name rescue nil %></strong><br class="spacer" />
+      	<p><%=_("Area")%>:</p><strong><%= charity.charity_category.name rescue nil %></strong><br class="spacer" />
+      </div>
+	    <p class="chariTxt"><%= read_more(raw(charity.description), charity_path(charity.id), 20) %></p>
+      <ul class="star">
+      	<li><a href="#"><img src="images/star.png" width="15" height="15" alt="" /></a></li>
+        <li><a href="#"><img src="images/star.png" width="15" height="15" alt="" /></a></li>
+        <li><a href="#"><img src="images/star.png" width="15" height="15" alt="" /></a></li>
+        <li><a href="#"><img src="images/star.png" width="15" height="15" alt="" /></a></li>
+        <li><a href="#"><img src="images/starHo.png" width="15" height="15" alt="" /></a></li>
+      </ul> <!-- TODO: deshardcodear estrellas-->
+    </div>
+    <div class="chariRi">
+    	<div class="chariRiBox">
+        <a href="<%=charity_path(charity.id)%>">
+          <span class="statInBoxNo chariRiBoxNo"><%=charity.total_funds_raised.to_s%></span>
+          <span class="statInBoxTxt chariRiBoxTxt"><%=_(' raised')%></span>
+        </a>
+      </div>
+      <div class="chariRiBox">
+        <a href="<%=charity_path(charity.id)%>">
+          <span class="statInBoxNo chariRiBoxNo"><%=charity.causes_count.to_s%></span>
+          <span class="statInBoxTxt chariRiBoxTxt"><%=charity.causes_count == 1 ? _(' cause') : _(' causes')%></span>
+        </a>
+      </div>
+    </div>
   </div>
 <% end %>
 </div>
+
+<script type="text/javascript">
+  $(".chariIn").last().addClass("noBg");
+</script>
+
 

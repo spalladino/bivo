@@ -14,17 +14,24 @@
 <% end %>
 
 <%= form_tag(request.path, :method => "get") do %>
-  <%= _('Period') %>
-  <%= select_tag :period, options_for_select(@periods, @period) %>
-
+  <%= select_tag :period, options_for_select(@periods, @period),:class=>"genChoo dashChoo" %>
   <div id="custom_period">
+    <br />
     <br />
     <%= _('From') %>
     <%= select_date @from, :prefix => :custom_from, :start_year => 2000, :end_year => 2020 %>
+
     <br />
     <%= _('To') %>
     <%= select_date @to, :prefix => :custom_to, :start_year => 2000, :end_year => 2020 %>
+
   </div>
-  <br />
-  <%= submit_tag _('Search'), :disable_with => _('Searching...') %>
+<div class="buttonMainSearM">
+                    <div class="buttonSide accBtnSt"></div>
+  <%= submit_tag _('Search'), :disable_with => _('Searching...'),:class => "buttonMid accBtnMi" %>
+                    <div class="buttonSide accBtnEn"></div><br class="spacer" />
+               </div>
+
+
 <% end %>
+

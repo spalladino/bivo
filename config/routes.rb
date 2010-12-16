@@ -117,6 +117,7 @@ Bivo::Application.routes.draw do
   resources :transactions, :path => 'transaction', :except => :destroy
 
   get "change_language", :to => "home#change_language"
+  get "change_currency", :to => "home#change_currency"
 
   # path for static pages
   get "how_it_works", :to => "home#how_it_works"
