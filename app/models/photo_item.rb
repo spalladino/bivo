@@ -8,8 +8,8 @@ class PhotoItem < GalleryItem
     true
   end
 
-  has_attached_file :image, :styles => { :thumbnail => "120x90>", :normal => "425x355>", :big_avatar => "150x110>" },
-    :convert_options => { :thumbnail => "-gravity center -extent 120x90", :normal => "-gravity center -extent 425x355", :big_avatar => "-gravity center -extent 150x110" }
+  has_attached_file :image, :styles => { :thumbnail => "69x57>", :normal => "311x183>", :big_avatar => "150x110>" },
+    :convert_options => { :thumbnail => "-gravity center -extent 69x57", :normal => "-gravity center -extent 311x183", :big_avatar => "-gravity center -extent 150x110" }
   
   def thumbnail_url
     self.image.url(:thumbnail)
