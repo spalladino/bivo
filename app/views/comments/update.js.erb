@@ -2,4 +2,5 @@
   $('#<%="row_"+@comment.id.to_s%>').replaceWith("<%= escape_javascript(render('comment_row', :comment => @comment, :entity => @entity))%>");
 <%end%>
 <%= render(:partial => 'shared/notifications.js') %>
+$('#comments_list').closest('.flexcroll')[0].scrollUpdate();
 
