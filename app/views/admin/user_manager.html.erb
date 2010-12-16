@@ -27,7 +27,11 @@
   <% for user in @users %>
     <tr>
       <td><%= link_to _("Delete"), { :action => "destroy", :controller => "registrations", :id => user.id }, :confirm => "are you sure you want to delete the user?", :method => :delete %></td>
+      <% if user.is_charity_user -%>
+      <td><%= link_to user.name, charity_path(user.id) %></td>
+      <% else -%>
       <td><%= user.name %></td>
+      <% end -%>
       <td><%= user.type %></td>
       <td><%= format_date user.last_sign_in_at %></td>
       <td><%= format_date user.created_at %></td>
