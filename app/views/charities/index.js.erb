@@ -1,1 +1,3 @@
 $("#charities").html("<%= escape_javascript(render("charities")) %>");
+
+setCurrentCategory(<%= @category || 0 %>);
