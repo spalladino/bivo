@@ -4,7 +4,7 @@
 
 <% content_for(:js) do %>
 	$(function() {
-		$('#filters select').add('#filters input').change(function() {
+		$('.filter').change(function() {
 			$('#filter_form').submit();
 		});
 	});
@@ -23,24 +23,25 @@
 						    <li><%= link_to "#{category.name} (#{category.charities_count})", category_filter_url(category)%></li>
                 <li class="grPipe">|</li>
 					    <% end%>
+              <script type="text/javascript">$(".grPipe").last().remove();</script>
             </ul>
         </div>
       </div>
       <div class="boxMain">
      	  <div class="gnFilMain">
 			    <p class="genFilTxt"><%= _('Sort by') %></p>
-          <%= select_tag :sorting, options_for_select(@sortings, @sorting), {:class => 'genChoo'} %>
+          <%= select_tag :sorting, options_for_select(@sortings, @sorting), {:class => 'genChoo filter'} %>
 				  <p class="genFilTxt chariMidTxt"><%= _('Show region') %></p>
-				  <%= select_tag :region, options_from_collection_for_select(@regions, 'id', 'name', @region), {:include_blank => _('All countries'), :class => 'genChoo'}%>
+				  <%= select_tag :region, options_from_collection_for_select(@regions, 'id', 'name', @region), {:include_blank => _('All countries'), :class => 'genChoo filter'}%>
 				  <p class="genFilTxt"><%= _('Filter by') %></p>
-				  <%= text_field_tag :name, @name, :id => 'name_filter', :class => "genChoo" %> <%= link_to_function(_('clear'), "$('#name_filter').val('').change();") if @name %>
+				  <%= text_field_tag :name, @name, :id => 'name_filter', :class => "genChoo inputWithBorder" %> <%= link_to_function(_('clear'), "$('#name_filter').val('').change();") if (@name && @name != "") %>
           <!-- PUT PAGE SELECTOR HERE-->
         </div><!-- /gnFilMain -->
         <div id="charities">
           <%= render 'charities' %>
         </div>
         <div class="rgtFilmarg">
-          <%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page), :class => 'showChoo'%>
+          <%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page), :class => 'showChoo filter'%>
           <p class="showTxt"><%= _("Show per page")%></p><br class="spacer" />
         </div>            
       </div><!-- /boxMain -->

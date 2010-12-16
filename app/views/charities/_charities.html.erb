@@ -1,4 +1,4 @@
-<%= will_paginate @charities %>
+<%= will_paginate @charities, :prev_label => image_tag('pegiarL.png'), :next_label => image_tag('pegiarR.png'), :class => 'pegi' %>
 
 <div id="charities-list">
 <% for charity in @charities %>
