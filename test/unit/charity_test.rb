@@ -111,6 +111,25 @@ class CharityTest < ActiveSupport::TestCase
     c = Cause.make :status => :active,:charity => charity
     assert_equal c, charity.causes_to_show(admin).last
   end
+  
+  test 'should not save charity with invalid rating' do
+    charity = Charity.make
+    charity.rating = -1
+    assert !charity.save
+    charity.rating = 6
+    assert !charity.save
+    charity.rating = 5
+    assert  charity.save
+    charity.rating = 0
+    assert  charity.save
+  end
+
+  test 'should save charity with no rating' do
+    charity = Charity.make
+    charity.rating = nil
+    assert charity.save
+  end
+
 
 end
 

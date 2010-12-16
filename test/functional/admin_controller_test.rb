@@ -19,11 +19,15 @@ class AdminControllerTest < ActionController::TestCase
       :tax_reg_number        => 123456,
       :country_id            => Country.make.id,
       :city                  => "Bs As",
-      :description           => "Description test"
+      :description           => "Description test",
+      :rating                => 4
     }
     charity = Charity.find_by_email("char@bivotest.com")
-    assert_equal :active,charity.status
+
     assert_not_nil charity
+    assert_equal :active, charity.status
+    assert_equal 4, charity.rating
+
     assert_response :found
   end
 

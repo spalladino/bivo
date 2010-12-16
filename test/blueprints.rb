@@ -15,7 +15,7 @@ Sham.country      { Faker::Address.uk_county }
 Sham.city         { Faker::Address.city }
 Sham.password     { rand(36**8).to_s(36) }
 Sham.funds        { rand(1000) }
-Sham.amount        { 1 + rand(1000) }
+Sham.amount       { 1 + rand(1000) }
 
 Country.blueprint do
   name {Sham.country}
@@ -68,15 +68,16 @@ Charity.blueprint do
   email
   description
   password
-  charity_website  {Sham.url}
-  short_url        {Sham.short_name}
-  charity_type     {Sham.simple_name}
-  tax_reg_number   {Sham.simple_name}
+  rating             {rand(6)}
+  charity_website    {Sham.url}
+  short_url          {Sham.short_name}
+  charity_type       {Sham.simple_name}
+  tax_reg_number     {Sham.simple_name}
   preferred_language {:en}
   city
-  charity_category {CharityCategory.make_or_get(5)}
-  eula_accepted    {true}
-  status           {:active}
+  charity_category   {CharityCategory.make_or_get(5)}
+  eula_accepted      {true}
+  status             {:active}
 
 end
 

@@ -97,6 +97,8 @@ class Charity < User
 
   validates_presence_of :description
   validates_length_of :description, :maximum => 255
+  
+  validates_numericality_of :rating, :only_integer => true, :greater_than_or_equal_to => 0, :less_than_or_equal_to => 5, :unless => Proc.new {|c| c.rating.nil?}
 
   enum_attr :status, %w(^inactive active deleted),:nil => false
 

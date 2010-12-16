@@ -70,6 +70,7 @@ class AdminController < ApplicationController
     @countries = Country.all
     @categories = CharityCategory.all
     @referer = request.referer
+    @ratings = (0..5).map{|i| ["#{i} #{n_('star', 'stars', i)}", i]}
   end
 
   def create_charity
@@ -80,7 +81,7 @@ class AdminController < ApplicationController
     @referer = params[:referer]
 
     if (@resource.save)
-      redirect_to @referer || admin_user_manager_path
+      redirect_to @referer || admin_user_manager_pat_h
     else
       @countries = Country.all
       @categories = CharityCategory.all
