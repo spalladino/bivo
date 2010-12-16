@@ -15,11 +15,13 @@
           <%= hidden_field_tag(:entity_id, entity.id) %>
           <%= hidden_field_tag(:class, entity.class) %>
           <%= hidden_field_tag(:id, comment.id) %>
-          <%=cancel_save_button comment.id%>
-          <%= submit_tag _('Save'),
-              :disable_with => _('Submitting...'),
-              :style => "display:none",
-              :id => "save_button_#{comment.id}"
-           %>
+      <br class="spacer" />
+      <ul class="rpLink">
+        <li> <%=cancel_save_button comment.id%></li>
+        <li class="rpPipe">|</li>
+        <li> <%=save_comment_button comment.id %></li>
+    </ul>
+
+
  <%end%>
 
