@@ -1,3 +1,62 @@
+
+
+
+<div class="headerFull">
+	<div class="main">
+    	<div class="banM banM2">
+        	<div class="banMIN">
+
+
+
+                <h2 class="shopHead"><%=_("Buy through us. Change the world")%></h2>
+                <%= image_tag(@shop.image.url(:small),:class=>"carzol") if @shop.image_file_name %>
+                <p class="carzolTxt"><b><%= @shop.name %></b>: <%= @shop.description %></p>
+                <p class="carzolORTxt"><%= number_to_currency(@shop.incomes_in_period(1.month.ago, Date.today),:precision=>0)%></p>
+                <p class="carzolTxt2"><%=_('Raised this month')%></p>
+
+                <%= link_to _("See How it Works !"), how_it_works_url,:class => "carzolBtn" %>
+                <%= link_to _("Shop Details"), shop_details_path(@shop.short_url),:class => "carzolBtn"%>
+           </div>
+        </div>
+    </div>
+
+	<div class="headerFullIn"></div>
+</div>
+
+
+<div class="bodyM">
+	<div class="bodyIn">
+    	<div class="bodyDIVI">
+            <div class="bodyL">
+                <h2 class="bodyHead"><%=_("Choose Your Cause")%></h2>
+                <p class="bodytxt"><%=_("Vote for charitable causes from around the globe.")%></p>
+
+                <p class="bodytxt"><%=_("Causes with the most votes get funds faster.")%></p>
+                <%= link_to _("Vote Causes"), causes_url, :class=>"bodyLBtn"  %>
+            </div>
+            <div class="bodyMid">
+                <h2 class="bodyHead"><%=_("Change the World")%></h2>
+                <p class="bodytxt"><%=_("Bivo donates commissions from all sales to the causes our users choose.")%></p>
+                <p class="bodytxt"><%=_("To see how your contribution is distributed, check out Bivo's fundraising dashboard.")%></p>
+
+                <%= link_to _("Dashboard"), dashboard_url,:class=>"bodyLBtn bodyMidBtn" %>
+            </div>
+            <div class="bodyR">
+                <h2 class="bodyHead"><%=_("Spread the World")%></h2>
+                <p class="bodytxtR"><a href="#"><%=_("Tell your friends")%></a> <%=_("about Bivo and get even more funding for your favourite causes..")%></p>
+                <h2 class="bodyHead"><%=_("Volunteer")%></h2>
+
+                <p class="bodytxtR"><a href="#"><%=_("Volunteer your time")%></a> <%=_("at Bivo and help us -- and the charities we support -- grow.")%></p>
+                <h2 class="bodyHead"><%=_("Support other Fundraisers")%></h2>
+                <p class="bodytxtR noMarg"><%=_("Learn more about Bivo's other social initiatives and")%> <a href="#"><%=_("fund raising projects.")%></a></p>
+          </div><br class="spacer" />
+       </div>
+     </div>
+
+	<div class="bodyBot"></div>
+</div>
+
+
 <% content_for(:js) do %>
 	function replaceSearch(form){
     var value = $("input").val();
@@ -13,31 +72,20 @@
 
 <%= inactive_shop_notification @shop %>
 
-<p>
-  <%= link_to _("Shop Details"), shop_details_path(@shop.short_url)%> <br /> <br />
-
-</p>
 
 
 
-<h3><%= _("Name") %></h3>
-<p><%= @shop.name %></p>
 
-<h3><%= _("Short Url") %></h3>
-<p><%= @shop.short_url %></p>
+
 
 <h3><%= _("Shop at") %></h3>
 <p><a href= "<%=@shop.url %>"> <%=@shop.url %></a></p>
 
-<h3><%= _("Description") %></h3>
-<p><%= @shop.description %></p>
 
-<div>
-  <%= @shop.incomes_in_period(1.month.ago, Date.today)%>
-  <b><%=_('Raised this month')%></b>
-</div>
 
-<%= link_to _("See how it works"), how_it_works_url %>
+
+
+
 
 <h3><%= _("Affiliate Code") %></h3>
 <div>
@@ -57,8 +105,4 @@
     <!-- Custom widget: -->
     <%if @shop.redirection == :custom_widget%><%=raw @shop.affiliate_code%><%end%>
 </div>
-
-<p>
-  <%= image_tag @shop.image.url(:small) if @shop.image_file_name %>
-</p>
 

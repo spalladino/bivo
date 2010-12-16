@@ -42,7 +42,7 @@
           <div class="shopListBoxRi">
            	<div class="shopListGr"><span class="shopBoxNo"><%= @shop.comission_value%><%if @shop.comission_kind == :percentage%>%<% end%></span><span class="shopBoxTxt"> <%=_("of your purchase will be donated")%></span></div>
 
-  					<div class="shopListGr"><span class="shopBoxNo shopBoxNo2"><%= @shop.incomes_in_period(1.month.ago, Date.today)%></span><span class="shopBoxTxt"><%=("raised this month")%></span></div>
+  					<div class="shopListGr"><span class="shopBoxNo shopBoxNo2"><%= number_to_currency(@shop.incomes_in_period(1.month.ago, Date.today),:precision=>0)%></span><span class="shopBoxTxt"><%=("raised this month")%></span></div>
 
             <div class="buttonMainVote29">
   						<div class="buttonSideRec recBtnStS"></div>
