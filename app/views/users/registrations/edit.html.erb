@@ -21,6 +21,11 @@
     <p><%= f.label :charity_website, _("Charity Website") %><br />
     <%= f.text_field :charity_website %></p>
 
+    <% if current_user.is_admin_user %>
+      <p><%= f.label :rating, "Rating" %><br />
+      <%= select 'charity', 'rating', @ratings, :include_blank => true %></p>
+    <% end %>
+
     <p><%= f.label :country, _("Country") %>
     <%= f.select :country_id, @countries.collect{ |c| [c.name, c.id] }, :include_blank => true %></p>
 

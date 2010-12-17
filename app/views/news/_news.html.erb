@@ -28,11 +28,12 @@
   <%= cancel_news_add_button%>
 <% end %>
 
-<h3>News</h3>
-
-<div id="news">
-<% for news in all_news %>
-  <%=render :partial=>'news/news_row',:locals => {:news => news, :newsable => newsable}%>
-<% end %>
+<div class="cvNews"><h2><%=_("News")%></h2></div>
+<div class="cvNewsBox">
+	<div class="cvNewsBoxIn cvNewsBoxIn2 flexcroll" id="news">
+  <% for news in all_news %>
+    <%=render :partial=>'news/news_row',:locals => {:news => news, :newsable => newsable}%>
+  <% end %>
+  </div>
 </div>
 

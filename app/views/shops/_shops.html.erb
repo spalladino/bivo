@@ -30,13 +30,26 @@
 <div id="shop-list">
 
 <% for shop in @shops %>
-  <div class="shop">
-	  <h3><%= link_to shop.display_name, shop_path(shop.id) %></h3>
-    <p><b><%=_('Website:')%></b> <%=shop.url%></p>
-    <p><%=shop.description%></p>
-    <p><b><%=_('Shop at:')%></b> <a href= "<%=shop.url %>"> <%=shop.url %></a></p>
-    <p><b><%=_('Comission')%>:</b><%=shop.comission_value%><%if shop.comission_kind == :percentage%>%<% end%> <%=_("will be donated for your purchase")%></p>
-  </div>
+	<div class="shop shopListBox searBox">
+		<div class="shopListBoxL"><%= link_to(image_tag("/images/shopLogo.jpg"))%></div>
+		<div class="shopListBoxMid searBoxMid">
+			<h3><%= link_to shop.display_name, shop_path(shop.id) %></h3><%= link_to "Website: #{shop.url}", shop.url, :class => "shopListlink" %>
+			<p><%= link_to "#{shop.description}", shop_path(shop.id) %></p>
+		</div>
+		<div class="shopListBoxRi">
+			<div class="shopListGr"><a href="<%= shop_path(shop.id) %>"><span class="statInBoxNo chariRiBoxNo"><%=shop.comission_value%><%if shop.comission_kind == :percentage%>%<% end%></span><span class="shopListGrTxt">of your purchase will be<br />donated</span></a></div>
+                
+			<div class="buttonMainFloat">
+				<div class="buttonSide accBtnSt"></div>
+				<%= link_to _("Shop at #{shop.display_name}"), shop_path(shop.id), :class => "buttonMid accBtnMi" %>
+				<div class="buttonSide accBtnEn"></div><br class="spacer" />
+			</div>
+                
+                
+			<!--<input type="button" name="shopAmazon" value="Shop at Amazon" id="shopAmazon" class="addBtn shopBtn" />-->
+		</div>
+		<br class="spacer" /> 
+	</div>
 <% end %>
 
 </div>

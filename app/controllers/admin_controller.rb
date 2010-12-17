@@ -70,10 +70,12 @@ class AdminController < ApplicationController
     @countries = Country.all
     @categories = CharityCategory.all
     @referer = request.referer
+    @ratings = (0..5).map{|i| ["#{i} #{n_('star', 'stars', i)}", i]}
   end
 
   def create_charity
     @resource = Charity.new(params["charity"])
+    @resource.rating = params["charity"]['rating']
     @resource.status = :active
     @resource.eula_accepted = true
     @type = @resource.type.to_sym
@@ -106,5 +108,21 @@ class AdminController < ApplicationController
     @t_language = params[:language_for_transalte]
     @translated_classes = ActiveRecord::Base.translated_classes
   end
+  
+  def save_translation
+    clazz = params[:clazz].constantize
+    instance = clazz.find(params[:id])
+    field = params[:t_field].to_sym
+    lang = params[:lang].to_sym
+    
+    if instance.save_translation(lang , field => params[:translation]) 
+      ajax_flash[:notice] = _("Translation has been saved")
+    else
+      ajax_flash[:notice] = _("Error saving translation")
+    end
+    render :partial => "shared/notifications.js"
+    
+  end  
+    
 end
 

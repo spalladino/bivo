@@ -4,39 +4,56 @@
 
 
 <% title "Shops" %>
-
-<%=@count%> <%if @count== 1 %> <%=_("result found")%> <%else%> <%=_("results found")%> <%end%>
-<h2>Filters</h2>
-
-<div id="filters">
-	<%= form_tag({:controller => :shops, :action => :search, :id => "filter_form" },{ :method => :get }) do %>
-		<table cellspacing="5">
-			<tr>
-				<td><%= label_tag :per_page, _("Show per page")%></td>
-				<td><%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page)%></td>
-			</tr>
-			<tr>
-				<td><%= label_tag :sorting, _('Sort by')%></td>
-				<td><%= select_tag :sorting, options_for_select(@sortings, @sorting) %></td>
-			</tr>
-			<tr>
-				<td><%= label_tag :search_word, _('Search')%></td>
-				<td><%= text_field_tag :search_word, @search_word %> <%= link_to_function(_('clear'), "$('#search_word_filter').val('').change();") if @search_word %></td>
-			</tr>
-		</table>
-		<p>
-			<%= submit_tag _('Search'), :disable_with => _('Searching...') %>
-		</p>
-	<% end %>
+<div class="inbodyM">
+	<div class="bodyInner">
+    	<div class="statGrT"><h2><%= _("Search Results")%></h2></div>
+        <div class="boxMain">
+			<%= form_tag({:controller => :shops, :action => :search, :id => "filter_form" },{ :method => :get }) do %>
+	        	<div class="searFilM">
+					
+					<%= text_field_tag :search_word, @search_word, :class => "searFill" %> 
+           
+	               <div class="buttonMainSearM">
+	                    <div class="buttonSide accBtnSt"></div>
+						<%= submit_tag _('Search'), :class =>"buttonMid accBtnMi" %>
+	                    <div class="buttonSide accBtnEn"></div><br class="spacer" />
+						<%= link_to_function(_('clear'), "$('#search_word_filter').val('').change();", :style => "position: relative; right: -80px; top: -23px;") if @search_word %>
+	               </div>
+               
+	                <!--<input type="button" name="search" id="search" value="Search" class="serchBtn" />--><br class="spacer" />
+	            </div>
+				<p class="searFilTxt"><%= _("Enter the product or service to buy (i.e. books) or the name of the seller (i.e. Amazon)")%></p>
+            
+	   	  		<div class="gnFilMain">
+	            	<h3 class="shopRinHead searInHead"><%=@count%> <%if @count== 1 %> <%=_("result found")%> <%else%> <%=_("results found")%> </h3>
+	            	<p class="genFilTxt"><%= label_tag :sorting, _('Sort by')%></p><%= select_tag :sorting, options_for_select(@sortings, @sorting) %>
+	                <div class="pegi">
+	                	<ul>
+	                    	<li><a href="#"><img src="/images/pegiarL.png" width="4" height="7" alt="" /></a></li>
+	                        <li><a href="#">1</a></li>
+	                        <li><a href="#">2</a></li>
+	                        <li><a href="#">3</a></li>
+	                        <li><a href="#">4</a></li>
+	                        <li><a href="#">5</a></li>
+	                        <li class="noPad"><a href="#"><img src="/images/pegiarR.png" width="4" height="7" alt="" /></a></li><br class="spacer" />
+	                    </ul>
+	          		</div><br class="spacer" />
+	            </div>
+	
+				<div id="shops">
+				  <%= render 'shops' %>
+				</div>
+	
+				<div class="rgtFilmarg">
+					<%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page)%>
+					<p class="showTxt"><%= label_tag :per_page, _("Show per page")%></p>
+					<br class="spacer" />
+	            </div>
+           	<% end %>
+			
+        </div>
+     </div>
+	 <div class="bodyBot"></div>
 </div>
 
-<br/>
-
-
-
-<h2>Shops</h2>
-
-<div id="shops">
-  <%= render 'shops' %>
-</div>
-
+<%end%>

@@ -41,14 +41,15 @@ class Charity < User
     end
   end
 
-
-
   UrlFormat = /[a-zA-Z\-_][a-zA-Z0-9\-_]*/
+
   # Default scope excludes deleted charities
   default_scope where('users.status != ?', :deleted)
 
-  scope :with_cause_data, proc { where('users.status != ?', :inactive)\
-      .joins("LEFT JOIN #{Cause.table_name} ON #{Cause.table_name}.charity_id = #{Charity.table_name}.id")\
+  scope :exclude_inactive, where('users.status != ?', :inactive)
+
+  scope :with_cause_data, proc { \
+       joins("LEFT JOIN #{Cause.table_name} ON #{Cause.table_name}.charity_id = #{Charity.table_name}.id")\
       .joins(:country)\
       .group(self.column_names.map{|c| "#{Charity.table_name}.#{c}"})\
       .group("#{Country.table_name}.name")\
@@ -97,6 +98,8 @@ class Charity < User
 
   validates_presence_of :description
   validates_length_of :description, :maximum => 255
+  
+  validates_numericality_of :rating, :only_integer => true, :greater_than_or_equal_to => 0, :less_than_or_equal_to => 5, :unless => Proc.new {|c| c.rating.nil?}
 
   enum_attr :status, %w(^inactive active deleted),:nil => false
 

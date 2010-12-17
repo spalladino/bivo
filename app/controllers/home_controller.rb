@@ -6,6 +6,7 @@ class HomeController < ApplicationController
   skip_before_filter :check_eula_accepted, :only => [:accept_eula, :confirm_eula]
 
   def index
+    @home_index = true
     @raised_amount = Income.funds_raised(1.month.ago, Date.today)
   end
 

@@ -1,8 +1,5 @@
 <h1><%= _("Choose a language for start translations")%></h1>
 
 <% @languages.each do |lang|%>
-	<% form_tag :action => "translate" do -%>
-		<%= hidden_field_tag :language_for_transalte, lang.id %>
-		<%= link_to_function "#{lang.name} (#{Shop.translation_pending(lang.id).count} pending translations)", "$(this).parent().submit()" %>
-	<%end%>
+	<%= link_to "#{lang.name} (#{Shop.translation_pending(lang.id).count} pending translations)", :action => "translate", :language_for_transalte => lang.id%> </br>
 <% end %>

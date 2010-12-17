@@ -105,7 +105,7 @@ class CharitiesControllerTest < ActionController::TestCase
     assert_charities_unsorted Charity.where('users.status != ?', :inactive)
   end
 
-  test "shoul not get inactive charities on the list beeing the inactive charity" do
+  test "should not get inactive charities on the list beeing the inactive charity" do
     Charity.make_many 5
     Charity.make :status => :inactive
     user = create_charity_and_sign_in

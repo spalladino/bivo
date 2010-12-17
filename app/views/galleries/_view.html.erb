@@ -12,7 +12,7 @@
 				  options['data-url'] = item.image.url(:normal)
 			  end
 		  %>
-			  <li data-item-id="<%=item.id%>">
+			  <li class="<%=item.kind%>" data-item-id="<%=item.id%>">
 				  <%= image_tag item.thumbnail_url, options %>
 				  <% if edit %>
 				  <br/>
