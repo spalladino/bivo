@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'mocha'
 
 class AccountTest < ActiveSupport::TestCase
   test "Account is created wihout empty balance" do
@@ -64,4 +65,28 @@ class AccountTest < ActiveSupport::TestCase
     assert_equal 0.to_d, b.balance
     assert_equal 0, AccountMovement.count
   end
+  
+  test "balance at the certain date" do
+    from, to = Account.make_many(2)
+    
+    did(2.month.ago) { Account.transfer(from, to, 20.to_d) }
+    did(1.month.ago) { Account.transfer(from, to, 10.to_d) }
+    did(2.week.ago) { Account.transfer(from, to, 5.to_d) }
+
+    assert_equal 35.to_d, to.balance_at(Date.today)
+    assert_equal 30.to_d, to.balance_at(3.week.ago)
+    assert_equal 20.to_d, to.balance_at(6.week.ago)
+    assert_equal 0.to_d, to.balance_at(4.month.ago)
+  end
+  
+  private
+  
+  def did(date)
+    now = Time.now
+    Time.stubs(:now => date)
+    yield
+    Time.stubs(:now => now)
+    nil
+  end
+    
 end
