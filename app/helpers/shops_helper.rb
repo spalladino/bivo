@@ -35,10 +35,9 @@ module ShopsHelper
     end
   end
   
-
-
-
-
+  def to_absolute_url(shop_website, default_protocol='http')
+    if shop_website =~ /^([^:])+:\/\// then shop_website else "#{default_protocol}://#{shop_website}" end
+  end
 
 end
 
