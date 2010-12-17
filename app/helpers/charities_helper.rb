@@ -33,7 +33,13 @@ module CharitiesHelper
     end
   end
 
-
+  # Renders a control with stars that indicate charity rating
+  def rating_stars(charity, html_opts={})
+    return (content_tag :ul, (0..4).map { |idx|
+      img = (charity.rating || 0).to_i >= idx ? 'star.png' : 'starHo.png'
+      content_tag :li, image_tag(img, :width => 15, :height => 15), {}, false
+    }.join("\n"), {:class => 'star'}.merge(html_opts), false).html_safe
+  end
 
   # Redirects to the “Add Cause” page.
   def add_cause_button(charity)

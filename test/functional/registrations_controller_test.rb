@@ -203,34 +203,10 @@ class RegistrationsControllerTest < ActionController::TestCase
       charity.reload
       assert_equal "char123@bivotest.com", charity.email
       assert_equal status, charity.status
-      assert_equal 3, charity.rating
+      assert_equal 3, charity.rating.to_i
       assert_response :found
     end
   end
-  
-  #UPDATE
-  test "should update charity being admin" do
-      charity = create_charity_and_sign_in :status => :active, :rating => 3
-      
-      post :update,
-        :user =>
-        {
-          :email                 => "char123@bivotest.com",
-          :charity_name          => "test",
-          :charity_website       => "http://www.test.com",
-          :charity_type          => "def",
-          :tax_reg_number        => 123456,
-          :country_id            => Country.make.id,
-          :city                  => "Bs As",
-          :rating                => 1
-        }
-
-      charity.reload
-      assert_equal "char123@bivotest.com", charity.email
-      assert_equal status, charity.status
-      assert_equal 1, charity.rating
-      assert_response :found
-    end  
   
 
   #UPDATE
@@ -438,7 +414,7 @@ class RegistrationsControllerTest < ActionController::TestCase
 
   test "should edit a charity from admin" do
     admin = create_admin_and_sign_in
-    charity = Charity.make
+    charity = Charity.make :rating => 4
 
     post :update,
       :id => charity.id,
@@ -450,10 +426,13 @@ class RegistrationsControllerTest < ActionController::TestCase
         :charity_type          => "def",
         :tax_reg_number        => 123456,
         :country_id            => Country.make.id,
-        :city                  => "Bs As"
+        :city                  => "Bs As",
+        :rating                => 2
       }
 
-    assert_equal Charity.find(charity.id).email, "char123@bivotest.com"
+    charity.reload
+    assert_equal "char123@bivotest.com", charity.email
+    assert_equal 2, charity.rating.to_i
 
     assert_redirected_to :controller => :admin, :action => :user_manager
   end

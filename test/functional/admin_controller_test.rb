@@ -2,7 +2,7 @@ require 'test_helper'
 
 class AdminControllerTest < ActionController::TestCase
 
-  test "should add an active charity from admin " do
+  test "should add an active charity from admin" do
     admin = create_admin_and_sign_in
 
     post :create_charity,
@@ -26,7 +26,7 @@ class AdminControllerTest < ActionController::TestCase
 
     assert_not_nil charity
     assert_equal :active, charity.status
-    assert_equal 4, charity.rating
+    assert_equal 4, charity.rating.to_i
 
     assert_response :found
   end

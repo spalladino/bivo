@@ -75,13 +75,14 @@ class AdminController < ApplicationController
 
   def create_charity
     @resource = Charity.new(params["charity"])
+    @resource.rating = params["charity"]['rating']
     @resource.status = :active
     @resource.eula_accepted = true
     @type = @resource.type.to_sym
     @referer = params[:referer]
 
     if (@resource.save)
-      redirect_to @referer || admin_user_manager_pat_h
+      redirect_to @referer || admin_user_manager_path
     else
       @countries = Country.all
       @categories = CharityCategory.all
