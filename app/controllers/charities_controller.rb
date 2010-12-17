@@ -2,7 +2,8 @@ class CharitiesController < ApplicationController
 
   before_filter :authenticate_user!, :except => [:show, :details, :index, :check_url, :destroy]
   before_filter :user_required, :only => [:follow, :unfollow]
-  before_filter :load_charity, :except => [:index, :new, :create, :check_url,:destroy]
+  before_filter :load_charity, :except => [:index, :new, :create, :check_url,:destroy, :show, :details]
+  before_filter :load_charity_with_data, :only => [:show, :details]
   before_filter :only_owner_or_admin_if_inactive, :only => [:details, :follow]
   before_filter :only_admin, :only => [:activate, :deactivate, :create,:delete,:destroy]
   before_filter :follows_exist, :only => [:unfollow]
@@ -139,6 +140,11 @@ class CharitiesController < ApplicationController
   def load_charity
     @charity = Charity.find(params[:id]) if params[:id]
     @charity = Charity.find_by_short_url(params[:url]) if params[:url]
+  end
+
+  def load_charity_with_data
+    @charity = Charity.with_cause_data.find(params[:id]) if params[:id]
+    @charity = Charity.with_cause_data.find_by_short_url(params[:url]) if params[:url]
   end
 
 
