@@ -15,13 +15,11 @@ module ShopsHelper
     end
   end
 
-
   def edit_shop_button(shop)
     if current_user && current_user.is_admin_user
       return content_tag :div, link_to(_("Edit"), :controller => "shops", :action => "edit", :id => shop.id)
     end
   end
-
 
   def delete_shop_button(shop)
     if current_user && current_user.is_admin_user
@@ -36,7 +34,20 @@ module ShopsHelper
   end
   
   def to_absolute_url(shop_website, default_protocol='http')
-    if shop_website =~ /^([^:])+:\/\// then shop_website else "#{default_protocol}://#{shop_website}" end
+    if shop_website =~ /^([^:])+:\/\// 
+      URI.escape(shop_website) 
+    else 
+      "#{default_protocol}://#{URI.escape(shop_website)}"
+    end
+  end
+
+  def shop_at_link(shop, html_opts={})
+    url = if shop.redirection_purchase_button?
+      to_absolute_url(shop.affiliate_code)
+    else
+      shop_home_path(shop.short_url)
+    end
+    link_to _("Shop at %s") % shop.display_name, url, html_opts
   end
 
 end
