@@ -89,14 +89,11 @@ form.inline {
 	margin-left: 8px;
 }
 
-
-
 .cvReBoxR{
 	width:inherit;
 	padding-left: 66px;
 	float: none;
 }
-
 
 .pegi a, .pegi span{
 	color:#ff8400;
@@ -111,15 +108,16 @@ form.inline {
   font-weight:bold;
 }
 
-.inputWithBorder
-{
-border: 1px solid #7F9DB9;
+.inputWithBorder {
+  border: 1px solid #7F9DB9;
 }
 
-li.youtube img, li.vimeo img
-{
-width: 69px;
-height:52px;
-margin-top:2px;
+li.youtube img, li.vimeo img {
+  width:      69px;
+  height:     52px;
+  margin-top: 2px;
 }
 
+a.accBtnMi {
+  padding-top: 5px;   
+}

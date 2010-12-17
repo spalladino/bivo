@@ -24,7 +24,7 @@
 				<p class="searFilTxt"><%= _("Enter the product or service to buy (i.e. books) or the name of the seller (i.e. Amazon)")%></p>
             
 	   	  		<div class="gnFilMain">
-	            	<h3 class="shopRinHead searInHead"><%=@count%> <%if @count== 1 %> <%=_("result found")%> <%else%> <%=_("results found")%> </h3>
+	            	<h3 class="shopRinHead searInHead"><%=@count%> <%=n_("result found", "results found", @count)%> </h3>
 	            	<p class="genFilTxt"><%= label_tag :sorting, _('Sort by')%></p><%= select_tag :sorting, options_for_select(@sortings, @sorting) %>
 	                <div class="pegi">
 	                	<ul>
@@ -44,7 +44,7 @@
 				</div>
 	
 				<div class="rgtFilmarg">
-					<%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page)%>
+					<%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page), :class => "showChoo"%>
 					<p class="showTxt"><%= label_tag :per_page, _("Show per page")%></p>
 					<br class="spacer" />
 	            </div>
@@ -54,5 +54,3 @@
      </div>
 	 <div class="bodyBot"></div>
 </div>
-
-<%end%>
