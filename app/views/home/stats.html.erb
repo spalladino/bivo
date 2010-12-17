@@ -4,6 +4,12 @@
   <%= render 'choose_period' %>
 </div>
 
+<br/>
+
+<%= _("Total Expenses")%>: <%= @expenses_total %><br/>
+<%= _("Total Revenue")%>: <%= @revenues_total %><br/>
+
+
 <div>
   <h2><%= _("Expenses")%></h2>
 
@@ -16,7 +22,7 @@
   <% end %>
 	<tr>
 	  <td><%= _("Total Expenses")%></td>
-	  <td><%= @expense_categories.sum &:amount %>
+	  <td><%= @expenses_total %>
 	</tr>
   </table>
 

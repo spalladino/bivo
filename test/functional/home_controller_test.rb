@@ -91,6 +91,7 @@ class HomeControllerTest < ActionController::TestCase
     assert_equal e1.amount + e2.amount, assigns(:expense_categories).first.amount
     assert_equal e3.amount, assigns(:expense_categories).second.amount
     assert_equal 0, assigns(:expense_categories).third.amount
+    assert_equal [e1, e2, e3].sum(&:amount), assigns(:expenses_total)    
   end
   
   test "should display all expense categories" do
@@ -108,6 +109,7 @@ class HomeControllerTest < ActionController::TestCase
     assert_equal 0, assigns(:expense_categories).first.amount
     assert_equal 0, assigns(:expense_categories).second.amount
     assert_equal 0, assigns(:expense_categories).third.amount
+    assert_equal 0, assigns(:expenses_total)
   end
   
   test "should get income stats filtering by period" do

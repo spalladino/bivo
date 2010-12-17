@@ -11,10 +11,10 @@ class ExpenseCategory < ActiveRecord::Base
     
     amounts = Expense.between(from, to).group(:expense_category_id)\
       .select("expense_category_id, SUM(amount) AS amount")\
-      .inject({}) { |res,row| res.merge!({ row.expense_category_id => row.amount.to_f }) }
+      .inject({}) { |res,row| res.merge!({ row.expense_category_id => row.amount.to_d }) }
     
     # fix data type of the SUM, it is a string
-    categories.each { |row| row.define_accessor :amount, (amounts[row.id] || 0.to_f) }
+    categories.each { |row| row.define_accessor :amount, (amounts[row.id] || 0.to_d) }
     
     categories
   end

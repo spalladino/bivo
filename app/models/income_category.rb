@@ -16,11 +16,11 @@ class IncomeCategory < ActiveRecord::Base
     
     amounts = Income.between(from, to).group(:income_category_id)\
       .select("income_category_id, SUM(amount) AS amount")\
-      .inject({}) { |res,row| res.merge!({ row.income_category_id => row.amount.to_f }) }
+      .inject({}) { |res,row| res.merge!({ row.income_category_id => row.amount.to_d }) }
     
     # fix data type of the SUM, it is a string
     categories.each do |row| 
-      row.define_accessor :revenue_amount, Income.to_revenue(amounts[row.id] || 0.to_f)    
+      row.define_accessor :revenue_amount, Income.to_revenue(amounts[row.id] || 0.to_d)    
     end
     
     categories
