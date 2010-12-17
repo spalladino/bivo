@@ -11,16 +11,10 @@
         <%= edit_gallery_link @charity %>
         <div class="chariMid cauVMid">
           <div class="cariOrg">
-	          <p><%=_("Charity Rating")%>:</p><%= rating_stars @charity %><br class="spacer" />
+	          <p><%=_("Charity Rating")%>:</p><br class="spacer" />
             <p><%=raw @charity.description%></p>
           </div><!-- cariOrg-->
-          <ul class="star star3"> <!-- TODO: deshardcodear -->
-	          <li><a href="#"><%=image_tag "star.png", :width => "15", :height => 15%></a></li>
-            <li><a href="#"><%=image_tag "star.png", :width => "15", :height => 15%></a></li>
-            <li><a href="#"><%=image_tag "star.png", :width => "15", :height => 15%></a></li>
-            <li><a href="#"><%=image_tag "star.png", :width => "15", :height => 15%></a></li>
-            <li><a href="#"><%=image_tag "starHo.png", :width => "15", :height => 15%></a></li>
-          </ul>
+          <%= rating_stars @charity, :class => "star star3" %>
         </div><!-- /chariMid cauVMid -->
         <div class="shopListBoxRi">
         	<div class="shopListGr"><span class="cvMBoxNo"><%=number_to_currency(@charity.total_funds_raised || 0,:precision => 0)%></span><span class="cvMBoxTxt"><%=_(' raised')%></span></div>
