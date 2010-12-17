@@ -9,7 +9,7 @@ class CharitiesController < ApplicationController
   before_filter :follows_exist, :only => [:unfollow]
 
   def index
-    @charities = Charity.with_cause_data
+    @charities = Charity.exclude_inactive.with_cause_data
     @categories = CharityCategory.sorted_by_charities_count
 
     def apply_filters(only_charities=false, &block)
