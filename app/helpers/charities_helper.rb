@@ -3,7 +3,7 @@ module CharitiesHelper
   # *Follow* is displayed when the user is not following the charity, otherwise *Unfollow* is displayed.
   # If the user is logged off, redirects to the Login page.
   # When a charity is being followed the user gets e-mail alerts when the status of the charity changes.
-  def follow_charity_button(charity)
+  def follow_charity_button(charity, opts={})
     if current_user.nil?
         label = _("Login to follow")
         disabled = true
@@ -15,12 +15,13 @@ module CharitiesHelper
 
     return content_tag :div,
     button_to(label,
+        {:action => action, :id => charity.id },
         {
-        :action => action, :id => charity.id },
         :remote => true,
         :disabled => disabled ,
         :onclick => 'disableAndContinue(this,"Submitting...")',
         :id => "follow_charity_btn"
+        }.merge(opts)
       ),
       :id => "follow_charity_button"
   end
@@ -33,7 +34,13 @@ module CharitiesHelper
     end
   end
 
-
+  # Renders a control with stars that indicate charity rating
+  def rating_stars(charity, html_opts={})
+    return (content_tag :ul, (0..4).map { |idx|
+      img = (charity.rating || 0).to_i >= idx ? 'star.png' : 'starHo.png'
+      content_tag :li, image_tag(img, :width => 15, :height => 15), {}, false
+    }.join("\n"), {:class => 'star'}.merge(html_opts), false).html_safe
+  end
 
   # Redirects to the “Add Cause” page.
   def add_cause_button(charity)

@@ -2,7 +2,7 @@ require 'test_helper'
 
 class AdminControllerTest < ActionController::TestCase
 
-  test "should add an active charity from admin " do
+  test "should add an active charity from admin" do
     admin = create_admin_and_sign_in
 
     post :create_charity,
@@ -19,11 +19,15 @@ class AdminControllerTest < ActionController::TestCase
       :tax_reg_number        => 123456,
       :country_id            => Country.make.id,
       :city                  => "Bs As",
-      :description           => "Description test"
+      :description           => "Description test",
+      :rating                => 4
     }
     charity = Charity.find_by_email("char@bivotest.com")
-    assert_equal :active,charity.status
+
     assert_not_nil charity
+    assert_equal :active, charity.status
+    assert_equal 4, charity.rating.to_i
+
     assert_response :found
   end
 

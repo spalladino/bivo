@@ -37,18 +37,16 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def edit
+    @ratings = (0..5).map{|i| ["#{i} #{n_('star', 'stars', i)}", i]}
     render_with_scope :edit
   end
 
-  def update
-    super
-  end
-
 
   def update
-
+    # Manually update rating as we mark it as protected, it can be only modified by an admin
+    @resource.rating = params[resource_name][:rating] if @resource.type.to_s == "Charity" && admin_is_logged_in
+    
     if @resource.update_with_password(params[resource_name])
-
       set_flash_message :notice, :updated
       if admin_is_logged_in
         redirect_to admin_user_manager_path
@@ -68,8 +66,6 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   protected
-
-
 
     def allow_edit
       if  !((current_user && current_user == @resource) || admin_is_logged_in)

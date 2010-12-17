@@ -35,6 +35,9 @@
 
   <p><%= f.label :tax_reg_number, "Tax Registration Number" %><br />
   <%= f.text_field :tax_reg_number %></p>
+  
+  <p><%= f.label :rating, "Rating" %><br />
+  <%= select 'charity', 'rating', @ratings, :include_blank => true %></p>
 
   <p><%= f.label :country, "Country" %>
   <%= f.select :country_id, @countries.collect{ |c| [c.name, c.id] }, :include_blank => true %></p>

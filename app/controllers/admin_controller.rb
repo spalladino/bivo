@@ -70,10 +70,12 @@ class AdminController < ApplicationController
     @countries = Country.all
     @categories = CharityCategory.all
     @referer = request.referer
+    @ratings = (0..5).map{|i| ["#{i} #{n_('star', 'stars', i)}", i]}
   end
 
   def create_charity
     @resource = Charity.new(params["charity"])
+    @resource.rating = params["charity"]['rating']
     @resource.status = :active
     @resource.eula_accepted = true
     @type = @resource.type.to_sym

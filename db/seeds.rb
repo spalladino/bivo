@@ -7,14 +7,10 @@
 #   Mayor.create(:name => 'Daley', :city => cities.first)
 
 
-require 'open-uri'
-
-puts "Creating countries from openconcept"
-open("http://openconcept.ca/sites/openconcept.ca/files/country_code_drupal_0.txt") do |countries|
-  countries.read.each_line do |country|
+puts "Creating countries from data/countries.txt"
+File.open("db/data/countries.txt", 'r').each do |country|
   code, name = country.chomp.split("|")
   Country.find_or_create_by_name name
-  end
 end
 
 puts "Creating categories"
