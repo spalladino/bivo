@@ -53,5 +53,10 @@ module CharitiesHelper
     return Comment.where(:commentable_type => charity.class.name, :commentable_id => charity.id, :approved => false).order('created_at ASC')
   end
 
+  def big_avatar(charity)
+    photo = Gallery.for_entity(charity).items.first(&:is_photo?)
+    photo ? photo.big_avatar_url : nil
+  end
+
 end
 

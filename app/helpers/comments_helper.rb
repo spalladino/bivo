@@ -2,40 +2,47 @@ module CommentsHelper
 
   def reply_comment_button(id,entity)
     if rules(entity).can_add?(current_user)
-      return raw("<input type=\"button\" name=\"reply_or_add_button\" value=\"#{_("Reply")}\" onclick=\"showComments(this, #{id})\"/>")
+      return raw("<a href=\"#\" name=\"reply_or_add_button\" onclick=\"showComments(this, #{id});return false;\">#{_("Reply")}</a>")
     end
   end
 
   def edit_comment_button(id,entity,body)
     if rules(entity).can_edit?(current_user,entity)
-      return raw("<input type=\"button\" id =\"edit_button_#{id}\" value=\"#{_("Edit")}\" onclick=\"editComment(#{id},\'#{nl2br(body)}\')\"/>")
-
+      return raw("<a href=\"#\" id=\"edit_button_#{id}\" onclick=\"editComment(#{id},\'#{nl2br(body)}\');return false;\">#{_("Edit")} </a>")
     end
   end
 
   def delete_comment_button(id,entity)
-    if rules(entity).can_delete?(current_user,entity,Comment.find(id))
-      return button_to(_("Delete"),{:action => "destroy",:controller => "comments", :id => id, :entity_id => entity.id, :class => entity.class}, :remote => true, :method => "post")
+    comment = Comment.find(id)
+    if rules(entity).can_delete?(current_user,entity,comment)
+     form_tag({:action => "destroy",:controller => "comments", :id => id, :entity_id => entity.id, :class => entity.class}, {:remote=>true}) do
+        link_to _("Delete"), "#", :disable_with => _('Deleting...'),:class => "submit_form"
+      end
     end
   end
+
 
   def add_comment_button(entity)
     if rules(entity).can_add?(current_user)
-      return raw("<input type=\"button\" class = \"leav\" name = \"reply_or_add_button\" value=\"#{_("Add Comment")}\" onclick=\"showComments(this, null);\"/>")
+      return raw("<a href = \"#\" class = \"leav\" name = \"reply_or_add_button\" onclick=\"showComments(this, null);return false;\">#{_("Add Comment")}</a>")
     end
   end
 
-
   def save_comment_button(id)
-    return raw("<input type=\"button\" id =\"save_button_#{id}\" class=\"nodisplay\" value=\"#{_("Save")}\" onclick=\"saveEdit(#{id})\"/>")
+    comment = Comment.find(id)
+    link_to _("Save"), "#",:disable_with => _('Submitting...'),:id => "save_button_#{comment.id}",:class => "nodisplay submit_form"
+  end
+
+  def submit_comment_button
+    link_to _("Submit"), "#",:disable_with => _('Submitting...'),:class => "submit_form"
   end
 
   def cancel_save_button(id)
-     return raw("<input type=\"button\" id =\"cancel_button_#{id}\" class=\"nodisplay\" value=\"#{_("Cancel")}\" onclick=\"cancelEdit(#{id})\"/>")
+     return raw("<a href = \"#\" id =\"cancel_button_#{id}\" class=\"nodisplay\" onclick=\"cancelEdit(#{id});return false\">#{_("Cancel")}</a>")
   end
 
    def cancel_add_button
-     return raw("<input type=\"button\" name =\"cancel_button\" class=\"nodisplay\" value=\"#{_("Cancel")}\" onclick=\"cancelAdd(this)\"/>")
+     return raw("<a href = \"#\" name =\"cancel_button\" class=\"nodisplay\" onclick=\"cancelAdd(this);return false;\">#{_("Cancel")}</a>")
   end
 
   def rules(entity)

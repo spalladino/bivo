@@ -3,7 +3,7 @@
 <div id="charities-list">
 <% for charity in @charities %>
   <div class="chariIn">
-    <div class="chariLpic"><a href="#"><img src="images/pic.jpg" width="150" height="110" alt="" /></a></div> <!-- TODO: deshardcodear foto-->
+    <div class="chariLpic"><a href="#"><%=image_tag big_avatar(charity) || "navHo.png"%></a></div> <!-- TODO: deshardcodear foto-->
     <div class="chariMid">
       <h3><%= link_to charity.name, charity_path(charity.id) %></h3>
       <div class="chariLoca">
@@ -22,7 +22,7 @@
     <div class="chariRi">
     	<div class="chariRiBox">
         <a href="<%=charity_path(charity.id)%>">
-          <span class="statInBoxNo chariRiBoxNo"><%=charity.total_funds_raised.to_s%></span>
+          <span class="statInBoxNo chariRiBoxNo"><%=number_to_currency(charity.total_funds_raised || 0,:precision => 0)%></span>
           <span class="statInBoxTxt chariRiBoxTxt"><%=_(' raised')%></span>
         </a>
       </div>
