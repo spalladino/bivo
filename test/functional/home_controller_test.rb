@@ -72,6 +72,8 @@ class HomeControllerTest < ActionController::TestCase
   test "should get stats without data" do
     get :stats
     assert_response :success
+    
+    assert_not_nil assigns(:cash_reserves)
   end
   
   test "should get expense stats filtering by period" do
