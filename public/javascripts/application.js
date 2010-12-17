@@ -10,6 +10,12 @@ function disableAndContinue(element, text) {
 // gallery related scripts
 
 $(function(){
+	$(".submit_form").live('click', function(){
+ 		$(this).closest("form").submit();
+    	return false;
+	});
+
+
 	$('.gallery .thumbnails img').click(function(){
 		var _this = $(this);
 		var gallery = _this.closest('.gallery');
