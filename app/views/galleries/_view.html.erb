@@ -1,29 +1,29 @@
-<div class="gallery">
-	<div class="view">
-	</div>
-
-	<ul class="thumbnails">
-		<% gallery.items.each_with_index do |item, index|
-			options = {}		
-			options[:class] = 'current' if index == 0		
-			options['data-kind'] = item.kind
-			if item.is_video?
-				options['data-video_id'] = item.video_id
-			elsif item.is_photo?
-				options['data-url'] = item.image.url(:normal)
-			end
-		%>
-			<li data-item-id="<%=item.id%>">
-				<%= image_tag item.thumbnail_url, options %>
-				<% if edit %>
-				<br/>
-				<div>
-					<%=move_before_button item.id%>
-			        <%=delete_item_button item.id%>
-			        <%=move_after_button item.id%>
-				</div>
-				<% end %>
-			</li>			
-		<% end %>
-	</ul>
+<div class="cauVL gallery">
+  <div class="cauVLpic view"></div>
+  <div class="thumbMain flexcroll">
+    <ul class="thumb thumbnails">
+		  <% gallery.items.each_with_index do |item, index|
+			  options = {}		
+			  options[:class] = 'current' if index == 0		
+			  options['data-kind'] = item.kind
+			  if item.is_video?
+				  options['data-video_id'] = item.video_id
+			  elsif item.is_photo?
+				  options['data-url'] = item.image.url(:normal)
+			  end
+		  %>
+			  <li class="<%=item.kind%>" data-item-id="<%=item.id%>">
+				  <%= image_tag item.thumbnail_url, options %>
+				  <% if edit %>
+				  <br/>
+				  <div>
+					  <%=move_before_button item.id%>
+			          <%=delete_item_button item.id%>
+			          <%=move_after_button item.id%>
+				  </div>
+				  <% end %>
+			  </li>			
+		  <% end %>
+    </ul>
+  </div>
 </div>

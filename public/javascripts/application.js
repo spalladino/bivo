@@ -10,6 +10,12 @@ function disableAndContinue(element, text) {
 // gallery related scripts
 
 $(function(){
+	$(".submit_form").live('click', function(){
+ 		$(this).closest("form").submit();
+    	return false;
+	});
+
+
 	$('.gallery .thumbnails img').click(function(){
 		var _this = $(this);
 		var gallery = _this.closest('.gallery');
@@ -24,25 +30,26 @@ $(function(){
 		// show/hide didn't work, so add/remove is used
 		var content;
 		if (kind == 'photo') {
-			content = $('<img>').attr('src', _this.attr('data-url'));
+			content = $('<img style="height:183px; width:311px">').attr('src', _this.attr('data-url'));
 		} else if (kind == 'youtube') {
 			content = $('<iframe>')
 				.attr('src', 'http://www.youtube.com/embed/' + _this.attr('data-video_id') + '?rel=0')
 				.attr('type', 'text/html')
-				.attr('width', '425')
-				.attr('height', '349')
+				.attr('width', '223')
+				.attr('height', '183')
 				.attr('frameborder', '0');
 		} else if (kind == 'vimeo') {
 			content = $('<iframe>')
 				.attr('src', 'http://player.vimeo.com/video/' + _this.attr('data-video_id') + '?title=0&amp;byline=0&amp;portrait=0&amp;autoplay=1')
 				.attr('type', 'text/html')
-				.attr('width', '425')
-				.attr('height', '239')
+				.attr('width', '311')
+				.attr('height', '175')
 				.attr('frameborder', '0');
 		}
 
 		view.html(content);
 		$(content).css('margin-top', (view.height() - content.height()) / 2);
+    $(content).css('margin-left', (view.width() - content.width()) / 2);
 	});
 
 	// load first item

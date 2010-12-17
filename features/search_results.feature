@@ -7,7 +7,7 @@ Feature: Search shops page
 		
 		When I go to the home page
 		And I fill in "search_word" with "First"
-		And I press "Go"
+		And I press "GO"
 		
 		Then I should be on search page
 		And I should see "1 result found"

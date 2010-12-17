@@ -1,72 +1,90 @@
+<% content_for(:head) do %>
+  <%= javascript_include_tag "flexcroll" %>
+<% end %>
 
-<h1><%= link_to_charity @charity %></h1>
-
-<%= gallery @charity %>
-<%= edit_gallery_link @charity %>
-
-<p> <b><%=_('id')%></b>: <%= @charity.id%> </p>
-<p> <b><%=_('email')%></b>: <%= @charity.email%> </p>
-<p> <b><%=_('type')%></b>: <%= @charity.type%> </p>
-<p> <b><%=_('charity_name')%></b>: <%= @charity.charity_name%> </p>
-<p> <b><%=_('charity_website')%></b>: <%= @charity.charity_website%> </p>
-<p> <b><%=_('charity_category_id')%></b>: <%= @charity.charity_category_id%> </p>
-<p> <b><%=_('charity_type')%></b>: <%= @charity.charity_type%> </p>
-<p> <b><%=_('rating')%></b>: <%= @charity.rating%> </p>
-<p> <b><%=_('rating_url')%></b>: <%= @charity.rating_url%> </p>
-<p> <b><%=_('country')%></b>: <%= Country.find(@charity.country_id).name%> </p>
-<p> <b><%=_('city')%></b>: <%= @charity.city%> </p>
-<p> <b><%=_('description')%></b>: <%=raw @charity.description%> </p>
-
-<p><b><%=_('rating')%></b>: <%= rating_stars @charity %> </p>
-
-<p><a href="#cause_list"><%=@charity.causes.length%> <%=@charity.causes.length == 1 ? _('cause') :  _('causes')%></a></p>
-
-<div id="follow_charity_button">
-  <%= follow_charity_button @charity %>
-</div>
-
-<br/>
-<div id="delete_charity_button">
-  <%= delete_charity_button @charity %>
-</div>
-
-<br/>
-<div id="add_cause_button">
-  <%= add_cause_button(@charity) %>
-</div>
-
-<br/>
-<div id="activate_deactivate_charity_btn_<%=@charity.id%>">
-  <%= active_deactive_charity_button @charity %>
-</div>
-
-
-<div id="cause_list">
-  <table BORDER="1">
-  <tr>
-    <th>Name</th>
-    <th>Status</th>
-    <th>Progress</th>
-  </tr>
-
-  <% @charity.causes_to_show(current_user).each do |cause|%>
-  <tr>
-    <td><%=cause_link cause%></td>
-    <td><%=cause.status%></td>
-    <td><%=progress_box cause%></td>
-  </tr>
-
-  <%end%>
-
-  </table>
-
-</div>
+<div class="inbodyM">
+  <div class="bodyInner">
+    <div class="statGrT"><h2><%= @charity.charity_name%></h2></div>
+    <div class="boxMain">
+      <div class="cauVMain">
+        <%= gallery @charity %>
+        <%= edit_gallery_link @charity %>
+        <div class="chariMid cauVMid">
+          <div class="cariOrg">
+	          <p><%=_("Charity Rating")%>:</p><%= rating_stars @charity %><br class="spacer" />
+            <p><%=raw @charity.description%></p>
+          </div><!-- cariOrg-->
+          <ul class="star star3"> <!-- TODO: deshardcodear -->
+	          <li><a href="#"><%=image_tag "star.png", :width => "15", :height => 15%></a></li>
+            <li><a href="#"><%=image_tag "star.png", :width => "15", :height => 15%></a></li>
+            <li><a href="#"><%=image_tag "star.png", :width => "15", :height => 15%></a></li>
+            <li><a href="#"><%=image_tag "star.png", :width => "15", :height => 15%></a></li>
+            <li><a href="#"><%=image_tag "starHo.png", :width => "15", :height => 15%></a></li>
+          </ul>
+        </div><!-- /chariMid cauVMid -->
+        <div class="shopListBoxRi">
+        	<div class="shopListGr"><span class="cvMBoxNo"><%=number_to_currency(@charity.total_funds_raised || 0,:precision => 0)%></span><span class="cvMBoxTxt"><%=_(' raised')%></span></div>
+	        <div class="shopListGr"><span class="cvMBoxNo"><%=@charity.causes_count.to_s%></span><span class="cvMBoxTxt"><%= n_(' cause', ' causes', @charity.causes_count) %></span></div>  
+          <div class="buttonMainVote29">
+		        <div class="buttonSideRec recBtnStF"></div>
+            <div id="follow_charity_button">
+              <%= follow_charity_button @charity, :class => "buttonMidRec" %>
+            </div>
+        		<div class="buttonSideRec recBtnEn"></div><br class="spacer" />
+   			  </div>            
+          <div class="buttonMainVote29">
+            <!--<div class="buttonSideRec recBtnStL"></div>
+        		<input type="button" name="like" value="Like" id="like" class="buttonMidRec" />
+        		<div class="buttonSideRec recBtnEn"></div><br class="spacer" />
+            TODO: estilo de fb, no se puede poner cualquiera -->
+            <div id="facebook_like">
+              <%=facebook_like%>
+            </div>
+          </div>
+        </div><!-- /shopListBoxRi -->
+        <br class="spacer" />      
+  	  </div><!--cauVMain-->
 
 
-<br/>
-<div id="facebook_like">
-  <%=facebook_like%>
-</div>
+<!--<p><a href="#cause_list"><%=@charity.causes.length%> <%=@charity.causes.length == 1 ? _('cause') :  _('causes')%></a></p>-->
+
+
+
+      <br/>
+      <div id="delete_charity_button">
+        <%= delete_charity_button @charity %>
+      </div>
+
+      <br/>
+
+      <br/>
+      <div id="activate_deactivate_charity_btn_<%=@charity.id%>">
+        <%= active_deactive_charity_button @charity %>
+      </div>
+
+      <div id="add_cause_button">
+        <%= add_cause_button(@charity) %>
+      </div>
+
+      <div class="cvNews"><h2>Causes</h2></div>
+      <div class="cvNewsBox chriCABox">
+    	  <div class="cvNewsBoxIn chriCABox flexcroll" id="cause_list">
+          <ul class="statInmainT2">
+   		      <li class="chariTy"><%=_('Name')%><!--<a class="statInTLArr"><img src="images/tabBullet.png" width="7" height="4" alt="" /></a>--></li>
+        	  <li class="chariSt"><%=_('Status')%></li>
+            <li class="chariPro noBord"><%=_('Progress')%></li><br class="spacer" />
+    	    </ul>
+          <% @charity.causes_to_show(current_user).each do |cause|%>
+          <ul class="statInmainT3">
+            <li class="chariTy"><%=cause_link cause%></li>
+            <li class="chariSt"><%=cause.status%></li>
+            <li class="chariPro noBord"><%=progress_box cause%></li><br class="spacer" />
+          </ul>
+          <%end%>
+        </div><!-- /cause_list -->
+      </div>
+
+      <%= render :partial => 'news/news', :locals => { :newsable => @charity, :all_news => @charity.news.order('id Desc') } %>
 
 <div id="comments_pending_approval_link">
   <%= comments_pending_approval_link @charity %>
@@ -76,5 +94,9 @@
   <%= comments @charity %>
 </div>
 
-<%= render :partial => 'news/news', :locals => { :newsable => @charity, :all_news => @charity.news.order('id Desc') } %>
+    </div><!-- boxMain -->
+  </div><!-- /bodyInner -->
+  <div class="bodyBot"></div>
+</div><!-- /inbodyM -->
+
 

@@ -1,3 +1,4 @@
 $('#<%="row_"+@comment.id.to_s%>').hide("slow");
 <%= render(:partial => 'shared/notifications.js') %>
+$('#comments_list').closest('.flexcroll')[0].scrollUpdate();
 

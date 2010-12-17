@@ -9,7 +9,7 @@
     var container = $(".add_form_container:last", $(button).closest(".comment_row"));
     var comment_text = $('textarea', comment_add_form);
     var hidden_comment_parent = $('input[name="parent_id"]',comment_add_form);
-    var cancel_add_button = $('input[name="cancel_button"]',comment_add_form);
+    var cancel_add_button = $('a[name="cancel_button"]',comment_add_form);
 
     container.append(comment_add_form);
 
@@ -18,7 +18,6 @@
     comment_add_form.show();
     comment_text.focus();
 
-    $(button).hide();
     cancel_add_button.show();
 
   }
@@ -31,7 +30,6 @@
     $('#text_area_' + id).attr('value',replaceAll(body,'<br>', '\n'));
     $('#text_area_' + id).show();
     $('#comment_body_' + id).hide();
-    $('#edit_button_' + id).hide();
     $('#save_button_' + id).show();
     $('#cancel_button_' + id).show();
   }
@@ -39,18 +37,15 @@
   function cancelEdit(id){
     $('#text_area_' + id).hide();
     $('#comment_body_' + id).show();
-    $('#edit_button_' + id).show();
     $('#save_button_' + id).hide();
     $('#cancel_button_' + id).hide();
   }
 
   function cancelAdd(button){
     var comment_add_form = $('#comment_add_form');
-    var reply_or_add_comment_button = $('input[name="reply_or_add_button"]:first', $(button).closest(".comment_row"));
+    var reply_or_add_comment_button = $('a[name="reply_or_add_button"]:first', $(button).closest(".comment_row"));
 
     comment_add_form.hide();
-    reply_or_add_comment_button.show();
-    $(button).hide();
   }
 
 <% end %>
@@ -83,7 +78,15 @@
         <%= render(:partial => 'comments/add_form', :locals => {:entity => entity, :action => action})%>
         </div>
       </div>
-
+<br class="spacer" />
+<br class="spacer" />
+<br class="spacer" />
+<br class="spacer" />
+<br class="spacer" />
+<br class="spacer" />
+<br class="spacer" />
+<br class="spacer" />
+<br class="spacer" />
     </div>
 </div>
 

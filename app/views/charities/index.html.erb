@@ -7,7 +7,16 @@
 		$('.filter').change(function() {
 			$('#filter_form').submit();
 		});
+
+    setCurrentCategory(<%= @category || 0 %>);
 	});
+  
+  function setCurrentCategory(id){
+    $('.catfilter').removeClass('grNavselect');
+    $('.catfilter').each(function(){
+      if ($(this).attr('id') == ('catfilter'+id.toString())) $(this).addClass('grNavselect');
+    });
+  }
 <% end %>
 
 <% title "Charities" %>
@@ -20,7 +29,7 @@
         <div id="filters" class="grNav">
             <ul>
 					    <% @categories.each do |category| %>
-						    <li><%= link_to "#{category.name} (#{category.charities_count})", category_filter_url(category)%></li>
+						    <li><%= link_to "#{category.name} (#{category.charities_count})", category_filter_url(category), :id => ('catfilter'+(category.id || 0).to_s), :class => 'catfilter'%></li>
                 <li class="grPipe">|</li>
 					    <% end%>
               <script type="text/javascript">$(".grPipe").last().remove();</script>
