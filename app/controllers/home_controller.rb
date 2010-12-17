@@ -45,6 +45,8 @@ class HomeController < ApplicationController
     @expense_categories = ExpenseCategory.stats(@from, @to)
     
     @revenues = Income.between(@from, @to)
+    @revenue_categories = IncomeCategory.stats(@from, @to)
+    @revenues_total = @revenue_categories.sum(&:revenue_amount) rescue 0
   end
 
   def change_language

@@ -15,8 +15,13 @@ class IncomeTest < ActiveSupport::TestCase
     assert_equal [b], incomes
   end
   
-  test "revenue_amount is 5% of amount" do
+  test "revenue_amount is 5% of amount for shops" do
     a = Income.make :shop, :input_amount => 100
+    assert_equal 5, a.revenue_amount 
+  end
+  
+  test "revenue_amount is 5% of amount for investments" do
+    a = Income.make :investment, :input_amount => 100
     assert_equal 5, a.revenue_amount 
   end
 end

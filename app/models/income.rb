@@ -28,7 +28,11 @@ class Income < Transaction
   end
   
   def revenue_amount
-    0.05 * amount
+    Income.to_revenue amount
+  end
+  
+  def self.to_revenue(value)
+    0.05 * value
   end
 
   def self.between(from, to)
