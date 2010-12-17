@@ -4,6 +4,12 @@
   <%= render 'choose_period' %>
 </div>
 
+<br/>
+
+<%= _("Total Expenses")%>: <%= @expenses_total %><br/>
+<%= _("Total Revenue")%>: <%= @revenues_total %><br/>
+<%= _("Cash Reserves")%>: <%= @cash_reserves %><br/>
+
 <div>
   <h2><%= _("Expenses")%></h2>
 
@@ -16,7 +22,25 @@
   <% end %>
 	<tr>
 	  <td><%= _("Total Expenses")%></td>
-	  <td><%= @expense_categories.sum &:amount %>
+	  <td><%= @expenses_total %>
+	</tr>
+  </table>
+
+</div>
+
+<div>
+  <h2><%= _("Revenues")%></h2>
+
+  <table border="1">
+  <% for cat in @revenue_categories %>
+    <tr>
+	  <td><%= cat.name %></td>
+	  <td><%= cat.revenue_amount %></td>
+	</tr>
+  <% end %>
+	<tr>
+	  <td><%= _("Total Revenue")%></td>
+	  <td><%= @revenues_total %>
 	</tr>
   </table>
 

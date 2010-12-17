@@ -4,6 +4,10 @@ class Account < ActiveRecord::Base
 
   validates :balance, :decimal => true
   
+  def balance_at(date)
+    self.movements.where(['created_at <= ?', date]).except(:order).order('created_at DESC').first.balance rescue 0
+  end
+  
   def self.cash_reserves_account
     CashReservesAccount.find_or_create_by_name(CashReservesAccount::NAME)
   end

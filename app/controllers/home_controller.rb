@@ -42,10 +42,15 @@ class HomeController < ApplicationController
   def stats
     load_periods
 
+    @cash_reserves = Account.cash_reserves_account.balance_at(@to)
+
     @expenses = Expense.between(@from, @to)
     @expense_categories = ExpenseCategory.stats(@from, @to)
-    
+    @expenses_total = @expense_categories.sum(&:amount) rescue 0.to_d
+
     @revenues = Income.between(@from, @to)
+    @revenue_categories = IncomeCategory.stats(@from, @to)
+    @revenues_total = @revenue_categories.sum(&:revenue_amount) rescue 0.to_d
   end
 
   def change_language
