@@ -17,15 +17,15 @@ class InvestmentsAccountTest < ActiveSupport::TestCase
     end
   end
   
-  test "creating investment moves total amount to cash pool" do
+  test "creating investment moves total amount to cash reserves" do
     income = Income.make :investment, :input_amount => 100
     investment_movement = Account.investments_account.movements.first
-    cash_pool_movement = Account.cash_pool_account.movements.first
+    cash_reserves_movement = Account.cash_reserves_account.movements.first
     
     assert_movement -100, -100, investment_movement
-    assert_movement 100, 100, cash_pool_movement
+    assert_movement 100, 100, cash_reserves_movement
     
     assert_equal income, investment_movement.transaction
-    assert_equal income, cash_pool_movement.transaction
+    assert_equal income, cash_reserves_movement.transaction
   end
 end
