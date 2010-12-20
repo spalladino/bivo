@@ -30,7 +30,7 @@ module CommentsHelper
 
   def save_comment_button(id)
     comment = Comment.find(id)
-    link_to _("Save"), "#",:disable_with => _('Submitting...'),:id => "save_button_#{comment.id}",:class => "nodisplay submit_form"
+    link_to _("Save"), "#",:disable_with => _('Submitting...'),:id => "save_button_#{comment.id}",:class => "submit_form"
   end
 
   def submit_comment_button
@@ -38,7 +38,7 @@ module CommentsHelper
   end
 
   def cancel_save_button(id)
-     return raw("<a href = \"#\" id =\"cancel_button_#{id}\" class=\"nodisplay\" onclick=\"cancelEdit(#{id});return false\">#{_("Cancel")}</a>")
+     return raw("<a href = \"#\" id =\"cancel_button_#{id}\" onclick=\"cancelEdit(#{id});return false\">#{_("Cancel")}</a>")
   end
 
    def cancel_add_button
@@ -54,7 +54,15 @@ module CommentsHelper
   end
 
   def owner_of(comment)
-    return (User.find(comment.user_id)).email
+    if  comment.user.is_admin_user
+      return "Admin"
+    else
+      if !comment.user.nickname.blank?
+        return comment.user.nickname
+      else
+        return  comment.user.name
+      end
+    end
   end
 
   def children(comment)
