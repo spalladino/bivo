@@ -22,10 +22,12 @@
     <br class="spacer" />
     <ul class="rpLink">
       <li><%=reply_comment_button comment.id, entity%></li>
-      <li class="rpPipe">|</li>
-      <li> <%=edit_comment_button comment.id, entity, comment.body%></li>
-      <li class="rpPipe">|</li>
+
+      <%=edit_comment_button comment.id, entity, comment.body%>
+
       <li><%=delete_comment_button comment.id, entity%></li>
+
+
     </ul>
 
 
