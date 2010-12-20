@@ -3,7 +3,7 @@
 <%form_tag(
       {:controller => 'comments',:action => 'update', :id => comment.id},
       :remote => true,
-      :id=>"edit_comment_form_#{comment.id}",:style => "display:none",) do%>
+      :id=>"edit_comment_form_#{comment.id}",:style => "display:none") do%>
           <%=text_area(
               :comment,
               :body,

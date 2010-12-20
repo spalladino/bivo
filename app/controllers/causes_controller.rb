@@ -12,6 +12,8 @@ class CausesController < ApplicationController
   before_filter :status_allow_edit , :only => [:edit, :update]
   before_filter :status_allow_delete, :only => [:delete]
   before_filter :follows_exist, :only => [:unfollow]
+  
+  before_filter :set_section, :only => [:show, :details, :index, :vote]
 
   def show
     render 'details'
@@ -305,5 +307,8 @@ class CausesController < ApplicationController
     end
   end
 
+  def set_section
+    @section = :vote_causes
+  end
 end
 
