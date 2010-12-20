@@ -12,7 +12,7 @@ module ApplicationHelper
     if parts.size == max_words+1
       text = parts[0...-1].join(' ')
       if url
-        "#{link_to (h text), url} #{link_to _('Read more'), url, :class => 'chariTxtRead'}".html_safe
+        "#{link_to(h(text), url)} #{link_to _('Read more'), url, :class => 'chariTxtRead'}".html_safe
       else
         "#{text}..."
       end
