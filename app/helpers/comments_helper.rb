@@ -8,7 +8,7 @@ module CommentsHelper
 
   def edit_comment_button(id,entity,body)
     if rules(entity).can_edit?(current_user,entity)
-      return raw("<a href=\"#\" id=\"edit_button_#{id}\" onclick=\"editComment(#{id},\'#{nl2br(body)}\');return false;\">#{_("Edit")} </a>")
+      return raw("<li class=\"rpPipe\">|</li><li><a href=\"#\" id=\"edit_button_#{id}\" onclick=\"editComment(#{id},\'#{nl2br(body)}\');return false;\">#{_("Edit")} </a></li><li class=\"rpPipe\">|</li>")
     end
   end
 
