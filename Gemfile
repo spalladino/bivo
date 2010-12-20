@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 gem 'rails', '>=3.0.0'
-gem 'devise'
+gem 'devise', '1.2.rc'
 gem 'omniauth'
 gem 'pg'
 gem 'mongrel'

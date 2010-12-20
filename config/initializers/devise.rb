@@ -43,7 +43,8 @@ Devise.setup do |config|
   # from others authentication tools as :clearance_sha1, :authlogic_sha512 (then
   # you should set stretches above to 20 for default behavior) and :restful_authentication_sha1
   # (then you should set stretches to 10, and copy REST_AUTH_SITE_KEY to pepper)
-  config.encryptor = :bcrypt
+  # Encryptor is deprecated in 1.2rc, commented out config.encryptor setting
+  #config.encryptor = :bcrypt
 
   # Setup a pepper to generate the encrypted password.
   config.pepper = "aa46c6229c49e308bcb274ad6de3fe3fe7cd3fbcbf2f3003312c135bbaa70e47410deaeb99baab31e955880b8f2ee5e3f2510d09712d36b747da56021d5bd3b9"
@@ -139,4 +140,46 @@ Devise.setup do |config|
   #   end
   #   manager.default_strategies(:scope => :user).unshift :twitter_oauth
   # end
+end
+
+# Reopen devise modules to trim emails as well as applying downcase to them
+# so users can register with emails using any casing and extra spaces
+module Devise
+  module Models
+    
+    module Authenticatable
+      module ClassMethods
+        
+        alias_method :old_find_for_authentication, :find_for_authentication
+        def find_for_authentication(conditions)
+          case_insensitive_keys.each { |k| conditions[k].try(:strip!) }
+          old_find_for_authentication(conditions)
+        end
+        
+        alias_method :old_find_or_initialize_with_errors, :find_or_initialize_with_errors
+        def find_or_initialize_with_errors(required_attributes, attributes, error=:invalid)
+          case_insensitive_keys.each { |k| attributes[k].try(:strip!) }
+          old_find_or_initialize_with_errors(required_attributes, attributes, error)
+        end
+
+      end
+    end
+
+    module DatabaseAuthenticatable
+      alias_method :old_downcase_keys, :downcase_keys
+      def downcase_keys
+         self.class.case_insensitive_keys.each { |k| self[k].try(:strip!) }
+         old_downcase_keys
+      end
+    end
+    
+  end
+end
+
+# Fix devise hash with indifferent access
+class Devise::IndifferentHash
+  def [](key)
+    converted = convert_key(key)
+    super(converted)
+  end
 end
