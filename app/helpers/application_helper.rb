@@ -40,7 +40,7 @@ module ApplicationHelper
   def gallery(entity)
     render :partial => 'galleries/view', :locals => { :gallery => Gallery.for_entity(entity), :edit => false }
   end
-  
+
   def edit_gallery_link(entity)
     if eval("#{entity.class}::GalleryRules").can_edit?(current_user, entity)
       link_to _('Edit Gallery'), edit_gallery_path(entity.class.name, entity.id)
@@ -109,7 +109,7 @@ module ApplicationHelper
   def br2nl(s)
      s.gsub('<br>',/\n/)
   end
-  
+
   def link_to_cause(cause)
     link_to cause.name, url_cause(cause)
   end
@@ -117,13 +117,30 @@ module ApplicationHelper
   def url_cause(cause)
     { :controller => "causes", :action => "details", :url => cause.url }
   end
-  
+
   def link_to_charity(charity)
     link_to charity.charity_name, url_charity(charity)
   end
-  
+
   def url_charity(charity)
     { :controller => "charities", :action => "details", :url => charity.short_url }
   end
+
+  def comments_avatar(user)
+    if user.is_charity_user
+      photo = Gallery.for_entity(user).items.first(&:is_photo?)
+      photo ? photo.comments_avatar_url : nil
+    elsif user.is_personal_user
+      photo = user.picture.url(:comments_avatar)
+      return nil if photo == "/pictures/original/missing.png"
+    elsif user.is_admin_user
+      photo = "admin.png"
+    end
+  end
+  
+  def styled_will_paginate(collection, atts={})
+    will_paginate @collection, {:previous_label => image_tag('pegiarL.png'), :next_label => image_tag('pegiarR.png'), :class => 'pegi'}.merge(atts)
+  end
+
 end
 

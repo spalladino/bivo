@@ -49,6 +49,11 @@ module ShopsHelper
     end
     link_to _("Shop at %s") % shop.display_name, url, html_opts
   end
+  
+  def comission_value_text(shop)
+    value_s = shop.comission_value.to_s
+    shop.comission_kind_percentage? ? "#{value_s}%" : value_s
+  end
 
 end
 

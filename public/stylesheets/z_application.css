@@ -104,6 +104,10 @@ form.inline {
   position:relative;
 }
 
+.pegi.shops a, .pegi.shops span{
+  top: -53px;
+}
+
 .pegi span{
   font-weight:bold;
 }
@@ -120,4 +124,8 @@ li.youtube img, li.vimeo img {
 
 a.accBtnMi {
   padding-top: 5px;   
+}
+
+select.genChoo {
+    width: 120px;
 }
