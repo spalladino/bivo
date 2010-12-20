@@ -121,3 +121,7 @@ li.youtube img, li.vimeo img {
 a.accBtnMi {
   padding-top: 5px;   
 }
+
+select.genChoo {
+    width: 120px;
+}

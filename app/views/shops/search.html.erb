@@ -25,7 +25,7 @@
             
 	   	  		<div class="gnFilMain">
 	            	<h3 class="shopRinHead searInHead"><%=@count%> <%=n_("result found", "results found", @count)%> </h3>
-	            	<p class="genFilTxt"><%= label_tag :sorting, _('Sort by')%></p><%= select_tag :sorting, options_for_select(@sortings, @sorting) %>
+	            	<p class="genFilTxt"><%= label_tag :sorting, _('Sort by')%></p><%= select_tag :sorting, options_for_select(@sortings, @sorting), :class => "genChoo" %>
 	                <div class="pegi">
 	                	<ul>
 	                    	<li><a href="#"><img src="/images/pegiarL.png" width="4" height="7" alt="" /></a></li>
