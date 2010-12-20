@@ -104,6 +104,10 @@ form.inline {
   position:relative;
 }
 
+.pegi.shops a, .pegi.shops span{
+  top: -53px;
+}
+
 .pegi span{
   font-weight:bold;
 }

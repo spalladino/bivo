@@ -130,6 +130,10 @@ module ApplicationHelper
     photo = Gallery.for_entity(user).items.first(&:is_photo?)
     photo ? photo.comments_avatar_url : nil
   end
+  
+  def styled_will_paginate(collection, atts={})
+    will_paginate @collection, {:previous_label => image_tag('pegiarL.png'), :next_label => image_tag('pegiarR.png'), :class => 'pegi'}.merge(atts)
+  end
 
 end
 
