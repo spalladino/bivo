@@ -1,87 +1,86 @@
-<h1>Statistics</h1>
+<div class="inbodyM">
+	<div class="bodyInner">
+    	<div class="statGrT"><h2>Statistics</h2></div>
+        <div class="boxMain">
+			<%= render 'choose_period' %>
+			<br class="spacer" />
+            <div class="statIn">
+            	<h3 class="statGrTop"><%= _("Overall performance") %></h3>
+                <ul class="statInmain">
+                	<li class="statInBox"><span class="statInBoxNo"><%= number_to_currency @expenses_total %></span><span class="statInBoxTxt"><%= _("revenue") %></span></li>
+                    <li class="statInBox"><span class="statInBoxNo"><%= number_to_currency @revenues_total %></span><span class="statInBoxTxt"><%= _("expenses") %></span></li>
+                    <li class="statInBox noMarg"><span class="statInBoxNo"><%= number_to_currency @cash_reserves %></span><span class="statInBoxTxt"><%= _("cash reserves") %></span></li><br class="spacer" />
+                </ul>
+                <div class="statInL">
+                	<h3 class="statGrTop"><%= _("Expenses") %></h3>
+                    <div class="statIn2main">
+						<% for cat in @expense_categories %>
+                        <ul class="inTab">
+                        	<li class="inTabL"><%= cat.name %></li>
+                            <li class="inTabR"><%= number_to_currency cat.amount %></li><br class="spacer" />
+                        </ul>
+						<% end %>
+                        <ul class="inTab inTab2">
+                        	<li class="inTabL"><%= _("Total Expenses")%></li>
+                            <li class="inTabR"><%= number_to_currency @expenses_total %></li><br class="spacer" />
+                        </ul>
+                    </div>
+                </div>
+                <div class="statInR">
+                	<h3 class="statGrTop"><%= _("Revenue") %></h3>
+                    <div class="statIn2main">
+					  <% for cat in @revenue_categories %>
+                      <ul class="inTab">
+						<li class="inTabL"><%= cat.name %></li>
+                    	<li class="inTabR"><%= number_to_currency cat.revenue_amount %></li><br class="spacer" />
+                      </ul>
+					  <% end %>	
+                        <ul class="inTab inTab2">
+                        	<li class="inTabL"><%= _("Total Revenue")%></li>
+                            <li class="inTabR"><%= number_to_currency @revenues_total %></li><br class="spacer" />
+                        </ul>
+                    </div>
+                </div><br class="spacer" />
+                <h3 class="statGrTop"><%= _("Expenses details") %></h3>
+                <div class="statInmainBord" id="masterdiv">
+                	<ul class="statInmainT">
+                		<li class="statInTL"><%= _("Type") %><!-- <a class="statInTLArr" onclick="SwitchMenu('sub1')"><img src="images/tabBullet.png" width="7" height="4" alt="" /></a> --></li>
+                    	<li class="statInTM"><%= _("Description") %></li>
+                    	<li class="statInTM"><%= _("Paid to") %></li>
+                    	<li class="statInTR noBord"><%= _("Amount") %></li><br class="spacer" />
+                	</ul>
+                    <div id="sub1" class="closeTab">
+						<% @expenses.each_with_index do |expense, index| %>
+                    	<ul class="<%= "statInmainT " + (index.even? ? "statInmainDark" : "statInmainLight") %>">
+                    		<li class="statInTL statInTL2"><%= expense.expense_category.name rescue nil %></li>
+                        	<li class="statInTM"><%= expense.description %></li>
+                        	<li class="statInTM"><%= expense.paid_to %></li>
+                        	<li class="statInTR noBord"><%= number_to_currency expense.amount %></li><br class="spacer" />
+                    	</ul>
+						<% end %>
+                    </div>
+                    
+                </div>
+			</div>
 
-<div id="filters">
-  <%= render 'choose_period' %>
-</div>
-
-<br/>
-
-<%= _("Total Expenses")%>: <%= @expenses_total %><br/>
-<%= _("Total Revenue")%>: <%= @revenues_total %><br/>
-<%= _("Cash Reserves")%>: <%= @cash_reserves %><br/>
-
-<div>
-  <h2><%= _("Expenses")%></h2>
-
-  <table border="1">
-  <% for cat in @expense_categories %>
-    <tr>
-	  <td><%= cat.name %></td>
-	  <td><%= cat.amount %></td>
-	</tr>
-  <% end %>
-	<tr>
-	  <td><%= _("Total Expenses")%></td>
-	  <td><%= @expenses_total %>
-	</tr>
-  </table>
-
-</div>
-
-<div>
-  <h2><%= _("Revenues")%></h2>
-
-  <table border="1">
-  <% for cat in @revenue_categories %>
-    <tr>
-	  <td><%= cat.name %></td>
-	  <td><%= cat.revenue_amount %></td>
-	</tr>
-  <% end %>
-	<tr>
-	  <td><%= _("Total Revenue")%></td>
-	  <td><%= @revenues_total %>
-	</tr>
-  </table>
-
-</div>
-
-<div>
-  <h2><%= _("Expenses Details")%></h2>
-
-  <table border="1"> 
-	<tr>
-		<th>Type</th>
-		<th>Description</th>
-		<th>Paid to</th>
-		<th>Amount</th>
-	</tr>
-	<% for expense in @expenses %>
-	  <tr>
-		<td><%= expense.expense_category.name rescue nil %></td>
-		<td><%= expense.description %></td>
-		<td><%= expense.paid_to %></td>
-		<td><%= expense.amount %></td>
-	  </tr>
-	<% end %>
-  </table>
-</div>
-
-<div>
-  <h2><%= _("Revenue Details")%></h2>
-
-  <table border="1"> 
-	<tr>
-		<th>Source</th>
-		<th>Channel</th>
-		<th>Amount</th>
-	</tr>
-	<% for revenue in @revenues %>
-	  <tr>
-		<td><%= revenue.income_category.name rescue nil %></td>
-		<td><%= revenue.detail %></td>
-		<td><%= revenue.revenue_amount %></td>
-	  </tr>
-	<% end %>
-  </table>
+            <h3 class="statGrTop"><%= _("Revenue details") %></h3>
+            <div class="statInmainBord" id="masterdiv">
+            	<ul class="statInmainT">
+           			<li class="statInTL statInTL4">Type<!-- <a class="statInTLArr" onclick="SwitchMenu('sub2')"><img src="images/tabBullet.png" width="7" height="4" alt="" /></a> --></li>
+                	<li class="statInTM">Channel</li>
+					<li class="statInTR noBord">Amount</li><br class="spacer" />
+            	</ul>
+                <div id="sub2" class="closeTab">
+					<% @revenues.each_with_index do |revenue, index| %>
+                	<ul class="<%= "statInmainT " + (index.even? ? "statInmainDark" : "statInmainLight") %>">
+						<li class="statInTL statInTL3"><%= revenue.income_category.name rescue nil %></li>
+						<li class="statInTM"><%= revenue.detail %></li>
+						<li class="statInTR noBord"><%= number_to_currency revenue.revenue_amount %></li><br class="spacer" />
+                    </ul>
+					<% end %>
+                </div>
+            </div>
+            <p class="statBotTxt">If you can help us optimize our expenses please <a href="#">contact us</a> or post your proposal to the <a href="#">community forum</a>.</p> 
+		</div>
+	</div>
 </div>
