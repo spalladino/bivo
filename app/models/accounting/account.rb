@@ -16,6 +16,10 @@ class Account < ActiveRecord::Base
     CashPoolAccount.find_or_create_by_name(CashPoolAccount::NAME)
   end
 
+  def self.expenses_account
+    ExpensesAccount.find_or_create_by_name(ExpensesAccount::NAME)
+  end
+  
   def self.investments_account
     InvestmentsAccount.find_or_create_by_name(InvestmentsAccount::NAME)
   end
