@@ -12,9 +12,9 @@ end
 
 Then /^I should see "([^"]*)" pages$/ do |count|
   1.upto(count.to_i) do |i|
-    Then %(I should see "#{i}" within ".pagination")
+    Then %(I should see "#{i}" within ".pegi")
   end
-  Then %(I should not see "#{count.to_i + 1}" within ".pagination")
+  Then %(I should not see "#{count.to_i + 1}" within ".pegi")
 end
 
 
