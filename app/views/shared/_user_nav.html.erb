@@ -13,19 +13,17 @@
 <%end%>
 	  <div class="main">
 		<%= link_to image_tag("logo.png", :size => "211x77", :alt => "Bivo", :title => "Bivo"), root_url %>
+	    <div class="topDropDev">
 	      <% if user_signed_in? %>
-	        <ul class="topnav">
+          		<%= _("Signed in as") %> <%= current_user.email %> - 
 	          <% if (current_user.type == "Charity") %>
-	            <li><%= link_to _("Settings"), edit_user_registration_path %></li>
+	            <%= link_to _("Settings"), edit_user_registration_path %>
 	          <% elsif (current_user.type == "PersonalUser") %>
-	            <li><%= link_to _("Settings"), edit_user_registration_path %></li>
+	            <%= link_to _("Settings"), edit_user_registration_path %>
 	          <% elsif (current_user.type == "Admin") %>
-	            <li><%= link_to _("Admin Tools"), admin_tools_path %></li>
+	            <%= link_to _("Admin Tools"), admin_tools_path %>
 	          <% end %>
-	          <li class="navPipe"><%= image_tag "navPipe.png", :size => "2x19"%></li><li><%= _("Signed in as") %> <%= current_user.email %></li>
-	        </ul>
-	      <% end %>
-	    <div class="topDrop">
+	      <% end %>		
 		    <%= form_tag(change_language_path, :method => "get", :id => "nav_form", :class => "inline") do %>
 	      	<%= select_tag :language, options_for_select(languages.collect { |l| [l.name, l.id] }, language.id ) %>
 		    <% end %>

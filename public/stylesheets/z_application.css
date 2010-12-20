@@ -129,3 +129,13 @@ a.accBtnMi {
 select.genChoo {
     width: 120px;
 }
+
+.topDropDev {
+	float:right;
+	margin:8px 0 0 0;
+}
+.topDropDev select{
+	width:115px;
+	margin:0 0 0 10px;
+	font:normal 11px/12px Arial, Helvetica, sans-serif;
+}
