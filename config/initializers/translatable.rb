@@ -195,7 +195,7 @@ class ActiveRecord::Base
       define_method field do
         locale = self.class.lazy_translation_language || I18n.locale
         if self.class.lazy_translation && locale != :en
-          self.translation(locale).send(field.intern) 
+          self.translation(locale).send(field.to_s.intern) 
         else 
           read_attribute(field) 
         end
