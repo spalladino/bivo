@@ -30,18 +30,12 @@ class ApplicationController < ActionController::Base
   end
 
   def set_gettext_locale
-    if user_signed_in?
-      if !current_user.preferred_language.nil?
-        session[:locale] = current_user.preferred_language.to_sym
-      else
-        session[:locale] = Language.preferred(get_browser_accept_languages).id
-      end
-    else
-      if (session[:locale].nil?)
-        session[:locale] = Language.preferred(get_browser_accept_languages).id
-      end
+    if user_signed_in? && !current_user.preferred_language.nil?
+      session[:locale] = current_user.preferred_language.to_sym
+    elsif (session[:locale].nil?)
+      session[:locale] = Language.preferred(get_browser_accept_languages).id || :en
     end
-    
+
     # Set request locale
     I18n.locale = session[:locale]
     super
