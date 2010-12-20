@@ -82,7 +82,7 @@ class RegistrationsController < Devise::RegistrationsController
     end
 
     def load_resource
-      if params[:id]
+      if admin_is_logged_in && !params[:id].blank?
         @id = params[:id]
         @resource = User.find(params[:id])
       else
