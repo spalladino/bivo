@@ -32,17 +32,17 @@
 		    <% end %>
 	    </div><br class="spacer" />
 	    <ul class="nav">
-	  	  <li><%= link_to _("Home"), root_path, :class=> if @home_index then "selected"end%></li><li class="navPipe"><%= image_tag "navPipe.png", :size => "2x19"%></li>
-		    <li><%= link_to _("Vote Causes"), causes_url %></li><li class="navPipe"><%= image_tag "navPipe.png", :size => "2x19"%></li>
-		    <li><%= link_to _("Dashboard"), dashboard_url %><li class="navPipe"><%= image_tag "navPipe.png", :size => "2x19"%></li>
-		    <li><%= link_to _("About Bivo"), about_url %><li class="navPipe"><%= image_tag "navPipe.png", :size => "2x19"%></li>
+	  	  <li><%= link_to _("Home"), root_path, :class => if @section == :home_index then "selected" end %></li><li class="navPipe"><%= image_tag "navPipe.png", :size => "2x19"%></li>
+		    <li><%= link_to _("Vote Causes"), causes_url, :class => if @section == :vote_causes then "selected" end %></li><li class="navPipe"><%= image_tag "navPipe.png", :size => "2x19"%></li>
+		    <li><%= link_to _("Dashboard"), dashboard_url, :class => if @section == :dashboard then "selected" end %><li class="navPipe"><%= image_tag "navPipe.png", :size => "2x19"%></li>
+		    <li><%= link_to _("About Bivo"), about_url, :class => if @section == :about then "selected" end %><li class="navPipe"><%= image_tag "navPipe.png", :size => "2x19"%></li>
 	      <% if user_signed_in? %>
 	        <li><%= link_to _("Logout"), destroy_user_session_path %></li><br class="spacer" />
 	      <% else %>
 		      <li><%= link_to _("Login"), new_user_session_path %></li><br class="spacer" />
 	      <% end %>
 	    </ul>
-	  <%if @home_index %>
+	  <%if @section == :home_index %>
         <%= content_for :home_content %>
 	  <%end%>
 	  </div>
