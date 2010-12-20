@@ -3,13 +3,12 @@
 <%form_tag(
       {:controller => 'comments',:action => 'update', :id => comment.id},
       :remote => true,
-      :id=>"edit_comment_form_#{comment.id}") do%>
+      :id=>"edit_comment_form_#{comment.id}",:style => "display:none",) do%>
           <%=text_area(
               :comment,
               :body,
               :size => "30x5",
               :id => "text_area_" + comment.id.to_s,
-              :style => "display:none",
               :class => "accfil accMess")
            %>
           <%= hidden_field_tag(:entity_id, entity.id) %>

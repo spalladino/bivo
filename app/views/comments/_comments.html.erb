@@ -28,17 +28,15 @@
 
   function editComment(id,body){
     $('#text_area_' + id).attr('value',replaceAll(body,'<br>', '\n'));
-    $('#text_area_' + id).show();
     $('#comment_body_' + id).hide();
-    $('#save_button_' + id).show();
-    $('#cancel_button_' + id).show();
+    $('#edit_comment_form_' + id).show();
   }
 
   function cancelEdit(id){
-    $('#text_area_' + id).hide();
+
     $('#comment_body_' + id).show();
-    $('#save_button_' + id).hide();
-    $('#cancel_button_' + id).hide();
+    $('#edit_comment_form_' + id).hide();
+
   }
 
   function cancelAdd(button){
