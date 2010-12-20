@@ -4,7 +4,7 @@
 <div class="cvComReply comment_row" id="<%="row_" + comment.id.to_s%>">
 <% end %>
 
-  <div class="cvComBoxLPic"><%=image_tag comments_avatar(comment.user) || "navHo.png"%><%#TODO: Foto en caso de no encontrar?%>
+  <div class="cvComBoxLPic"><%=image_tag comments_avatar(comment.user) || "unknown.jpg"%><%#TODO: Foto en caso de no encontrar?%>
   </div>
 
   <% if !comment.parent%>
@@ -23,7 +23,7 @@
     <ul class="rpLink">
       <li><%=reply_comment_button comment.id, entity%></li>
 
-      <%=edit_comment_button comment.id, entity, comment.body%>
+      <%= edit_comment_button comment.id, entity, comment.body%>
 
       <li><%=delete_comment_button comment.id, entity%></li>
 
