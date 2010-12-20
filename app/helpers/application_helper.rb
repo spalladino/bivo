@@ -137,6 +137,10 @@ module ApplicationHelper
       photo = "admin.png"
     end
   end
+  
+  def styled_will_paginate(collection, atts={})
+    will_paginate @collection, {:previous_label => image_tag('pegiarL.png'), :next_label => image_tag('pegiarR.png'), :class => 'pegi'}.merge(atts)
+  end
 
 end
 

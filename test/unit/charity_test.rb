@@ -17,17 +17,16 @@ class CharityTest < ActiveSupport::TestCase
     assert_equal 300, charities.first.total_funds_raised.to_i
   end
 
-  test "should get not inactive nor deleted charities with cause data" do
+  test "should get not inactive nor deleted charities with cause data if excluded" do
     charity1 = Charity.make :status => :inactive
+    charity2 = Charity.make :status => :deleted
+    charity3 = Charity.make :status => :active
 
-   charity2 = Charity.make :status => :deleted
-
-   charity3 = Charity.make :status => :active
     [20,10,40].each do |votes|
       Cause.make_with_votes :votes_count => votes, :charity => charity3, :funds_raised => 100.0
     end
 
-    charities = Charity.with_cause_data.all
+    charities = Charity.exclude_inactive.with_cause_data.all
     assert_not_nil charities
     assert_equal 1, charities.size
     assert_equal charity3.id, charities.first.id

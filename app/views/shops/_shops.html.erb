@@ -1,4 +1,4 @@
-<%= will_paginate @shops %>
+<%= styled_will_paginate @shops, :class => "pegi shops" %>
 
 <%if @is_shop_list%>
   <% content_for :js do %>
@@ -38,7 +38,7 @@
 			<p><%= link_to "#{shop.description}", shop_path(shop.id) %></p>
 		</div>
 		<div class="shopListBoxRi">
-			<div class="shopListGr"><a href="<%= shop_path(shop.id) %>"><span class="statInBoxNo chariRiBoxNo"><%=shop.comission_value%><%if shop.comission_kind == :percentage%>%<% end%></span><span class="shopListGrTxt">of your purchase will be<br />donated</span></a></div>
+			<div class="shopListGr"><a href="<%= shop_path(shop.id) %>"><span class="statInBoxNo chariRiBoxNo"><%= comission_value_text(shop)%></span><span class="shopListGrTxt"><%= (_("of your purchase will be%sdonated") % '<br/>').html_safe %></span></a></div>
                 
 			<div class="buttonMainFloat">
 				<div class="buttonSide accBtnSt"></div>
