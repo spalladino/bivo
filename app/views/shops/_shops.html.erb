@@ -31,7 +31,7 @@
 
 <% for shop in @shops %>
 	<div class="shop shopListBox searBox">
-		<div class="shopListBoxL"><%= link_to(image_tag("/images/shopLogo.jpg"))%></div>
+		<div class="shopListBoxL"><%= link_to(image_tag(shop.search_url))%></div>
 		<div class="shopListBoxMid searBoxMid">
 			<h3><%= link_to shop.display_name, shop_path(shop.id) %></h3>
 			<%= link_to "Website: #{shop.url}", to_absolute_url(shop.url), :class => "shopListlink" %>

@@ -122,6 +122,10 @@ class Shop < ActiveRecord::Base
   def inactive?
     status == :inactive
   end
+  
+  def search_url
+    self.image.url(:search)
+  end
 
   protected
 
