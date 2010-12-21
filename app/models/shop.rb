@@ -97,13 +97,21 @@ class Shop < ActiveRecord::Base
   def incomes_in_period(from, to)
     return Income.where('shop_id = ? and transaction_date BETWEEN ? AND ?',self.id,from,to).sum('amount')
   end
-
+  
   def incomes_in_period_rank(from,to)
  #TODO: DEFINE HOW IT RANKS
     return "" if self.incomes_in_period(from,to) <= 100
     return "cloud3" if (100..1000) === self.incomes_in_period(from,to)
     return "cloud2" if (1001..10000) === self.incomes_in_period(from,to)
     return "cloud1"
+  end
+  
+  def incomes_per_month
+    rows = self.incomes.group("date_part('month', transaction_date), date_part('year', transaction_date)")\
+                .select("date_part('month', transaction_date) AS month, date_part('year', transaction_date) AS year, SUM(amount) AS amount")\
+                .order("date_part('year', transaction_date), date_part('month', transaction_date)")
+    
+    return rows.map { |r| { :month => Date.civil(r.year.to_i, r.month.to_i, 1) , :amount => r.amount } }
   end
 
   def display_name
