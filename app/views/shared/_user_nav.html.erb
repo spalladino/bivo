@@ -6,7 +6,7 @@
 	});
 <% end %>
 
-<% if @home_index%>
+<% if @section == :home_index %>
 	<div class="headerFull">
 <%else%>
 	<div id="user_nav" class="innheaderFull">
@@ -24,11 +24,11 @@
 	            <%= link_to _("Admin Tools"), admin_tools_path %>
 	          <% end %>
 	      <% end %>		
-		    <%= form_tag(change_language_path, :method => "get", :id => "nav_form", :class => "inline") do %>
-	      	<%= select_tag :language, options_for_select(languages.collect { |l| [l.name, l.id] }, language.id ) %>
+		    <%= form_tag(change_language_path, :method => "post", :id => "nav_form", :class => "inline") do %>
+	      	<%= select_tag :language, options_for_select(languages.collect { |l| [l.name, l.id] }, language.id ), :onchange => submit_parent_form %>
 		    <% end %>
-		    <%= form_tag(change_currency_path, :method => "get", :id => "curr_form", :class => "inline") do %>
-	      	<%= select_tag :currency, options_for_select(all_currencies.collect { |c| [c.name, c.id] }, current_currency.id ) %>
+		    <%= form_tag(change_currency_path, :method => "post", :id => "curr_form", :class => "inline") do %>
+	      	<%= select_tag :currency, options_for_select(all_currencies.collect { |c| [c.name, c.id] }, current_currency.id), :onchange => submit_parent_form %>
 		    <% end %>
 	    </div><br class="spacer" />
 	    <ul class="nav">

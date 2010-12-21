@@ -54,14 +54,14 @@ module CommentsHelper
   end
 
   def owner_of(comment)
-    if  comment.user.is_admin_user
+    if comment.user.nil?
+      return "-"
+    elsif comment.user.is_admin_user
       return "Admin"
+    elsif !comment.user.nickname.blank?
+      return comment.user.nickname
     else
-      if !comment.user.nickname.blank?
-        return comment.user.nickname
-      else
-        return  comment.user.name
-      end
+      return comment.user.name
     end
   end
 

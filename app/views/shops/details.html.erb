@@ -59,10 +59,10 @@
                 <li class="chariPro noBord"><%=("Funds Raised:")%></li><br class="spacer" />
               </ul>
 
-              <%10.times do %>
+              <%  @shop.incomes_per_month.each do |row| %>
                 <ul class="statInmainT3">
-                 	<li class="chariTy">September 2010</li>
-                   <li class="chariPro noBord">$1000</li><br class="spacer" />
+                 	<li class="chariTy"><%= row[:month].strftime("%B %Y") %></li>
+                   <li class="chariPro noBord"><%= number_to_currency row[:amount] %></li><br class="spacer" />
                  </ul>
                <% end %>
             </div>
