@@ -22,9 +22,9 @@ module CauseHelper
     visible = true
     disabled = nil
 
-    if current_user.nil?
-      visible = false
-    elsif current_user.nil? and cause.can_vote?
+    if current_user.nil? && !cause.can_vote?
+      return nil
+    elsif current_user.nil? && cause.can_vote?
       label = _("Login to vote")
       disabled = true
     else
@@ -39,16 +39,11 @@ module CauseHelper
       end
     end
 
-   return content_tag :div,
-      button_to(label,
-        {:action => "vote",:id => cause.id},
-        :remote => true,
-        :disabled => disabled ,
-        :onclick => 'disableAndContinue(this,"Submitting...")',
-        :class => (if not visible then 'hidden' end),
-        :id => "vote_btn_#{cause.id}"
-      )
+    render :partial => 'cause_buttons',:locals => {:action => 'vote', :label => label, :id => cause.id, :disabled => disabled, :visible => visible,:button_id =>"vote_btn_" + cause.id.to_s}
+
   end
+
+
 
   # *Follow* is displayed when the user is not following the cause, otherwise *Unfollow* is displayed.
   # If the user is logged off, redirects to the Login page.
@@ -63,14 +58,9 @@ module CauseHelper
       action = if follow then "unfollow" else "follow" end
     end
 
-    return content_tag :div,
-      button_to(label,
-        {:action => action, :id => cause.id },
-        :remote => true,
-        :disabled => disabled ,
-        :onclick => 'disableAndContinue(this,"Submitting...")',
-        :id => "follow_cause_btn"
-      ), :id => "follow_cause_button"
+    visible = true
+
+   render :partial => 'cause_buttons',:locals => {:action => action, :label => label, :id => cause.id, :disabled => disabled, :visible => visible,:button_id =>"follow_cause_button"}
 
   end
 
@@ -114,11 +104,11 @@ module CauseHelper
   # * In “completed” mode: Displays the funds raised.
   def progress_box(cause)
     if cause.status == :active
-      return vote_counter cause
+      return  raw(_("Voting (%s votes).") % [cause.votes_count.to_s])
     elsif cause.status == :raising_funds
-      return content_tag :span, cause_funds_completed(cause)
-  elsif cause.status == :completed
-      return content_tag :span, cause.funds_raised
+      return  raw(_("Raising Funds (%s completed).") % [cause_funds_percentage_completed(cause)])
+  elsif cause.status == :completed || cause.status == :paid
+      return  raw(_("Completed (%s funds raised).") % [number_to_currency(cause.funds_raised,:precision => 0)])
     end
   end
 
