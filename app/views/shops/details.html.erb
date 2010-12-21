@@ -30,16 +30,22 @@
          	  <div class="cauVLpic shopVLpic"><%= image_tag @shop.image.url(:view) if @shop.image_file_name %></div>
          	</div>
           <div class="chariMid shopVMid">
-            <p class="shopMidTxt"><strong><%=("Website:")%></strong> <a href= "<%=@shop.url %>"> <%=@shop.url %></a><br /> <%= @shop.description %></p>
-            <p class="shopMidTxt"><strong><%=("Affiliate program details:")%></strong>
-              <%= @shop.comission_details%>
+            <p class="shopMidTxt"><strong><%=_("Website:")%></strong> <a href= "<%=@shop.url %>"> <%=@shop.url %></a></p>
+
+            <p class="shopMidTxt"><strong><%=_("Recommended for residents of:")%></strong>
+			  <%= _("Worldwide") if @shop.worldwide %>
+              <%= @shop.countries.map(&:name).to_sentence :last_word_connector => ' and ' %>
             </p>
 
-            <p class="shopMidTxt"><strong><%=("Categories:")%></strong>
-            <%= @shop.categories.map(&:name).to_sentence %>
+            <p class="shopMidTxt"><strong><%=_("Affiliate program details:")%></strong>
+              <%= @shop.comission_details %>
             </p>
 
-            <p class="shopMidTxt"><strong><%=("Keywords:")%></strong> </p>
+            <p class="shopMidTxt"><strong><%=_("Categories:")%></strong>
+            <%= @shop.categories.map(&:name).to_sentence :last_word_connector => ' and ' %>
+            </p>
+
+            <p class="shopMidTxt"><%= @shop.description %></p>
           </div>
           <div class="shopListBoxRi">
            	<div class="shopListGr"><span class="shopBoxNo"><%= @shop.comission_value%><%if @shop.comission_kind == :percentage%>%<% end%></span><span class="shopBoxTxt"> <%=_("of your purchase will be donated")%></span></div>
