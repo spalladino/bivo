@@ -139,3 +139,12 @@ select.genChoo {
 	margin:0 0 0 10px;
 	font:normal 11px/12px Arial, Helvetica, sans-serif;
 }
+
+
+.actions {
+	margin-bottom: 5px;
+}
+.actions div, .actions form {
+	display: inline;
+}
+.actions > div { float: left; }
