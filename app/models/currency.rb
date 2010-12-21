@@ -15,8 +15,8 @@ class Currency
   end
 
   def self.by_id(id)
-    if (Bivo::Application.config.currencies.include? id)
-      new(id, Bivo::Application.config.currencies[id])
+    if id && Bivo::Application.config.currencies.include?(id.to_sym)
+      new(id.to_sym, Bivo::Application.config.currencies[id.to_sym])
     else
       nil
     end
