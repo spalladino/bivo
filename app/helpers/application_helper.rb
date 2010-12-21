@@ -151,5 +151,15 @@ module ApplicationHelper
     "window.location = '#{location.html_safe}'; return false;"
   end
 
+  def gray_button_to(name, options = {}, html_options = {})
+    html = Hpricot(button_to(name, options, html_options))
+    html.search('//input[@type=submit]').wrap('<div class="buttonMainGra"></div>')
+    html.search('//input[@type=submit]').add_class 'buttonMidGra'
+    gra = html.search('.buttonMainGra')
+    gra.prepend('<div class="graBtnSt"></div>')
+    gra.append('<div class="graBtnEn"></div><br class="spacer"/>')
+    
+    html.to_html.html_safe
+  end
 end
 
