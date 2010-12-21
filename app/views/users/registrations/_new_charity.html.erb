@@ -6,15 +6,22 @@
   <%= f.text_field :charity_website, :class =>"accfil"%>
   <br class="spacer" />
 
-  <p class="accfilTxt"><%= f.label :short_url, _("Short Url")%></p><p style ="width:auto; border:none;" >http://www.bivo.org/ng/</p>
-  <%= f.text_field :short_url, :onfocus => "javascript:$('#available').html('');", :class =>"accfil", :style => "width: 200px;"%>
-  <br class="spacer" />
-  <%= tag 'input', {:type => 'button', :value => _('Check Url'), :onclick => "javascript:checkUrl();"} %>
-  <span id="available"></span>
+  <p class="accfilTxt"><%= f.label :short_url, _("Short Url")%></p>
+	<p style ="display:inline;" >
+		<span>http://www.bivo.org/ng/</span>
+		<%= f.text_field :short_url, :onfocus => "javascript:$('#available').html('');", :class =>"accfil", :style => "width: 200px; float:none; padding-left:7px;"%> 
+		<span style= "float:right; display: inline;">
+			<span class="buttonSide accBtnSt"></span>
+			<%= link_to  _("Check Url"), "#", {:onclick => "javascript:checkUrl(); return false;", :class => "buttonSide accBtnMi", :style => "width: auto;"}%>
+        	<span class="buttonSide accBtnEn"></span>
+		</span>
+  	</p>
+  <br class="accfilTxt" />
+  <p style="font: normal normal normal 13px/24px Arial, Helvetica, sans-serif; margin-left: 175px"><span id="available"></span></p>
   <br/>
 
   <p class="accfilTxt"><%= f.label :charity_category_id, _("Category") %></p>
-  <%= f.select :charity_category_id, @categories.collect{ |c| [c.name, c.id] }, :include_blank => true, :class =>"accfil accChoo" %>
+  <%= f.select :charity_category_id, @categories.collect{ |c| [c.name, c.id] }, {:include_blank => true}, :class =>"accfil accChoo" %>
   <br class="spacer" />
 
   <p class="accfilTxt"><%= f.label :charity_type, _("Charity Type") %></p>
@@ -26,7 +33,7 @@
   <br class="spacer" />
 
   <p class="accfilTxt"><%= f.label :country_id, _("Country") %></p>
-  <%= f.select :country_id, @countries.collect{ |c| [c.name, c.id] }, :include_blank => true, :class =>"accfil accChoo" %>
+  <%= f.select :country_id, @countries.collect{ |c| [c.name, c.id] }, {:include_blank => true}, :class =>"accfil accChoo" %>
   <br class="spacer" />
 
   <p class="accfilTxt"><%= f.label :city, _("City") %></p>

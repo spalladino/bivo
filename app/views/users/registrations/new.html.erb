@@ -9,6 +9,8 @@
       $("#charity_form").css("display", "block");
       $("#personal_form").css("display", "none");
     });
+	
+	$('#recaptcha_widget_div').addClass ('captua');
   });
 <% end %>
 
@@ -49,21 +51,26 @@
 				</div>
 				
 				
-
-				<%= raw recaptcha_tags %>
-				<div class="captuaR">
-			    	<div class="ChkTxtM">
-						<br class="spacer" />
+				<div class="captcha" style= "display:inline;">
+					<%= raw recaptcha_tags %>
+					<div class="captuaR" style="left: 160px;position: relative;">
+				    	<div class="ChkTxtM">
+							<br class="spacer" />
 						
 
-						<%= f.check_box :eula_accepted, :class => "Chk"%>
-						<p class="ChkTxt"><%= f.label :eula_accepted, _("I agree to the ") %><%= link_to _("terms and conditions"), eula_path, :target => :_new %></p>
-						<br class="spacer" />
-						<%= f.check_box :send_me_news, :class => "Chk" %>
-						<p class="ChkTxt"><%= f.label :send_me_news, _("Sign me up to the newsletter") %></p>
-						<br class="spacer" />
+							<%= f.check_box :eula_accepted, :class => "Chk"%>
+							<p class="ChkTxt"><%= f.label :eula_accepted, _("I agree to the ") %><%= link_to _("terms and conditions"), eula_path, :target => :_new %></p>
+							<br class="spacer" />
+							<%= f.check_box :send_me_news, :class => "Chk" %>
+							<p class="ChkTxt"><%= f.label :send_me_news, _("Sign me up to the newsletter") %></p>
+							<br class="spacer" />
+						</div>
 					</div>
-				</div><br class="spacer" />
+				</div>
+				<br class="spacer" />
+				<br class="spacer" />
+				<br class="spacer" />
+				
 				
 				<div class="buttonMainACC">
 					<div class="buttonSide accBtnSt"></div>
