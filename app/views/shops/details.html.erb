@@ -18,7 +18,7 @@
 				<div id="edit_shop_button">
 				  <%= edit_shop_button @shop %>
 				</div>
-
+				
 				<div id="activate_deactivate_shop_btn">
 				  <%= active_deactive_shop_button @shop %>
 				</div>
@@ -27,7 +27,7 @@
 			</div>
 			
         	<div class="shopVL">
-         	  <div class="cauVLpic shopVLpic"><%= image_tag @shop.image.url if @shop.image_file_name %></div>
+         	  <div class="cauVLpic shopVLpic"><%= image_tag @shop.image.url(:view) if @shop.image_file_name %></div>
          	</div>
           <div class="chariMid shopVMid">
             <p class="shopMidTxt"><strong><%=("Website:")%></strong> <a href= "<%=@shop.url %>"> <%=@shop.url %></a><br /> <%= @shop.description %></p>
@@ -48,7 +48,7 @@
 
             <div class="buttonMainVote29">
   						<div class="buttonSideRec recBtnStS"></div>
-           		<%= link_to(_("Shop at ") + @shop.name,shop_home_path(@shop.short_url),:class=>"buttonMidRec")%>
+           		<%= button_to(_("Shop at ") + @shop.name, shop_home_path(@shop.short_url), :class=>"buttonMidRec", :method => :get)%>
           		<div class="buttonSideRec recBtnEn"></div><br class="spacer" /></div>
             </div><br class="spacer" />
 

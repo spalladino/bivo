@@ -149,4 +149,4 @@ select.genChoo {
 .actions div, .actions form {
 	display: inline;
 }
-.actions > div { float: left; }
+.actions > div { float: left; margin: 0px 2px;}

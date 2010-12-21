@@ -17,7 +17,7 @@ module ShopsHelper
 
   def edit_shop_button(shop)
     if current_user && current_user.is_admin_user
-      return content_tag :div, link_to(_("Edit"), :controller => "shops", :action => "edit", :id => shop.id)
+      return gray_link_to(_("Edit"), :controller => "shops", :action => "edit", :id => shop.id)
     end
   end
 

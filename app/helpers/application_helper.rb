@@ -157,5 +157,16 @@ module ApplicationHelper
     
     html.to_html.html_safe
   end
+  
+  def gray_link_to(*args, &block)
+    html = Hpricot(link_to(*args, &block))
+    html.search('a').wrap('<div class="buttonMainGra"></div>')
+    html.search('a').add_class 'buttonMidGra'
+    gra = html.search('.buttonMainGra')
+    gra.prepend('<div class="graBtnSt"></div>')
+    gra.append('<div class="graBtnEn"></div><br class="spacer"/>')
+    
+    html.to_html.html_safe
+  end
 end
 

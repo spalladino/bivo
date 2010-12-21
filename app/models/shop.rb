@@ -39,8 +39,8 @@ class Shop < ActiveRecord::Base
 
   after_save :ensure_shop_account
 
-  has_attached_file :image, :styles => { :search => "80x72>", :small => "150x150>" },
-    :convert_options => { :search => "-gravity center -extent 80x72" }
+  has_attached_file :image, :styles => { :search => "80x72>", :view => "208x183>", :small => "150x150>" },
+    :convert_options => { :search => "-gravity center -extent 80x72", :view => "-gravity center -extent 208x183" }
 
   UrlFormat = /[a-zA-Z\-_][a-zA-Z0-9\-_]*/
 
