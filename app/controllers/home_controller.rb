@@ -6,7 +6,7 @@ class HomeController < ApplicationController
   skip_before_filter :check_eula_accepted, :only => [:accept_eula, :confirm_eula]
 
   def index
-    @home_index = true
+    @section = :home_index
     @raised_amount = Income.funds_raised(1.month.ago, Date.today)
   end
 
@@ -30,6 +30,7 @@ class HomeController < ApplicationController
   end
 
   def dashboard
+    @section = :dashboard
     load_periods
     
     @funds_raised = Income.funds_raised(@from, @to)
@@ -63,10 +64,20 @@ class HomeController < ApplicationController
       current_user.save
     end
 
-    redirect_to root_path
+    redirect_to request.referrer
   end
 
   def change_currency
+    if params[:currency] && Currency.by_id(params[:currency])
+      session[:currency] = params[:currency].to_sym
+    end
+
+    if (user_signed_in?)
+      current_user.preferred_currency = session[:currency]
+      current_user.save
+    end
+
+    redirect_to request.referrer
   end
 
   def how_it_works
@@ -82,6 +93,7 @@ class HomeController < ApplicationController
   end
 
   def about
+    @section = :about    
   end
   
   protected

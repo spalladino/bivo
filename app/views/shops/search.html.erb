@@ -8,10 +8,10 @@
 	<div class="bodyInner">
     	<div class="statGrT"><h2><%= _("Search Results")%></h2></div>
         <div class="boxMain">
-			<%= form_tag({:controller => :shops, :action => :search, :id => "filter_form" },{ :method => :get }) do %>
+			<%= form_tag({:controller => :shops, :action => :search, :id => "filter_form" },{ :method => :get, :id => "filter_form"}) do %>
 	        	<div class="searFilM">
 					
-					<%= text_field_tag :search_word, @search_word, :class => "searFill" %> 
+					<%= text_field_tag :search_word, @search_word, :class => "searFill", :id => "Search"  %> 
            
 	               <div class="buttonMainSearM">
 	                    <div class="buttonSide accBtnSt"></div>
@@ -25,17 +25,8 @@
             
 	   	  		<div class="gnFilMain">
 	            	<h3 class="shopRinHead searInHead"><%=@count%> <%=n_("result found", "results found", @count)%> </h3>
-	            	<p class="genFilTxt"><%= label_tag :sorting, _('Sort by')%></p><%= select_tag :sorting, options_for_select(@sortings, @sorting), :class => "genChoo" %>
-	                <div class="pegi">
-	                	<ul>
-	                    	<li><a href="#"><img src="/images/pegiarL.png" width="4" height="7" alt="" /></a></li>
-	                        <li><a href="#">1</a></li>
-	                        <li><a href="#">2</a></li>
-	                        <li><a href="#">3</a></li>
-	                        <li><a href="#">4</a></li>
-	                        <li><a href="#">5</a></li>
-	                        <li class="noPad"><a href="#"><img src="/images/pegiarR.png" width="4" height="7" alt="" /></a></li><br class="spacer" />
-	                    </ul>
+	            	<p class="genFilTxt"><%= label_tag :sorting, _('Sort by')%></p><%= select_tag :sorting, options_for_select(@sortings, @sorting), :onchange =>"$('#filter_form').submit()", :class => "genChoo" %>
+	                <div class="pegi pagination">
 	          		</div><br class="spacer" />
 	            </div>
 	
@@ -44,7 +35,7 @@
 				</div>
 	
 				<div class="rgtFilmarg">
-					<%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page), :class => "showChoo"%>
+					<%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page), :class => "showChoo", :onchange =>"$('#filter_form').submit()"%>
 					<p class="showTxt"><%= label_tag :per_page, _("Show per page")%></p>
 					<br class="spacer" />
 	            </div>

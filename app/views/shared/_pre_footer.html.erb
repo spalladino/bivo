@@ -2,27 +2,27 @@
 	<div class="bodyIn">
     	<div class="bodyDIVI">
             <div class="bodyL">
-                <h2 class="bodyHead <%=if @home_index then 'bodyHead2' end%>"><%=_("Choose Your Cause")%></h2>
-                <p class="bodytxt <%=if @home_index then 'bodytxt2' end%>"><%=_("Vote for charitable causes from around the globe.")%></p>
-                <p class="bodytxt <%=if @home_index then 'bodytxt2' end%>"><%=_("Causes with the most votes get funds faster.")%></p>
+                <h2 class="bodyHead <%=if @section == :home_index then 'bodyHead2' end%>"><%=_("Choose Your Cause")%></h2>
+                <p class="bodytxt <%=if @section == :home_index then 'bodytxt2' end%>"><%=_("Vote for charitable causes from around the globe.")%></p>
+                <p class="bodytxt <%=if @section == :home_index then 'bodytxt2' end%>"><%=_("Causes with the most votes get funds faster.")%></p>
                 <%= link_to _("Vote Causes"), causes_url, :class=>"bodyLBtn"  %>
             </div>
             <div class="bodyMid">
-                <h2 class="bodyHead <%=if @home_index then 'bodyHead2' end%>"><%=_("Change the World")%></h2>
-                <p class="bodytxt <%=if @home_index then 'bodytxt2' end%>"><%=_("Bivo donates commissions from all sales to the causes our users choose.")%></p>
-                <p class="bodytxt <%=if @home_index then 'bodytxt2' end%>"><%=_("To see how your contribution is distributed, check out Bivo's fundraising dashboard.")%></p>
+                <h2 class="bodyHead <%=if @section == :home_index then 'bodyHead2' end%>"><%=_("Change the World")%></h2>
+                <p class="bodytxt <%=if @section == :home_index then 'bodytxt2' end%>"><%=_("Bivo donates commissions from all sales to the causes our users choose.")%></p>
+                <p class="bodytxt <%=if @section == :home_index then 'bodytxt2' end%>"><%=_("To see how your contribution is distributed, check out Bivo's fundraising dashboard.")%></p>
 
                 <%= link_to _("Go to Dashboard"), dashboard_url,:class=>"bodyLBtn bodyMidBtn" %>
             </div>
             <div class="bodyR">
-                <h2 class="bodyHead <%=if @home_index then 'bodyHead2' end%>"><%=_("Spread the Word")%></h2>
-                <p class="bodytxtR <%=if @home_index then 'bodytxtR2' end%>"><%=_("Tell your friends about Bivo and get even more funding for your favorite causes..")%><%= facebook_like %></p>
+                <h2 class="bodyHead <%=if @section == :home_index then 'bodyHead2' end%>"><%=_("Spread the Word")%></h2>
+                <p class="bodytxtR <%=if @section == :home_index then 'bodytxtR2' end%>"><%=_("Tell your friends about Bivo and get even more funding for your favorite causes..")%><%= facebook_like %></p>
 
-                <h2 class="bodyHead <%=if @home_index then 'bodyHead2' end%>"><%=_("Volunteer")%></h2>
-                <p class="bodytxtR <%=if @home_index then 'bodytxtR2' end%>"><%= raw(_("%s at Bivo and help us -- and the charities we support -- grow.") % link_to(_("Volunteer your time"), jobs_url)) %></p>
+                <h2 class="bodyHead <%=if @section == :home_index then 'bodyHead2' end%>"><%=_("Volunteer")%></h2>
+                <p class="bodytxtR <%=if @section == :home_index then 'bodytxtR2' end%>"><%= raw(_("%s at Bivo and help us -- and the charities we support -- grow.") % link_to(_("Volunteer your time"), jobs_url)) %></p>
 
-                <h2 class="bodyHead <%=if @home_index then 'bodyHead2' end%>"><%=_("Support other Fundraisers")%></h2>
-                <p class="bodytxtR <%=if @home_index then 'bodytxtR2' end%> noMarg"><%= raw(_("Learn more about Bivo's other social initiatives and %s.") % [link_to(_("fund raising projects"), social_initiatives_url), link_to(_("fund raisers"), fund_raisers_url)]) %></p>
+                <h2 class="bodyHead <%=if @section == :home_index then 'bodyHead2' end%>"><%=_("Support other Fundraisers")%></h2>
+                <p class="bodytxtR <%=if @section == :home_index then 'bodytxtR2' end%> noMarg"><%= raw(_("Learn more about Bivo's other %s and %s.") % [link_to(_("social initiatives"), social_initiatives_url), link_to(_("fund raising projects"), fund_raisers_url)]) %></p>
      
 
 </div><br class="spacer" />

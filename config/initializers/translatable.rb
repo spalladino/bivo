@@ -25,7 +25,7 @@ module Translatable
         Kernel.const_set class_name, c
       end
     end
-  
+    
     def translation_class(lang_id=nil)
       lang_id ||= I18n.locale
       return self if lang_id == :en
@@ -71,7 +71,7 @@ module Translatable
     def translation (lang_id=nil)
       lang_id ||= I18n.locale
       return self if lang_id == :en
-      self.class.translation_class(lang_id).find_by_referenced_id(self.id)
+      self.class.translation_class(lang_id).find_by_referenced_id(self.id) || create_translation(lang_id)
     end
     
     def translations
@@ -195,7 +195,7 @@ class ActiveRecord::Base
       define_method field do
         locale = self.class.lazy_translation_language || I18n.locale
         if self.class.lazy_translation && locale != :en
-          self.translation(locale).send(field.intern) 
+          self.translation(locale).send(field.to_s.intern) 
         else 
           read_attribute(field) 
         end
@@ -218,7 +218,7 @@ class ActiveRecord::Base
         end if eval("#{field}_changed?")
       end
       
-      ts.select(&:changed?).each do |t| 
+      ts.select{|t| t.changed? || t.new_record?}.each do |t| 
         t.pending = true
         t.save
       end

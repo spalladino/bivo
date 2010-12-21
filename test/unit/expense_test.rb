@@ -14,4 +14,5 @@ class ExpenseTest < ActiveSupport::TestCase
     
     assert_equal [b], expenses
   end
+  
 end

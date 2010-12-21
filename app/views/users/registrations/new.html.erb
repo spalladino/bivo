@@ -12,40 +12,72 @@
   });
 <% end %>
 
-<h2><%= _("Sign Up") %></h2>
+<div class="inbodyM">
+	<div class="bodyInSm">
+    	<div class="GrTSm"><h2><%= _("Create Account") %></h2></div>
+        <div class="boxMainSm">
+			<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+				<%= render "shared/error_messages", :target => resource %>
+        		<p class="accfilTxt">Account Type</p>
+				<%= f.radio_button :type, _("PersonalUser"), :id => "user_type_personaluser", :class => "radio", :checked => true %>
+				<p class = "accfilTxt radTxt" ><%= f.label :personal, _("Personal"), :for => "user_type_personaluser" %></p>
+				<%= f.radio_button :type, _("Charity"), :id => "user_type_charity", :class => "radio" %>
+				<p class = "accfilTxt radTxt" ><%= f.label :charity, _("Charity"), :for => "user_type_charity", :class => "accfilTxt radTxt"  %></p>
+				<br class="spacer" />
 
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
-  <%= render "shared/error_messages", :target => resource %>
 
-  <%= f.radio_button :type, _("PersonalUser"), :id => "user_type_personaluser", :checked => true %> <%= f.label :personal, _("Personal"), :for => "user_type_personaluser" %> <br />
-  <%= f.radio_button :type, _("Charity"), :id => "user_type_charity" %>  <%= f.label :charity, _("Charity"), :for => "user_type_charity"  %>
+  
+  				<p class="accfilTxt"><%= f.label :email, _("E-Mail") %></p>
+				<%= f.text_field :email, :class => "accfil" %>
+				<br class="spacer" />
+				
+				<p class="accfilTxt"><%= f.label :password, _("Password") %></p>
+				<%= f.password_field :password, :class => "accfil" %>
+				<br class="spacer" />
 
-  <p><%= f.label :email, _("E-Mail") %><br />
-  <%= f.text_field :email %></p>
+				<p class="accfilTxt"><%= f.label :password_confirmation,_("Password Confirmation") %></p>
+				<%= f.password_field :password_confirmation, :class => "accfil" %>
+				<br class="spacer" />
+				
 
-  <p><%= f.label :password, _("Password") %><br />
-  <%= f.password_field :password %></p>
+				<div id="charity_form" style="<%= get_display_of :Charity, @user %>">
+					<%= render :partial => 'users/registrations/new_charity', :locals => {:countries => @countries, :categories => @categories, :f => f} %>
+				</div>
 
-  <p><%= f.label :password_confirmation,_("Password Confirmation") %><br />
-  <%= f.password_field :password_confirmation %></p>
+				<div id="personal_form" style="<%= get_display_of :PersonalUser, @user %>">
+				<%= render :partial => 'users/registrations/new_personal', :locals => {:f => f} %>
+				</div>
+				
+				
 
-  <div id="charity_form" style="<%= get_display_of :Charity, @user %>">
-    <%= render :partial => 'users/registrations/new_charity', :locals => {:countries => @countries, :categories => @categories, :f => f} %>
-  </div>
+				<%= raw recaptcha_tags %>
+				<div class="captuaR">
+			    	<div class="ChkTxtM">
+						<br class="spacer" />
+						
 
-  <div id="personal_form" style="<%= get_display_of :PersonalUser, @user %>">
-    <%= render :partial => 'users/registrations/new_personal', :locals => {:f => f} %>
-  </div>
+						<%= f.check_box :eula_accepted, :class => "Chk"%>
+						<p class="ChkTxt"><%= f.label :eula_accepted, _("I agree to the ") %><%= link_to _("terms and conditions"), eula_path, :target => :_new %></p>
+						<br class="spacer" />
+						<%= f.check_box :send_me_news, :class => "Chk" %>
+						<p class="ChkTxt"><%= f.label :send_me_news, _("Sign me up to the newsletter") %></p>
+						<br class="spacer" />
+					</div>
+				</div><br class="spacer" />
+				
+				<div class="buttonMainACC">
+					<div class="buttonSide accBtnSt"></div>
+					<%= f.submit _("Create Account"), :class => "buttonMid accBtnMi", :id => "account" %>
+	                <div class="buttonSide accBtnEn"></div>
+					<br class="spacer" />
+	           </div>
 
-  <p><%= f.label :captcha,_("Captcha") %><br />
-  <%= raw recaptcha_tags %></p>
+				<p></p>
+			<% end %>
 
-  <p><%= f.check_box :eula_accepted %>
-  <%= f.label :eula_accepted, _("I agree to the ") %><%= link_to _("terms and conditions"), eula_path, :target => :_new %></p>
+ 		</div>
 
-  <p><%= f.check_box :send_me_news %>
-  <%= f.label :send_me_news, _("Sign me up to the newsletter") %></p>
-
-  <p><%= f.submit _("Create Account") %></p>
-<% end %>
+	</div>
+	<div class="bodyBot"></div>
+</div>
 

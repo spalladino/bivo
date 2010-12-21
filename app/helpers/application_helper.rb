@@ -12,7 +12,7 @@ module ApplicationHelper
     if parts.size == max_words+1
       text = parts[0...-1].join(' ')
       if url
-        "#{link_to (h text), url} #{link_to _('Read more'), url, :class => 'chariTxtRead'}".html_safe
+        "#{link_to(h(text), url)} #{link_to _('Read more'), url, :class => 'chariTxtRead'}".html_safe
       else
         "#{text}..."
       end
@@ -140,6 +140,11 @@ module ApplicationHelper
 
   def styled_will_paginate(collection, atts={})
     will_paginate @collection, {:previous_label => image_tag('pegiarL.png'), :next_label => image_tag('pegiarR.png'), :class => 'pegi'}.merge(atts)
+  end
+
+  # Returns javascript snippet for submitting first parent form
+  def submit_parent_form
+    "$(this).parents('form:first').submit(); return false;"
   end
 
 end
