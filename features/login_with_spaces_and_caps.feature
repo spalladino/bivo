@@ -9,7 +9,7 @@ Feature: Email in login is case insensitive and works ok with spaces. Personal U
 			Then I choose personal sign up
 			And I fill in "First Name" with "John"
 			And I fill in "Last Name" with "Doe"
-			And I fill in "E-Mail" with "JOHNDOE@MAIL.COM"
+			And I fill in "Email" with "JOHNDOE@MAIL.COM"
 			And I fill in "Password" with "password"
 			And I fill in "Password Confirmation" with "password"
 			And I agree terms and conditions
@@ -50,7 +50,7 @@ Feature: Email in login is case insensitive and works ok with spaces. Personal U
 			Then I choose personal sign up
 			And I fill in "First Name" with "John"
 			And I fill in "Last Name" with "Doe"
-			And I fill in "E-Mail" with "johndoe@mail.com"
+			And I fill in "Email" with "johndoe@mail.com"
 			And I fill in "Password" with "password"
 			And I fill in "Password Confirmation" with "password"
 			And I agree terms and conditions
