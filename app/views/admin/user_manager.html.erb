@@ -14,19 +14,18 @@
 <br />
 <div id="results">
   <%= will_paginate @users %>
-  <table>
+  <table class="classic_table">
     <tr>
-      <th>&nbsp;</th>
       <th><%= link_to _("Name"), request.parameters.merge({:sort_by => get_sort_for("name")}) %></th>
       <th><%= link_to _("Type"), request.parameters.merge({:sort_by => get_sort_for("type")}) %></th>
       <th><%= link_to _("Last Login"), request.parameters.merge({:sort_by => get_sort_for("last_sign_in_at")}) %></th>
       <th><%= link_to _("Signup Date"), request.parameters.merge({:sort_by => get_sort_for("created_at")}) %></th>
       <th>&nbsp;</th>
       <th>&nbsp;</th>
+      <th>&nbsp;</th>
     </tr>
   <% for user in @users %>
     <tr>
-      <td><%= link_to _("Delete"), { :action => "destroy", :controller => "registrations", :id => user.id }, :confirm => "are you sure you want to delete the user?", :method => :delete %></td>
       <% if user.is_charity_user -%>
       <td><%= link_to user.name, charity_path(user.id) %></td>
       <% else -%>
@@ -37,7 +36,7 @@
       <td><%= format_date user.created_at %></td>
       <td id="activate_deactivate_charity_btn_<%=user.id%>"><%= active_deactive_charity_button(user) if user.is_charity_user%></td>
       <td><%= link_to _("Edit"), edit_user_registration_path(:id => user.id) %></td>
-
+      <td><%= link_to _("Delete"), { :action => "destroy", :controller => "registrations", :id => user.id }, :confirm => "are you sure you want to delete the user?", :method => :delete %></td>
     </tr>
   <% end %>
   </table>
