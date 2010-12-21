@@ -8,6 +8,14 @@ Given /^the following charities:$/ do |table|
 
 end
 
+Given /^the following personal users:$/ do |table|
+
+  table.hashes.each do |hash|
+    Charity.make hash
+  end
+
+end
+
 Given /^the following shops:$/ do |table|
 
   table.hashes.each do |hash|
