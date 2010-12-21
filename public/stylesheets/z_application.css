@@ -142,3 +142,11 @@ select.genChoo {
 .error {
 	color:red;
 }
+
+.actions {
+	margin-bottom: 5px;
+}
+.actions div, .actions form {
+	display: inline;
+}
+.actions > div { float: left; }

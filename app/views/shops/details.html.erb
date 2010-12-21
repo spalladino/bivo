@@ -4,26 +4,28 @@
 
 <%= inactive_shop_notification @shop %>
 
-<br/>
-<div id="delete_shop_button">
-  <%= delete_shop_button @shop %>
-</div>
-
-<br/>
-<div id="edit_shop_button">
-  <%= edit_shop_button @shop %>
-</div>
-
-<br/>
-<div id="activate_deactivate_shop_btn">
-  <%= active_deactive_shop_button @shop %>
-</div>
-
 <div class="inbodyM">
 	<div class="bodyInner">
   	<div class="statGrT"><h2><%= @shop.name %></h2></div>
       <div class="boxMain">
         <div class="cauVMain">
+			
+			<div class="actions">
+				<div id="delete_shop_button">
+				  <%= delete_shop_button @shop %>
+				</div>
+
+				<div id="edit_shop_button">
+				  <%= edit_shop_button @shop %>
+				</div>
+
+				<div id="activate_deactivate_shop_btn">
+				  <%= active_deactive_shop_button @shop %>
+				</div>
+				
+				<br class="spacer"/>
+			</div>
+			
         	<div class="shopVL">
          	  <div class="cauVLpic shopVLpic"><%= image_tag @shop.image.url if @shop.image_file_name %></div>
          	</div>
