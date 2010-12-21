@@ -2,30 +2,7 @@
 
 <div id="causes-list">
 <% for cause in @causes %>
-  <div class="cause">
-
-	<h3><%= link_to_cause cause %></h3>
-	<p><%= cause.country.name %></p>
-	<p><%= _("Organized by")%>: <%= link_to_charity cause.charity %></p>
-	<p><%= link_to _("Funds needed"), cause_details_path(cause.url) %>: <%= cause.funds_needed %></p>
-	<p><%= read_more(raw(cause.description), cause_details_path(cause.url), 20) %></p>
-
-	<% case @status.to_sym %>
-		<% when :active%>
-			<p><%= _('Votes')%>: <%= vote_counter cause %></p>
-		<% when :raising_funds%>
-			<p><%= _('Funds raised')%>: <%= cause_funds_completed cause %></p>
-		<% when :completed%>
-			<p><%= _('Funds raised')%>: <%= cause.funds_raised %></p>
-	<% end %>
-
-	<% if current_user && @status.to_sym == :active && !cause_voted(cause) %>
-		<p><%= vote_button(cause)%></p>
-	<% else %>
-		<p><%= view_cause_button(cause)%></p>
-	<% end %>
-
-  </div>
+  
 <% end %>
 </div>
 
