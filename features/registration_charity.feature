@@ -21,11 +21,11 @@ Feature: Visitors can register as charities
 		And I fill in "Short Url" with "charityone"
 		And I select "Human Aid" from "Category"
 		And I fill in "Charity Type" with "charityOneType"
-		And I fill in "Tax Registration Number" with "10374"
+		And I fill in "Tax Registration No." with "10374"
 		And I select "Argentina" from "user_country_id"
 		And I fill in "City" with "Buenos Aires"
 		And I fill in "Description" with "Charity one description"
-		And I fill in "E-Mail" with "charityone@mail.com"
+		And I fill in "Email" with "charityone@mail.com"
 		And I fill in "Password" with "password"
 		And I fill in "Password Confirmation" with "password"
 		And I agree terms and conditions

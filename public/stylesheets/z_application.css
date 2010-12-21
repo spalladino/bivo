@@ -139,7 +139,9 @@ select.genChoo {
 	margin:0 0 0 10px;
 	font:normal 11px/12px Arial, Helvetica, sans-serif;
 }
-
+.error {
+	color:red;
+}
 
 .actions {
 	margin-bottom: 5px;
