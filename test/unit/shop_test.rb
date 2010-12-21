@@ -154,5 +154,17 @@ class ShopTest < ActiveSupport::TestCase
     assert !s.active?
     assert !s.status_active?    
   end
+  
+  test "incomes grouped per month" do
+    s = Shop.make
+    Income.make :shop, :shop => s, :input_amount => 10, :transaction_date => '2010-10-10'
+    Income.make :shop, :shop => s, :input_amount => 15, :transaction_date => '2010-10-13'
+    Income.make :shop, :shop => s, :input_amount => 22, :transaction_date => '2010-12-10'
+    s.reload
+    
+    incomes = s.incomes_per_month
+    
+    assert_equal [{:month => Date.civil(2010,10,1), :amount => 25.to_d}, {:month => Date.civil(2010,12,1), :amount => 22.to_d}], incomes
+  end
 
 end

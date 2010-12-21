@@ -7,6 +7,7 @@ class ShopsControllerTest < ActionController::TestCase
 [:home,:details].each do |action|
   test "should get #{action}" do
     shop = Shop.make :short_url => "foobar", :redirection => :search_box
+    Income.make :shop, :shop => shop
 
     get action, :short_url => "foobar"
 
