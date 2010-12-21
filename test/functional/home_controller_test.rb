@@ -29,6 +29,7 @@ class HomeControllerTest < ActionController::TestCase
     
     assert_equal @request.session[:locale].to_sym, :en
   end
+
   #in this test I am assuming spanish and french are available
   test "shouldnt use english if the language is spanish or french" do
     @controller.stubs(:get_browser_accept_languages).returns("es")
@@ -45,7 +46,7 @@ class HomeControllerTest < ActionController::TestCase
   
   test "should change the language if the user choose another one" do
     get :index
-    get :change_language, :language => "en"
+    post :change_language, :language => "en"
     get :index
   
     assert_equal @request.session[:locale].to_sym, :en
@@ -63,10 +64,49 @@ class HomeControllerTest < ActionController::TestCase
     get :index
     user = create_charity_and_sign_in :preferred_language => :en
     get :index
-    get :change_language, :language => "fr"
+    post :change_language, :language => "fr"
   
     assert_equal @request.session[:locale].to_sym, :fr
     assert_equal Charity.find(user.id).preferred_language.to_sym, :fr    
+  end
+  
+  test "should use gbp if no currency set" do
+    get :index
+    assert_equal :GBP, session[:currency].to_sym
+  end
+  
+  test "should set usd in current session" do
+    post :change_currency, :currency => 'USD'
+    get :index
+    get :jobs
+    assert_equal :USD, session[:currency].to_sym
+  end
+  
+  test "should redirect to referrer when changing currency" do
+    get :jobs
+    @request.env['HTTP_REFERER'] = 'http://test.host/jobs'
+    
+    post :change_currency, :currency => 'USD'
+    assert_redirected_to :action => :jobs
+    assert_equal :USD, session[:currency].to_sym
+  end
+  
+  test "should persist preferred currency in signed in user" do
+    user = create_and_sign_in
+    assert_equal :GBP, user.preferred_currency.to_sym
+    post :change_currency, :currency => "USD"
+
+    assert_equal :USD, session[:currency].to_sym
+    assert_equal :USD, user.reload.preferred_currency.to_sym
+  end
+  
+  test "should not persist invalid currency" do
+    user = create_and_sign_in
+    assert_equal :GBP, user.preferred_currency.to_sym
+    post :change_currency, :currency => "XXX"
+
+    assert_equal :GBP, session[:currency].to_sym
+    assert_equal :GBP, user.preferred_currency.to_sym
   end
   
   test "should get stats without data" do

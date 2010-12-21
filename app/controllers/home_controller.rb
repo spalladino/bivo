@@ -64,10 +64,20 @@ class HomeController < ApplicationController
       current_user.save
     end
 
-    redirect_to root_path
+    redirect_to request.referrer
   end
 
   def change_currency
+    if params[:currency] && Currency.by_id(params[:currency])
+      session[:currency] = params[:currency].to_sym
+    end
+
+    if (user_signed_in?)
+      current_user.preferred_currency = session[:currency]
+      current_user.save
+    end
+
+    redirect_to request.referrer
   end
 
   def how_it_works

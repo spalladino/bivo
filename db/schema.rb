@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101214204220) do
+ActiveRecord::Schema.define(:version => 20101220194515) do
 
   create_table "account_movements", :force => true do |t|
     t.integer  "account_id"
@@ -280,6 +280,7 @@ ActiveRecord::Schema.define(:version => 20101214204220) do
     t.integer  "picture_file_size"
     t.datetime "picture_updated_at"
     t.string   "preferred_language"
+    t.string   "preferred_currency",                            :default => "GBP"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

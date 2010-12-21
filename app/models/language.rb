@@ -21,8 +21,8 @@ class Language
   end
 
   def self.by_id(id)
-    if (Bivo::Application.config.languages.include? id)
-      new(id, Bivo::Application.config.languages[id])
+    if id && Bivo::Application.config.languages.include?(id.to_sym)
+      new(id.to_sym, Bivo::Application.config.languages[id.to_sym])
     else
       nil
     end

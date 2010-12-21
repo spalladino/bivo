@@ -142,5 +142,10 @@ module ApplicationHelper
     will_paginate @collection, {:previous_label => image_tag('pegiarL.png'), :next_label => image_tag('pegiarR.png'), :class => 'pegi'}.merge(atts)
   end
 
+  # Returns javascript snippet for submitting first parent form
+  def submit_parent_form
+    "$(this).parents('form:first').submit(); return false;"
+  end
+
 end
 
