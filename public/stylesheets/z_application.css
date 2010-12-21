@@ -95,6 +95,15 @@ form.inline {
 	float: none;
 }
 
+.cvComBox {
+	margin-bottom: 0px;
+}
+
+.leav {
+	margin-top: 0px;
+	margin-right: 22px;
+}
+
 .pegi a, .pegi span{
 	color:#ff8400;
 	padding:0 5px 0 0;
