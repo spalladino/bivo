@@ -12,13 +12,14 @@ module CauseHelper
     return current_user && !Vote.find_by_cause_id_and_user_id(cause.id,current_user.id)
   end
 
-  def view_cause_button(cause)
-    return link_to _("View"), cause_details_path(cause.url)
+  def view_cause_button(cause, opts)
+#      return tag 'input', :value => _('View'), :type => 'button', :onclick => set_window_location(cause_details_path(cause.url))
+   return link_to _("View"), cause_details_path(cause.url), opts
   end
 
   # Displayed when the cause is in “voting” mode or when the user did not vote for the cause.
   # Users have to be logged in to vote. A cause can only be voted once.
-  def vote_button(cause)
+  def vote_button(cause, opts={})
     visible = true
     disabled = nil
 
@@ -39,15 +40,16 @@ module CauseHelper
       end
     end
 
-   return content_tag :div,
-      button_to(label,
-        {:action => "vote",:id => cause.id},
-        :remote => true,
-        :disabled => disabled ,
-        :onclick => 'disableAndContinue(this,"Submitting...")',
-        :class => (if not visible then 'hidden' end),
-        :id => "vote_btn_#{cause.id}"
-      )
+    html_opts = {
+      :remote => true,
+      :disabled => disabled,
+      :onclick => "disableAndContinue(this,'#{_('Voting...')}')",
+      :class => "",
+      :id => "vote_btn_#{cause.id}"
+    }.merge(opts)
+    html_opts[:class] += 'hidden' if not visible
+    
+    return button_to label, {:action => "vote", :id => cause.id}, html_opts
   end
 
   # *Follow* is displayed when the user is not following the cause, otherwise *Unfollow* is displayed.
@@ -117,13 +119,11 @@ module CauseHelper
     if cause.status == :active
       return vote_counter cause
     elsif cause.status == :raising_funds
-      return content_tag :span, cause_funds_completed cause
+      return content_tag :span, cause_funds_completed(cause)
     elsif cause.status == :completed
       return content_tag :span, cause.funds_raised
     end
   end
-
-
 
 
   # Redirects to the cause page. Charity. (Owner)

@@ -139,12 +139,16 @@ module ApplicationHelper
   end
   
   def styled_will_paginate(collection, atts={})
-    will_paginate @collection, {:previous_label => image_tag('pegiarL.png'), :next_label => image_tag('pegiarR.png'), :class => 'pegi'}.merge(atts)
+    will_paginate @collection, {:previous_label => image_tag('pegiarL.png'), :next_label => image_tag('pegiarR.png'), :class => 'pegi', :inner_window => 2, :outer_window => 1}.merge(atts)
   end
 
   # Returns javascript snippet for submitting first parent form
   def submit_parent_form
     "$(this).parents('form:first').submit(); return false;"
+  end
+  
+  def set_window_location(location)
+    "window.location = '#{location.html_safe}'; return false;"
   end
 
 end

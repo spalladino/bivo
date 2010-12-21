@@ -28,20 +28,26 @@
     </div>
 
     <div class="boxMain">
-			<%= select_tag :status, options_from_collection_for_select(@statuses, 'to_s', 'description', @status), :class => 'showChoo' %>
-			<p class="showTxt"><%=_("Show")%></p>
-		  <br class="spacer" />
+    	<%= form_tag causes_path, :method => :get, :id => "filter_form", :remote => true do %>
+			  <%= select_tag :status, options_from_collection_for_select(@statuses, 'to_s', 'description', @status), :class => 'showChoo' %>
+			  <p class="showTxt"><%=_("Show")%></p>
+		    <br class="spacer" />
 
-			<div class="gnFilMain">
-      	<p class="genFilTxt"><%= _('Sort by') %></p>
-      	<%= select_tag :sorting, options_for_select(@sortings, @sorting), :class => 'genChoo' %>
-      	
-        <p class="genFilTxt causfilTxt"><%= _('Filter by region') %></p>
-        <%= select_tag :region, options_from_collection_for_select(@regions, 'id', 'name', @region), {:include_blank => _('All countries')}, :class => 'genChoo' %>
+			  <div class="gnFilMain">
+        	<p class="genFilTxt"><%= _('Sort by') %></p>
+        	<%= select_tag :sorting, options_for_select(@sortings, @sorting), :class => 'genChoo' %>
+        	
+          <p class="genFilTxt causfilTxt"><%= _('Filter by region') %></p>
+          <%= select_tag :region, options_from_collection_for_select(@regions, 'id', 'name', @region), :include_blank => _('All countries'), :class => 'genChoo' %>
 
-        <p class="genFilTxt"><%= _('Filter by') %></p>
-        <%= text_field_tag :name, @name, :id => 'name_filter', :class => 'genChoo' %>
+          <%= hidden_field_tag :per_page, :id => 'hiddenPerPage' %>
 
+          <p class="genFilTxt"><%= _('Filter by') %></p>
+          <%= text_field_tag :name, @name, :id => 'name_filter', :class => 'genChoo' %>
+
+      		<%= submit_tag _('Search'), :disable_with => _('Searching...') %>
+      <% end %>
+      
         <div id="causes">
           <%= render 'causes' %>
         </div>
@@ -62,7 +68,7 @@
         	
             
         <div class="rgtFilmarg">
-          <%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page), :class => 'showChoo'%>
+          <%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page), :class => 'showChoo', :onchange => "$('hiddenPerPage').val($(this).val())"%>
           <p class="showTxt"><%= _("Show per page")%></p>
           <br class="spacer" />
         </div>
@@ -72,46 +78,5 @@
 </div>
 
 
-
-<h2>Filters</h2>
-
-<div id="filters">
-	<%= form_tag causes_path, :method => :get, :id => "filter_form" do %>
-		<table cellspacing="5">
-			<tr>
-				<td><%= _("Categories") %>: </td>
-				<td>
-					<% @categories.each do |category| %>
-						<%= link_to "#{category.name} (#{category.causes_count})", category_filter_url(category)%>
-					<% end%>
-				</td>
-			<tr>
-				<td><%= _('Filter by region') %></td>
-				<td><%= select_tag :region, options_from_collection_for_select(@regions, 'id', 'name', @region), {:include_blank => _('All countries')}%></td>
-			</tr>
-			<tr>
-				<td><%= _("Show per page")%></td>
-				<td><%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page)%></td>
-			</tr>
-			<tr>
-				<td><%= _('Showing') %></td>
-				<td><%= select_tag :status, options_from_collection_for_select(@statuses, 'to_s', 'description', @status) %></td>
-			</tr>
-			<tr>
-				<td><%= _('Sort by') %></td>
-				<td><%= select_tag :sorting, options_for_select(@sortings, @sorting) %></td>
-			</tr>
-			<tr>
-				<td><%= _('Filter by') %></td>
-				<td><%= text_field_tag :name, @name, :id => 'name_filter' %> <%= link_to_function(_('clear'), "$('#name_filter').val('').change();") if @name %></td>
-			</tr>
-		</table>
-		<p>
-			<%= submit_tag _('Search'), :disable_with => _('Searching...') %>
-		</p>
-	<% end %>
-</div>
-
-<br/>
-
+	
 

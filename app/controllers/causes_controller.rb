@@ -68,8 +68,10 @@ class CausesController < ApplicationController
     @category = params[:category]
     @causes = @causes.where('causes.cause_category_id = ?', @category.to_i) unless @category.blank?
 
+    #TODO: Remove me!
+    @causes = Cause.all
+
     # Set pagination
-    
     @per_page = (params[:per_page] || 5).to_i
     if !current_user || !current_user.is_admin_user
       @causes = @causes.first(50) if @status == :active

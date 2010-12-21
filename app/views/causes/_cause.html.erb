@@ -34,61 +34,25 @@
 		      <%= vote_counter cause, :class => 'statInBoxNo chariRiBoxNo' %>
 		      <span class="statInBoxTxt chariRiBoxTxt"><%=_('votes')%></span>
 	      <% when :raising_funds%>
-	        <%= vote_counter cause, :class => 'statInBoxNo chariRiBoxNo' %>
-		      <span class="statInBoxTxt chariRiBoxTxt"><%=_('votes')%></span>
-
-		      <p><%= _('Funds raised')%>: <%= cause_funds_percentage_completed(cause) %></p>
+	        <span class="statInBoxNo chariRiBoxNo"><%= "#{number_to_currency cause.funds_raised} (#{cause_funds_percentage_completed cause})"%></span>
+		      <span class="statInBoxTxt chariRiBoxTxt"><%=_('raised')%></span>
 	      <% when :completed%>
-  	      <%= vote_counter cause, :class => 'statInBoxNo chariRiBoxNo' %>
-		      <span class="statInBoxTxt chariRiBoxTxt"><%=_('votes')%></span>
-
-		      <p><%= _('Funds raised')%>: <%= cause.funds_raised %></p>
+	        <span class="statInBoxNo chariRiBoxNo"><%= "#{number_to_currency cause.funds_raised}"%></span>
+		      <span class="statInBoxTxt chariRiBoxTxt"><%=_('raised')%></span>
       <% end %>
-
-  	  <a href="#">
-  	    <span class="statInBoxNo chariRiBoxNo">1,376</span>
-	    </a>
     </div>
-        <!--<input type="button" name="vote" value="Vote" id="vote" class="addBtn voteBtn" />-->
-
-        <div class="buttonMainVote">
-<div class="buttonSide accBtnSt"></div>
-    		<input type="button" name="vote" value="Vote" id="vote" class="buttonMid accBtnMi" />
-    		<div class="buttonSide accBtnEn"></div><br class="spacer" />
-		</div>
-
-        <br class="spacer" /> 
-    </div>
-</div>
-          	
-          	
-          	
-          	
-          	
-          	
-
-
-<div class="cause">
-
-<h3><%= link_to_cause cause %></h3>
-<p><%= cause.country.name %></p>
-<p><%= _("Organized by")%>: <%= link_to_charity cause.charity %></p>
-<p><%= link_to _("Funds needed"), cause_details_path(cause.url) %>: <%= link_to cause.funds_needed, cause_details_path(cause.url) %></p>
-<p><%= read_more(raw(cause.description), cause_details_path(cause.url), 20) %></p>
-
-<% case @status.to_sym %>
-	<% when :active%>
-		<p><%= _('Votes')%>: <%= vote_counter cause %></p>
-	<% when :raising_funds%>
-		<p><%= _('Funds raised')%>: <%= cause_funds_completed cause %></p>
-	<% when :completed%>
-		<p><%= _('Funds raised')%>: <%= cause.funds_raised %></p>
-<% end %>
-
-<% if current_user && @status.to_sym == :active && !cause_voted(cause) %>
-	<p><%= vote_button(cause)%></p>
-<% else %>
-	<p><%= view_cause_button(cause)%></p>
-<% end %>
-
+    
+    <div class="buttonMainVote">
+      <div class="buttonSide accBtnSt"></div>
+      <% if current_user && @status.to_sym == :active && !cause_voted(cause) %>
+    		<%= vote_button cause, :class => 'buttonMid accBtnMi'%>
+  		<% else %>
+  		  <%= view_cause_button cause, :class => 'buttonMid accBtnMi'%>
+	    <% end %>
+  		<div class="buttonSide accBtnEn"></div>
+  		<br class="spacer" />
+	  </div>
+    
+    <br class="spacer" /> 
+  </div>
 </div>

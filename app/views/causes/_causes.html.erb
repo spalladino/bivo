@@ -1,8 +1,8 @@
-<%= will_paginate @causes %>
+<%= styled_will_paginate @causes %>
 
 <div id="causes-list">
-<% for cause in @causes %>
-  
-<% end %>
+  <% for cause in @causes %>
+    <%= render cause %>
+  <% end %>
 </div>
 
