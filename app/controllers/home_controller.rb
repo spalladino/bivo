@@ -6,7 +6,7 @@ class HomeController < ApplicationController
   skip_before_filter :check_eula_accepted, :only => [:accept_eula, :confirm_eula]
 
   def index
-    @home_index = true
+    @section = :home_index
     @raised_amount = Income.funds_raised(1.month.ago, Date.today)
   end
 
@@ -30,6 +30,7 @@ class HomeController < ApplicationController
   end
 
   def dashboard
+    @section = :dashboard
     load_periods
     
     @funds_raised = Income.funds_raised(@from, @to)
@@ -92,6 +93,7 @@ class HomeController < ApplicationController
   end
 
   def about
+    @section = :about    
   end
   
   protected
