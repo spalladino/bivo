@@ -139,7 +139,7 @@ module ApplicationHelper
   end
   
   def styled_will_paginate(collection, atts={})
-    will_paginate @collection, {:previous_label => image_tag('pegiarL.png'), :next_label => image_tag('pegiarR.png'), :class => 'pegi', :inner_window => 2, :outer_window => 1}.merge(atts)
+    will_paginate @collection, {:previous_label => image_tag('pegiarL.png'), :next_label => image_tag('pegiarR.png'), :class => 'pegi', :inner_window => 2, :outer_window => 0}.merge(atts)
   end
 
   # Returns javascript snippet for submitting first parent form
@@ -172,5 +172,10 @@ module ApplicationHelper
     
     html.to_html.html_safe
   end
+  
+  def orange_button(obj)
+     ('<div class="buttonMainVote"><div class="buttonSide accBtnSt"></div>' + obj + '<div class="buttonSide accBtnEn"></div><br class="spacer" /></div>').html_safe
+  end
+  
 end
 

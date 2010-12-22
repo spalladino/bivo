@@ -1,8 +1,11 @@
 <%= styled_will_paginate @causes %>
 
 <div id="causes-list">
-  <% for cause in @causes %>
-    <%= render cause %>
+  <% @causes.each_with_index do |cause, index| %>
+    <%= index == @causes.size-1 %>
+    <%= index %>
+    <%= @causes.size-1 %>
+    <%= render cause, :locals => {:nobg => (index == @causes.size-1)} %>
   <% end %>
 </div>
 

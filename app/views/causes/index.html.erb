@@ -45,7 +45,9 @@
           <p class="genFilTxt"><%= _('Filter by') %></p>
           <%= text_field_tag :name, @name, :id => 'name_filter', :class => 'genChoo' %>
 
-      		<%= submit_tag _('Search'), :disable_with => _('Searching...') %>
+          <div style="position:relative; top: -3px; left: -18px;" class="hidden">
+        		<%= orange_button submit_tag(_('Search'), :disable_with => _('Searching...'), :class => 'buttonMid accBtnMi') %>
+      		</div>
       <% end %>
       
         <div id="causes">

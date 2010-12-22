@@ -1,4 +1,7 @@
-<div class="chariIn">
+<%= 'noBg' if @nobg %>
+<%= 'bg' unless @nobg %>
+
+<div class="chariIn <%= 'noBg' if @nobg %>">
   <div class="chariLpic">
     <a href="#">
       <img src="images/causPic.jpg" width="150" height="110" alt="" />
