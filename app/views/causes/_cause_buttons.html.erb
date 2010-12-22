@@ -1,14 +1,31 @@
 <% if visible -%>
-<div class="buttonMainVote29" id="<%=button_id%>" >
-    <div class="buttonSideRec recBtnStV"></div>
-    <%= button_to(label, \
-        {:action => action,:id => id}, \
-        :remote => true, \
-        :disabled => disabled, \
-        :onclick => 'disableAndContinue(this,"Submitting...")', \
-        :class => "buttonMidRec ")
-     %>
-		<div class="buttonSideRec recBtnEn"></div><br class="spacer" />
-</div>
+  <%
+    small ||= false 
+    url_opts ||= {}
+    opts = {:remote => true, \
+      :disabled => disabled, \
+      :onclick => 'disableAndContinue(this,"Voting...")', \
+      :class => (small ? "buttonMid accBtnMi " : "buttonMidRec ")}
+    opts[:disabled] = true if disabled
+    btn = button_to(label, {:action => action,:id => id}.merge(url_opts), opts) 
+  %> 
+
+    <% if small %>
+      <div class="buttonMainVote" id="<%=button_id%>">
+        <div class="buttonSide accBtnSt"></div>
+        <%= btn %>
+        <div class="buttonSide accBtnEn"></div>
+        <br class="spacer" />
+      </div>
+    <% else %>
+      <div class="buttonMainVote29" id="<%=button_id%>" >
+        <div class="buttonSideRec recBtnStV"></div>
+          <%= btn %>
+	      <div class="buttonSideRec recBtnEn"></div>
+	      <br class="spacer" />
+      </div>
+    <% end -%>
+
 <% end -%>
 
+     

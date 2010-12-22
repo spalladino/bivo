@@ -18,7 +18,7 @@ module CauseHelper
 
   # Displayed when the cause is in “voting” mode or when the user did not vote for the cause.
   # Users have to be logged in to vote. A cause can only be voted once.
-  def vote_button(cause, rounded=false, opts={})
+  def vote_button(cause, small=false, opts={})
     visible = true
     disabled = nil
 
@@ -39,19 +39,16 @@ module CauseHelper
       end
     end
 
-    if rounded
-      html_opts = {
-        :remote => true,
-        :disabled => disabled,
-        :onclick => "disableAndContinue(this,'#{_('Voting...')}')",
-        :class => "buttonMid accBtnMi",
-        :id => "vote_btn_#{cause.id}"
-      }.merge(opts)
-      html_opts[:class] += 'hidden' if not visible
-      return orange_button(button_to(label, {:action => "vote", :id => cause.id}, html_opts))
-    else
-      render :partial => 'cause_buttons', :locals => {:action => 'vote', :label => label, :id => cause.id, :disabled => disabled, :visible => visible,:button_id =>"vote_btn_" + cause.id.to_s}
-    end
+    render :partial => 'cause_buttons', :locals => {
+      :action => 'vote', 
+      :label => label, 
+      :id => cause.id, 
+      :disabled => disabled, 
+      :visible => visible,
+      :button_id =>"vote_btn_" + cause.id.to_s,
+      :small => small,
+      :url_opts => {:small => small}
+    }
 
 end
 
