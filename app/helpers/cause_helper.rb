@@ -9,17 +9,16 @@ module CauseHelper
   end
 
   def cause_voted(cause)
-    return current_user && !Vote.find_by_cause_id_and_user_id(cause.id,current_user.id)
+    return current_user && !!Vote.find_by_cause_id_and_user_id(cause.id, current_user.id)
   end
 
-  def view_cause_button(cause, opts)
-#      return tag 'input', :value => _('View'), :type => 'button', :onclick => set_window_location(cause_details_path(cause.url))
-   return link_to _("View"), cause_details_path(cause.url), opts
+  def view_cause_button(cause, opts={})
+   return orange_button(link_to(_("View"), cause_details_path(cause.url), {:class => 'buttonMid accBtnMi'}.merge(opts)))
   end
 
   # Displayed when the cause is in “voting” mode or when the user did not vote for the cause.
   # Users have to be logged in to vote. A cause can only be voted once.
-  def vote_button(cause, opts={})
+  def vote_button(cause, rounded=false, opts={})
     visible = true
     disabled = nil
 
@@ -40,18 +39,19 @@ module CauseHelper
       end
     end
 
-#    html_opts = {
-#      :remote => true,
-#      :disabled => disabled,
-#      :onclick => "disableAndContinue(this,'#{_('Voting...')}')",
-#      :class => "",
-#      :id => "vote_btn_#{cause.id}"
-#    }.merge(opts)
-#    html_opts[:class] += 'hidden' if not visible
-    
-#    return button_to label, {:action => "vote", :id => cause.id}, html_opts
-
-    render :partial => 'cause_buttons',:locals => {:action => 'vote', :label => label, :id => cause.id, :disabled => disabled, :visible => visible,:button_id =>"vote_btn_" + cause.id.to_s}
+    if rounded
+      html_opts = {
+        :remote => true,
+        :disabled => disabled,
+        :onclick => "disableAndContinue(this,'#{_('Voting...')}')",
+        :class => "buttonMid accBtnMi",
+        :id => "vote_btn_#{cause.id}"
+      }.merge(opts)
+      html_opts[:class] += 'hidden' if not visible
+      return orange_button(button_to(label, {:action => "vote", :id => cause.id}, html_opts))
+    else
+      render :partial => 'cause_buttons', :locals => {:action => 'vote', :label => label, :id => cause.id, :disabled => disabled, :visible => visible,:button_id =>"vote_btn_" + cause.id.to_s}
+    end
 
 end
 

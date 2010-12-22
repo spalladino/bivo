@@ -2,9 +2,6 @@
 
 <div id="causes-list">
   <% @causes.each_with_index do |cause, index| %>
-    <%= index == @causes.size-1 %>
-    <%= index %>
-    <%= @causes.size-1 %>
     <%= render cause, :locals => {:nobg => (index == @causes.size-1)} %>
   <% end %>
 </div>

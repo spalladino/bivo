@@ -1,7 +1,4 @@
-<%= 'noBg' if @nobg %>
-<%= 'bg' unless @nobg %>
-
-<div class="chariIn <%= 'noBg' if @nobg %>">
+<div class="chariIn <%= 'noBg' if nobg rescue nil %>">
   <div class="chariLpic">
     <a href="#">
       <img src="images/causPic.jpg" width="150" height="110" alt="" />
@@ -31,8 +28,9 @@
   </div>
     
   <div class="causRi">
+  	
   	<div class="causRiBox">
-  	  <% case @status.to_sym %>
+  	  <% case cause.status.to_sym %>
 	      <% when :active%>
 		      <%= vote_counter cause, :class => 'statInBoxNo chariRiBoxNo' %>
 		      <span class="statInBoxTxt chariRiBoxTxt"><%=_('votes')%></span>
@@ -45,16 +43,11 @@
       <% end %>
     </div>
     
-    <div class="buttonMainVote">
-      <div class="buttonSide accBtnSt"></div>
-      <% if current_user && @status.to_sym == :active && !cause_voted(cause) %>
-    		<%= vote_button cause, :class => 'buttonMid accBtnMi'%>
-  		<% else %>
-  		  <%= view_cause_button cause, :class => 'buttonMid accBtnMi'%>
-	    <% end %>
-  		<div class="buttonSide accBtnEn"></div>
-  		<br class="spacer" />
-	  </div>
+    <% if current_user && cause.status_active? && !cause_voted(cause) %>
+  		<%= vote_button cause, true %>
+		<% else %>
+		  <%= view_cause_button cause %>
+    <% end %>
     
     <br class="spacer" /> 
   </div>
