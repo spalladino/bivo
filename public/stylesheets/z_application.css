@@ -95,6 +95,15 @@ form.inline {
 	float: none;
 }
 
+.cvComBox {
+	margin-bottom: 0px;
+}
+
+.leav {
+	margin-top: 0px;
+	margin-right: 22px;
+}
+
 .pegi a, .pegi span{
 	color:#ff8400;
 	padding:0 5px 0 0;
@@ -144,6 +153,7 @@ select.genChoo {
     border-collapse:collapse;
     border-top:1px solid #e3e3e3;
     border-bottom:1px solid #e3e3e3;
+    margin: auto;
 }
 
 .classic_table th a {
@@ -164,3 +174,14 @@ select.genChoo {
 }
 
 
+.error {
+	color:red;
+}
+
+.actions {
+	margin-bottom: 5px;
+}
+.actions div, .actions form {
+	display: inline;
+}
+.actions > div { float: left; margin: 0px 2px;}

@@ -11,10 +11,10 @@
   <br class="spacer" />
 
   <p class="accfilTxt"><%= f.label :birthday, _("Birthday") %></p>
-  <%= f.date_select :birthday, :discard_year => true, :default => { :year => 1950 }, :class =>"accfil" %>
+  <%= f.date_select :birthday, {:discard_year => true, :default => { :year => 1950 }}, :class =>"accfil accChoo", :style => "width: 181px !important;" %>
   <br class="spacer" />
 
   <p class="accfilTxt"><%= f.label :gender, _("Sex (optional)") %></p>
-  <%= f.select :gender, [[_("Male"),"M"], [_("Female"),"F"]], :include_blank => true, :class =>"accfil" %>
+  <%= f.select :gender, [[_("Male"),"M"], [_("Female"),"F"]], {:include_blank => true}, :class => "accfil accChoo" %>
   <br class="spacer" />
 

@@ -28,7 +28,7 @@ module ApplicationHelper
     if current_user && current_user.is_admin_user
       label = if charity.status_inactive? then _("Activate") else _("Deactivate") end
       action = if charity.status_inactive? then "activate" else "deactivate" end
-      return content_tag :div, button_to(label,
+      return orange_button_to(label,
         {:action => action, :controller=>"charities", :id => charity.id },
         :remote => true,
         :onclick => 'disableAndContinue(this,"Submitting...")',
@@ -147,5 +147,48 @@ module ApplicationHelper
     "$(this).parents('form:first').submit(); return false;"
   end
 
+  def gray_button_to(name, options = {}, html_options = {})
+    html = Hpricot(button_to(name, options, html_options))
+    html.search('//input[@type=submit]').wrap('<div class="buttonMainGra"></div>')
+    html.search('//input[@type=submit]').add_class 'buttonMidGra'
+    gra = html.search('.buttonMainGra')
+    gra.prepend('<div class="graBtnSt"></div>')
+    gra.append('<div class="graBtnEn"></div><br class="spacer"/>')
+    
+    html.to_html.html_safe
+  end
+  
+  def gray_link_to(*args, &block)
+    html = Hpricot(link_to(*args, &block))
+    html.search('a').wrap('<div class="buttonMainGra"></div>')
+    html.search('a').add_class 'buttonMidGra'
+    gra = html.search('.buttonMainGra')
+    gra.prepend('<div class="graBtnSt"></div>')
+    gra.append('<div class="graBtnEn"></div><br class="spacer"/>')
+    
+    html.to_html.html_safe
+  end
+  
+  def orange_button_to(name, options = {}, html_options = {})
+    html = Hpricot(button_to(name, options, html_options))
+    html.search('//input[@type=submit]').wrap('<div class="buttonMainFloat"></div>')
+    html.search('//input[@type=submit]').add_class 'buttonMid accBtnMi'
+    gra = html.search('.buttonMainFloat')
+    gra.prepend('<div class="buttonSide accBtnSt"></div>')
+    gra.append('<div class="buttonSide accBtnEn"></div><br class="spacer"/>')
+    
+    html.to_html.html_safe
+  end
+  
+  def orange_link_to(*args, &block)
+    html = Hpricot(link_to(*args, &block))
+    html.search('a').wrap('<div class="buttonMainFloat"></div>')
+    html.search('a').add_class 'buttonMid accBtnMi'
+    gra = html.search('.buttonMainFloat')
+    gra.prepend('<div class="buttonSide accBtnSt"></div>')
+    gra.append('<div class="buttonSide accBtnEn"></div><br class="spacer"/>')
+    
+    html.to_html.html_safe
+  end
 end
 
