@@ -28,7 +28,7 @@ module ApplicationHelper
     if current_user && current_user.is_admin_user
       label = if charity.status_inactive? then _("Activate") else _("Deactivate") end
       action = if charity.status_inactive? then "activate" else "deactivate" end
-      return gray_button_to(label,
+      return orange_button_to(label,
         {:action => action, :controller=>"charities", :id => charity.id },
         :remote => true,
         :onclick => 'disableAndContinue(this,"Submitting...")',
@@ -137,7 +137,7 @@ module ApplicationHelper
       photo = "admin.png"
     end
   end
-  
+
   def styled_will_paginate(collection, atts={})
     will_paginate @collection, {:previous_label => image_tag('pegiarL.png'), :next_label => image_tag('pegiarR.png'), :class => 'pegi'}.merge(atts)
   end

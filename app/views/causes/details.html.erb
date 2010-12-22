@@ -1,55 +1,78 @@
-<h1><%= link_to_cause @cause %></h1>
+<% content_for(:head) do %>
+  <%= javascript_include_tag "flexcroll" %>
+<% end %>
 
-<%= gallery @cause %>
-<%= edit_gallery_link @cause %>
 
-<p> <b><%=_('Organized by')%>: <%= link_to_charity @cause.charity %>
-<p> <b><%=_('Landing page')%></b>: <%= link_to(url_for(url_cause(@cause).merge({ :only_path => false })), url_cause(@cause)) %> </p>
-<p> <b><%=_('Content')%></b>: <%= raw @cause.description %> </p>
-<p> <b><%=s_('Cause|City')%></b>: <%= @cause.city %> </p>
-<p> <b><%=_('country')%></b>: <%= Country.find(@cause.country_id).name%> </p>
-<p> <b><%=_('Founds Needed')%></b>: <%= @cause.funds_needed %> </p>
-<div id="funds_raised"> <%= @cause.funds_raised %> </div>
-
-<br/>
-<div id="vote_button">
-  <%= vote_button @cause %>
-</div>
-
-<br/>
-<div id="follow_cause_button">
-  <%= follow_cause_button @cause %>
-</div>
-
-<br/>
 <div id="delete_cause_button">
   <%= delete_cause_button @cause %>
 </div>
 
-<br/>
+
 <div id="edit_cause_button">
   <%= edit_cause_button @cause %>
 </div>
 
-<br/>
+
 <div id="activate_deactivate_cause_btn">
   <%= active_deactive_cause_button @cause %>
 </div>
 
-<br/>
-<div id="progress_box">
-<%=progress_box @cause%>
-</div>
 
-<br/>
-<div id="facebook_like">
-<%=facebook_like%>
-</div>
+<div class="inbodyM">
+	<div class="bodyInner">
+
+    	<div class="statGrT"><h2><%=_('Build the best skatepark in the midwest')%></h2></div>
+        <div class="boxMain">
+            <div class="cauVMain">
+            	<%= gallery @cause %>
+              <%= edit_gallery_link @cause %>
+
+                <div class="chariMid cauVMid">
+              	   <div class="cauVOrg">
+                      <strong><%=_('Charity Rating: ')%></strong><br class="spacer" />
+                    	<strong><%=_('Organized by: ')%></strong><p><%= link_to_charity @cause.charity %></p><br class="spacer" />
+                        <strong><%=_('Status: ')%></strong><p><%=progress_box(@cause)%></p><br class="spacer" />
 
 
-<div id="comments">
-  <%= comments @cause %>
-</div>
 
-<%= render :partial => 'news/news', :locals => { :newsable => @cause, :all_news => @cause.news.order('id Desc') }%>
+                        <strong><%=_('Founds Needed: ')%></strong><p><%=number_to_currency(@cause.funds_needed,:precision => 0)%> </p><br class="spacer" />
+                        <strong><%=_('Location: ')%></strong><p><%= @cause.city %>, <%= Country.find(@cause.country_id).name%></p><br class="spacer" />
+                        <strong><%=_('Landing page: ')%></strong><p><%= link_to(url_for(url_cause(@cause).merge({ :only_path => false })), url_cause(@cause)) %></p><br class="spacer" />
+
+                    </div>
+
+                  	<p class="cauVMidTxt"><%= raw @cause.description %></p>
+                <%= rating_stars @cause.charity, :class => "star star3" %>
+
+                </div>
+
+                <div class="shopListBoxRi">
+                	<div class="shopListGr"><span class="cvMBoxNo">$4500</span><span class="cvMBoxTxt">raised</span></div>
+
+
+
+                   <%= vote_button @cause %>
+
+                   <%= follow_cause_button @cause %>
+
+                    <%=facebook_like%>
+
+
+              </div><br class="spacer" />
+
+          	</div>
+
+
+
+     <%= render :partial => 'news/news', :locals => { :newsable => @cause, :all_news => @cause.news.order('id Desc') }%>
+
+
+    <div id="comments">
+      <%= comments @cause %>
+    </div>
+
+    </div><!-- boxMain -->
+  </div><!-- /bodyInner -->
+  <div class="bodyBot"></div>
+</div><!-- /inbodyM -->
 

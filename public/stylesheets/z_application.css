@@ -148,6 +148,32 @@ select.genChoo {
 	margin:0 0 0 10px;
 	font:normal 11px/12px Arial, Helvetica, sans-serif;
 }
+
+.classic_table {
+    border-collapse:collapse;
+    border-top:1px solid #e3e3e3;
+    border-bottom:1px solid #e3e3e3;
+    margin: auto;
+}
+
+.classic_table th a {
+    color:inherit;
+}
+
+.classic_table th {
+	font:bold 14px/31px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color:#f6f6f6;
+    background:url(../images/grenHead.jpg) 0 0 repeat-x;
+	border-right:1px solid #989898;
+}
+
+.classic_table td {
+	font:bold 14px/31px "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-left:1px solid #989898;	
+    border-right:1px solid #989898;
+}
+
+
 .error {
 	color:red;
 }
@@ -158,4 +184,4 @@ select.genChoo {
 .actions div, .actions form {
 	display: inline;
 }
-.actions > div { float: left; margin: 0px 2px;}
+.actions > div { float: left; }
