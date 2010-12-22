@@ -20,56 +20,26 @@
 <div class="headerFull">
   <div class="main">
     <div class="banM banM2">
-      <div class="banMIN">
-
+      <div class="banartR">
         <h2 class="shopHead"><%=_("Buy through us. Change the world")%></h2>
         <%= image_tag(@shop.image.url(:small),:class=>"carzol") if @shop.image_file_name %>
-        <p class="carzolTxt"><b><%= @shop.name %></b>: <%= @shop.description %></p>
+        <p class="carzolTxt artRtxt"><b><%= @shop.name %></b>: <%= @shop.description %></p>
         <p class="carzolORTxt"><%= number_to_currency(@shop.incomes_in_period(1.month.ago, Date.today),:precision=>0)%></p>
         <p class="carzolTxt2"><%=_('Raised this month')%></p>
-
         <%= link_to _("See How it Works !"), how_it_works_url,:class => "carzolBtn" %>
-
+      </div>
+      <div class="banL">
+        <%= render 'affiliate_code'%>
       </div>
     </div>
   </div>
+
 
   <div class="headerFullIn"></div>
 </div>
 
 
-<div>
-  <br class="spacer">
-  <br class="spacer">
 
-<!-- Search box: -->
-  <%if @shop.redirection == :purchase_button%>
-  <div class="buttonMainLog goBtnMain">
-    <div class="logBtnSt"></div>
-    <a href= "<%=@shop.affiliate_code %>" class="buttonMidlog"> <%=_('Go to ')%> <%=@shop.name %></a>
-    <div class="logBtnEn"></div><br class="spacer">
-  </div>
-
-
-  <%end%>
-  <%if @shop.redirection == :search_box%>
-  <form action="<%= @shop.affiliate_code %>" onsubmit="return replaceSearch(this)">
-    <p class="bodyHead"><%=_("Search for Products")%> <br/>
-    <input type="text" class="banLFill"/>
-
-    <div class="buttonMainLog goBtnMain">
-      <div class="logBtnSt"></div>
-      <%= submit_tag 'submit', :class=>"buttonMidlog"%>
-      <div class="logBtnEn"></div><br class="spacer">
-    </div>
-  </form>
-    <%end%>
-    <!-- Purchase button: -->
-
-
-  <!-- Custom widget: -->
-  <%if @shop.redirection == :custom_widget%><%=raw @shop.affiliate_code%><%end%>
-</div>
 <br class="spacer">
 <br class="spacer">
 
