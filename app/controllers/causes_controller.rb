@@ -91,8 +91,13 @@ class CausesController < ApplicationController
   def vote
     @vote = Vote.new :cause_id => params[:id], :user_id=> current_user.id
     ajax_flash[:notice] = @vote.save ? _("Vote submitted") : @vote.errors[:cause_id]
-
-    redirect_to request.referer unless request.xhr?
+  
+    if request.xhr?
+      @small = params[:small] || false
+      @votes_count = Cause.find(params[:id]).votes_count
+    else
+      redirect_to request.referer 
+    end
   end
 
   def follow

@@ -17,31 +17,42 @@
 
 
 
+
 <div class="headerFull">
-  <div class="main">
-    <div class="banM banM2">
-      <div class="banartR">
-        <h2 class="shopHead"><%=_("Buy through us. Change the world")%></h2>
-        <%= image_tag(@shop.image.url(:small),:class=>"carzol") if @shop.image_file_name %>
-        <p class="carzolTxt artRtxt"><b><%= @shop.name %></b>: <%= @shop.description %></p>
-        <p class="carzolORTxt"><%= number_to_currency(@shop.incomes_in_period(1.month.ago, Date.today),:precision=>0)%></p>
-        <p class="carzolTxt2"><%=_('Raised this month')%></p>
-        <%= link_to _("See How it Works !"), how_it_works_url,:class => "carzolBtn" %>
-      </div>
-      <div class="banL">
-        <%= render 'affiliate_code'%>
-      </div>
+	<div class="main">
+        <div class="banM">
+        	<div class="banMIN">
+                <div class="banL">
+                    <h2 class="banWhHead"><%=_("Donate to charity when")%><br />  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=_("you shop at ")%><%= @shop.name.capitalize %></h2>
+                    <%= image_tag(@shop.image.url(:home),:class=>"carzol") if @shop.image_file_name %>
+                    <%= render 'affiliate_code'%>
+                </div>
+                <div class="banR2">
+
+                    <h2 class="banWhHead"><%=_("Creating a better world.")%><br /> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=_("One purchase at a time.")%></h2>
+                    <p><%=_("Buy the products and services you love from ")%><%= @shop.name.capitalize %><%=_("using Bivo.")%>  <%= @shop.comission_details %> </p>
+                    <p class="banRDolarTxt2"><%= number_to_currency(@shop.incomes_in_period(1.month.ago, Date.today),:precision=>0)%></p>
+                    <p><%=_("Using Bivo to buy at ")%><%= @shop.name.capitalize %><%=_(" costs you nothing, but it can mean everything to those who need your help today.")%></p>
+
+
+
+                    <br/>
+                    <div class="shopSeeBtn">
+                        <div class="see1BtnSt"></div>
+                        <%= link_to _("See How it Works !"), how_it_works_url,:class => "buttonMidSee1" %>
+                      <div class="see1BtnEn"></div><br class="spacer" />
+                    </div>
+
+
+                </div><br class="spacer" />
+           </div>
+        </div>
+
+
     </div>
-  </div>
-
-
-  <div class="headerFullIn"></div>
+	<div class="headerFullIn"></div>
 </div>
 
-
-
-<br class="spacer">
-<br class="spacer">
 
 <%= render 'shared/pre_footer'%>
 
