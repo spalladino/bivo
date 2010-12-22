@@ -87,6 +87,14 @@ form.inline {
 	color:#4c4c4c !important;
 	padding-top: 10px;
 	margin-left: 8px;
+  /*left: -203px;
+  top: 13px;*/
+}
+
+.updnWatermark
+{
+  position:absolute;
+  display: none;
 }
 
 .cvReBoxR{
