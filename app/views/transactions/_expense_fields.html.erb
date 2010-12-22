@@ -1,7 +1,6 @@
-    <p><%= f.label :category %> <br />
+    <%= f.label :category %>
     <%= f.select :expense_category_id, expense_categories.collect{ |c| [c.name, c.id] }, :include_blank => true %>
-    <%= link_to _("Manage Categories"), expense_categories_path, :class => "iframe" %>
-    </p>
+    <%= link_to _("Manage Categories"), expense_categories_path, :class => "iframe" %>    
     
-    <p><%= f.label :paid_to %><br />
-    <%= f.text_field :paid_to %></p>
+    <%= f.label :paid_to %>
+    <%= f.text_field :paid_to %>

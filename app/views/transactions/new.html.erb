@@ -1,7 +1,3 @@
-<h2>
-  <%= link_to _("Transactions"), transaction_list_path %> | <%= _("Add Income/Expense") %>
-</h2>
-
 <% content_for :js do %>
 
 $(document).ready(function(){
@@ -51,14 +47,17 @@ $(document).ready(function(){
 
 <% end %>
 
-<%= form_for(@transaction, :as => :transaction, :url => {:controller => "transactions", :action => "create"}) do |f| %>
+<%= single_block _("Transactions | Add Income/Expense") do %>
+
+<%= form_for(@transaction, :as => :transaction, :url => {:controller => "transactions", :action => "create"}, :builder => BivoFormBuilder) do |f| %>
   <%= render "shared/error_messages", :target => @transaction %>
 
-  <p><%= f.label :type %><br />
-  <%= f.select :type, [["Income","Income"], ["Expense","Expense"]], :include_blank => true %></p>
+  <%= f.label :type %>
+  <%= f.select :type, [["Income","Income"], ["Expense","Expense"]], :include_blank => true %>
 
-  <p><%= f.label :date %><br />
-  <%= f.date_select :transaction_date %></p>
+  <%= f.label :date %>
+  <%= f.date_select :transaction_date %>
+  <br class="spacer"/>
 
   <div id="income_fields" style="<%= get_display_of :Income, @transaction %>">
     <%= render :partial => "income_fields",
@@ -70,14 +69,15 @@ $(document).ready(function(){
           :locals => {:f => f, :expense_categories => @expense_categories} %>
   </div>
 
-  <p><%= f.label :amount %><br />
+  <%= f.label :amount %>
+  <%= f.select :input_currency, @currencies, :selected => @currency %>
+  <%= f.label ' ' %>
+  <%= f.text_field :input_amount %>
 
-  <%= f.select :input_currency, @currencies, :selected => @currency %></p>
-  <%= f.text_field :input_amount %></p>
+  <%= f.label :description %>
+  <%= f.text_area :description %>
 
-  <p><%= f.label :description %><br />
-  <%= f.text_area :description %></p>
-
-  <p><%= f.submit :Save %> <%= f.submit :Cancel, :id => "cancel" %></p>
+  <%= f.submit :Save %> <%= f.submit :Cancel, :id => "cancel" %>
 <% end %>
 
+<% end %>
