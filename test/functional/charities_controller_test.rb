@@ -357,7 +357,7 @@ class CharitiesControllerTest < ActionController::TestCase
       post :deactivate, :id => id
 
       assert_response :redirect
-      assert_equal "Error deactivating charity", flash[:notice]
+      assert_match /Error deactivating charity/, flash[:notice]
       assert_equal :active, Charity.find(id).status
       assert_equal status, cause.reload.status
     end

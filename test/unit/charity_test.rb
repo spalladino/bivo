@@ -131,17 +131,13 @@ class CharityTest < ActiveSupport::TestCase
 
   test "status test methods when active" do
     s = Charity.make_unsaved :status => :active
-    assert s.active?
     assert s.status_active?
-    assert !s.inactive?
     assert !s.status_inactive?    
   end
 
   test "status test methods when inactive" do
     s = Charity.make_unsaved :status => :inactive
-    assert s.inactive?
     assert s.status_inactive?
-    assert !s.active?
     assert !s.status_active?    
   end
 
