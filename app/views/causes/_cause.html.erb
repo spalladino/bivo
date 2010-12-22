@@ -1,0 +1,58 @@
+<div class="chariIn <%= 'noBg' if nobg rescue nil %>">
+  <div class="chariLpic">
+    <a href="#">
+      <%= image_tag big_avatar(cause) || "causPic.jpg", :width => 150, :height => 110 %>
+    </a>
+  </div>
+
+  <div class="chariMid causMid">
+  	<h3><%= link_to_cause cause %></h3>
+  	<div class="flagTxt">
+  	  <p class="flagTxt"><%= cause.country.name %></p>
+    	<!--img src="images/flag.jpg" width="17" height="12" alt="" /-->
+    	<br class="spacer" />
+  	</div>
+        
+		<div class="chariLoca">
+    	<p class="orgaTxt"><%= _("Organized by")%> :</p>
+    	<strong><%= link_to_charity cause.charity %></strong>
+    	<br class="spacer" />
+    	<p class="orgaTxt"><%= _("Funds needed")%> :</p>
+    	<strong><%= link_to cause.funds_needed, cause_details_path(cause.url) %></strong>
+    	<br class="spacer" />
+    </div>
+      	
+  	<p class="chariTxt">
+      <%= read_more(raw(cause.description), cause_details_path(cause.url), 20) %>
+    </p>
+  </div>
+    
+  <div class="causRi">
+  	
+  	<div class="causRiBox">
+  	  <% case cause.status.to_sym %>
+	      <% when :active%>
+		      <%= vote_counter cause, :class => 'statInBoxNo chariRiBoxNo' %>
+		      <span class="statInBoxTxt chariRiBoxTxt"><%=_('votes')%></span>
+	      <% when :raising_funds%>
+	        <span class="statInBoxNo chariRiBoxNo">
+	          <%= "#{number_to_currency cause.funds_raised, :precision => 0}" %>
+          </span>
+		      <span class="statInBoxTxt chariRiBoxTxt">
+		        <%= "#{cause_funds_percentage_completed cause} #{_('raised')}" %>
+	        </span>
+	      <% when :completed%>
+	        <span class="statInBoxNo chariRiBoxNo"><%= "#{number_to_currency cause.funds_raised}"%></span>
+		      <span class="statInBoxTxt chariRiBoxTxt"><%=_('raised')%></span>
+      <% end %>
+    </div>
+    
+    <% if current_user && cause.status_active? && !cause_voted(cause) %>
+  		<%= vote_button cause, true %>
+		<% else %>
+		  <%= view_cause_button cause %>
+    <% end %>
+    
+    <br class="spacer" /> 
+  </div>
+</div>

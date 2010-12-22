@@ -9,16 +9,16 @@ module CauseHelper
   end
 
   def cause_voted(cause)
-    return current_user && !Vote.find_by_cause_id_and_user_id(cause.id,current_user.id)
+    return current_user && !!Vote.find_by_cause_id_and_user_id(cause.id, current_user.id)
   end
 
-  def view_cause_button(cause)
-    return link_to _("View"), cause_details_path(cause.url)
+  def view_cause_button(cause, opts={})
+   return orange_button(link_to(_("View"), cause_details_path(cause.url), {:class => 'buttonMid accBtnMi'}.merge(opts)))
   end
 
   # Displayed when the cause is in “voting” mode or when the user did not vote for the cause.
   # Users have to be logged in to vote. A cause can only be voted once.
-  def vote_button(cause)
+  def vote_button(cause, rounded=false, opts={})
     visible = true
     disabled = nil
 
@@ -39,9 +39,21 @@ module CauseHelper
       end
     end
 
-    render :partial => 'cause_buttons',:locals => {:action => 'vote', :label => label, :id => cause.id, :disabled => disabled, :visible => visible,:button_id =>"vote_btn_" + cause.id.to_s}
+    if rounded
+      html_opts = {
+        :remote => true,
+        :disabled => disabled,
+        :onclick => "disableAndContinue(this,'#{_('Voting...')}')",
+        :class => "buttonMid accBtnMi",
+        :id => "vote_btn_#{cause.id}"
+      }.merge(opts)
+      html_opts[:class] += 'hidden' if not visible
+      return orange_button(button_to(label, {:action => "vote", :id => cause.id}, html_opts))
+    else
+      render :partial => 'cause_buttons', :locals => {:action => 'vote', :label => label, :id => cause.id, :disabled => disabled, :visible => visible,:button_id =>"vote_btn_" + cause.id.to_s}
+    end
 
-  end
+end
 
 
 
@@ -94,10 +106,11 @@ module CauseHelper
     end
   end
 
-  def vote_counter(cause)
-    content_tag :span, cause.votes_count, :id => "vote_counter_#{cause.id}"
+  def vote_counter(cause, opts={})
+    content_tag :span, cause.votes_count, {:id => "vote_counter_#{cause.id}"}.merge(opts)
   end
 
+  
   # Displays info on the cause depending on its status
   # * In “voting” mode: Displays the number of votes.
   # * In “raising funds” mode: Displays the funds raised and the fundraising progress percentage.
@@ -107,12 +120,10 @@ module CauseHelper
       return  raw(_("Voting (%s votes).") % [cause.votes_count.to_s])
     elsif cause.status == :raising_funds
       return  raw(_("Raising Funds (%s completed).") % [cause_funds_percentage_completed(cause)])
-  elsif cause.status == :completed || cause.status == :paid
+    elsif cause.status == :completed || cause.status == :paid
       return  raw(_("Completed (%s funds raised).") % [number_to_currency(cause.funds_raised,:precision => 0)])
     end
   end
-
-
 
 
   # Redirects to the cause page. Charity. (Owner)
@@ -140,11 +151,15 @@ module CauseHelper
     end
   end
 
-
-
   def comments_to_approve(cause)
     return Comment.where(:commentable_type => cause.class.name, :commentable_id => cause.id, :approved => false).order('created_at ASC')
   end
+  
+  def big_avatar(cause)
+    photo = Gallery.for_entity(cause).items.first(&:is_photo?)
+    photo ? photo.big_avatar_url : nil
+  end
+
 
 end
 

@@ -5,61 +5,64 @@
 <% content_for(:js) do %>
 
   $(function() {
-    $('#filters select').add('#filters input').change(function() {
+    $('.filterReload').change(function() {
 			$('#filter_form').submit();
 		});
 	});
 <% end %>
 
-<% title "Causes" %>
+<% title _('Causes') %>
 
+<div class="inbodyM">
+	<div class="bodyInner">
+  	<div class="statGrT">
+    	<h2><%=_('Causes List')%></h2>
+      <div class="grNav">
+      	<ul>
+					<% @categories.each_with_index do |category, idx| %>
+						<% if idx > 0 %><li class="grPipe">|</li><% end %>
+						<li><%= link_to "#{category.name} (#{category.causes_count})", category_filter_url(category)%></li>
+      		<% end%>
+      	</ul>
+      </div>
+    </div>
 
+    <div class="boxMain">
+    	<%= form_tag causes_path, :method => :get, :id => "filter_form" do %>
+			  <%= select_tag :status, options_from_collection_for_select(@statuses, 'to_s', 'description', @status), :class => 'showChoo filterReload' %>
+			  <p class="showTxt"><%=_("Show")%></p>
+		    <br class="spacer" />
 
+			  <div class="gnFilMain">
+        	<p class="genFilTxt"><%= _('Sort by') %></p>
+        	<%= select_tag :sorting, options_for_select(@sortings, @sorting), :class => 'genChoo filterReload' %>
+        	
+          <p class="genFilTxt causfilTxt"><%= _('Filter by region') %></p>
+          <%= select_tag :region, options_from_collection_for_select(@regions, 'id', 'name', @region), :include_blank => _('All countries'), :class => 'genChoo filterReload' %>
 
-<h2>Filters</h2>
+          <p class="genFilTxt"><%= _('Filter by') %></p>
+          <%= text_field_tag :name, @name, :id => 'name_filter', :class => 'genChoo' %>
 
-<div id="filters">
-	<%= form_tag causes_path, :method => :get, :id => "filter_form" do %>
-		<table cellspacing="5">
-			<tr>
-				<td><%= _("Categories") %>: </td>
-				<td>
-					<% @categories.each do |category| %>
-						<%= link_to "#{category.name} (#{category.causes_count})", category_filter_url(category)%>
-					<% end%>
-				</td>
-			<tr>
-				<td><%= _('Filter by region') %></td>
-				<td><%= select_tag :region, options_from_collection_for_select(@regions, 'id', 'name', @region), {:include_blank => _('All countries')}%></td>
-			</tr>
-			<tr>
-				<td><%= _("Show per page")%></td>
-				<td><%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page)%></td>
-			</tr>
-			<tr>
-				<td><%= _('Showing') %></td>
-				<td><%= select_tag :status, options_from_collection_for_select(@statuses, 'to_s', 'description', @status) %></td>
-			</tr>
-			<tr>
-				<td><%= _('Sort by') %></td>
-				<td><%= select_tag :sorting, options_for_select(@sortings, @sorting) %></td>
-			</tr>
-			<tr>
-				<td><%= _('Filter by') %></td>
-				<td><%= text_field_tag :name, @name, :id => 'name_filter' %> <%= link_to_function(_('clear'), "$('#name_filter').val('').change();") if @name %></td>
-			</tr>
-		</table>
-		<p>
-			<%= submit_tag _('Search'), :disable_with => _('Searching...') %>
-		</p>
-	<% end %>
+          <div style="position:relative; top: -3px; left: -18px;" class="hidden">
+        		<%= orange_button submit_tag(_('Search'), :disable_with => _('Searching...'), :class => 'buttonMid accBtnMi') %>
+      		</div>
+      <% end %>
+      
+        <div id="causes">
+          <%= render 'causes' %>
+        </div>
+        	
+            
+        <div class="rgtFilmarg">
+          <%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page), :class => 'showChoo filterReload' %>
+          <p class="showTxt"><%= _("Show per page")%></p>
+          <br class="spacer" />
+        </div>
+      </div>
+    </div>
+  <div class="bodyBot"></div>
 </div>
 
-<br/>
 
-<h2>Causes</h2>
-
-<div id="causes">
-  <%= render 'causes' %>
-</div>
+	
 

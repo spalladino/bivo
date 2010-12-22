@@ -121,6 +121,10 @@ form.inline {
   font-weight:bold;
 }
 
+.pegi {
+  width: 200px;
+}
+
 .inputWithBorder {
   border: 1px solid #7F9DB9;
 }
