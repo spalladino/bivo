@@ -15,9 +15,10 @@ class CommentsController < ApplicationController
   end
 
   def create
+
     @user_who_commented = @current_user
     @comment = Comment.build_from(@entity, @user_who_commented.id,params[:comment]["body"])
-    @comment.parent_id = params[:parent_id]
+    @comment.parent_id = params[:parent_id] if params[:parent_id] != "null" #for IE
 
     rules.before_add @comment,current_user
 
