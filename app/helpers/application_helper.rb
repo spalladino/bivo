@@ -28,7 +28,7 @@ module ApplicationHelper
     if current_user && current_user.is_admin_user
       label = if charity.status_inactive? then _("Activate") else _("Deactivate") end
       action = if charity.status_inactive? then "activate" else "deactivate" end
-      return content_tag :div, button_to(label,
+      return gray_button_to(label,
         {:action => action, :controller=>"charities", :id => charity.id },
         :remote => true,
         :onclick => 'disableAndContinue(this,"Submitting...")',

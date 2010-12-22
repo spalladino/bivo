@@ -177,6 +177,20 @@ class Charity < User
     end
   end
 
+  # this are overriden w.r.t. enum_attr since inactive and active clash
+  def status_inactive?
+    status == :inactive
+  end
+
+  def inactive?
+    status == :inactive
+  end
+
+  def active?
+    status == :active
+  end
+  #
+
   private
 
   def check_presence_of_protocol_in_website
@@ -190,7 +204,7 @@ class Charity < User
       self.causes.each do |cause|
         cause.status = :inactive
         if !cause.save
-          errors.add(:status, "can't inactivate charity due to causes")
+          errors.add(:status, _("can't inactivate charity due to cause: %s") % [cause.name])
           return false
         end
       end
