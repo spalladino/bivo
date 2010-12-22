@@ -43,7 +43,7 @@ module ApplicationHelper
 
   def edit_gallery_link(entity)
     if eval("#{entity.class}::GalleryRules").can_edit?(current_user, entity)
-      link_to _('Edit Gallery'), edit_gallery_path(entity.class.name, entity.id)
+      orange_link_to _('Edit Gallery'), edit_gallery_path(entity.class.name, entity.id)
     end
   end
 
@@ -189,6 +189,14 @@ module ApplicationHelper
     gra.append('<div class="buttonSide accBtnEn"></div><br class="spacer"/>')
     
     html.to_html.html_safe
+  end
+  
+  def single_block(title, &block)
+    content_tag :div, :class => "inbodyM" do
+      content_tag :div, :class => "bodyInSm" do
+        '<div class="GrTSm"><h2>' + title + '</h2></div>' + content_tag(:div, :class => "boxMainSm", &block)
+      end
+    end
   end
 end
 

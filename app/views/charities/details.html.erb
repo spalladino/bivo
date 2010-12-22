@@ -18,14 +18,17 @@
 			</div>
 
 			<div id="add_cause_button">
-			  <%= add_cause_button(@charity) %>
+			  <%= add_cause_button @charity %>
 			</div>
 			
+			<div>
+			  <%= edit_gallery_link @charity %>
+			</div>
 			<br class="spacer"/>
 		</div>
 	
         <%= gallery @charity %>
-        <%= edit_gallery_link @charity %>
+
         <div class="chariMid cauVMid">
           <div class="cariOrg">
 	          <p><%=_("Charity Rating")%>:</p><br class="spacer" />

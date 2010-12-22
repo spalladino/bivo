@@ -1,52 +1,52 @@
-<h2><%= _("Create New User") %></h2>
-
-<%= form_for(@resource, :as => @resource_name, :url => admin_create_charity_path) do |f| %>
+<%= single_block _("Create New Charity") do %>
+<%= form_for(@resource, :as => @resource_name, :url => admin_create_charity_path, :builder => BivoFormBuilder) do |f| %>
   <%= render "shared/error_messages", :target => @resource %>
   
   <%= hidden_field_tag :referer, @referer %>
 
-  <p><%= f.label :email, _("E-Mail") %><br />
-  <%= f.text_field :email %></p>
+  <%= f.label :email, _("E-Mail") %>
+  <%= f.text_field :email %>
 
-  <p><%= f.label :password %><br />
-  <%= f.password_field :password %></p>
+  <%= f.label :password %>
+  <%= f.password_field :password %>
 
-  <p><%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %></p>
+  <%= f.label :password_confirmation %>
+  <%= f.password_field :password_confirmation %>
 
-  <p><%= f.label :charity_name, "Charity Name" %><br />
-  <%= f.text_field :charity_name %></p>
+  <%= f.label :charity_name, "Charity Name" %>
+  <%= f.text_field :charity_name %>
 
-  <p><%= f.label :charity_website, "Charity Website" %><br />
-  <%= f.text_field :charity_website %></p>
+  <%= f.label :charity_website, "Charity Website" %>
+  <%= f.text_field :charity_website %>
 
-  <%= f.label _("Short Url")%><br/>
+  <%= f.label _("Short Url")%>
   http://www.bivo.org/ng/<%= f.text_field :short_url, :id => 'short_url', :onfocus => "javascript:$('#available').html('');"%>
   <%= tag 'input', {:type => 'button', :value => _('Check Url'), :onclick => "javascript:checkUrl();"} %>
   &nbsp;
   <span id="available"></span>
   <br/>
 
-  <p><%= f.label :category, "Category" %>
-  <%= f.select :charity_category_id, @categories.collect{ |c| [c.name, c.id] }, :include_blank => true %></p>
+  <%= f.label :category, "Category" %>
+  <%= f.select :charity_category_id, @categories.collect{ |c| [c.name, c.id] }, :include_blank => true %>
 
-  <p><%= f.label :charity_type, "Charity Type" %><br />
-  <%= f.text_field :charity_type %></p>
+  <%= f.label :charity_type, "Charity Type" %>
+  <%= f.text_field :charity_type %>
 
-  <p><%= f.label :tax_reg_number, "Tax Registration Number" %><br />
-  <%= f.text_field :tax_reg_number %></p>
+  <%= f.label :tax_reg_number, "Tax Registration Number" %>
+  <%= f.text_field :tax_reg_number %>
   
-  <p><%= f.label :rating, "Rating" %><br />
-  <%= select 'charity', 'rating', @ratings, :include_blank => true %></p>
+  <%= f.label :rating, "Rating" %>
+  <%= select 'charity', 'rating', @ratings, :include_blank => true %>
+  <br class="spacer" />
 
-  <p><%= f.label :country, "Country" %>
-  <%= f.select :country_id, @countries.collect{ |c| [c.name, c.id] }, :include_blank => true %></p>
+  <%= f.label :country, "Country" %>
+  <%= f.select :country_id, @countries.collect{ |c| [c.name, c.id] }, :include_blank => true %>
 
-  <p><%= f.label :city, "City" %><br />
-  <%= f.text_field :city %></p>
+  <%= f.label :city, "City" %>
+  <%= f.text_field :city %>
 
-  <p><%= f.label _("Description") %><br />
-  <%= f.text_area :description %></p>
+  <%= f.label _("Description") %>
+  <%= f.text_area :description %>
 
   <% content_for :js do %> <!-- javascript code to run, for this view only -->
     <%= render :partial => 'shared/check_url', :locals => {
@@ -55,4 +55,5 @@
   <%end%>
 
   <p><%= f.submit _("Create Account") %></p>
+<% end %>
 <% end %>
