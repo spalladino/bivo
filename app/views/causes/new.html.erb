@@ -1,3 +1,4 @@
 <% @partial_cause_edit = 'form_sensitive_edit' %>
-<%= render :partial => 'form' %>
-
+<%= single_block _("Create New Cause") do %>
+	<%= render :partial => 'form' %>
+<% end %>

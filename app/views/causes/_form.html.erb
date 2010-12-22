@@ -1,34 +1,20 @@
-<%= form_for @cause do |f|%>
+<%= form_for @cause, :builder => BivoFormBuilder do |f|%>
 
   <%= render "shared/error_messages", :target => @cause %>
 
   <%= f.hidden_field :charity_id %>
-  <br/>  <br/>
 
   <%= render :partial => @partial_cause_edit, :locals => { :f => f }  %>
 
-  <table>
-	  <tr>
-		  <td>
-			  <%= f.label _('Country')%>
-		  </td>
-		  <td>
-			  <%= f.label _('City')%>
-		  </td>
-	  </tr>
-	  <tr>
-		  <td>
-			  <%= collection_select('cause', 'country_id', Country.all, :id, :name) %>
-		  </td>
-		  <td>
-			  <%= f.text_field :city %>
-		  </td>
-	  </tr>
-  </table>
+  <%= f.label _('Country')%>
+  <%= collection_select('cause', 'country_id', Country.all, :id, :name) %>
+  <br class="spacer" />
 
-  <%= f.label _('Description') %><br/>
+  <%= f.label _('City')%>
+  <%= f.text_field :city %>
+
+  <%= f.label _('Description') %>
   <%= f.text_area :description, :id => "wysiwyg", :rows=>"5", :cols=>"47"%>
-  <br/>
 
   <%= f.submit 'Save' %> &nbsp;
   <%= tag 'input', {:type => 'button', :value => _('Cancel'), :onclick => "javascript:window.location = '#{root_path}';"} %>
