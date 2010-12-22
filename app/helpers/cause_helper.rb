@@ -40,22 +40,20 @@ module CauseHelper
       end
     end
 
-<<<<<<< HEAD
-    html_opts = {
-      :remote => true,
-      :disabled => disabled,
-      :onclick => "disableAndContinue(this,'#{_('Voting...')}')",
-      :class => "",
-      :id => "vote_btn_#{cause.id}"
-    }.merge(opts)
-    html_opts[:class] += 'hidden' if not visible
+#    html_opts = {
+#      :remote => true,
+#      :disabled => disabled,
+#      :onclick => "disableAndContinue(this,'#{_('Voting...')}')",
+#      :class => "",
+#      :id => "vote_btn_#{cause.id}"
+#    }.merge(opts)
+#    html_opts[:class] += 'hidden' if not visible
     
-    return button_to label, {:action => "vote", :id => cause.id}, html_opts
-=======
+#    return button_to label, {:action => "vote", :id => cause.id}, html_opts
+
     render :partial => 'cause_buttons',:locals => {:action => 'vote', :label => label, :id => cause.id, :disabled => disabled, :visible => visible,:button_id =>"vote_btn_" + cause.id.to_s}
 
->>>>>>> 5fc25dab91e6b6705a0a8abd2f3faf4df0e0a196
-  end
+end
 
 
 
