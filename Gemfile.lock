@@ -80,6 +80,7 @@ GEM
     ffi (0.6.3-x86-mingw32)
       rake (>= 0.8.7)
     gem_plugin (0.2.3)
+    geoip (0.8.7)
     gettext (2.1.0)
       locale (>= 2.0.5)
     gettext_i18n_rails (0.2.9)
@@ -242,6 +243,7 @@ DEPENDENCIES
   devise (= 1.2.rc)
   enumerated_attribute
   ffaker
+  geoip
   gettext (>= 1.9.3)
   gettext_i18n_rails
   google_currency

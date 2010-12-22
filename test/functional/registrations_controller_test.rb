@@ -442,7 +442,7 @@ class RegistrationsControllerTest < ActionController::TestCase
     # update action is inaccesible for guest due to authenticate_scope!
     charity = Charity.make
 
-    assert_raise RuntimeError do
+    assert_raise NoMethodError do
       post :update,
         :id => charity.id,
         :user =>
@@ -482,7 +482,7 @@ class RegistrationsControllerTest < ActionController::TestCase
     # update action is inaccesible for guest due to authenticate_scope!
     personal = PersonalUser.make
 
-    assert_raise RuntimeError do
+    assert_raise NoMethodError do
       post :update,
         :id => personal.id,
         :user =>

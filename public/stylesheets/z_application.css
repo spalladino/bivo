@@ -160,8 +160,12 @@ select.genChoo {
     margin: auto;
 }
 
-.classic_table th a {
+.classic_table tr a {
     color:inherit;
+}
+
+.classic_table tr a:hover {
+    text-decoration:underline;
 }
 
 .classic_table th {
@@ -184,6 +188,7 @@ select.genChoo {
 	margin:0 5px 0 0;
 }
 
+
 .banLFill2{
 	display:block;
 	width:218px;
@@ -196,6 +201,8 @@ select.genChoo {
 	behavior:url(iepngfix.htc);
 }
 
+
+
 .error {
 	color:red;
 }
@@ -207,4 +214,11 @@ select.genChoo {
 	display: inline;
 }
 .actions > div { float: left; }
+
+.arrow {
+	width:7px;
+	height:4px;
+	cursor:pointer;
+	z-index:100;
+}
 

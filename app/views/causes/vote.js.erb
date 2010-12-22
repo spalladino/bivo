@@ -1,4 +1,5 @@
-$("<%="#vote_btn_#{@cause.id}"%>").replaceWith("<%= escape_javascript(vote_button(@cause)) %>");
+$("<%="#vote_btn_#{@cause.id}"%>").replaceWith("<%= escape_javascript(vote_button(@cause, @small)) %>");
+$("<%="#vote_counter_#{@cause.id}"%>").text('<%= @votes_count %>');
 
 <%= render(:partial => 'shared/notifications.js') %>
 
