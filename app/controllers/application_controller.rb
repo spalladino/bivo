@@ -34,7 +34,17 @@ class ApplicationController < ActionController::Base
     if user_signed_in? && Currency.by_id(current_user.preferred_currency)
       session[:currency] = current_user.preferred_currency.to_sym
     elsif session[:currency].nil?
-      session[:currency] = 'GBP'
+      country = self.get_country_from_ip
+      case country[6]
+      when 'SA'
+        session[:currency] = 'ARS'
+      when 'NA'
+        session[:currency] = country[3] == 'CA' ? 'CAD' : 'USD'
+      when 'EU'
+        session[:currency] = country[3] == 'GB' ? 'GBP' : 'EUR'
+      else
+        session[:currency] = 'GBP'
+      end
     end
   end
 
@@ -109,6 +119,11 @@ class ApplicationController < ActionController::Base
   
   def append_errors(message, entity)
     message + ". " + entity.errors.values.flatten.to_sentence(:last_word_connector => " and ")
+  end
+
+  def get_country_from_ip
+    @@geoip ||= GeoIP.new(Rails.root.to_s + '/data/GeoIP.dat')
+    @@geoip.country request.remote_ip
   end
 end
 
