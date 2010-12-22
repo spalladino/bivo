@@ -151,11 +151,15 @@ end
     end
   end
 
-
-
   def comments_to_approve(cause)
     return Comment.where(:commentable_type => cause.class.name, :commentable_id => cause.id, :approved => false).order('created_at ASC')
   end
+  
+  def big_avatar(cause)
+    photo = Gallery.for_entity(cause).items.first(&:is_photo?)
+    photo ? photo.big_avatar_url : nil
+  end
+
 
 end
 

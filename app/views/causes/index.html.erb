@@ -5,7 +5,7 @@
 <% content_for(:js) do %>
 
   $(function() {
-    $('#filters select').add('#filters input').change(function() {
+    $('.filterReload').change(function() {
 			$('#filter_form').submit();
 		});
 	});
@@ -28,19 +28,17 @@
     </div>
 
     <div class="boxMain">
-    	<%= form_tag causes_path, :method => :get, :id => "filter_form", :remote => true do %>
-			  <%= select_tag :status, options_from_collection_for_select(@statuses, 'to_s', 'description', @status), :class => 'showChoo' %>
+    	<%= form_tag causes_path, :method => :get, :id => "filter_form" do %>
+			  <%= select_tag :status, options_from_collection_for_select(@statuses, 'to_s', 'description', @status), :class => 'showChoo filterReload' %>
 			  <p class="showTxt"><%=_("Show")%></p>
 		    <br class="spacer" />
 
 			  <div class="gnFilMain">
         	<p class="genFilTxt"><%= _('Sort by') %></p>
-        	<%= select_tag :sorting, options_for_select(@sortings, @sorting), :class => 'genChoo' %>
+        	<%= select_tag :sorting, options_for_select(@sortings, @sorting), :class => 'genChoo filterReload' %>
         	
           <p class="genFilTxt causfilTxt"><%= _('Filter by region') %></p>
-          <%= select_tag :region, options_from_collection_for_select(@regions, 'id', 'name', @region), :include_blank => _('All countries'), :class => 'genChoo' %>
-
-          <%= hidden_field_tag :per_page, :id => 'hiddenPerPage' %>
+          <%= select_tag :region, options_from_collection_for_select(@regions, 'id', 'name', @region), :include_blank => _('All countries'), :class => 'genChoo filterReload' %>
 
           <p class="genFilTxt"><%= _('Filter by') %></p>
           <%= text_field_tag :name, @name, :id => 'name_filter', :class => 'genChoo' %>
@@ -53,24 +51,10 @@
         <div id="causes">
           <%= render 'causes' %>
         </div>
-
-   
-                <div class="pegi">
-                	<ul>
-                    	<li><a href="#"><img src="images/pegiarL.png" width="4" height="7" alt="" /></a></li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li class="noPad"><a href="#"><img src="images/pegiarR.png" width="4" height="7" alt="" /></a></li><br class="spacer" />
-                    </ul>
-          		</div><br class="spacer" />
-            </div>
         	
             
         <div class="rgtFilmarg">
-          <%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page), :class => 'showChoo', :onchange => "$('hiddenPerPage').val($(this).val())"%>
+          <%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page), :class => 'showChoo filterReload' %>
           <p class="showTxt"><%= _("Show per page")%></p>
           <br class="spacer" />
         </div>

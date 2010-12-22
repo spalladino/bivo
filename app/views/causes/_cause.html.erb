@@ -1,7 +1,7 @@
 <div class="chariIn <%= 'noBg' if nobg rescue nil %>">
   <div class="chariLpic">
     <a href="#">
-      <img src="images/causPic.jpg" width="150" height="110" alt="" />
+      <%= image_tag big_avatar(cause) || "causPic.jpg", :width => 150, :height => 110 %>
     </a>
   </div>
 
@@ -35,8 +35,12 @@
 		      <%= vote_counter cause, :class => 'statInBoxNo chariRiBoxNo' %>
 		      <span class="statInBoxTxt chariRiBoxTxt"><%=_('votes')%></span>
 	      <% when :raising_funds%>
-	        <span class="statInBoxNo chariRiBoxNo"><%= "#{number_to_currency cause.funds_raised} (#{cause_funds_percentage_completed cause})"%></span>
-		      <span class="statInBoxTxt chariRiBoxTxt"><%=_('raised')%></span>
+	        <span class="statInBoxNo chariRiBoxNo">
+	          <%= "#{number_to_currency cause.funds_raised, :precision => 0}" %>
+          </span>
+		      <span class="statInBoxTxt chariRiBoxTxt">
+		        <%= "#{cause_funds_percentage_completed cause} #{_('raised')}" %>
+	        </span>
 	      <% when :completed%>
 	        <span class="statInBoxNo chariRiBoxNo"><%= "#{number_to_currency cause.funds_raised}"%></span>
 		      <span class="statInBoxTxt chariRiBoxTxt"><%=_('raised')%></span>
