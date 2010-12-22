@@ -2,13 +2,13 @@
 	<%= javascript_include_tag "flexcroll" %>
 <% end %>
 
-<%= inactive_shop_notification @shop %>
-
 <div class="inbodyM">
 	<div class="bodyInner">
   	<div class="statGrT"><h2><%= @shop.name %></h2></div>
       <div class="boxMain">
         <div class="cauVMain">
+			
+			<%= inactive_shop_notification @shop %>
 			
 			<div class="actions">
 				<div id="delete_shop_button">

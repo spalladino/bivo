@@ -29,7 +29,7 @@ module ShopsHelper
   
   def inactive_shop_notification(shop)
     unless @shop.active?
-      return content_tag :div, _("This shop is inactive and won't appear to users")
+      return content_tag :div, _("This shop is inactive and won't appear to users"), :class => 'error'
     end
   end
   
