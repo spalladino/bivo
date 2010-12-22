@@ -1,3 +1,5 @@
+<%= single_block _("Edit Cause") do %>
+
 <%= render 'form' %>
 
 <div id="delete_cause_button">
@@ -12,6 +14,7 @@
   <%= mark_as_paid_and_unpaid_button @cause %>
 </div>
 
+<% end %>
 
 <% content_for(:js) do %>
 

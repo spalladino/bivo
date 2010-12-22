@@ -70,7 +70,7 @@ module CauseHelper
     if current_user && current_user.is_admin_user
       label = if cause.status_inactive? then _("Activate") else _("Deactivate") end
       action = if cause.status_inactive? then "activate" else "deactivate" end
-      return content_tag :div, button_to(label,
+      return orange_button_to(label,
         {:action => action, :id => cause.id },
         :remote => true,
         :onclick => 'disableAndContinue(this,"Submitting...")',
@@ -126,7 +126,7 @@ module CauseHelper
   # * Owner: Redirects to the “Cause Add/Edit” page. Causes with a “completed” status cannot be edited by the charity.
   def edit_cause_button(cause)
     if current_user && (current_user.is_admin_user ||  (current_user.is_charity_user && cause.charity.id == current_user.id && cause.can_edit?))
-      return content_tag :div, link_to(_("Edit"), :controller => "causes", :action => "edit", :id => cause.id)
+      return orange_link_to(_("Edit"), :controller => "causes", :action => "edit", :id => cause.id)
     end
   end
 
@@ -136,7 +136,7 @@ module CauseHelper
   # * Admin: Deletes the current cause. If the cause has a history of raised funds the deletion is logical.
   def delete_cause_button(cause)
     if current_user && (current_user.is_admin_user || (current_user.is_charity_user && cause.charity.id == current_user.id && cause.can_delete?))
-      return content_tag :div, button_to(_("Delete"), cause_path(cause.id), :method => :delete, :confirm => _("Are you sure?"))
+      return orange_button_to(_("Delete"), cause_path(cause.id), :method => :delete, :confirm => _("Are you sure?"))
     end
   end
 

@@ -2,30 +2,33 @@
   <%= javascript_include_tag "flexcroll" %>
 <% end %>
 
-
-<div id="delete_cause_button">
-  <%= delete_cause_button @cause %>
-</div>
-
-
-<div id="edit_cause_button">
-  <%= edit_cause_button @cause %>
-</div>
-
-
-<div id="activate_deactivate_cause_btn">
-  <%= active_deactive_cause_button @cause %>
-</div>
-
-
 <div class="inbodyM">
-	<div class="bodyInner">
-
+	<div class="bodyInner">	
     	<div class="statGrT"><h2><%=_('Build the best skatepark in the midwest')%></h2></div>
         <div class="boxMain">
             <div class="cauVMain">
+
+				<div class="actions">
+					<div id="delete_cause_button">
+					  <%= delete_cause_button @cause %>
+					</div>
+
+					<div id="edit_cause_button">
+					  <%= edit_cause_button @cause %>
+					</div>
+
+					<div id="activate_deactivate_cause_btn">
+					  <%= active_deactive_cause_button @cause %>
+					</div>
+
+					<div>
+						<%= edit_gallery_link @cause %>
+					</div>
+
+					<br class="spacer"/>
+				</div>					
+	
             	<%= gallery @cause %>
-              <%= edit_gallery_link @cause %>
 
                 <div class="chariMid cauVMid">
               	   <div class="cauVOrg">
@@ -47,7 +50,7 @@
                 </div>
 
                 <div class="shopListBoxRi">
-                	<div class="shopListGr"><span class="cvMBoxNo">$4500</span><span class="cvMBoxTxt">raised</span></div>
+                	<div class="shopListGr"><span class="cvMBoxNo"><%= number_to_currency @cause.funds_raised %></span><span class="cvMBoxTxt">raised</span></div>
 
 
 
