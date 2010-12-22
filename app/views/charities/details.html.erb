@@ -7,8 +7,28 @@
     <div class="statGrT"><h2><%= @charity.charity_name%></h2></div>
     <div class="boxMain">
       <div class="cauVMain">
+	
+		<div class="actions">
+			<div id="delete_charity_button">
+			  <%= delete_charity_button @charity %>
+			</div>
+
+			<div id="activate_deactivate_charity_btn_<%=@charity.id%>">
+			  <%= active_deactive_charity_button @charity %>
+			</div>
+
+			<div id="add_cause_button">
+			  <%= add_cause_button @charity %>
+			</div>
+			
+			<div>
+			  <%= edit_gallery_link @charity %>
+			</div>
+			<br class="spacer"/>
+		</div>
+	
         <%= gallery @charity %>
-        <%= edit_gallery_link @charity %>
+
         <div class="chariMid cauVMid">
           <div class="cariOrg">
 	          <p><%=_("Charity Rating")%>:</p><br class="spacer" />
@@ -45,20 +65,6 @@
 
 
       <br/>
-      <div id="delete_charity_button">
-        <%= delete_charity_button @charity %>
-      </div>
-
-      <br/>
-
-      <br/>
-      <div id="activate_deactivate_charity_btn_<%=@charity.id%>">
-        <%= active_deactive_charity_button @charity %>
-      </div>
-
-      <div id="add_cause_button">
-        <%= add_cause_button(@charity) %>
-      </div>
 
       <div class="cvNews"><h2>Causes</h2></div>
       <div class="cvNewsBox chriCABox">

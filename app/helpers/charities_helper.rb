@@ -30,7 +30,7 @@ module CharitiesHelper
   # Admin only action.
   def delete_charity_button(charity)
     if current_user && (current_user.is_admin_user)
-      return link_to _("Delete"), { :action => "destroy", :controller => "registrations", :id => charity.id }, :confirm => "are you sure you want to delete the user?", :method => :delete
+      return orange_link_to _("Delete"), { :action => "destroy", :controller => "registrations", :id => charity.id }, :confirm => "are you sure you want to delete the user?", :method => :delete
     end
   end
 
@@ -45,7 +45,7 @@ module CharitiesHelper
   # Redirects to the “Add Cause” page.
   def add_cause_button(charity)
     if current_user && (current_user.is_admin_user || (current_user.is_charity_user && charity.id == current_user.id))
-      return content_tag :div, link_to(_("Add"), :controller => "causes", :action => "new", :charity_id => charity.id)
+      return content_tag :div, orange_link_to(_("Add Cause"), :controller => "causes", :action => "new", :charity_id => charity.id)
     end
   end
 

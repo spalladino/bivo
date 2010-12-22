@@ -184,8 +184,8 @@ class CausesController < ApplicationController
     if @cause.save then
       ajax_flash[:notice] = _("Activated")
     else
-      ajax_flash[:notice] = _("Error activating cause")
-      ajax_flash[:notice] = @cause.errors[:status]
+      ajax_flash[:notice] = append_errors(_("Error activating cause"), @cause)
+      @cause.reload
     end
     redirect_to request.referer unless request.xhr?
   end
@@ -195,7 +195,8 @@ class CausesController < ApplicationController
     if @cause.save then
       ajax_flash[:notice] = _("Deactivated")
     else
-      ajax_flash[:notice] = _("Error deactivating cause")
+      ajax_flash[:notice] = append_errors(_("Error deactivating cause"), @cause)
+      @cause.reload
     end
     redirect_to request.referer unless request.xhr?
   end

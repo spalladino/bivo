@@ -20,9 +20,15 @@
     }
 <% end %>
 
-
-
 <% title "Transactions" %>
+
+<%= single_block _("Transactions") do %>
+
+	<div class="actions">
+		<%= orange_link_to _("add transaction"), new_transaction_path%>
+		
+		<br class="spacer" />
+	</div>
 
 <%=raw @info%>
 
@@ -54,11 +60,9 @@
 	<% end %>
 </div>
 
-
-<h2><%= link_to _("Transactions"), transaction_list_path %></h2>
-
-<%= link_to _("add transaction"), new_transaction_path%></td>
 <div id="transactions">
   <%= render 'transactions' %>
 </div>
+
+<% end %>
 

@@ -23,9 +23,9 @@ module CauseHelper
     visible = true
     disabled = nil
 
-    if current_user.nil?
-      visible = false
-    elsif current_user.nil? and cause.can_vote?
+    if current_user.nil? && !cause.can_vote?
+      return nil
+    elsif current_user.nil? && cause.can_vote?
       label = _("Login to vote")
       disabled = true
     else
@@ -40,6 +40,7 @@ module CauseHelper
       end
     end
 
+<<<<<<< HEAD
     html_opts = {
       :remote => true,
       :disabled => disabled,
@@ -50,7 +51,13 @@ module CauseHelper
     html_opts[:class] += 'hidden' if not visible
     
     return button_to label, {:action => "vote", :id => cause.id}, html_opts
+=======
+    render :partial => 'cause_buttons',:locals => {:action => 'vote', :label => label, :id => cause.id, :disabled => disabled, :visible => visible,:button_id =>"vote_btn_" + cause.id.to_s}
+
+>>>>>>> 5fc25dab91e6b6705a0a8abd2f3faf4df0e0a196
   end
+
+
 
   # *Follow* is displayed when the user is not following the cause, otherwise *Unfollow* is displayed.
   # If the user is logged off, redirects to the Login page.
@@ -65,14 +72,9 @@ module CauseHelper
       action = if follow then "unfollow" else "follow" end
     end
 
-    return content_tag :div,
-      button_to(label,
-        {:action => action, :id => cause.id },
-        :remote => true,
-        :disabled => disabled ,
-        :onclick => 'disableAndContinue(this,"Submitting...")',
-        :id => "follow_cause_btn"
-      ), :id => "follow_cause_button"
+    visible = true
+
+   render :partial => 'cause_buttons',:locals => {:action => action, :label => label, :id => cause.id, :disabled => disabled, :visible => visible,:button_id =>"follow_cause_button"}
 
   end
 
@@ -82,7 +84,7 @@ module CauseHelper
     if current_user && current_user.is_admin_user
       label = if cause.status_inactive? then _("Activate") else _("Deactivate") end
       action = if cause.status_inactive? then "activate" else "deactivate" end
-      return content_tag :div, button_to(label,
+      return orange_button_to(label,
         {:action => action, :id => cause.id },
         :remote => true,
         :onclick => 'disableAndContinue(this,"Submitting...")',
@@ -117,11 +119,11 @@ module CauseHelper
   # * In “completed” mode: Displays the funds raised.
   def progress_box(cause)
     if cause.status == :active
-      return vote_counter cause
+      return  raw(_("Voting (%s votes).") % [cause.votes_count.to_s])
     elsif cause.status == :raising_funds
-      return content_tag :span, cause_funds_completed(cause)
-    elsif cause.status == :completed
-      return content_tag :span, cause.funds_raised
+      return  raw(_("Raising Funds (%s completed).") % [cause_funds_percentage_completed(cause)])
+    elsif cause.status == :completed || cause.status == :paid
+      return  raw(_("Completed (%s funds raised).") % [number_to_currency(cause.funds_raised,:precision => 0)])
     end
   end
 
@@ -137,7 +139,7 @@ module CauseHelper
   # * Owner: Redirects to the “Cause Add/Edit” page. Causes with a “completed” status cannot be edited by the charity.
   def edit_cause_button(cause)
     if current_user && (current_user.is_admin_user ||  (current_user.is_charity_user && cause.charity.id == current_user.id && cause.can_edit?))
-      return content_tag :div, link_to(_("Edit"), :controller => "causes", :action => "edit", :id => cause.id)
+      return orange_link_to(_("Edit"), :controller => "causes", :action => "edit", :id => cause.id)
     end
   end
 
@@ -147,7 +149,7 @@ module CauseHelper
   # * Admin: Deletes the current cause. If the cause has a history of raised funds the deletion is logical.
   def delete_cause_button(cause)
     if current_user && (current_user.is_admin_user || (current_user.is_charity_user && cause.charity.id == current_user.id && cause.can_delete?))
-      return content_tag :div, button_to(_("Delete"), cause_path(cause.id), :method => :delete, :confirm => _("Are you sure?"))
+      return orange_button_to(_("Delete"), cause_path(cause.id), :method => :delete, :confirm => _("Are you sure?"))
     end
   end
 

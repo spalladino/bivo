@@ -28,7 +28,7 @@ module ApplicationHelper
     if current_user && current_user.is_admin_user
       label = if charity.status_inactive? then _("Activate") else _("Deactivate") end
       action = if charity.status_inactive? then "activate" else "deactivate" end
-      return content_tag :div, button_to(label,
+      return orange_button_to(label,
         {:action => action, :controller=>"charities", :id => charity.id },
         :remote => true,
         :onclick => 'disableAndContinue(this,"Submitting...")',
@@ -43,7 +43,7 @@ module ApplicationHelper
 
   def edit_gallery_link(entity)
     if eval("#{entity.class}::GalleryRules").can_edit?(current_user, entity)
-      link_to _('Edit Gallery'), edit_gallery_path(entity.class.name, entity.id)
+      orange_link_to _('Edit Gallery'), edit_gallery_path(entity.class.name, entity.id)
     end
   end
 
@@ -137,7 +137,7 @@ module ApplicationHelper
       photo = "admin.png"
     end
   end
-  
+
   def styled_will_paginate(collection, atts={})
     will_paginate @collection, {:previous_label => image_tag('pegiarL.png'), :next_label => image_tag('pegiarR.png'), :class => 'pegi', :inner_window => 2, :outer_window => 0}.merge(atts)
   end
@@ -177,5 +177,34 @@ module ApplicationHelper
      ('<div class="buttonMainVote"><div class="buttonSide accBtnSt"></div>' + obj + '<div class="buttonSide accBtnEn"></div><br class="spacer" /></div>').html_safe
   end
   
+  def orange_button_to(name, options = {}, html_options = {})
+    html = Hpricot(button_to(name, options, html_options))
+    html.search('//input[@type=submit]').wrap('<div class="buttonMainFloat"></div>')
+    html.search('//input[@type=submit]').add_class 'buttonMid accBtnMi'
+    gra = html.search('.buttonMainFloat')
+    gra.prepend('<div class="buttonSide accBtnSt"></div>')
+    gra.append('<div class="buttonSide accBtnEn"></div><br class="spacer"/>')
+    
+    html.to_html.html_safe
+  end
+  
+  def orange_link_to(*args, &block)
+    html = Hpricot(link_to(*args, &block))
+    html.search('a').wrap('<div class="buttonMainFloat"></div>')
+    html.search('a').add_class 'buttonMid accBtnMi'
+    gra = html.search('.buttonMainFloat')
+    gra.prepend('<div class="buttonSide accBtnSt"></div>')
+    gra.append('<div class="buttonSide accBtnEn"></div><br class="spacer"/>')
+    
+    html.to_html.html_safe
+  end
+  
+  def single_block(title, &block)
+    content_tag :div, :class => "inbodyM" do
+      content_tag :div, :class => "bodyInSm" do
+        '<div class="GrTSm"><h2>' + title + '</h2></div>' + content_tag(:div, :class => "boxMainSm", &block)
+      end
+    end
+  end
 end
 

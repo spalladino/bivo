@@ -107,5 +107,8 @@ class ApplicationController < ActionController::Base
     ActionMailer::Base.default_url_options[:host] = request.host_with_port
   end
   
+  def append_errors(message, entity)
+    message + ". " + entity.errors.values.flatten.to_sentence(:last_word_connector => " and ")
+  end
 end
 

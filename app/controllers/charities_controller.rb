@@ -91,7 +91,8 @@ class CharitiesController < ApplicationController
     if @charity.save then
       ajax_flash[:notice] = _("Activated")
     else
-      ajax_flash[:notice] = _("Error activating charity")
+      ajax_flash[:notice] = append_errors(_("Error activating charity"), @charity)
+      @charity.reload
     end
     redirect_to request.referer unless request.xhr?
   end
@@ -99,7 +100,12 @@ class CharitiesController < ApplicationController
   def deactivate
     @charity.status = :inactive
 
-    ajax_flash[:notice] = if @charity.save then _("Deactivated") else _("Error deactivating charity") end
+    if @charity.save then
+      ajax_flash[:notice] = _("Deactivated") 
+    else 
+      ajax_flash[:notice] = append_errors(_("Error deactivating charity"), @charity)
+      @charity.reload
+    end
     redirect_to request.referer unless request.xhr?
   end
 

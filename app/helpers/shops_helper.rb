@@ -6,7 +6,7 @@ module ShopsHelper
     if current_user && current_user.is_admin_user
       label = if shop.active? then _("Deactivate") else _("Activate") end
       action = if shop.active? then "deactivate" else "activate" end
-      return gray_button_to(label,
+      return orange_button_to(label,
         { :action => action, :id => shop.id },
         :remote => true,
         :onclick => 'disableAndContinue(this,"Submitting..")',
@@ -17,19 +17,19 @@ module ShopsHelper
 
   def edit_shop_button(shop)
     if current_user && current_user.is_admin_user
-      return gray_link_to(_("Edit"), :controller => "shops", :action => "edit", :id => shop.id)
+      return orange_link_to(_("Edit"), :controller => "shops", :action => "edit", :id => shop.id)
     end
   end
 
   def delete_shop_button(shop)
     if current_user && current_user.is_admin_user
-      return gray_button_to(_("Delete"), shop_path(shop.id), :method => :delete, :confirm => "Are you sure?") 
+      return orange_button_to(_("Delete"), shop_path(shop.id), :method => :delete, :confirm => "Are you sure?") 
     end
   end
   
   def inactive_shop_notification(shop)
     unless @shop.active?
-      return content_tag :div, _("This shop is inactive and won't appear to users")
+      return content_tag :div, _("This shop is inactive and won't appear to users"), :class => 'error'
     end
   end
   
