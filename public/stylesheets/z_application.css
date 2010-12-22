@@ -160,8 +160,12 @@ select.genChoo {
     margin: auto;
 }
 
-.classic_table th a {
+.classic_table tr a {
     color:inherit;
+}
+
+.classic_table tr a:hover {
+    text-decoration:underline;
 }
 
 .classic_table th {
@@ -189,3 +193,10 @@ select.genChoo {
 	display: inline;
 }
 .actions > div { float: left; }
+
+.arrow {
+	width:7px;
+	height:4px;
+	cursor:pointer;
+	z-index:100;
+}

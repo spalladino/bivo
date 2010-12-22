@@ -38,7 +38,13 @@ class AdminController < ApplicationController
     sort_param = params[:sort_by] || "created_at-desc"
     sort_parts = sort_param.split("-")
 
-    @users = @users.order "#{sort_parts.first} #{sort_parts.last}"
+    @users = @users.all
+
+    if (sort_parts.last == "asc")
+      @users.sort! { |a,b| a.send(sort_parts.first) <=> b.send(sort_parts.first) }    
+    else
+      @users.sort! { |a,b| b.send(sort_parts.first) <=> a.send(sort_parts.first) }
+    end
 
     @per_page = (params[:per_page] || 5).to_i
     @users = @users.paginate(:per_page => @per_page, :page => params[:page])
