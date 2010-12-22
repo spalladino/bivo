@@ -1,14 +1,13 @@
 <% if visible -%>
 <div class="buttonMainVote29" id="<%=button_id%>" >
     <div class="buttonSideRec recBtnStV"></div>
-    <%= button_to(label,
-        {:action => action,:id => id},
-        :remote => true,
-        :disabled => disabled ,
-        :onclick => 'disableAndContinue(this,"Submitting...")',
-        :class => "buttonMidRec ",
-       )
-  %>
+    <%= button_to(label, \
+        {:action => action,:id => id}, \
+        :remote => true, \
+        :disabled => disabled, \
+        :onclick => 'disableAndContinue(this,"Submitting...")', \
+        :class => "buttonMidRec ")
+     %>
 		<div class="buttonSideRec recBtnEn"></div><br class="spacer" />
 </div>
 <% end -%>

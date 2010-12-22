@@ -38,7 +38,7 @@
         </div><!-- /chariMid cauVMid -->
         <div class="shopListBoxRi">
         	<div class="shopListGr"><span class="cvMBoxNo"><%=number_to_currency(@charity.total_funds_raised || 0,:precision => 0)%></span><span class="cvMBoxTxt"><%=_(' raised')%></span></div>
-	        <div class="shopListGr"><span class="cvMBoxNo"><%=@charity.causes_count.to_s%></span><span class="cvMBoxTxt"><%= n_(' cause', ' causes', @charity.causes_count) %></span></div>  
+	        <div class="shopListGr"><span class="cvMBoxNo"><%=@charity.causes_count.to_s%></span><span class="cvMBoxTxt"><%= n_(' cause', ' causes', @charity.causes_count.to_i) %></span></div>  
           <div class="buttonMainVote29">
 		        <div class="buttonSideRec recBtnStF"></div>
             <div id="follow_charity_button">
