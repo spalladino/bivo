@@ -11,7 +11,7 @@
 	<%= _("Size per page")%> <%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page)%> <br />
 	<%= _("Filter by") %> <%= text_field_tag :filter, @filter %> <br />
 	<br />
-	<%= submit_tag("Search") %>
+	<%= orange_button_to _("Search") %>
 	</div>
 	<% end %>
 	<br />
@@ -19,10 +19,22 @@
     <%= will_paginate @users %>
     <table class="classic_table">
       <tr>
-        <th><%= link_to _("Name"), request.parameters.merge({:sort_by => get_sort_for("name")}) %></th>
-        <th><%= link_to _("Type"), request.parameters.merge({:sort_by => get_sort_for("type")}) %></th>
-        <th><%= link_to _("Last Login"), request.parameters.merge({:sort_by => get_sort_for("last_sign_in_at")}) %></th>
-        <th><%= link_to _("Signup Date"), request.parameters.merge({:sort_by => get_sort_for("created_at")}) %></th>
+        <th>
+          <%= link_to _("Name"), request.parameters.merge({:sort_by => get_sort_for("name")}) %> 
+          <%= sort_arrow_for :name %> 
+        </th>
+        <th>
+          <%= link_to _("Type"), request.parameters.merge({:sort_by => get_sort_for("type")}) %>
+          <%= sort_arrow_for :type %>
+        </th>
+        <th>
+          <%= link_to _("Last Login"), request.parameters.merge({:sort_by => get_sort_for("last_sign_in_at")}) %>
+          <%= sort_arrow_for :last_sign_in_at %>
+        </th>
+        <th>
+          <%= link_to _("Signup Date"), request.parameters.merge({:sort_by => get_sort_for("created_at")}) %>
+          <%= sort_arrow_for :created_at %>
+        </th>
         <th>&nbsp;</th>
         <th>&nbsp;</th>
         <th>&nbsp;</th>

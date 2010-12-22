@@ -27,17 +27,25 @@
   <div id="custom_period" class = "nodisplay">
     <br/>
     <br/>
-    <%= _('From:') %>
-    <%= select_date @from, {:prefix => 'custom_from', :start_year => 2000, :end_year => 2020},:class => "date_select" %>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <p class = "cloud3"><%= _('From:') %>
+      <%= select_date @from, {:prefix => 'custom_from', :start_year => 2000, :end_year => 2020},:class => "date_select" %>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <%= _('To:') %>
+
     <%= select_date @to,{:prefix => 'custom_to', :start_year => 2000, :end_year => 2020},:class => "date_select"%>
+ </p>
     <div class="buttonMainSearM">
       <div class="buttonSide accBtnSt"></div>
-        <%= submit_tag _('Search'), :disable_with => _('Searching...'),:class => "buttonMid accBtnMi" %>
+  <% if request.env['HTTP_USER_AGENT'] =~ /MSIE/ %> <!--IF IExplorer -->
+     <%= submit_tag _('Search'),:class => "buttonMid accBtnMi"%>
+  <% else -%>
+  <%= submit_tag _('Search'), :disable_with => _('Searching...'),:class => "buttonMid accBtnMi"%>
+  <% end -%>
+
         <div class="buttonSide accBtnEn"></div><br class="spacer" />
      </div>
   </div>
+
 
 
 
