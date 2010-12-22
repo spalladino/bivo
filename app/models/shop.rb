@@ -39,8 +39,8 @@ class Shop < ActiveRecord::Base
 
   after_save :ensure_shop_account
 
-  has_attached_file :image, :styles => { :search => "80x72>", :view => "208x183>", :small => "150x150>" },
-    :convert_options => { :search => "-gravity center -extent 80x72", :view => "-gravity center -extent 208x183" }
+  has_attached_file :image, :styles => { :home => "277x176>", :search => "80x72>", :view => "208x183>", :small => "150x150>" },
+    :convert_options => { :home => "-gravity center -extent 277x176", :search => "-gravity center -extent 80x72", :view => "-gravity center -extent 208x183" }
 
   UrlFormat = /[a-zA-Z\-_][a-zA-Z0-9\-_]*/
 
@@ -97,7 +97,7 @@ class Shop < ActiveRecord::Base
   def incomes_in_period(from, to)
     return Income.where('shop_id = ? and transaction_date BETWEEN ? AND ?',self.id,from,to).sum('amount')
   end
-  
+
   def incomes_in_period_rank(from,to)
  #TODO: DEFINE HOW IT RANKS
     return "" if self.incomes_in_period(from,to) <= 100
@@ -105,12 +105,12 @@ class Shop < ActiveRecord::Base
     return "cloud2" if (1001..10000) === self.incomes_in_period(from,to)
     return "cloud1"
   end
-  
+
   def incomes_per_month
     rows = self.incomes.group("date_part('month', transaction_date), date_part('year', transaction_date)")\
                 .select("date_part('month', transaction_date) AS month, date_part('year', transaction_date) AS year, SUM(amount) AS amount")\
                 .order("date_part('year', transaction_date), date_part('month', transaction_date)")
-    
+
     return rows.map { |r| { :month => Date.civil(r.year.to_i, r.month.to_i, 1) , :amount => r.amount } }
   end
 
@@ -126,7 +126,7 @@ class Shop < ActiveRecord::Base
   def status_inactive?
     status == :inactive
   end
-  
+
   def search_url
     self.image.url(:search)
   end
@@ -160,7 +160,7 @@ class Shop < ActiveRecord::Base
   def self.find_with_inactives(id)
     self.all_with_inactives.find(id)
   end
-  
+
   def self.find_translated_with_inactives(id)
     self.all_translated_with_inactives.find(id)
   end
