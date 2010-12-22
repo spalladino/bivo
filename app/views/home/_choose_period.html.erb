@@ -2,30 +2,29 @@
   $(function() {
 		setCustomPeriodWithoutSubmitting();
     $('#period').change(setCustomPeriod);
-
-
-    function setCustomPeriodWithoutSubmitting() {
-      if ($('#period').attr('value') == "custom") {
-          $('#custom_period').show();
-      } else {
-        $('#custom_period').hide();
-      }
-    }
-
-    function setCustomPeriod() {
-      if ($('#period').attr('value') == "custom") {
-          $('#custom_period').show();
-      } else {
-        $('#custom_period').hide();
-        $('#form').submit();
-      }
-    }
 	});
+
+  function setCustomPeriodWithoutSubmitting() {
+    if ($('#period').attr('value') == "custom") {
+        $('#custom_period').show();
+    } else {
+      $('#custom_period').hide();
+    }
+  }
+
+  function setCustomPeriod() {
+    if ($('#period').attr('value') == "custom") {
+        $('#custom_period').show();
+    } else {
+      $('#custom_period').hide();
+      $('#form').submit();
+    }
+  }
 <% end %>
 
 <%= form_tag(request.path, :method => "get",:id => "form") do %>
   <%= select_tag :period, options_for_select(@periods, @period),:class=>"genChoo dashChoo" %>
-  <div id="custom_period">
+  <div id="custom_period" class = "nodisplay">
     <br />
     <br />
     <%= _('From:') %>
