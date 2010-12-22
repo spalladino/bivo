@@ -181,14 +181,6 @@ class Charity < User
   def status_inactive?
     status == :inactive
   end
-
-  def inactive?
-    status == :inactive
-  end
-
-  def active?
-    status == :active
-  end
   #
 
   private

@@ -70,7 +70,38 @@ class HomeControllerTest < ActionController::TestCase
     assert_equal Charity.find(user.id).preferred_language.to_sym, :fr    
   end
   
-  test "should use gbp if no currency set" do
+  test "should use ARS currency if no currency set and ip from South America" do
+    @request.env['REMOTE_ADDR'] = '200.49.130.130'
+    get :index
+    assert_equal :ARS, session[:currency].to_sym
+  end
+
+  test "should use CAD currency if no currency set and ip from Canada" do
+    @request.env['REMOTE_ADDR'] = '198.103.238.30'
+    get :index
+    assert_equal :CAD, session[:currency].to_sym
+  end
+
+  test "should use USD currency if no currency set and ip from North America and not Canada" do
+    @request.env['REMOTE_ADDR'] = '72.52.4.244'
+    get :index
+    assert_equal :USD, session[:currency].to_sym
+  end
+
+  test "should use EUR currency if no currency set and ip from Europe and not United Kingdom" do
+    @request.env['REMOTE_ADDR'] = '92.61.36.99'
+    get :index
+    assert_equal :EUR, session[:currency].to_sym
+  end
+
+  test "should use GBP currency if no currency set and ip from Europe and United Kingdom" do
+    @request.env['REMOTE_ADDR'] = '89.151.94.50'
+    get :index
+    assert_equal :GBP, session[:currency].to_sym
+  end
+
+  test "should use GBP currency if no currency set and no country information" do
+    @request.env['REMOTE_ADDR'] = '127.0.0.1'
     get :index
     assert_equal :GBP, session[:currency].to_sym
   end

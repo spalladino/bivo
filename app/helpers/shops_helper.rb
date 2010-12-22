@@ -4,8 +4,8 @@ module ShopsHelper
   # *Activate* button: Displayed only when the shop is deactivated.
   def active_deactive_shop_button(shop)
     if current_user && current_user.is_admin_user
-      label = if shop.active? then _("Deactivate") else _("Activate") end
-      action = if shop.active? then "deactivate" else "activate" end
+      label = if shop.status_active? then _("Deactivate") else _("Activate") end
+      action = if shop.status_active? then "deactivate" else "activate" end
       return orange_button_to(label,
         { :action => action, :id => shop.id },
         :remote => true,
@@ -28,7 +28,7 @@ module ShopsHelper
   end
   
   def inactive_shop_notification(shop)
-    unless @shop.active?
+    unless @shop.status_active?
       return content_tag :div, _("This shop is inactive and won't appear to users"), :class => 'error'
     end
   end

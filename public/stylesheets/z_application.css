@@ -136,7 +136,7 @@ li.youtube img, li.vimeo img {
 }
 
 a.accBtnMi {
-  padding-top: 5px;   
+  padding-top: 5px;
 }
 
 select.genChoo {
@@ -160,8 +160,12 @@ select.genChoo {
     margin: auto;
 }
 
-.classic_table th a {
+.classic_table tr a {
     color:inherit;
+}
+
+.classic_table tr a:hover {
+    text-decoration:underline;
 }
 
 .classic_table th {
@@ -173,10 +177,16 @@ select.genChoo {
 
 .classic_table td {
 	font:bold 14px/31px "Trebuchet MS", Arial, Helvetica, sans-serif;
-    border-left:1px solid #989898;	
+    border-left:1px solid #989898;
     border-right:1px solid #989898;
 }
 
+.date_select{
+	height:20px;
+	font:normal 13px/20px Arial, Helvetica, sans-serif;
+	color:#000;
+	margin:0 5px 0 0;
+}
 
 .error {
 	color:red;
@@ -189,3 +199,10 @@ select.genChoo {
 	display: inline;
 }
 .actions > div { float: left; }
+
+.arrow {
+	width:7px;
+	height:4px;
+	cursor:pointer;
+	z-index:100;
+}

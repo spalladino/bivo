@@ -16,6 +16,7 @@ gem 'paperclip'
 gem "money"
 gem "google_currency"
 gem "hpricot"
+gem "geoip"
 
 group :test do
   gem 'machinist'

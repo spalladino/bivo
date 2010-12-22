@@ -40,4 +40,21 @@ module AdminHelper
       value.strftime("%B, %d, %Y")
     end
   end
+
+  def sort_arrow_for(field)
+    sort_param = params[:sort_by] || "created_at-desc"
+    sort_parts = sort_param.split("-")
+
+    if (sort_parts.first.to_sym == field)
+      if (sort_parts.last == "asc")
+        arrow_image = "star"
+      else
+        arrow_image = "tabBulletInverse"
+      end
+
+      raw "<a class=\"arrow\"><img src=\"images/#{arrow_image}.png\" width=\"7\" height=\"4\" /></a>"
+    else
+      ""
+    end
+  end
 end
