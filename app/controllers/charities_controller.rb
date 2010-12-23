@@ -83,7 +83,7 @@ class CharitiesController < ApplicationController
   end
 
   def details
-
+    @comments_avatar =  comments_avatar(current_user)
   end
 
   def activate
@@ -101,8 +101,8 @@ class CharitiesController < ApplicationController
     @charity.status = :inactive
 
     if @charity.save then
-      ajax_flash[:notice] = _("Deactivated") 
-    else 
+      ajax_flash[:notice] = _("Deactivated")
+    else
       ajax_flash[:notice] = append_errors(_("Error deactivating charity"), @charity)
       @charity.reload
     end

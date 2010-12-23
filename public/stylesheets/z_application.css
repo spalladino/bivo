@@ -18,6 +18,39 @@
 	padding: 10px;
 }
 
+.accfil2{
+	height:22px;
+	float:left;
+	padding:0 2px;
+	margin:0 0 0px 66px;
+	font:normal 13px/24px Arial, Helvetica, sans-serif;
+	color:#000;
+	border:1px solid #7f9db9;
+}
+
+.leftMarginFromBorder{
+	margin:0 0 0px 20px;
+
+}
+
+.cvComBoxLPic2{
+	width:50px;
+	height:50px;
+	float:left;
+	padding:1px;
+	border:1px solid #abd026;
+}
+.accMess2{
+	height:70px !important;
+}
+.cvComReply2{
+	background-color:#e0e0e0;
+	border:1px dashed #989898;
+	padding:15px 10px;
+	margin:0px 0 0 10px;
+	overflow:hidden;
+}
+
 .field {
   margin: 10px;
 }

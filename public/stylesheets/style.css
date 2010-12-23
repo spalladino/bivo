@@ -578,7 +578,7 @@ img, input{
 	cursor:pointer;
 	background:url(../images/logFaeBtn.png) 0 0 no-repeat;
 	behavior:url(iepngfix.htc);
-}	
+}
 .logR{
 	width:508px;
 	float:right;
@@ -593,7 +593,7 @@ img, input{
 	color:#9aba27;
 	text-align:center;
 	margin:5px auto 30px;
-}	
+}
 .regisBtn{
 	display:block;
 	width:110px;
@@ -656,7 +656,7 @@ img, input{
 	border-top:1px solid #d7d7d7;
 	border-right:1px solid #d7d7d7;
 	border-left:1px solid #d7d7d7;
-	
+
 }
 .statInmain{
 	width:870px;
@@ -722,7 +722,7 @@ img, input{
 .inTabR{
 	width:246px;
 	text-align:right;
-}	
+}
 .inTab2{
 	color:#000 !important;
 	border:none !important;
@@ -932,7 +932,7 @@ img, input{
 	position:relative;
 	float:left;
 	margin:0 36px 0 22px;
-}	
+}
 .chariMid h3{
 	font:bold 22px/15px "Trebuchet MS", Arial, Helvetica, sans-serif;
 	color:#000;
@@ -969,7 +969,7 @@ img, input{
 .chariTxt a{
 	color:#000;
 }
-.chariTxtRead{		
+.chariTxtRead{
 	color:#1b78e0 !important;
 }
 .chariTxt a:hover{
@@ -1048,7 +1048,7 @@ img, input{
 	width:17px;
 	height:12px;
 	float:right;
-}	
+}
 /*-----------------------------------causesList-end--------------------------------------------*/
 /*-------------------------------------account-start-------------------------------------------*/
 .bodyInSm{
@@ -1119,7 +1119,7 @@ img, input{
 .captuaR{
 	width:250px;
 	float:left;
-}	
+}
 .ChkTxtM{
 	width:100%;
 	overflow:hidden;
@@ -1272,7 +1272,7 @@ img, input{
 .searFilTxt{
 	font:normal 12px/13px "Trebuchet MS", Arial, Helvetica, sans-serif;
 	color:#4a4a4a;
-	margin:6px 0 10px 10px;	
+	margin:6px 0 10px 10px;
 }
 .searInHead{
 	width:340px !important;
@@ -1371,12 +1371,12 @@ img, input{
 	height:103px;
 	float:left;
 	margin:0 8px 0 0;
-	background:url(../images/humBox.jpg) 0 0 no-repeat;	
+	background:url(../images/humBox.jpg) 0 0 no-repeat;
 }
 .boxHu h3{
 	height:28px;
 	padding:0 0 0 28px;
-	background:url(../images/dashIcon1.jpg) 6px 6px no-repeat;	
+	background:url(../images/dashIcon1.jpg) 6px 6px no-repeat;
 	border-bottom:1px solid #dddad6;
 	font:bold 18px/28px "Trebuchet MS", Arial, Helvetica, sans-serif;
 	color:#d8820e;
@@ -1512,12 +1512,12 @@ img, input{
 }
 .artBotsubHead{
 	font:bold 16px/18px "Trebuchet MS", Arial, Helvetica, sans-serif;
-	color:#232323;	
+	color:#232323;
 }
 .artBotTxt{
 	font:normal 14px/18px "Trebuchet MS", Arial, Helvetica, sans-serif;
 	color:#383838;
-	margin:10px 0 0 0;	
+	margin:10px 0 0 0;
 }
 /*--------------------------------------art-start-----------------------------------------------*/
 /*----------------------------------webhosting-start--------------------------------------------*/
@@ -1758,7 +1758,7 @@ img, input{
 	line-height:1px;
 	font-size:1px;
 	position:absolute;
-	top:0; 
+	top:0;
 	left:0;
 	}
 .vscrollerbase, .vscrollerbar{
@@ -1776,7 +1776,7 @@ img, input{
 	background:url(../images/vscroller.jpg) 0 0 no-repeat;
 	}
 .vscrollerbarend{
-	width:9px; 
+	width:9px;
 	height:1px;
 	background:url(../images/vscroller.jpg) 0 0 no-repeat;
 	}
@@ -1802,7 +1802,7 @@ img, input{
 	}
 .vscrollerbaseend{
 	width:11px;
-	height:11px; 
+	height:11px;
 	background:url(../images/scrollbasedwn.jpg) 0 0 no-repeat;
 	}
 .hscrollerbasebeg{
@@ -1812,15 +1812,15 @@ img, input{
 	}
 .hscrollerbaseend{
 	width:11px;
-	height:11px; 
+	height:11px;
 	background:url(../images/scrollbasedwnh.jpg) 0 0 no-repeat;
 	}
 .scrollerjogbox{
 	width:15px;
 	height:15px;
-	top:auto; 
+	top:auto;
 	left:auto;
-	bottom:0px; 
+	bottom:0px;
 	right:0px;
 	background:url(../images/scrolljog.png) 0 0;
 	}
@@ -1916,7 +1916,7 @@ img, input{
 .shopMidTxt{
 	font:normal 13px/20px "Trebuchet MS", Arial, Helvetica, sans-serif;
 	color:#494949;
-	margin:0 0 25px 0;	
+	margin:0 0 25px 0;
 }
 .shopMidTxt a{
 	color:#1075e6;
@@ -2203,6 +2203,4 @@ img, input{
 
 
 /*--------------------------------------BUTTON-end-----------------------------------------------*/
-
-
 

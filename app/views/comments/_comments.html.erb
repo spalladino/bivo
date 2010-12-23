@@ -20,6 +20,13 @@
 
     cancel_add_button.show();
 
+    if (id){
+      comment_add_form.removeClass('leftMarginFromBorder');
+    }else
+    {
+      comment_add_form.addClass('leftMarginFromBorder');
+    }
+
   }
 
   function replaceAll(txt, replace, with_this) {
