@@ -16,6 +16,10 @@ class BivoFormBuilder < ActionView::Helpers::FormBuilder
     normal_input(super, 'accChoo')
   end
   
+  def file_field(method, options = {})
+    normal_input(super)
+  end
+  
   def text_area(method, options = {})
     normal_input(super, 'accMess')
   end

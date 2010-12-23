@@ -1,3 +1,4 @@
 $('#<%="news_"+@news.id.to_s%>').hide("slow");
+$('#<%="delete_news_button_"+@news.id.to_s%>').hide("slow");
 <%= render(:partial => 'shared/notifications.js') %>
 

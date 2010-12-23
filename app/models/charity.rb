@@ -37,7 +37,7 @@ class Charity < User
 
   class GalleryRules
     def self.can_edit?(user, entity)
-      return user == entity
+      return user == entity || user.is_admin_user
     end
   end
 

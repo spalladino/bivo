@@ -1,5 +1,5 @@
 <%= single_block _("Create New Charity") do %>
-<%= form_for(@resource, :as => @resource_name, :url => admin_create_charity_path, :builder => BivoFormBuilder) do |f| %>
+<%= bivo_form_for(@resource, :as => @resource_name, :url => admin_create_charity_path) do |f| %>
   <%= render "shared/error_messages", :target => @resource %>
   
   <%= hidden_field_tag :referer, @referer %>

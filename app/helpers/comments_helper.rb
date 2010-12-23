@@ -41,7 +41,7 @@ module CommentsHelper
      return raw("<a href = \"#\" id =\"cancel_button_#{id}\" onclick=\"cancelEdit(#{id});return false\">#{_("Cancel")}</a>")
   end
 
-   def cancel_add_button
+  def cancel_add_button
      return raw("<a href = \"#\" name =\"cancel_button\" class=\"nodisplay\" onclick=\"cancelAdd(this);return false;\">#{_("Cancel")}</a>")
   end
 
