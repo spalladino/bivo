@@ -24,8 +24,7 @@ class GalleriesController < ApplicationController
 
   def add_video
     vi = VideoItem.new
-    vi.video_url = params[:video_url]
-    vi.gallery_id = params[:gallery_id]
+    vi.attributes = params[:video_item]
     if vi.save
       ajax_flash[:notice] = _("Video submitted")
     else

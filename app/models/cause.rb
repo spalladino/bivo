@@ -39,7 +39,7 @@ class Cause < ActiveRecord::Base
 
   class GalleryRules
     def self.can_edit?(user, entity)
-      return entity.charity == user
+      return entity.charity == user || user.is_admin_user
     end
   end
 

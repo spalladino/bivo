@@ -374,6 +374,25 @@ class CharitiesControllerTest < ActionController::TestCase
     assert_equal :active,Cause.find(cause.id).status
   end
 
+  #CHECK_URL
+  test "should check url and return ok" do
+    get :check_url, :url=>"url"
+    assert_equal 'available',@response.body.to_s
+  end
+
+  #CHECK_URL
+  test "should validate url" do
+    get :check_url, :url=>"url.bad"
+    assert_equal 'invalid',@response.body.to_s
+  end
+  
+  #CHECK_URL
+  test "should reject url" do
+    url = Charity.make.short_url
+    get :check_url, :url=>url
+    assert_equal 'not_available',@response.body.to_s
+  end
+  
   private
 
   def assert_charities_unsorted(causes_or_ids)

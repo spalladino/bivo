@@ -263,3 +263,14 @@ select.genChoo {
 	z-index:100;
 }
 
+.thumbnails form, .thumbnails form div {
+	display: inline;
+}
+
+.thumbnails input {
+	width: 20px;
+	height: 20px;
+	background-color: white;
+	border: 1px solid #D6D6D6;
+	cursor: pointer;
+}
