@@ -18,7 +18,7 @@ t = link_to_cause @entity if @entity.class == Cause
 <%= bivo_form_for :photo_item, :url => 'add_photo', :method => :post, :html => { :multipart => true } do |f|%>
 	<%= f.label :image %>
     <%= f.file_field :image %></p>
-    <%= f.hidden_field :gallery_id,:value => @gallery.id %>
+    <%= f.hidden_field :gallery_id, :value => @gallery.id %>
    	<%= f.submit _('Submit Photo'), :disable_with => _('Submitting...') %>
 <% end %>
 </div></div>
