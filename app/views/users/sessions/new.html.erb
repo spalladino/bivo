@@ -1,6 +1,12 @@
 <% content_for(:js) do %>
 $(function(){
 	$('.watermark').updnWatermark();
+  $('.updnWatermark').each(function(){
+    var siblingPos = $(this).next().position();
+    $(this).css('top', siblingPos.top);
+    $(this).css('left', siblingPos.left);
+  });
+  $('.updnWatermark').show();
 });
 <% end %>
 

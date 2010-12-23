@@ -1,33 +1,27 @@
 
-<div>
-  <br class="spacer">
-  <br class="spacer">
 
-<!-- Search box: -->
+
+  <!-- Purchase button: -->
   <%if @shop.redirection == :purchase_button%>
-  <div class="buttonMainLog goBtnMain">
+  <div class="buttonMainLog">
     <div class="logBtnSt"></div>
     <a href= "<%=@shop.affiliate_code %>" class="buttonMidlog"> <%=_('Go to ')%> <%=@shop.name %></a>
     <div class="logBtnEn"></div><br class="spacer">
   </div>
-
-
   <%end%>
+
+  <!-- Search box: -->
   <%if @shop.redirection == :search_box%>
   <form action="<%= @shop.affiliate_code %>" onsubmit="return replaceSearch(this)">
-    <p class="bodyHead"><%=_("Search for Products")%> <br/>
-      <input type="text" class="banLFill"/>
-      <div class="buttonMainLog goBtnMain">
+    <input type="text" class="banLFill2"/>
+      <div class="buttonMainLog">
         <div class="logBtnSt"></div>
-        <%= submit_tag 'submit', :class=>"buttonMidlog"%>
+        <%= submit_tag _('Search at ')+@shop.name.capitalize, :class=>"buttonMidlog"%>
         <div class="logBtnEn"></div><br class="spacer">
       </div>
     </form>
-    <%end%>
-    <!-- Purchase button: -->
-
+  <%end%>
 
   <!-- Custom widget: -->
   <%if @shop.redirection == :custom_widget%><%=raw @shop.affiliate_code%><%end%>
-</div>
 

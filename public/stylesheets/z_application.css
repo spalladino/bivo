@@ -87,6 +87,14 @@ form.inline {
 	color:#4c4c4c !important;
 	padding-top: 10px;
 	margin-left: 8px;
+  /*left: -203px;
+  top: 13px;*/
+}
+
+.updnWatermark
+{
+  position:absolute;
+  display: none;
 }
 
 .cvReBoxR{
@@ -188,6 +196,21 @@ select.genChoo {
 	margin:0 5px 0 0;
 }
 
+
+.banLFill2{
+	display:block;
+	width:218px;
+	height:35px;
+	float:left;
+	padding:8px 10px 5px;
+	font:normal 16px/18px Arial, Helvetica, sans-serif;
+	color:#000;
+	background:url(../images/filBg.png) 0 0 no-repeat;
+	behavior:url(iepngfix.htc);
+}
+
+
+
 .error {
 	color:red;
 }
@@ -206,3 +229,4 @@ select.genChoo {
 	cursor:pointer;
 	z-index:100;
 }
+

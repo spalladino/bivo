@@ -36,7 +36,7 @@
  </p>
     <div class="buttonMainSearM">
       <div class="buttonSide accBtnSt"></div>
-  <% if request.env['HTTP_USER_AGENT'] =~ /MSIE/ %> <!--IF IExplorer -->
+  <% if iexplorer? %>
      <%= submit_tag _('Search'),:class => "buttonMid accBtnMi"%>
   <% else -%>
   <%= submit_tag _('Search'), :disable_with => _('Searching...'),:class => "buttonMid accBtnMi"%>

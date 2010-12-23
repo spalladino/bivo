@@ -47,12 +47,12 @@
     <%= f.text_area :about_me %></p>
 
 	<p><%= f.label _("Profile picture") %><br/>
-	Current: <%= image_tag @resource.picture.url %>
+  <%=_("Current:")%> <%= image_tag @resource.picture.url %>
 	<%= f.check_box :delete_picture %> <%= f.label _("Delete profile picture") %>
 	<%= f.file_field :picture %></p>
   <% end %>
 
-  Email me updates of projects or charities I follow when: <br />
+   <%=_("Email me updates of projects or charities I follow when: ")%><br />
     <p><%= f.check_box :notice_all_funds_raised %>
     <%= f.label _("All funds are raised") %></p>
 
