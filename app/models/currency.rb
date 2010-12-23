@@ -1,16 +1,17 @@
 class Currency
-  attr_accessor :id, :name
+  attr_accessor :id, :name, :html_symbol
 
-  def initialize(id, name)
+  def initialize(id, data)
     self.id = id
-    self.name = name
+    self.name = data[:name]
+    self.html_symbol = data[:html_symbol]
   end
 
   def self.all
     result = []
-    Bivo::Application.config.currencies.each_pair { |key, value|
+    Bivo::Application.config.currencies.each_pair do |key, value|
       result << new(key, value)
-    }
+    end
     result
   end
 

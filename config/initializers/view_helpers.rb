@@ -16,3 +16,16 @@ module ActionView
   
   end
 end
+
+module ActionView
+ module Helpers
+   module NumberHelper
+   
+     alias :old_number_to_currency :number_to_currency
+     def number_to_currency(number, options={})
+       old_number_to_currency number, {:unit => @current_currency.html_symbol}.merge(options)
+     end
+   
+   end
+ end
+end
