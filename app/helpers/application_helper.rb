@@ -21,6 +21,10 @@ module ApplicationHelper
     end
   end
 
+  def iexplorer?
+    return request.env['HTTP_USER_AGENT'] =~ /MSIE/
+  end
+
   # Admin only action to change charity status
   # * Deactivate button:  All children causes are deactivated as well.
   # * Activate button: Displayed only when the charity is deactivated.
@@ -146,7 +150,7 @@ module ApplicationHelper
   def submit_parent_form
     "$(this).parents('form:first').submit(); return false;"
   end
-  
+
   def set_window_location(location)
     "window.location = '#{location.html_safe}'; return false;"
   end
@@ -158,10 +162,10 @@ module ApplicationHelper
     gra = html.search('.buttonMainGra')
     gra.prepend('<div class="graBtnSt"></div>')
     gra.append('<div class="graBtnEn"></div><br class="spacer"/>')
-    
+
     html.to_html.html_safe
   end
-  
+
   def gray_link_to(*args, &block)
     html = Hpricot(link_to(*args, &block))
     html.search('a').wrap('<div class="buttonMainGra"></div>')
@@ -169,14 +173,14 @@ module ApplicationHelper
     gra = html.search('.buttonMainGra')
     gra.prepend('<div class="graBtnSt"></div>')
     gra.append('<div class="graBtnEn"></div><br class="spacer"/>')
-    
+
     html.to_html.html_safe
   end
-  
+
   def orange_button(obj)
      ('<div class="buttonMainVote"><div class="buttonSide accBtnSt"></div>' + obj + '<div class="buttonSide accBtnEn"></div><br class="spacer" /></div>').html_safe
   end
-  
+
   def orange_button_to(name, options = {}, html_options = {})
     html = Hpricot(button_to(name, options, html_options))
     html.search('//input[@type=submit]').wrap('<div class="buttonMainFloat"></div>')
@@ -184,10 +188,10 @@ module ApplicationHelper
     gra = html.search('.buttonMainFloat')
     gra.prepend('<div class="buttonSide accBtnSt"></div>')
     gra.append('<div class="buttonSide accBtnEn"></div><br class="spacer"/>')
-    
+
     html.to_html.html_safe
   end
-  
+
   def orange_link_to(*args, &block)
     html = Hpricot(link_to(*args, &block))
     html.search('a').wrap('<div class="buttonMainFloat"></div>')
@@ -195,10 +199,10 @@ module ApplicationHelper
     gra = html.search('.buttonMainFloat')
     gra.prepend('<div class="buttonSide accBtnSt"></div>')
     gra.append('<div class="buttonSide accBtnEn"></div><br class="spacer"/>')
-    
+
     html.to_html.html_safe
   end
-  
+
   def single_block(title, &block)
     content_tag :div, :class => "inbodyM" do
       content_tag :div, :class => "bodyInSm" do
