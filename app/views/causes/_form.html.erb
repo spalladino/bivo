@@ -1,4 +1,4 @@
-<%= form_for @cause, :builder => BivoFormBuilder do |f|%>
+<%= bivo_form_for @cause do |f|%>
 
   <%= render "shared/error_messages", :target => @cause %>
 
@@ -18,10 +18,12 @@
 
   <%= f.submit 'Save' %> &nbsp;
   <%= tag 'input', {:type => 'button', :value => _('Cancel'), :onclick => "javascript:window.location = '#{root_path}';"} %>
-  <% end %>
-  <% content_for :js do %> <!-- javascript code to run, for this view only -->
+
+<% end %>
+
+<% content_for :js do %> <!-- javascript code to run, for this view only -->
     <%= render :partial => 'shared/check_url', :locals => {
       :is_new => @cause.new_record?, :url_was => @cause.url_was, :url_check => '/cause/check_url'
     } %>
-  <%end%>
+<%end%>
 

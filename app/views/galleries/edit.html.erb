@@ -2,56 +2,39 @@
   <%= javascript_include_tag "flexcroll" %>
 <% end %>
 
-<% content_for(:js) do %>
-  function showVideoAdd(button){
-    $(button).hide();
-    $('#video_form').show();
-    $('#photo_form').hide();
-    $('#add_photo_button').show();
-    $('#video_url').text("");
-  }
+<% 
+t = link_to_charity @entity if @entity.class == Charity
+t = link_to_cause @entity if @entity.class == Cause
+%>
+<%= single_block t + ' ' + _('Gallery') do %>
 
- function showPhotoAdd(button){
-    $(button).hide();
-    $('#photo_form').show();
-    $('#video_form').hide();
-    $('#add_video_button').show();
-  }
-<% end %>
-
-<h1>
-<%= link_to_charity @entity if @entity.class == Charity %>
-<%= link_to_cause @entity if @entity.class == Cause %> 
-| <%=_('Gallery')%></h1>
-
-<div style="float: left">
+<div>
 	<%= render :partial => 'galleries/view', :locals => { :gallery => @gallery, :edit => true }%>
+	<br class="spacer"/>
 </div>
 
-<div style="float: left">
-<%= form_for :photo_item, :url => 'add_photo',:method => :post,:html => { :multipart => true, :id => 'photo_form' } do |f|%>
-  <fieldset>
-	<legend><%= _('Add Photo')%></legend>
+<div class="cvNews" style="width: 100%;"><h2><%= _('Add Photo')%></h2></div>
+<div class="cvNewsBox" style="width: 99.8%;"><div style="padding: 20px;">
+<%= bivo_form_for :photo_item, :url => 'add_photo', :method => :post, :html => { :multipart => true } do |f|%>
+	<%= f.label :image %>
     <%= f.file_field :image %></p>
     <%= f.hidden_field :gallery_id,:value => @gallery.id %>
-    <%= cancel_add_button%>
-   	<%= submit_tag _('Submit Photo'), :disable_with => _('Submitting...') %>
-  </fieldset>
+   	<%= f.submit _('Submit Photo'), :disable_with => _('Submitting...') %>
 <% end %>
+</div></div>
 <br/>
 
-<%= form_tag({:controller => 'galleries', :action => "add_video"}, :id => 'video_form', :method => "post") do%>
-  <fieldset>
-	<legend><%= _('Add Video')%></legend>
-    <%= text_field_tag :video_url%>
-    <%= hidden_field_tag :gallery_id, @gallery.id %>
-    <%= cancel_add_button%>
-   	<%= submit_tag _('Submit Video'), :disable_with => _('Submitting...') %>
-	<p><%= raw(_('Paste any %s or %s video url') % [link_to('Youtube', 'http://www.youtube.com', :target => :_blank),link_to('Vimeo', 'http://www.vimeo.com', :target => :_blank)])%>
-  </fieldset>
+<div class="cvNews" style="width: 100%;"><h2><%= _('Add Video')%></h2></div>
+<div class="cvNewsBox" style="width: 99.8%;"><div style="padding: 20px;">
+<%= bivo_form_for :video_item, :url => "add_video", :method => :post do |f| %>
+	<%= f.label :video_url %>
+    <%= f.text_field :video_url%>
+	<p class="accfilTxt" style="display: inline; float: none;">
+		<%= raw(_('Paste any %s or %s video url') % [link_to('Youtube', 'http://www.youtube.com', :target => :_blank),link_to('Vimeo', 'http://www.vimeo.com', :target => :_blank)])%>
+	</p>
+    <%= f.hidden_field :gallery_id, :value => @gallery.id %>
+   	<%= f.submit _('Submit Video'), :disable_with => _('Submitting...') %>
 <% end %>
+</div></div>
 
-</div>
-
-<div style="clear: both;" />
-
+<% end %>
