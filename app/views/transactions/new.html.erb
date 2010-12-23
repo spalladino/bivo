@@ -49,7 +49,7 @@ $(document).ready(function(){
 
 <%= single_block _("Transactions | Add Income/Expense") do %>
 
-<%= form_for(@transaction, :as => :transaction, :url => {:controller => "transactions", :action => "create"}, :builder => BivoFormBuilder) do |f| %>
+<%= bivo_form_for(@transaction, :as => :transaction, :url => {:controller => "transactions", :action => "create"}) do |f| %>
   <%= render "shared/error_messages", :target => @transaction %>
 
   <%= f.label :type %>
