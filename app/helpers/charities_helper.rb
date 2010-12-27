@@ -61,7 +61,7 @@ module CharitiesHelper
   end
 
   def big_avatar(charity)
-    photo = Gallery.for_entity(charity).items.first(&:is_photo?)
+    photo = Gallery.for_entity(charity).items.all.select(&:is_photo?).first
     photo ? photo.big_avatar_url : nil
   end
 
