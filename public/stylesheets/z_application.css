@@ -140,18 +140,16 @@ form.inline {
 	margin-bottom: 0px;
 }
 
-.leav {
+.leav {zebra_table
 	margin-top: 0px;
 	margin-right: 22px;
 }
 
 .pegi a, .pegi span{
-	color:#ff8400;
-	padding:0 5px 0 0;
-	font:normal 13px/15px "Trebuchet MS", Arial, Helvetica, sans-serif;
-  top: -31px;
-  right: 15px;
-  position:relative;
+    color:#ff8400;
+    padding:0 5px 0 0;
+    font:normal 13px/15px "Trebuchet MS", Arial, Helvetica, sans-serif;
+    position:relative;
 }
 
 .pegi.shops a, .pegi.shops span{
@@ -194,32 +192,55 @@ select.genChoo {
 	font:normal 11px/12px Arial, Helvetica, sans-serif;
 }
 
-.classic_table {
+.zebra_table {
     border-collapse:collapse;
-    border-top:1px solid #e3e3e3;
-    border-bottom:1px solid #e3e3e3;
+    border: 1px solid #e3e3e3;
     margin: auto;
 }
 
-.classic_table tr a {
+.zebra_table tr {
+    border-top:1px solid #fff;
+	border-bottom:1px solid #fff;
+	border-right:1px solid #d7d7d7;
+}
+
+.zebra_table th a {
     color:inherit;
 }
 
-.classic_table tr a:hover {
+.zebra_table a:hover {
     text-decoration:underline;
 }
 
-.classic_table th {
+.zebra_table th {
 	font:bold 14px/31px "Trebuchet MS", Arial, Helvetica, sans-serif;
-	color:#f6f6f6;
-    background:url(../images/grenHead.jpg) 0 0 repeat-x;
-	border-right:1px solid #989898;
+    color:#000000 !important;   
+    background-color:#c7c7c7;
+    border-right:1px solid #989898;
 }
 
-.classic_table td {
+.zebra_table td {
 	font:bold 14px/31px "Trebuchet MS", Arial, Helvetica, sans-serif;
-    border-left:1px solid #989898;
     border-right:1px solid #989898;
+    color:#444444;
+}
+
+.username {
+    color:#7d9e06 !important;
+}
+
+.username a {
+    color:inherit;
+}
+
+.odd_field {
+	background-color:#e9e9e9 !important;
+	border-top:none !important;
+}
+
+.even_field {
+    background-color:#e1e1e1 !important;
+	border-top:none !important;
 }
 
 .date_select{

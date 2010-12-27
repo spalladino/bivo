@@ -46,7 +46,7 @@ class AdminController < ApplicationController
       @users.sort! { |a,b| b.send(sort_parts.first) <=> a.send(sort_parts.first) }
     end
 
-    @per_page = (params[:per_page] || 1).to_i
+    @per_page = (params[:per_page] || 5).to_i
     @users = @users.paginate(:per_page => @per_page, :page => params[:page])
   end
 
