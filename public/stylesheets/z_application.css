@@ -312,3 +312,17 @@ select.genChoo {
 	border: 1px solid #D6D6D6;
 	cursor: pointer;
 }
+
+h2.login_title {
+    color: #747474;
+    font: bold 26px/28px Arial,Helvetica,sans-serif;
+    margin: 0 0 28px;
+}
+
+.buttonMainACC {
+  margin-left: 381px;
+}
+
+.default_font {
+  font: 14px/24px "Trebuchet MS",Arial,Helvetica,sans-serif;
+}

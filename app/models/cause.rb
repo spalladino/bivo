@@ -39,7 +39,7 @@ class Cause < ActiveRecord::Base
 
   class GalleryRules
     def self.can_edit?(user, entity)
-      return entity.charity == user || user.is_admin_user
+      return !user.nil? && (entity.charity == user || user.is_admin_user)
     end
   end
 
@@ -193,6 +193,10 @@ class Cause < ActiveRecord::Base
         Account.transfer account, Account.cash_pool_account, account.balance
       end
     end
+  end
+
+  def first_gallery_photo
+    Gallery.for_entity(self).items.all.select(&:is_photo?).first
   end
 
   def self.most_voted_cause(category, from=nil, to=nil)

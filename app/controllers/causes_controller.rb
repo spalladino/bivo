@@ -20,7 +20,6 @@ class CausesController < ApplicationController
   end
 
   def details
-    @comments_avatar =  comments_avatar(current_user)
   end
 
   def index

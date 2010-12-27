@@ -37,7 +37,7 @@ class Charity < User
 
   class GalleryRules
     def self.can_edit?(user, entity)
-      return user == entity || user.is_admin_user
+      return !user.nil? && (user == entity || user.is_admin_user)
     end
   end
 
@@ -176,6 +176,10 @@ class Charity < User
       self.causes.where('status != ?',:inactive)
     end
   end
+  
+  def first_gallery_photo
+    Gallery.for_entity(self).items.all.select(&:is_photo?).first
+  end
 
   # this are overriden w.r.t. enum_attr since inactive and active clash
   def status_inactive?
@@ -183,6 +187,10 @@ class Charity < User
   end
   #
 
+  def comments_avatar_url
+    first_gallery_photo.try(:comments_avatar_url)
+  end
+    
   private
 
   def check_presence_of_protocol_in_website

@@ -15,9 +15,7 @@ class MailerTest < ActionMailer::TestCase
   end
 
   test 'should send cause status changed for charity email' do
-    mail_data = {
-      
-    }
+    #assert false
   end
 
   test 'should send cause status changed for follower email' do

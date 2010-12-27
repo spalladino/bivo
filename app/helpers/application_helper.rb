@@ -21,10 +21,6 @@ module ApplicationHelper
     end
   end
 
-  def iexplorer?
-    return request.env['HTTP_USER_AGENT'] =~ /MSIE/
-  end
-
   # Admin only action to change charity status
   # * Deactivate button:  All children causes are deactivated as well.
   # * Activate button: Displayed only when the charity is deactivated.
@@ -128,18 +124,6 @@ module ApplicationHelper
 
   def url_charity(charity)
     { :controller => "charities", :action => "details", :url => charity.short_url }
-  end
-
-  def comments_avatar(user)
-    if user.is_charity_user
-      photo = Gallery.for_entity(user).items.first(&:is_photo?)
-      photo ? photo.comments_avatar_url : nil
-    elsif user.is_personal_user
-      photo = user.picture.url(:comments_avatar)
-      return nil if photo == "/pictures/original/missing.png"
-    elsif user.is_admin_user
-      photo = "admin.png"
-    end
   end
 
   def styled_will_paginate(collection, atts={})
