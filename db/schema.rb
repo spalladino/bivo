@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101220194515) do
+ActiveRecord::Schema.define(:version => 20101227162127) do
 
   create_table "account_movements", :force => true do |t|
     t.integer  "account_id"
@@ -151,6 +151,7 @@ ActiveRecord::Schema.define(:version => 20101220194515) do
     t.integer  "retries"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "language"
   end
 
   create_table "shop_categories", :force => true do |t|
@@ -272,7 +273,7 @@ ActiveRecord::Schema.define(:version => 20101220194515) do
     t.boolean  "notice_comment_added"
     t.boolean  "send_me_news"
     t.boolean  "auto_approve_comments"
-    t.boolean  "from_facebook",                                 :default => false
+    t.boolean  "from_facebook"
     t.boolean  "eula_accepted"
     t.string   "status"
     t.string   "picture_file_name"

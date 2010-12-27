@@ -4,75 +4,79 @@
   });
 <% end %>
 
-<h2><%= title_for @type %></h2>
-<%= form_for(@resource, :as => :user, :url => @path, :html => { :method => :put, :multipart => (@type == :Personal) }) do |f| %>
-  <%= render "shared/error_messages", :target => @resource %>
+<%  single_block (title_for @type) do |s| %>
+  <%= bivo_form_for(@resource, :as => :user, :url => @path, :html => { :method => :put, :multipart => (@type == :Personal) }) do |f| %>
+    <%= render "shared/error_messages", :target => @resource %>
 
-  <%= hidden_field_tag :id, @id %>
-  <%= hidden_field_tag :referer, @referer %>
+    <%= hidden_field_tag :id, @id %>
+    <%= hidden_field_tag :referer, @referer %>
 
-  <p><%= f.label :email, _("E-Mail") %><br />
-  <%= f.text_field :email %></p>
-
-  <% if (@type == :Charity) %>
-    <p><%= f.label :charity_name, _("Charity Name") %><br />
-    <%= f.text_field :charity_name %></p>
-
-    <p><%= f.label :charity_website, _("Charity Website") %><br />
-    <%= f.text_field :charity_website %></p>
-
-    <% if current_user.is_admin_user %>
-      <p><%= f.label :rating, "Rating" %><br />
-      <%= select 'charity', 'rating', @ratings, :include_blank => true %></p>
-    <% end %>
-
-    <p><%= f.label :country, _("Country") %>
-    <%= f.select :country_id, @countries.collect{ |c| [c.name, c.id] }, :include_blank => true %></p>
-
-    <p><%= f.label :city, _("City") %><br />
-    <%= f.text_field :city %></p>
-
-    <p><%= f.label :description, _("Description") %><br />
-    <%= f.text_area :description %></p>
-
-	<p>
-		<%= f.label _("Landing page") %><br />
-		<%= link_to(url_for(url_charity(@resource).merge({ :only_path => false })), url_charity(@resource)) %>
-	</p>
-
-  <% elsif (@type == :PersonalUser) %>
-    <%= render :partial => 'users/registrations/new_personal', :locals => {:f => f} %>
-
-    <p><%= f.label _("About me") %><br />
-    <%= f.text_area :about_me %></p>
-
-	<p><%= f.label _("Profile picture") %><br/>
-  <%=_("Current:")%> <%= image_tag @resource.picture.url %>
-	<%= f.check_box :delete_picture %> <%= f.label _("Delete profile picture") %>
-	<%= f.file_field :picture %></p>
-  <% end %>
-
-   <%=_("Email me updates of projects or charities I follow when: ")%><br />
-    <p><%= f.check_box :notice_all_funds_raised %>
-    <%= f.label _("All funds are raised") %></p>
-
-    <p><%= f.check_box :notice_status_change %>
-    <%= f.label _("The status changes") %></p>
-
-    <p><%= f.check_box :notice_status_update_published %>
-    <%= f.label _("New status updates are published") %></p>
-
-    <p><%= f.check_box :notice_comment_added %>
-    <%= f.label _("Comments are added") %></p>
+    <%= f.label :email, _("E-Mail") %>
+    <%= f.text_field :email %>
 
     <% if (@type == :Charity) %>
-      <p><%= f.check_box :auto_approve_comments %>
-      <%= f.label _("Auto-approve comments of my charity of projects") %></p>
+      <%= f.label :charity_name, _("Charity Name") %>
+      <%= f.text_field :charity_name %>
+
+      <%= f.label :charity_website, _("Charity Website") %>
+      <%= f.text_field :charity_website %>
+
+      <% if current_user.is_admin_user %>
+        <%= f.label :rating, "Rating" %>
+        <%= select 'charity', 'rating', @ratings, :include_blank => true %>
+      <% end %>
+
+      <%= f.label :country, _("Country") %>
+      <%= f.select :country_id, @countries.collect{ |c| [c.name, c.id] }, :include_blank => true %>
+
+      <%= f.label :city, _("City") %>
+      <%= f.text_field :city %>
+
+      <%= f.label :description, _("Description") %>
+      <%= f.text_area :description %>
+
+		  <%= f.label _("Landing page") %>
+		  <%= link_to(url_for(url_charity(@resource).merge({ :only_path => false })), url_charity(@resource)) %>
+      <br class="spacer"/>
+
+    <% elsif (@type == :PersonalUser) %>
+      <%= render :partial => 'users/registrations/new_personal', :locals => {:f => f} %>
+
+      <p><%= f.label :about_me, _("About me") %>
+      <%= f.text_area :about_me %></p>
+
+	    <p><%= f.label _("Profile picture") %>
+      <%=_("Current:")%> <%= image_tag @resource.picture.url %>
+	    <%= f.check_box :delete_picture %> <%= f.label _("Delete profile picture") %>
+	    <%= f.file_field :picture %></p>
+    <% end %>
+    
+    <%= f.row_label _("Email me updates of projects or charities I follow when: ")%>
+
+    <%= f.check_box :notice_all_funds_raised %>
+    <%= f.rhs_label :notice_all_funds_raised, _("All funds are raised") %>
+
+    <%= f.check_box :notice_status_change %>
+    <%= f.rhs_label :notice_status_change, _("The status changes") %>
+
+    <%= f.check_box :notice_status_update_published %>
+    <%= f.rhs_label :notice_status_update_published, _("New status updates are published") %>
+
+    <%= f.check_box :notice_comment_added %>
+    <%= f.rhs_label :notice_comment_added, _("Comments are added") %>
+
+    <%= f.row_label _("Other: ")%>
+
+    <% if (@type == :Charity) %>
+      <%= f.check_box :auto_approve_comments %>
+      <%= f.rhs_label :auto_approve_comments, _("Auto-approve comments of my charity or projects") %>
     <% end%>
 
-    <p><%= f.check_box :send_me_news %>
-    <%= f.label _("Send me bivo.org news") %></p>
+    <%= f.check_box :send_me_news %>
+    <%= f.rhs_label :send_me_news, _("Send me bivo.org news") %>
 
-  <p><%= f.submit _("Update") %></p>
+    <%= f.submit _("Update") %>
+  <% end %>
+  <div class="bodyBot"></div>
 <% end %>
 
