@@ -26,7 +26,7 @@
 			<p>
 				<%= _("Buy products and services using Bivo. Participating sellers give a portion of your purchase price to Bivo, which we use to support the causes you vote for.") %>
 			</p>
-			<p class="banRDolarTxt">$<%= @raised_amount %></p>
+			<p class="banRDolarTxt"><%= number_to_currency(@raised_amount,:precision => 0) %></p>
 			<p><%= _("Using Bivo to buy online costs you nothing, but it can mean everything to those who need your help today.") %></p>
 			<div class="buttonMainSee1">
 				<div class="see1BtnSt"></div>

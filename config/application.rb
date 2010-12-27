@@ -47,11 +47,11 @@ module Bivo
     end
 
     config.currencies = {
-      :ARS => "Argentine Peso (ARS)",
-      :GBP => "British Pound Sterling (GBP)",
-      :CAD => "Canadian Dollar (CAD)",
-      :EUR => "Euro (EUR)",
-      :USD => "US Dollar (USD)"
+      :ARS => {:name => "Argentine Peso (ARS)", :html_symbol => "$"},
+      :GBP => {:name => "British Pound Sterling (GBP)", :html_symbol => "&pound;"},
+      :CAD => {:name => "Canadian Dollar (CAD)", :html_symbol => "C$"},
+      :EUR => {:name => "Euro (EUR)", :html_symbol => "&euro;"},
+      :USD => {:name => "US Dollar (USD)", :html_symbol => "$"}
     }
 
     config.languages = {

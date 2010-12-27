@@ -7,11 +7,12 @@ class ShopsController < ApplicationController
   before_filter :load_shop, :except => [ :new, :create, :index, :search, :edit_categories]
   before_filter :load_places, :only => [ :new, :edit, :create, :update ]
   before_filter :load_categories, :only => [ :new, :edit, :create, :update, :edit_categories, :index ]
-  
+
   before_filter :ensure_active_if_not_admin, :only => [:home,:details]
 
 
   def details
+    @comments_avatar =  comments_avatar(current_user)
   end
 
   def home
@@ -38,7 +39,7 @@ class ShopsController < ApplicationController
     end
     # Set pagination
     @per_page = (params[:per_page] || 20).to_i
-    
+
     #TODO: Count shouldn't be filtered by category as well?
     @count = if admin_is_logged_in then Shop.count else Shop.where('shops.status != ?',:inactive).count end
 
@@ -48,15 +49,15 @@ class ShopsController < ApplicationController
 
 
   def search
-  
+
     # Filter by text
     @search_word = params[:search_word]
-    
+
     if @search_word.blank?
       @shops = Shop.translated.includes(:countries)
     else
       term = @search_word.gsub(/\\/, '\&\&').gsub(/'/, "''")
-      
+
       # Return all shops that match the search and that have categories that match the search
       categories = ShopCategory.search_translated(term)
       categories_filter = "OR EXISTS (SELECT * FROM shop_categories_shops WHERE shop_categories_shops.shop_category_id IN (#{categories.map(&:id).join(',')}) AND shop_categories_shops.shop_id = shops.id)" if categories.count > 0
@@ -70,7 +71,7 @@ class ShopsController < ApplicationController
     else
       @shops = @shops.order "#{Shop.translation_table}.name ASC, #{Shop.translation_table}.description ASC"
     end
-    
+
     @count = @shops.count
 
     # Set pagination
@@ -181,6 +182,18 @@ private
 
   def translate_categories
     ShopCategory.with_lazy_translation { yield }
+  end
+
+def comments_avatar(user)
+    if user.is_charity_user
+      photo = Gallery.for_entity(user).items.first(&:is_photo?)
+      photo ? photo.comments_avatar_url : nil
+    elsif user.is_personal_user
+      photo = user.picture.url(:comments_avatar)
+      return nil if photo == "/pictures/original/missing.png"
+    elsif user.is_admin_user
+      photo = "admin.png"
+    end
   end
 
 end

@@ -1,6 +1,6 @@
 <div class="cauVL gallery">
   <div class="cauVLpic view"></div>
-  <div class="thumbMain flexcroll">
+  <div class="thumbMain flexcroll" style="<%= "height: 90px;" if edit %>">
     <ul class="thumb thumbnails">
 		  <% gallery.items.each_with_index do |item, index|
 			  options = {}		
@@ -13,9 +13,10 @@
 			  end
 		  %>
 			  <li class="<%=item.kind%>" data-item-id="<%=item.id%>">
+			      <div style="height: 63px;">
 				  <%= image_tag item.thumbnail_url, options %>
+				  </div>
 				  <% if edit %>
-				  <br/>
 				  <div>
 					  <%=move_before_button item.id%>
 			          <%=delete_item_button item.id%>
