@@ -12,7 +12,6 @@ class ShopsController < ApplicationController
 
 
   def details
-    @comments_avatar =  comments_avatar(current_user)
   end
 
   def home
@@ -182,18 +181,6 @@ private
 
   def translate_categories
     ShopCategory.with_lazy_translation { yield }
-  end
-
-def comments_avatar(user)
-    if user.is_charity_user
-      photo = Gallery.for_entity(user).items.first(&:is_photo?)
-      photo ? photo.comments_avatar_url : nil
-    elsif user.is_personal_user
-      photo = user.picture.url(:comments_avatar)
-      return nil if photo == "/pictures/original/missing.png"
-    elsif user.is_admin_user
-      photo = "admin.png"
-    end
   end
 
 end

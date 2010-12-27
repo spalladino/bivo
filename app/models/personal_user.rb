@@ -50,6 +50,9 @@ class PersonalUser < User
     self.picture = nil if delete_picture? && !picture.dirty?
   end
 
-
+  def comments_avatar_url
+    self.picture.url(:comments_avatar) || "/pictures/original/missing.png"
+  end
+  
 end
 

@@ -16,6 +16,10 @@ class Language
     result
   end
 
+  def self.default
+    DefaultLanguage
+  end
+
   def self.non_defaults
     self.all.reject{|l| l.id == DefaultLanguage}
   end

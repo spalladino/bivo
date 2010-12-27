@@ -59,5 +59,8 @@ module Bivo
       :es => {:name => "Español (ES)",  :english_name =>  "spanish"}, 
       :fr => {:name => "Français (FR)", :english_name =>  "french"}
     }
+    
+    config.mails_batch_size = 100
+    config.mails_max_retries = 5
   end
 end

@@ -83,7 +83,6 @@ class CharitiesController < ApplicationController
   end
 
   def details
-    @comments_avatar =  comments_avatar(current_user)
   end
 
   def activate
