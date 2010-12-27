@@ -5,8 +5,9 @@ $(function(){
     var siblingPos = $(this).next().position();
     $(this).css('top', siblingPos.top);
     $(this).css('left', siblingPos.left);
+    $(this).show();
+    if ($(this).next().val() != '') $(this).children().first().hide();
   });
-  $('.updnWatermark').show();
 });
 <% end %>
 
