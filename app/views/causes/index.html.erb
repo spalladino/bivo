@@ -32,6 +32,8 @@
 			  <%= select_tag :status, options_from_collection_for_select(@statuses, 'to_s', 'description', @status), :class => 'showChoo filterReload' %>
 			  <p class="showTxt"><%=_("Show")%></p>
 		    <br class="spacer" />
+  
+        <%= hidden_field_tag :per_page, @per_page, :id => 'hidden_per_page_field' %>
 
 			  <div class="gnFilMain">
         	<p class="genFilTxt"><%= _('Sort by') %></p>
@@ -55,7 +57,7 @@
         	
             
         <div class="rgtFilmarg">
-          <%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page), :class => 'showChoo filterReload' %>
+          <%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page), :class => 'showChoo filterReload', :onchange => "$('#hidden_per_page_field').val($(this).val());" %>
           <p class="showTxt"><%= _("Show per page")%></p>
           <br class="spacer" />
         </div>

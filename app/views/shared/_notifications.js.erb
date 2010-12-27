@@ -1,8 +1,6 @@
-<% if flash[:notice]%>
-	$.jGrowl("<%= flash[:notice] %>", <%= options_for_javascript(flash[:notice_options] || {}) %>);
-<% end %>
-
-<% if flash[:alert]%>
-	$.jGrowl("<%= flash[:alert] %>", <%= options_for_javascript(flash[:alert_options] || {}) %>);
+<% [:notice, :alert, :error].each do |kind| %>
+  <% if flash[kind]%>
+	  $.jGrowl("<%= flash[kind] %>", <%= options_for_javascript(flash["#{kind.to_s}_options".intern] || {}) %>);
+  <% end %>
 <% end %>
 
