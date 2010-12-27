@@ -187,6 +187,10 @@ class Charity < User
   end
   #
 
+  def comments_avatar_url
+    first_gallery_photo.try(:comments_avatar_url)
+  end
+    
   private
 
   def check_presence_of_protocol_in_website

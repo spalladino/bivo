@@ -126,18 +126,6 @@ module ApplicationHelper
     { :controller => "charities", :action => "details", :url => charity.short_url }
   end
 
-  def comments_avatar(user)
-    if user.is_charity_user
-      photo = user.first_gallery_photo
-      photo ? photo.comments_avatar_url : nil
-    elsif user.is_personal_user
-      photo = user.picture.url(:comments_avatar)
-      return nil if photo == "/pictures/original/missing.png"
-    elsif user.is_admin_user
-      photo = "admin.png"
-    end
-  end
-
   def styled_will_paginate(collection, atts={})
     will_paginate @collection, {:previous_label => image_tag('pegiarL.png'), :next_label => image_tag('pegiarR.png'), :class => 'pegi', :inner_window => 2, :outer_window => 0}.merge(atts)
   end

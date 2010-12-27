@@ -1,7 +1,7 @@
 
 <%= form_tag({:controller => 'comments', :action => action}, :id => "comment_add_form", :class => "nodisplay leftMarginFromBorder", :remote => true) do%>
 <br>
-<div id ="picture" class="cvComBoxLPic2"><%=image_tag @comment_image || "unknown.jpg" rescue image_tag "unknown.jpg"%></div>
+<div id ="picture" class="cvComBoxLPic2"><%= image_tag current_user.comments_avatar_url %></div>
     <%= text_area(:comment, :body, :rows => 3, :cols => 60, :id =>"comment_text_area",:class=>"cvComReply2 accMess2") %><br/>
     <%= hidden_field_tag(:entity_id, entity.id) %>
     <%= hidden_field_tag(:parent_id, nil) %>
