@@ -6,17 +6,14 @@
 
 	<br /><br />
 	<%= form_tag admin_user_manager_path, :method => "get" do %>
-	<div>
-	<%= _("Show") %> <%= select_tag :show, options_for_select(@show_options) %> <br />
-	<%= _("Size per page")%> <%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page)%> <br />
-	<%= _("Filter by") %> <%= text_field_tag :filter, @filter %> <br />
-	<br />
-	<%= orange_button_to _("Search") %>
-	</div>
+	  <div class="gnFilMain2">
+	    <p class="genFilTxt2"><%= _("Show") %> <%= select_tag :show, options_for_select(@show_options), :class => :genChoo2 %>
+	    <p class="genFilTxt2">Filter by</p><%= text_field_tag :filter, @filter, :class => "genFil" %>
+      <div><%= orange_button_to _("Search") %></div>
+      <%= will_paginate @users %>
+    </div>
 	<% end %>
-	<br />
-
-    <%= will_paginate @users %>
+    <br class="spacer" />
     <table class="classic_table">
       <tr>
         <th>
@@ -55,5 +52,7 @@
       </tr>
     <% end %>
     </table>
+
+	<%= _("Show per page")%> <%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page)%> <br />
   </div>
 </div>

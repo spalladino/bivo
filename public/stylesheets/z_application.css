@@ -196,6 +196,18 @@ select.genChoo {
 	margin:0 5px 0 0;
 }
 
+.genFilTxt2 {
+	float:left;
+	font:normal 13px/20px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color:#000;
+	padding:0 10px 0 0;
+}
+
+.gnFilMain2{
+	height:28px;
+	padding:20px 15px 0;
+	background:url(../images/bigrayTop.jpg) 0 0 repeat-x;
+}
 
 .banLFill2{
 	display:block;
@@ -209,7 +221,12 @@ select.genChoo {
 	behavior:url(iepngfix.htc);
 }
 
-
+.genChoo2{
+	height:20px;
+	font:normal 13px/20px Arial, Helvetica, sans-serif;
+	color:#000;
+	margin:0 30px 0 0;
+}
 
 .error {
 	color:red;
