@@ -21,13 +21,9 @@
     <%= render(:partial => 'comments/edit_form', :locals => {:comment => comment, :entity =>entity})%>
     <br class="spacer" />
     <ul class="rpLink">
-      <li><%=reply_comment_button comment.id, entity%></li>
-
-      <%= edit_comment_button comment.id, entity, comment.body%>
-
-      <li><%=delete_comment_button comment.id, entity%></li>
-
-
+      <%= reply_comment_button comment.id, entity %>	
+      <%= edit_comment_button comment.id, entity, comment.body %>
+      <li><%= delete_comment_button comment.id, entity %></li>
     </ul>
 
 

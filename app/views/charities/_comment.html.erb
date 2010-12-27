@@ -4,6 +4,7 @@
     <span><b><%=_("by")%></b> <%=owner_of(comment)%> <b><%=_("on")%></b> <%= l comment.created_at, :format => :short %></span>
     <span> <%=comment.body%>  </span>
     <span id = "<%="approve_button_" + comment.id.to_s%>"> <%=approve_comment_button comment.id, entity%> </span>
-    <%=delete_comment_button comment.id, entity%>
+    <%= delete_comment_button comment.id, entity %>
+
 </div>
 
