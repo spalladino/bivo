@@ -176,6 +176,10 @@ class Charity < User
       self.causes.where('status != ?',:inactive)
     end
   end
+  
+  def first_gallery_photo
+    Gallery.for_entity(self).items.all.select(&:is_photo?).first
+  end
 
   # this are overriden w.r.t. enum_attr since inactive and active clash
   def status_inactive?

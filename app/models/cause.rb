@@ -195,6 +195,10 @@ class Cause < ActiveRecord::Base
     end
   end
 
+  def first_gallery_photo
+    Gallery.for_entity(self).items.all.select(&:is_photo?).first
+  end
+
   def self.most_voted_cause(category, from=nil, to=nil)
     if (from.nil? || to.nil?)
       result = where(:cause_category_id => category.id, :status => :active)

@@ -132,7 +132,7 @@ module ApplicationHelper
 
   def comments_avatar(user)
     if user.is_charity_user
-      photo = Gallery.for_entity(user).items.first(&:is_photo?)
+      photo = user.first_gallery_photo
       photo ? photo.comments_avatar_url : nil
     elsif user.is_personal_user
       photo = user.picture.url(:comments_avatar)

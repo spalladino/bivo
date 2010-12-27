@@ -153,7 +153,7 @@ end
   end
   
   def big_avatar(cause)
-    photo = Gallery.for_entity(cause).items.first(&:is_photo?)
+    photo = cause.first_gallery_photo
     photo ? photo.big_avatar_url : nil
   end
 
