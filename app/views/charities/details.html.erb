@@ -24,6 +24,10 @@
 			<div>
 			  <%= edit_gallery_link @charity %>
 			</div>
+			
+			<div>
+			  <%= comments_pending_approval_link @charity %>			  
+			</div>
 			<br class="spacer"/>
 		</div>
 	
@@ -85,10 +89,6 @@
       </div>
 
       <%= render :partial => 'news/news', :locals => { :newsable => @charity, :all_news => @charity.news.order('id Desc') } %>
-
-<div id="comments_pending_approval_link">
-  <%= comments_pending_approval_link @charity %>
-</div>
 
 <div id="comments">
   <%= comments @charity %>

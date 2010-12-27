@@ -2,13 +2,13 @@ module CommentsHelper
 
   def reply_comment_button(id,entity)
     if rules(entity).can_add?(current_user)
-      return raw("<a href=\"#\" name=\"reply_or_add_button\" onclick=\"showComments(this, #{id});return false;\">#{_("Reply")}</a>")
+      return raw("<li><a href=\"#\" name=\"reply_or_add_button\" onclick=\"showComments(this, #{id});return false;\">#{_("Reply")}</a></li><li class=\"rpPipe\">|</li>")
     end
   end
 
   def edit_comment_button(id,entity,body)
     if rules(entity).can_edit?(current_user,entity)
-      return raw("<li class=\"rpPipe\">|</li><li><a href=\"#\" id=\"edit_button_#{id}\" onclick=\"editComment(#{id},\'#{nl2br(body)}\');return false;\">#{_("Edit")} </a></li><li class=\"rpPipe\">|</li>")
+      return raw("<li><a href=\"#\" id=\"edit_button_#{id}\" onclick=\"editComment(#{id},\'#{nl2br(body)}\');return false;\">#{_("Edit")} </a></li><li class=\"rpPipe\">|</li>")
     end
   end
 
