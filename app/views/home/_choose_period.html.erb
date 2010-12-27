@@ -33,17 +33,12 @@
     <%= _('To:') %>
 
     <%= select_date @to,{:prefix => 'custom_to', :start_year => 2000, :end_year => 2020},:class => "date_select"%>
- </p>
+    </p>
     <div class="buttonMainSearM">
       <div class="buttonSide accBtnSt"></div>
-  <% if iexplorer? %>
-     <%= submit_tag _('Search'),:class => "buttonMid accBtnMi"%>
-  <% else -%>
-  <%= submit_tag _('Search'), :disable_with => _('Searching...'),:class => "buttonMid accBtnMi"%>
-  <% end -%>
-
-        <div class="buttonSide accBtnEn"></div><br class="spacer" />
-     </div>
+  	  <%= submit_tag _('Search'), :disable_with => _('Searching...'), :class => "buttonMid accBtnMi" %>
+      <div class="buttonSide accBtnEn"></div><br class="spacer" />
+    </div>
   </div>
 
 

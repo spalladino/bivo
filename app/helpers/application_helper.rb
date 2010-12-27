@@ -21,10 +21,6 @@ module ApplicationHelper
     end
   end
 
-  def iexplorer?
-    return request.env['HTTP_USER_AGENT'] =~ /MSIE/
-  end
-
   # Admin only action to change charity status
   # * Deactivate button:  All children causes are deactivated as well.
   # * Activate button: Displayed only when the charity is deactivated.

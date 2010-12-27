@@ -16,13 +16,7 @@
         <%= hidden_field_tag('category_field', @category.try(:id)) %>
 				<%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page)%>
 		<p>
-    <% if iexplorer? %>
-			<%= submit_tag _('Search')%>
-    <% else -%>
 			<%= submit_tag _('Search'), :disable_with => _('Searching...') %>
-    <% end -%>
-
-
 		</p>
 	<% end %>
 </div>
