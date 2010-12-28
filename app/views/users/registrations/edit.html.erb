@@ -14,6 +14,14 @@
     <%= f.label :email, _("E-Mail") %>
     <%= f.text_field :email %>
 
+    <%= f.hidden_field :reset_password_token %>
+
+    <%= f.label :password,_("Password") %>
+    <%= f.password_field :password %>
+
+    <%= f.label :password_confirmation, ("Password Confirmation")  %>
+    <%= f.password_field :password_confirmation %>
+
     <% if (@type == :Charity) %>
       <%= f.label :charity_name, _("Charity Name") %>
       <%= f.text_field :charity_name %>
