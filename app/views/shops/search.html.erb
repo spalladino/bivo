@@ -24,11 +24,14 @@
 				<p class="searFilTxt"><%= _("Enter the product or service to buy (i.e. books) or the name of the seller (i.e. Amazon)")%></p>
             
 	   	  		<div class="gnFilMain">
-	            	<h3 class="shopRinHead searInHead"><%=@count%> <%=n_("result found", "results found", @count)%> </h3>
-	            	<p class="genFilTxt"><%= label_tag :sorting, _('Sort by')%></p><%= select_tag :sorting, options_for_select(@sortings, @sorting), :onchange =>"$('#filter_form').submit()", :class => "genChoo" %>
-	                <div class="pegi pagination">
-	          		</div><br class="spacer" />
-	            </div>
+	            	<h3 class="shopRinHead searInHead">
+                  <%= n_("%{count} result found", "%{count} results found", @count) % {:count => @count} %>
+                </h3>
+	            	<p class="genFilTxt"><%= label_tag :sorting, _('Sort by')%></p>
+                  <%= select_tag :sorting, options_for_select(@sortings, @sorting), :onchange =>"$('#filter_form').submit()", :class => "genChoo" %>
+	                <div class="pegi pagination"></div>
+                  <br class="spacer" />
+	          </div>
 	
 				<div id="shops">
 				  <%= render 'shops' %>
