@@ -127,7 +127,7 @@ module ApplicationHelper
   end
 
   def styled_will_paginate(collection, atts={})
-    will_paginate @collection, {:previous_label => image_tag('pegiarL.png'), :next_label => image_tag('pegiarR.png'), :class => 'pegi', :inner_window => 2, :outer_window => 0}.merge(atts)
+    will_paginate collection, {:previous_label => image_tag('pegiarL.png'), :next_label => image_tag('pegiarR.png'), :class => 'pegi', :inner_window => 2, :outer_window => 0}.merge(atts)
   end
 
   # Returns javascript snippet for submitting first parent form
@@ -200,5 +200,11 @@ module ApplicationHelper
     form_for(record_or_name_or_array, *(args << options.merge(:builder => BivoFormBuilder)), &proc)
   end
     
+  def set_zebra_style_to_table(table_class, even_class, odd_class)
+    "$(document).ready(function() {
+       $('.#{table_class.to_s} tr:not(tr:first):even').addClass('#{even_class.to_s}');
+       $('.#{table_class.to_s} tr:not(tr:first):odd').addClass('#{odd_class.to_s}');
+     });"
+  end
 end
 

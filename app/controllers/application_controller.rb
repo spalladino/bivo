@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   before_filter :load_languages
   before_filter :load_currencies
   before_filter :mailer_set_url_options
+  before_filter :store_last_visited_page_as_guest, :only => :new # aproximation to devise/session#new
 
   protected
 
@@ -124,6 +125,10 @@ class ApplicationController < ActionController::Base
   def get_country_from_ip
     @@geoip ||= GeoIP.new(Rails.root.to_s + '/data/GeoIP.dat')
     @@geoip.country request.remote_ip
+  end
+  
+  def store_last_visited_page_as_guest
+    session[:"user_return_to"] = request.referrer
   end
 end
 

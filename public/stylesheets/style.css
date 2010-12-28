@@ -95,6 +95,7 @@ img, input{
 }*/
 .navPipe{
 	padding:0 15px 0;
+	_padding:16px 15px 0;
 }
 .nav li a, .nav li a.selected{
 	display:block;
@@ -227,7 +228,8 @@ img, input{
 .bodyDIVI{
 	width:960px;
 	overflow:hidden;
-	background:url(../images/indBord.png) -75px 0 repeat-y;
+	background:url(../images/indBord.png) 0 0 repeat-y;
+	behavior:url(iepngfix.htc);
 }
 .bodyL{
 	width:248px;
@@ -323,7 +325,7 @@ img, input{
 	width:100%;
 	padding:30px 0 0 0;
 	position:relative;
-	z-index:0;
+	/*z-index:-1;*/
 	background:url(../images/inbodyBg.jpg) 0 0 repeat-x;
 }
 .bodyInner{
@@ -339,6 +341,9 @@ img, input{
 	height:14px;
 	background:url(../images/inLtop.png) 0 0 no-repeat;
 	behavior:url(iepngfix.htc);
+}
+.bodyInLTop span{
+	padding:14px 0 0 0;
 }
 .bodyInLbot{
 	height:14px;
@@ -371,7 +376,7 @@ img, input{
 	font:normal 11px/16px "Trebuchet MS", Arial, Helvetica, sans-serif;
 	color:#101010;
 }
-.bodyInLmidIn ul li a:hover{
+.bodyInLmidIn ul li a:hover, .bodyInLmidIn ul li a.leftSelect{
 	color:#2d8cae;
 }
 
@@ -475,6 +480,13 @@ img, input{
 	padding:25px 0 32px 0;
 	background:url(../images/infootBg.jpg) 0 0 repeat-x #606060;
 }
+.infootM2{
+	width:100%;
+	margin:64px 0 0 0;
+	_margin:-7px 0 0 0;
+	padding:25px 0 32px 0;
+	background:url(../images/infootBg.jpg) 0 0 repeat-x #606060;
+}
 .infootIn{
 	width:960px;
 	margin:0 auto;
@@ -512,8 +524,9 @@ img, input{
 /*---------------------------------------Inner-end----------------------------------------------*/
 /*-------------------------------------Login-start----------------------------------------------*/
 .logM{
-	padding:70px 0 0 0;
-	background:url(../images/logDivi.png) 450px 0 no-repeat !important;
+	padding:70px 0 60px 0;
+	background:url(../images/logDivi.png) 0 0 no-repeat;
+	behavior:url(iepngfix.htc);
 }
 .logL{
 	width:430px;
@@ -578,7 +591,7 @@ img, input{
 	cursor:pointer;
 	background:url(../images/logFaeBtn.png) 0 0 no-repeat;
 	behavior:url(iepngfix.htc);
-}
+}	
 .logR{
 	width:508px;
 	float:right;
@@ -593,7 +606,7 @@ img, input{
 	color:#9aba27;
 	text-align:center;
 	margin:5px auto 30px;
-}
+}	
 .regisBtn{
 	display:block;
 	width:110px;
@@ -621,6 +634,7 @@ img, input{
 	padding:0 0 0 26px;
 }
 .boxMain{
+	width:911px;
 	overflow:hidden;
 	background-color:#f6f6f6;
 	border-bottom:1px solid #c2c2c2;
@@ -656,7 +670,7 @@ img, input{
 	border-top:1px solid #d7d7d7;
 	border-right:1px solid #d7d7d7;
 	border-left:1px solid #d7d7d7;
-
+	
 }
 .statInmain{
 	width:870px;
@@ -722,7 +736,7 @@ img, input{
 .inTabR{
 	width:246px;
 	text-align:right;
-}
+}	
 .inTab2{
 	color:#000 !important;
 	border:none !important;
@@ -932,7 +946,7 @@ img, input{
 	position:relative;
 	float:left;
 	margin:0 36px 0 22px;
-}
+}	
 .chariMid h3{
 	font:bold 22px/15px "Trebuchet MS", Arial, Helvetica, sans-serif;
 	color:#000;
@@ -969,7 +983,7 @@ img, input{
 .chariTxt a{
 	color:#000;
 }
-.chariTxtRead{
+.chariTxtRead{		
 	color:#1b78e0 !important;
 }
 .chariTxt a:hover{
@@ -1048,7 +1062,7 @@ img, input{
 	width:17px;
 	height:12px;
 	float:right;
-}
+}	
 /*-----------------------------------causesList-end--------------------------------------------*/
 /*-------------------------------------account-start-------------------------------------------*/
 .bodyInSm{
@@ -1119,7 +1133,7 @@ img, input{
 .captuaR{
 	width:250px;
 	float:left;
-}
+}	
 .ChkTxtM{
 	width:100%;
 	overflow:hidden;
@@ -1247,6 +1261,7 @@ img, input{
 .searFill{
 	display:block;
 	width:265px;
+	*+width:261px;
 	height:20px;
 	float:left;
 	margin:5px 0 0 15px;
@@ -1272,7 +1287,7 @@ img, input{
 .searFilTxt{
 	font:normal 12px/13px "Trebuchet MS", Arial, Helvetica, sans-serif;
 	color:#4a4a4a;
-	margin:6px 0 10px 10px;
+	margin:6px 0 10px 10px;	
 }
 .searInHead{
 	width:340px !important;
@@ -1371,12 +1386,12 @@ img, input{
 	height:103px;
 	float:left;
 	margin:0 8px 0 0;
-	background:url(../images/humBox.jpg) 0 0 no-repeat;
+	background:url(../images/humBox.jpg) 0 0 no-repeat;	
 }
 .boxHu h3{
 	height:28px;
 	padding:0 0 0 28px;
-	background:url(../images/dashIcon1.jpg) 6px 6px no-repeat;
+	background:url(../images/dashIcon1.jpg) 6px 6px no-repeat;	
 	border-bottom:1px solid #dddad6;
 	font:bold 18px/28px "Trebuchet MS", Arial, Helvetica, sans-serif;
 	color:#d8820e;
@@ -1512,12 +1527,12 @@ img, input{
 }
 .artBotsubHead{
 	font:bold 16px/18px "Trebuchet MS", Arial, Helvetica, sans-serif;
-	color:#232323;
+	color:#232323;	
 }
 .artBotTxt{
 	font:normal 14px/18px "Trebuchet MS", Arial, Helvetica, sans-serif;
 	color:#383838;
-	margin:10px 0 0 0;
+	margin:10px 0 0 0;	
 }
 /*--------------------------------------art-start-----------------------------------------------*/
 /*----------------------------------webhosting-start--------------------------------------------*/
@@ -1758,7 +1773,7 @@ img, input{
 	line-height:1px;
 	font-size:1px;
 	position:absolute;
-	top:0;
+	top:0; 
 	left:0;
 	}
 .vscrollerbase, .vscrollerbar{
@@ -1776,7 +1791,7 @@ img, input{
 	background:url(../images/vscroller.jpg) 0 0 no-repeat;
 	}
 .vscrollerbarend{
-	width:9px;
+	width:9px; 
 	height:1px;
 	background:url(../images/vscroller.jpg) 0 0 no-repeat;
 	}
@@ -1802,7 +1817,7 @@ img, input{
 	}
 .vscrollerbaseend{
 	width:11px;
-	height:11px;
+	height:11px; 
 	background:url(../images/scrollbasedwn.jpg) 0 0 no-repeat;
 	}
 .hscrollerbasebeg{
@@ -1812,15 +1827,15 @@ img, input{
 	}
 .hscrollerbaseend{
 	width:11px;
-	height:11px;
+	height:11px; 
 	background:url(../images/scrollbasedwnh.jpg) 0 0 no-repeat;
 	}
 .scrollerjogbox{
 	width:15px;
 	height:15px;
-	top:auto;
+	top:auto; 
 	left:auto;
-	bottom:0px;
+	bottom:0px; 
 	right:0px;
 	background:url(../images/scrolljog.png) 0 0;
 	}
@@ -1916,7 +1931,7 @@ img, input{
 .shopMidTxt{
 	font:normal 13px/20px "Trebuchet MS", Arial, Helvetica, sans-serif;
 	color:#494949;
-	margin:0 0 25px 0;
+	margin:0 0 25px 0;	
 }
 .shopMidTxt a{
 	color:#1075e6;
@@ -1979,13 +1994,10 @@ img, input{
 	text-align:center;
 	background:url(../images/abBtnMid.png) 0 0 repeat-x;
 }
-
-
 .buttonMainACC{
 	height:27px;
 	margin:40px 0 10px 390px;
 }
-
 .accBtnSt{
 	background:url(../images/accBtnSt.png) 0 0 no-repeat;
 	behavior:url(iepngfix.htc);
@@ -2029,6 +2041,7 @@ img, input{
 	float:left;
 	cursor:pointer;
 	font:bold 14px/15px Arial, Helvetica, sans-serif;
+	*+font:bold 13px/15px Arial, Helvetica, sans-serif;
 	color:#fff;
 	text-align:center;
 	background:url(../images/mid29.png) 0 0 repeat-x;
@@ -2058,7 +2071,6 @@ img, input{
 	background:url(../images/recEn.png) 0 0 no-repeat;
 	behavior:url(iepngfix.htc);
 }
-
 .seaBtnSt{
 	background:url(../images/rBtn29St.png) 0 0 no-repeat;
 	behavior:url(iepngfix.htc);
@@ -2067,12 +2079,11 @@ img, input{
 	background:url(../images/rBtn29En.png) 0 0 no-repeat;
 	behavior:url(iepngfix.htc);
 }
-
-
-
 .buttonMainReg{
 	height:36px;
-	margin:0 0 0 214px;
+	/*margin:0 0 0 214px;*/
+	padding:0 0 0 214px;
+	*+padding:0 0 0 200px;
 }
 .buttonMainLog{
 	height:36px;
@@ -2116,16 +2127,14 @@ img, input{
 	background:url(../images/btnEnFace.png) 0 0 no-repeat;
 	behavior:url(iepngfix.htc);
 }
-
-
 .goBtnMain{
 	margin:73px 0 0 0;
 }
-
-
 .buttonMainSee1{
 	height:47px;
-	margin:22px 0 0 110px;
+	/*margin:22px 0 0 110px;*/
+	padding:22px 0 0 110px;
+	*+padding:22px 0 0 60px;
 }
 .buttonMidSee1{
 	display:block;
@@ -2158,11 +2167,12 @@ img, input{
 	behavior:url(iepngfix.htc);
 }
 
-
-
 .buttonMainGra{
 	height:33px;
 	margin:30px 0 0 0;
+}
+.buttonMainGra1{
+	margin:50px 0 0 0;
 }
 .buttonMidGra{
 	display:block;
@@ -2193,14 +2203,348 @@ img, input{
 	background:url(../images/grBtnEn.png) 0 0 no-repeat;
 	behavior:url(iepngfix.htc);
 }
-
-
 .buttonMainSearM{
 	height:27px;
 	float:right;
 	margin:2px 2px 0 0;
 }
-
-
 /*--------------------------------------BUTTON-end-----------------------------------------------*/
+/*--------------------------------------HowItWorks-start-----------------------------------------*/
+.howHead{
+	font:normal 24px/26px Arial, Helvetica, sans-serif;
+	color:#4e4e4e;
+	margin:44px 0 0;
+}	
+.vecPic{
+	display:block;
+	margin:30px 0 0 0;
+}
+.vecTxtM{
+	margin:30px 0 50px;
+}
+.vecTxtM p{
+	font:normal 14px/20px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color:#4e4e4e;
+	margin:0 0 14px 0;
+}
+.vecBulTxt{
+	padding:0 0 0 24px;
+}
+/*--------------------------------------HowItWorks-end-------------------------------------------*/
+/*------------------------------------------Art-start--------------------------------------------*/
+.mainArtBody{
+	width:960px;
+	margin:0 auto;
+	overflow:hidden;
+	background:url(../images/artDivi.jpg) 462px 40px no-repeat;
+}
+.artL{
+	width:435px;
+	float:left;
+	margin:40px 0 0 0;
+}
+.artL h2{
+	font:bold 22px/24px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color:#333;
+	padding:0 0 5px 0;
+	border-bottom:1px solid #ccc;
+	margin:0 0 20px 0;
+}
+.artL p{
+	font:normal 14px/20px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color:#4c4c4c;
+}
+.artLPic{
+	width:408px;
+	height:301px;
+	margin:20px 0;
+	padding:7px 0 0 0;
+	background:url(../images/artPicBg.png) 0 0 no-repeat;
+}
+.artLPic img{
+	display:block;
+	margin:0 auto;
+}
 
+.artBtnM{
+	height:36px;
+}
+.artBtnSide{
+    width:16px;
+    height:36px;
+	float:left;
+	cursor:pointer;
+}
+.artBtnMid{
+	display:block;
+    height:36px;
+	padding:0 0 3px;
+	*+padding:0;
+	*+margin:0;
+	float:left;
+	font:normal 18px/22px Arial, Helvetica, sans-serif;
+	*+font:bold 13px/22px Arial, Helvetica, sans-serif;
+	color:#fff;
+	text-align:center;
+	text-shadow:#d67c00 0px 1px 6px;
+	background:url(../images/artTbtnM.png) 0 0 repeat-x;
+	cursor:pointer;
+}
+.artBtnSt{
+	background:url(../images/artTbtnL.png) 0 0 no-repeat;
+	behavior:url(iepngfix.htc);
+}
+.artBtnEn{
+	background:url(../images/artTbtnR.png) 0 0 no-repeat;
+	behavior:url(iepngfix.htc);
+}
+
+.artR{
+	width:466px;
+	float:right;
+	margin:40px 0 0 0;
+}
+.artR h2{
+	font:normal 28px/32px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color:#333;
+	margin:0 0 20px 0;
+}
+.artRTxt{
+	font:normal 14px/20px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color:#4c4c4c;
+	text-align:center;
+	margin:30px auto 38px;
+}
+.artD{
+	font:bold 40px/42px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color:#f8a31b;
+	text-align:center;
+	text-shadow:#616161 0px 1px 3px;
+}
+.artRTxt2{
+	font:normal 12px/13px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color:#4c4c4c;
+	text-align:center;
+	margin:5px auto 38px;
+}
+
+.artbdy{
+	width:100%;
+	margin:20px 0 0 0;
+	padding:40px 0 0 0;
+	background:url(../images/artTbg.jpg) 0 0 repeat-x;
+}
+.artBBL{
+	width:241px;
+	float:left;
+	margin:0 19px 0 0;
+}
+.artBBLD{
+	height:20px;
+	background:url(../images/artBBot1.png) 0 0 no-repeat;
+	behavior:url(iepngfix.htc);
+}
+.artBBLT{
+	padding:18px 10px;
+	background-color:#dfdfdf;
+	border-top:1px solid #fff;
+	border-left:1px solid #fff;
+	border-right:1px solid #fff;
+}
+.artBBLT h2, .artBBR h2{
+	font:normal 20px/26px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color:#161616;
+	margin:0 0 28px;
+}
+/*.artBBLT p, .artBBR p{
+	font:normal 14px/20px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color:#161616;
+	margin:0 0 28px 0;
+}*/
+.artBBLT p, .artBBR p{
+	height:184px;
+	font:normal 14px/20px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color:#161616;
+	margin:0 0 10px 0;
+}
+.artBBR{
+	width:439px;
+	float:right;
+}
+.artBBRD{
+	height:20px;
+	background:url(../images/artBBot2.png) 0 0 no-repeat;
+	behavior:url(iepngfix.htc);
+}
+.artfootop{
+	width:100%;
+	height:63px;
+	background:url(../images/bodyBotBg.jpg) 0 0 repeat-x;
+}
+.artfootM{
+	margin:1px 0 0 0 !important;
+}
+.seeBtn{
+	/*margin:0 0 0 130px;*/
+	padding:0 0 0 130px;
+	*+padding:0 0 0 110px;
+}
+.browBtn{
+	/*margin:0 0 0 136px;*/
+	padding:0 0 0 136px;
+	*+padding:0 0 0 116px;
+}
+.subBtnart{
+	/*margin:0 0 0 156px;*/
+	padding:0 0 0 156px;
+	*+padding:0 0 0 136px;
+}
+.dashBtnart{
+	/*margin:68px 0 0 15px;*/
+	padding:0 0 0 20px;
+	*+padding:0 0 0 5px;
+}
+.voteBtnart{
+	/*margin:108px 0 0 30px;*/
+	padding:0 0 0 40px;
+	*+padding:0 0 0 32px;
+}
+/*------------------------------------------Art-end----------------------------------------------*/
+/*----------------------------------------Hosting-start------------------------------------------*/
+.hostingBan{
+	width:710px;
+	margin:68px auto 0;
+	*+padding:68px 0 0;
+}
+.hostingBan h2{
+	font:normal 26px/36px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color:#fff;
+	text-shadow:#617a0a 0px 1px 6px;
+	text-align:center;
+}
+.hostingBan p{
+	font:normal 14px/20px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color:#e7edd3;
+	text-align:center;
+	margin:25px auto;
+}
+.hostingD{
+	margin:0 auto 5px !important;
+	font:bold 36px/38px "Trebuchet MS", Arial, Helvetica, sans-serif !important;
+	color:#f29318 !important;
+	text-shadow:#617a0a 0px 1px 6px;
+}
+.hostingDT{
+	font:normal 12px/13px "Trebuchet MS", Arial, Helvetica, sans-serif !important;
+	color:#fff !important;
+	margin:0 auto !important;
+}
+.seeBtnHost{
+	/*margin:0 0 0 245px;*/
+	padding:0 0 0 245px;
+	*+padding:0 0 0 245px;
+}
+.bodyHost{
+	width:960px;
+	margin:0 auto;
+	padding:34px 0 0 0;
+	overflow:hidden;
+}
+
+.hostL{
+	width:438px;
+	float:left;
+	border:1px solid #fff;
+	background-color:#f0f0f0;
+	padding:15px;
+	margin:0 0 25px 0;	
+}
+.hostR{
+	float:right !important;
+}
+.hostL h3{
+	font:normal 20px/22px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color:#181818;
+	margin:0 0 15px 0;	
+}
+.hostL p{
+	font:normal 13px/18px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color:#000;
+	margin:0 0 8px 0;	
+}
+.googleBtnHost{
+	margin:49px 0 0 200px;
+	*+margin:0;
+	*+padding:49px 0 0 180px;
+}
+.rackBtnHost{
+	margin:0 0 0 215px;
+	*+margin:0;
+	*+padding:9px 0 0 190px;
+}
+.signBtnHost{
+	margin:0 0 0 165px;
+	*+margin:0;
+	*+padding:9px 0 0 170px;
+}
+.voteBtnHost{
+	margin:63px 0 0 23px;
+	*+margin:0;
+	*+padding:63px 0 0 20px;
+}
+
+.hostRS{
+	width:193px !important;
+	float:right !important;
+}
+.hostRS1{
+	width:193px !important;
+	float:left !important;
+	margin:0 0 0 20px;
+}
+/*----------------------------------------Hosting-end--------------------------------------------*/
+/*-----------------------------------------Shop-start--------------------------------------------*/
+.expLogoBg{
+	width:427px;
+	height:210px;
+	padding:15px 0 0 0;
+	margin:8px 0 0 0;
+	background:url(../images/shoplogoBg.png) 0 0 no-repeat;
+}
+.expLogoBg img{
+	display:block;
+	margin:0 auto;
+}
+.exBtn{
+	/*margin:0 0 0 115px;*/
+	padding:0 0 0 115px;
+	*+padding:0 0 0 100px;
+}
+.banR2{
+	width:480px;
+	float:right;
+}
+.banR2 p{
+	font:normal 14px/20px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color:#fff;
+	margin:15px 0 0 0;
+	text-align:center;
+}
+.banRDolarTxt2{
+	margin:10px auto 0;
+	font:bold 44px/46px "Trebuchet MS", Arial, Helvetica, sans-serif !important;
+	color:#f29318 !important;
+	text-shadow:#617a0a 0px 1px 6px;
+}
+.shopSeeBtn{
+	height:47px;
+	/*margin:32px 0 0 110px;*/
+	padding:32px 0 0 110px;
+	*+padding:32px 0 0 38px;
+}
+/*-----------------------------------------Shop-end----------------------------------------------*/
+
+
+.artBoxH{
+	height:340px !important;
+}

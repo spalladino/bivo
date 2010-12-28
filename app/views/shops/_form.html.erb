@@ -21,88 +21,68 @@ $(function(){
 });
 <% end %>
 
-<%= form_for @shop, :html => { :multipart => true } do |f| %>
+<%= bivo_form_for @shop, :html => { :multipart => true } do |f| %>
   <%= render "shared/error_messages", :target => @shop %>
 
-  <div class="field">
     <%= f.label :name %>
     <%= f.text_field :name %>
-  </div>
 
-  <div class="field">
     <%= f.label :description %>
     <%= f.text_field :description %>
-  </div>
 
-  <div class="field">
     <%= f.label :short_url %>
     <%= f.text_field :short_url %>
-  </div>
 
-  <div class="field">
     <%= f.label :url %>
     <%= f.text_field :url %>
-  </div>
 
 
-  <h3><%= _("Affiliate Redirection") %></h3>
-  <div>
-    <%= f.radio_button :redirection,:search_box , :checked => true %> <%= f.label :search_box %> <br />
-    <%= f.radio_button :redirection,:purchase_button %>  <%= f.label :purchase_button %><br />
-    <%= f.radio_button :redirection,:custom_widget %>  <%= f.label :custom_widget %><br />
-    <%= f.radio_button :redirection,:custom_html %>  <%= f.label :custom_html %>
-  </div>
+  <%= f.row_label _("Affiliate Redirection") %>
+  <%= f.radio_button :redirection,:search_box  %> <%= f.rhs_label :search_box %>
+  <%= f.radio_button :redirection,:purchase_button %>  <%= f.rhs_label :purchase_button %>
+  <%= f.radio_button :redirection,:custom_widget %>  <%= f.rhs_label :custom_widget %>
+  <%= f.radio_button :redirection,:custom_html %>  <%= f.rhs_label :custom_html %>
 
-  <h3><%= _("Affiliate Code") %></h3>
-  <div class="field">
-    <%= f.text_area :affiliate_code , :rows=>"5", :cols=>"47"%><br/>
-    <%= _("$query word will be replaced in the search box option") %>
-  </div>
+  <%= f.row_label _("Affiliate Code") %>
+  <%= f.text_area :affiliate_code , :rows=>"5", :cols=>"47"%>
+  <%= f.row_label _("$query word will be replaced in the search box option") %>
 
-  <h3><%= _("Recommended for") %></h3>
-  <div class="scroll">
-    <div>
-      <%= f.check_box :worldwide%>
-      <%= f.label :worldwide%>
-    </div>
+  <%= f.row_label _("Recommended for") %>
+  <div class="fat_scroll">
+    <%= f.check_box :worldwide%>
+    <%= f.rhs_label :worldwide%>
     <% @countries.each do |country|%>
-      <div>
-        <%= check_box_tag :country_ids, country.id, @shop.countries.include?(country), :name => 'shop[country_ids][]' %>
-        <%= label_tag 'shop[country_ids][]', country.name %>
-      </div>
+    <p class="accfilTxt"></p>
+    <%= check_box_tag :country_ids, country.id, @shop.countries.include?(country), :name => 'shop[country_ids][]' %>
+    <%= f.rhs_label 'shop[country_ids][]', country.name %>
     <% end%>
   </div>
 
-  <h3><%=_("Comissions")%></h3>
+  <br/>
+  <%= f.label _("Commision")%>
+  <%= f.text_field :comission_value %>
+  <p class="accfilTxt"></p>
+  <%= f.enum_select :comission_kind , :include_blank => false%><br/><br/>
+  <%= f.label _("Commision Details")%>
+  <%= f.text_field :comission_details %>
+  <%= f.check_box :comission_recurrent%>  <%= f.rhs_label _("recurrent each month")%>
 
-    <%= f.label _("Commision")%>
-    <%= f.text_field :comission_value %>
-    <%= f.enum_select :comission_kind , :include_blank => false%><br />
-    <%= f.label _("Commision Details")%>
-    <%= f.text_field :comission_details %> <br />
-    <%= f.check_box :comission_recurrent%>  <%= f.label _("recurrent each month")%><br />
+  <%= f.label :image %>
+  <%= f.file_field :image %>
 
+  <%= image_tag @shop.image.url(:small) if @shop.image_file_name %>
 
-  <h3><%=_("Image")%></h3>
-  <div class="field">
-    <%= f.label :image %>
-    <%= f.file_field :image %>
-  </div>
-
-  <div class="field">
-    <%= image_tag @shop.image.url(:small) if @shop.image_file_name %>
-  </div>
-
-  <h3><%=_("Categories")%></h3>
+  <%=f.row_label _("Categories")%>
   <div id="select_categories_container" class="field">
 	<%= render 'select_categories' %>
   </div>
   <%= link_to _('Edit Categories'), :admin_edit_shop_categories, :class => 'iframe' %>
 
-  <p><%= f.submit 'Save' %></p>
+  <%= f.submit 'Save' %>
 
 <% end %>
 
-<p><%= link_to _('Cancel'), '#' %></p>
-<p><%= button_to _('Delete'), shop_path, :method => :delete, :confirm => _("Are you sure you want to delete this shop?") unless @shop.new_record? %></p>
+<div style="position:relative;top:-37px;left:500px"><%= orange_button_to _('Delete'), shop_path, :method => :delete, :confirm => _("Are you sure you want to delete this shop?") unless @shop.new_record? %></div>
+
+<div class="bodyBot"></div>
 

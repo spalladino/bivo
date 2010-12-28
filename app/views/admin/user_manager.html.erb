@@ -1,59 +1,62 @@
 <div class="inbodyM">
   <div class="bodyInner">
-	
+    <div class="statGrT">
+      <h2><%= _('User manager') %></h2>
+    </div>
+	  <br class="spacer">
 	<%= orange_link_to _("Add User"), admin_new_personal_user_path %>
 	<%= orange_link_to _("Add Charity"), admin_new_charity_path %>
 
 	<br /><br />
 	<%= form_tag admin_user_manager_path, :method => "get" do %>
-	<div>
-	<%= _("Show") %> <%= select_tag :show, options_for_select(@show_options) %> <br />
-	<%= _("Size per page")%> <%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page)%> <br />
-	<%= _("Filter by") %> <%= text_field_tag :filter, @filter %> <br />
-	<br />
-	<%= orange_button_to _("Search") %>
-	</div>
+	  <div class="gnFilMain2">
+	    <p class="genFilTxt2"><%= _("Show") %> <%= select_tag :show, options_for_select(@show_options), :class => :genChoo2 %>
+	    <p class="genFilTxt2">Filter by</p><%= text_field_tag :filter, @filter, :class => "genFil" %>
+      <div><%= orange_button_to _("Search") %></div>
+      <%= styled_will_paginate @users %>
+    </div>
 	<% end %>
-	<br />
-
-    <%= will_paginate @users %>
-    <table class="classic_table">
+    <br class="spacer" />
+    <table class="zebra_table">
       <tr>
-        <th>
+        <th style="width:278px;">
           <%= link_to _("Name"), request.parameters.merge({:sort_by => get_sort_for("name")}) %> 
-          <%= sort_arrow_for :name %> 
+          <%= sort_arrow_for :name %>
         </th>
-        <th>
+        <th style="width:90px;">
           <%= link_to _("Type"), request.parameters.merge({:sort_by => get_sort_for("type")}) %>
           <%= sort_arrow_for :type %>
         </th>
-        <th>
+        <th style="width:140px;">
           <%= link_to _("Last Login"), request.parameters.merge({:sort_by => get_sort_for("last_sign_in_at")}) %>
           <%= sort_arrow_for :last_sign_in_at %>
         </th>
-        <th>
+        <th style="width:140px;">
           <%= link_to _("Signup Date"), request.parameters.merge({:sort_by => get_sort_for("created_at")}) %>
           <%= sort_arrow_for :created_at %>
         </th>
-        <th>&nbsp;</th>
-        <th>&nbsp;</th>
-        <th>&nbsp;</th>
+        <th style="width:130px;">&nbsp;</th>
+        <th style="width:75px;">&nbsp;</th>
+        <th class="noBord" style="width:90px;">&nbsp;</th>
       </tr>
     <% for user in @users %>
       <tr>
         <% if user.is_charity_user -%>
-        <td><%= link_to user.name, url_charity(user) %></td>
+        <td class ="username"><%= link_to user.name, url_charity(user) %></td>
         <% else -%>
-        <td><%= user.name %></td>
+        <td class ="username"><%= user.name %></td>
         <% end -%>
         <td><%= user.type %></td>
         <td><%= format_date user.last_sign_in_at %></td>
         <td><%= format_date user.created_at %></td>
-        <td id="activate_deactivate_charity_btn_<%=user.id%>"><%= active_deactive_charity_button(user) if user.is_charity_user%></td>
+        <td id="activate_deactivate_charity_btn_<%=user.id%>"><%= active_deactive_charity_button(user) if user.is_charity_user %></td>
         <td><%= orange_link_to _("Edit"), edit_user_registration_path(:id => user.id) %></td>
-        <td><%= orange_link_to _("Delete"), { :action => "destroy", :controller => "registrations", :id => user.id }, :confirm => "are you sure you want to delete the user?", :method => :delete %></td>
+        <td class="noBord"><%= orange_link_to _("Delete"), { :action => "destroy", :controller => "registrations", :id => user.id }, :confirm => "are you sure you want to delete the user?", :method => :delete %></td>
       </tr>
     <% end %>
     </table>
+    <br class="spacer" />
+	  <%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page), :class => :showChoo %>
+<p class="showTxt"><%= _("Show per page")%></p> <br />
   </div>
 </div>

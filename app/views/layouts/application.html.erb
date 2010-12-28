@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%= h(yield(:title) || "Bivo") %></title>
+
+  <title><%= yield(:title).presence || "Bivo" %></title>
   <%= stylesheet_link_tag :all, :cache => false %>
   <%= javascript_include_tag :defaults %>
   <%= javascript_include_tag 'jquery.jgrowl_minimized' %>
@@ -17,7 +18,8 @@
 
   <script type="text/javascript" language="JavaScript">
   	<%= on_document_ready { render(:partial => 'shared/notifications.js') } %>
-	<%= yield(:js) %>
+	  <%= yield(:js) %>
+    <%= set_zebra_style_to_table :zebra_table, :even_field, :odd_field %>
   </script>
 
 </head>

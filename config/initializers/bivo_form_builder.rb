@@ -1,9 +1,20 @@
 
 class BivoFormBuilder < ActionView::Helpers::FormBuilder
+
+  alias_method :plain_label, :label
+
   def label(method, text = nil, options = {})
     ('<p class="accfilTxt">' + super + '</p>').html_safe
   end
-  
+
+  def row_label(method, text = nil, options = {})
+    ('<p class="accfilTxt" style="width: 100%;">' + plain_label(method, text, options) + '</p><br class="spacer"/>').html_safe
+  end
+
+  def rhs_label(method, text = nil, options = {})
+    (' ' + plain_label(method, text, options.merge(:class => 'default_font')) + '<br class="spacer"/>').html_safe
+  end
+
   def text_field(method, options = {})
     normal_input(super)
   end
@@ -26,6 +37,14 @@ class BivoFormBuilder < ActionView::Helpers::FormBuilder
   
   def submit(value = "Save changes", options = {})
     BivoFormBuilder.orange_button_wrap(super)
+  end
+
+  def check_box(method, options = {})
+    ('<p class="accfilTxt"></p>' + super).html_safe
+  end
+
+  def radio_button(method, options = {})
+    ('<p class="accfilTxt"></p>' + super).html_safe
   end
   
   def self.orange_button_wrap(original)
