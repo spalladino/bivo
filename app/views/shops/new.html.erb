@@ -1,2 +1,3 @@
-<h2><%=_("Create new shop")%></h2>
-<%= render :partial => 'form' %>
+<%  single_block _("Create new shop") do |s| %>
+  <%= render :partial => 'form' %>
+<% end %>

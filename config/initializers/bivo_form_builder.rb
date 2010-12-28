@@ -42,6 +42,10 @@ class BivoFormBuilder < ActionView::Helpers::FormBuilder
   def check_box(method, options = {})
     ('<p class="accfilTxt"></p>' + super).html_safe
   end
+
+  def radio_button(method, options = {})
+    ('<p class="accfilTxt"></p>' + super).html_safe
+  end
   
   def self.orange_button_wrap(original)
     html = Hpricot(original)

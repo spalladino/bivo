@@ -66,6 +66,12 @@
   overflow: auto;
 }
 
+.fat_scroll {
+  max-height: 300px;
+  max-width: 550px;
+  overflow: auto;
+}
+
 .edit_catecories form, .edit_catecories form.button_to, .edit_catecories form.button_to div {
 	display: inline;
 }
