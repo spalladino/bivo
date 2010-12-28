@@ -80,7 +80,7 @@ class User < ActiveRecord::Base
 
   protected
     def password_required?
-      if (from_facebook || persisted?)
+      if (from_facebook)
         false
       else
         super
