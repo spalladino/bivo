@@ -27,10 +27,11 @@
 	            	<h3 class="shopRinHead searInHead">
                   <%= n_("%{count} result found", "%{count} results found", @count) % {:count => @count} %>
                 </h3>
-	            	<p class="genFilTxt"><%= label_tag :sorting, _('Sort by')%></p><%= select_tag :sorting, options_for_select(@sortings, @sorting), :onchange =>"$('#filter_form').submit()", :class => "genChoo" %>
-	                <div class="pegi pagination"><%= n_("%{count} result found", "%{count} results found", @count) % {:count => @count} %>
-	          		</div><br class="spacer" />
-	            </div>
+	            	<p class="genFilTxt"><%= label_tag :sorting, _('Sort by')%></p>
+                  <%= select_tag :sorting, options_for_select(@sortings, @sorting), :onchange =>"$('#filter_form').submit()", :class => "genChoo" %>
+	                <div class="pegi pagination"></div>
+                  <br class="spacer" />
+	          </div>
 	
 				<div id="shops">
 				  <%= render 'shops' %>

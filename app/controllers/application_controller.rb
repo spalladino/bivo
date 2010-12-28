@@ -128,7 +128,6 @@ class ApplicationController < ActionController::Base
   end
   
   def store_last_visited_page_as_guest
-    puts "store_last_visited_page_as_guest #{request.referrer}"
     session[:"user_return_to"] = request.referrer
   end
 end
