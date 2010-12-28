@@ -1,9 +1,9 @@
 # Observer for news.
 class NewsObserver < ActiveRecord::Observer
-  def after_save(news)
+  def after_create(news)
     @news = news
 
-    enqueue_charity_news if (news.newsable_type.to_sym == :Charity)
+    enqueue_charity_news if (news.newsable_type.to_sym == :Charity || news.newsable_type.to_sym == :User)
     enqueue_cause_news   if (news.newsable_type.to_sym == :Cause)
   end
 

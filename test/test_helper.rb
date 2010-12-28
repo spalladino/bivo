@@ -58,3 +58,35 @@ class ActionController::TestCase
 
 end
 
+class ActionMailer::TestCase
+
+  def clear_pending_mails
+    ActionMailer::Base.deliveries.clear
+    PendingMail.delete_all
+    
+    assert_equal 0, PendingMail.count
+    assert_equal 0, ActionMailer::Base.deliveries.size
+  end
+
+  def assert_mail_sent_to(recipient)
+    MailsProcessor.instance.process
+    mail = ActionMailer::Base.deliveries.first
+    assert_not_nil mail
+    assert_equal recipient, mail.to.first
+  end
+
+  def assert_mails_sent_to(*recipients)
+    if block_given?
+      clear_pending_mails
+      yield
+    end
+    
+    sent,failed,errs = MailsProcessor.instance.process
+    throw errs.first if errs.any?
+    
+    actual_recipients = ActionMailer::Base.deliveries.map{|m| m.to.first}
+    assert_equal recipients.sort, actual_recipients.sort
+  end
+
+
+end

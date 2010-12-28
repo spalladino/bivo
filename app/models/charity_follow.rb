@@ -7,9 +7,9 @@ class CharityFollow < ActiveRecord::Base
 
   validate :didnt_follow
 
-  after_save do
-    CharityFollowObserver.instance.after_save self
-  end
+#  after_create do
+#    CharityFollowObserver.instance.after_create self
+#  end
 
   def didnt_follow
     if charity && user && CharityFollow.find_by_charity_id_and_user_id(charity.id,user.id)

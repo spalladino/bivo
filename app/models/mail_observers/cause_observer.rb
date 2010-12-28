@@ -1,5 +1,6 @@
 # Observer for causes. It enqueues mails when a cause change its status (special case if the new status is completed).
 class CauseObserver < ActiveRecord::Observer
+  
   # it is fired after a cause has changed its status and the new status is persisted.
   def status_change_persisted(cause)
     @cause = cause

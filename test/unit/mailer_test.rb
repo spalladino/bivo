@@ -1,17 +1,18 @@
 require 'test_helper'
 
 class MailerTest < ActionMailer::TestCase
-  # replace this with your real tests
-  test 'should send cause being followed email' do
+
+  test 'should deliver cause being followed email' do
+    charity = Charity.make
     mail_data = {
       :cause_id    => Cause.make,
       :follower_id => PersonalUser.make,
-      :charity_id  => Charity.make
+      :charity_id  => charity
     }.to_struct
 
     Mailer.cause_being_followed(mail_data).deliver
 
-    assert ActionMailer::Base.deliveries.any?
+    assert_mail_sent_to charity.email
   end
 
   test 'should send cause status changed for charity email' do

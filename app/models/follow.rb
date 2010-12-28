@@ -7,9 +7,9 @@ class Follow < ActiveRecord::Base
   validates_presence_of :cause,:message => "inexistent cause"
   validate :didnt_follow
 
-  after_save do
-    FollowObserver.instance.after_save self
-  end
+#  after_create do
+#    FollowObserver.instance.after_create self
+#  end
 
   def didnt_follow
     if cause && user && Follow.find_by_cause_id_and_user_id(cause.id,user.id)
