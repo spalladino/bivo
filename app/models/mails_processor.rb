@@ -8,7 +8,7 @@ class MailsProcessor
 
     PendingMail.where("retries < ?", max_retries).limit(batch_size).each do |mail|
       begin
-        I18n.locale = Language.by_id(mail.language) || Language.default
+        set_language(mail)
         Mailer.send(mail.method, Marshal.load(mail.data).to_struct).deliver
         to_be_removed << mail.id
       rescue => e
@@ -29,5 +29,11 @@ class MailsProcessor
   
   def batch_size
     Bivo::Application.config.mails_batch_size
+  end
+  
+  def set_language(mail)
+    # Sets language for the email. Note that this is the language of the sender, 
+    # it will be used as a fallback if recipient has no configured preferred language.
+    I18n.locale = Language.by_id(mail.language).try(:id) || Language.default
   end
 end
