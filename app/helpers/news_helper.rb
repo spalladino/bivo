@@ -2,7 +2,7 @@ module NewsHelper
 
   def add_news_button(newsable)
     if news_rules(newsable).can_add?(current_user,newsable.id)
-      return raw("<input type=\"button\" id = \"add_news_button\" value=\"#{_("Add News")}\" onclick=\"showNewsForm(this);\"/>")
+      return raw(orange_button("<input type=\"button\" id = \"add_news_button\" class=\"buttonMid accBtnMi\" value=\"#{_("Add News")}\" onclick=\"showNewsForm(this);\"/>"))
     end
   end
 
@@ -31,8 +31,12 @@ module NewsHelper
     eval("#{newsable.class}::NewsRules")
   end
 
+  def submit_news_button
+    return raw(orange_button("<input id=\"news_submit\" class=\"buttonMid accBtnMi\" name=\"commit\" type=\"submit\" value=\"#{_("Submit")}\">"))
+  end
+
   def cancel_news_add_button
-     return raw("<input type=\"button\" id =\"cancel_news_add_button\" class=\"nodisplay\" value=\"#{_("Cancel")}\" onclick=\"cancelNewsAdd(this)\"/>")
+     return raw(orange_button("<input type=\"button\" id =\"cancel_news_add_button\" class=\"nodisplay buttonMid accBtnMi\" value=\"#{_("Cancel")}\" onclick=\"cancelNewsAdd(this)\"/>"))
   end
 
 

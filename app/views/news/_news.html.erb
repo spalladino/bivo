@@ -2,33 +2,31 @@
 
   function showNewsForm(button){
     $('#news_form').show();
-    $(button).hide();
+    $(button).closest('div').hide();
     $('#cancel_news_add_button').show();
 
   }
 
   function cancelNewsAdd(button){
-
-    $('#add_news_button').show();
+    $('#add_news_button').closest('div').show();
     $('#news_form').hide();
     $('#news_body').val("");
     $(button).hide();
   }
 
 <% end %>
-<br/><br/>
-<%=add_news_button newsable%>
-
-<%= form_for [newsable, News.new],:html=>{:class => 'nodisplay', :id => 'news_form'},:remote=>true do |f| %>
-  <p>
-    <%= f.label :body %><br/>
-    <%= f.text_area :body,:rows => 4 %>
-  </p>
-  <p><%= f.submit "Submit" %></p>
-  <%= cancel_news_add_button%>
-<% end %>
-
 <div class="cvNews"><h2><%=_("News")%></h2></div>
+<br />
+<%=add_news_button newsable%>
+<br />
+<%= form_for [newsable, News.new],:html=>{:class => 'nodisplay', :id => 'news_form'},:remote=>true do |f| %>
+  <p><%= f.text_area :body, :class => 'accNewsFil accMess' %></p>
+  <div class="actions">
+    <div><%=submit_news_button%></div>
+    <div style="margin-left:20px;"><%=cancel_news_add_button%></div>
+  </div>
+  <br /> <br />
+<% end %>
 <div class="cvNewsBox">
 	<div class="cvNewsBoxIn cvNewsBoxIn2 flexcroll" id="news">
   <% for news in all_news %>
