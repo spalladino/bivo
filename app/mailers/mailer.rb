@@ -6,6 +6,7 @@ class Mailer < ActionMailer::Base
     @follower = User.find(mail_data.follower_id)
     @charity = @cause.charity
 
+    set_locale @charity
     mail :to => @charity.email, :subject => _("New Follower")
   end
 
@@ -13,6 +14,7 @@ class Mailer < ActionMailer::Base
     @follower = User.find(mail_data.follower_id)
     @charity = Charity.find(mail_data.charity_id)
 
+    set_locale @charity
     mail :to => @charity.email, :subject => _("New Follower")
   end
 
@@ -20,6 +22,7 @@ class Mailer < ActionMailer::Base
     @cause = Cause.find(mail_data.cause_id)
     @follower = User.find(mail_data.charity_id)
 
+    set_locale @follower
     mail :to => @follower.email, :subject => _("Cause status changed")
   end
 
@@ -27,6 +30,7 @@ class Mailer < ActionMailer::Base
     @cause = Cause.find(mail_data.cause_id)
     @follower = User.find(mail_data.follower_id)
 
+    set_locale @follower
     mail :to => @follower.email, :subject => _("Cause status changed")
   end
 
@@ -35,6 +39,7 @@ class Mailer < ActionMailer::Base
     @cause = Cause.find(mail_data.cause_id)
     @comment = Comment.find mail_data.comment_id
 
+    set_locale @charity
     mail :to => @charity.email, :subject => _("New comment in your cause")
   end
 
@@ -43,6 +48,7 @@ class Mailer < ActionMailer::Base
     @follower = User.find(mail_data.follower_id)
     @comment = Comment.find mail_data.comment_id
 
+    set_locale @follower
     mail :to => @follower.email, :subject => _("New comment for cause")
   end
 
@@ -51,6 +57,7 @@ class Mailer < ActionMailer::Base
     @follower = User.find(mail_data.follower_id)
     @comment = Comment.find mail_data.comment_id
  
+    set_locale @follower
     mail :to => @follower.email, :subject => _("New comment to charity")
   end
 
@@ -58,6 +65,7 @@ class Mailer < ActionMailer::Base
     @charity = Charity.find(mail_data.charity_id)
     @comment = Comment.find mail_data.comment_id
  
+    set_locale @charity
     mail :to => @charity.email, :subject => _("New comment in your page")
   end
 
@@ -65,6 +73,7 @@ class Mailer < ActionMailer::Base
     @cause = Cause.find(mail_data.cause_id)
     @charity = User.find(mail_data.charity_id)
 
+    set_locale @charity
     mail :to => @charity.email, :subject => _("Cause completed")
   end
 
@@ -72,6 +81,7 @@ class Mailer < ActionMailer::Base
     @cause = Cause.find(mail_data.cause_id)
     @follower = User.find(mail_data.follower_id)
 
+    set_locale @follower
     mail :to => @follower.email, :subject => _("Cause completed")
   end
 
@@ -80,6 +90,7 @@ class Mailer < ActionMailer::Base
     @follower = User.find(mail_data.follower_id)
     @new = News.find(mail_data.news_id)
 
+    set_locale @follower
     mail :to => @follower.email, :subject => _("News about the cause")
   end
 
@@ -88,6 +99,13 @@ class Mailer < ActionMailer::Base
     @follower = User.find(mail_data.follower_id)
     @new = News.find(mail_data.news_id)
 
+    set_locale @follower
     mail :to => @follower.email, :subject => _("News about the charity")
+  end
+  
+  private 
+  
+  def set_locale(user)
+    I18n.locale = user.preferred_language if Language.by_id(user.preferred_language)
   end
 end
