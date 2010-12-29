@@ -9,26 +9,21 @@ $(document).ready(function(){
 
 <% end %>
 
-<h2>
-  <%= link_to _("Transactions"), transaction_list_path %>
-  | <%= edit_transaction_title_for @transaction.type %>
-</h2>
+<%= single_block (_("Transactions | ") + (edit_transaction_title_for @transaction.type)) do %>
 
+  <%= bivo_form_for(@transaction, :as => :transaction, :url => transaction_update_path, :id => @transaction.id) do |f| %>
+    <%= render "shared/error_messages", :target => @transaction %>
 
-<%= form_for(@transaction, :as => :transaction, :url => transaction_update_path, :id => @transaction.id) do |f| %>
-  <%= render "shared/error_messages", :target => @transaction %>
+    <%= f.label :amount %>
+    <%= f.select :input_currency, @currencies, :selected => @currency %>
+    <%= f.label ' ' %>
+    <%= f.text_field :amount %>
 
-  <div class="field">
-    <%= f.label :amount %><br />
-  <%= f.select :input_currency, @currencies, :selected => @currency %></p>
-  <%= f.text_field :amount %></p>
-  </div>
+    <%= f.label :description %>
+    <%= f.text_area :description %>
 
-  <div class="field">
-    <%= f.label :description %><br />
-    <%= f.text_field :description %>
-  </div>
+    <%= f.submit :Save %> <%= f.submit :Cancel, :id => "cancel" %>
+  <% end %>
 
-  <p><%= f.submit :Save %> <%= f.submit :Cancel, :id => "cancel" %></p>
 <% end %>
 
