@@ -28,6 +28,16 @@
 	border:1px solid #7f9db9;
 }
 
+.accNewsFil{
+	width:359px;
+	height:22px;
+	padding:0 2px;
+	margin:0 0 10px 0;
+	font:normal 13px/24px Arial, Helvetica, sans-serif;
+	color:#000;
+	border:1px solid #7f9db9;
+}
+
 .leftMarginFromBorder{
 	margin:0 0 0px 20px;
 

@@ -273,7 +273,7 @@ ActiveRecord::Schema.define(:version => 20101227162127) do
     t.boolean  "notice_comment_added"
     t.boolean  "send_me_news"
     t.boolean  "auto_approve_comments"
-    t.boolean  "from_facebook",                                 :default => false
+    t.boolean  "from_facebook"
     t.boolean  "eula_accepted"
     t.string   "status"
     t.string   "picture_file_name"

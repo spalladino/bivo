@@ -5,9 +5,8 @@ class MailerTest < ActionMailer::TestCase
   test 'should deliver cause being followed email' do
     charity = Charity.make
     mail_data = {
-      :cause_id    => Cause.make,
-      :follower_id => PersonalUser.make,
-      :charity_id  => charity
+      :cause_id    => Cause.make(:charity => charity),
+      :follower_id => PersonalUser.make
     }.to_struct
 
     Mailer.cause_being_followed(mail_data).deliver

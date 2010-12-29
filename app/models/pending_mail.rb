@@ -5,7 +5,7 @@ class PendingMail < ActiveRecord::Base
 
   def set_default_values
     self.retries ||= 0
-    self.language ||= I18n.locale
+    self.language ||= I18n.locale 
   end
 
   def data
