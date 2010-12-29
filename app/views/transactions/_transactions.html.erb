@@ -1,31 +1,33 @@
 <%= will_paginate @transactions %>
 
-<div id="transactions-list">
-  <table class="classic_table">
-  <thead>
-    <tr>
-       <th><%= _("Type") %></th>
-       <th><%= _("Date") %></th>
-	     <th><%= _("Description") %></th>
-       <th><%= _("Category") %></th>
-       <th><%= _("Detail") %></th>
-       <th>&nbsp;</th>
-    </tr>
-  </thead>
-  <% for transaction in @transactions %>
-    <tr>
-       <td><%= transaction.type %></td>
-       <td><%= transaction.transaction_date %></td>
-	     <td><%= transaction.description %></td>
-       <% if transaction.type == "Income"  %>
-          <td><%= transaction.income_category.name rescue nil %></td>
-       <% else %>
-          <td><%= transaction.expense_category.name rescue nil %></td>
-       <% end  %>
-       <td><%= transaction.detail %></td>
-       <td><%= link_to _("Edit"),transaction_edit_path(transaction.id)%></td>
-    </tr>
-  <% end %>
-  </table>
+<div id="transactions-list" class="statIn">
+  <div class="statInmainBord">
+  <ul class="statInmainT">
+    <li class="statInTM genListM">&nbsp;</li>
+    <li class="statInTM genListM"><%= _("Type") %></li>
+    <li class="statInTM genListM"><%= _("Date") %></li>
+    <li class="statInTM genListM"><%= _("Description") %></li>
+    <li class="statInTM genListM"><%= _("Category") %></li>
+    <li class="statInTM genListM noBord"><%= _("Detail") %></li>
+  </ul>
+    <div class="closeTab" id="sub3">
+    <% i = 1%>
+    <% for transaction in @transactions %>     
+      <ul class="statInmainT <%= (i % 2) == 1 ? 'statInmainDark' : 'statInmainLight' %>">
+         <li class="statInTM genListM"><%= link_to _("Edit"),transaction_edit_path(transaction.id)%></li>
+         <li class="statInTM genListM"><%= transaction.type %></li>
+         <li class="statInTM genListM"><%= transaction.transaction_date %></li>
+	       <li class="statInTM genListM"><%= transaction.description %></li>
+         <% if transaction.type == "Income"  %>
+            <li class="statInTM genListM"><%= transaction.income_category.name rescue nil %></li>
+         <% else %>
+            <li class="statInTM genListM"><%= transaction.expense_category.name rescue nil %></li>
+         <% end  %>
+         <li class="statInTM genListM noBord"><%= transaction.detail %></li>
+      </ul>
+    <% i=i+1 %>
+    <% end %>
+    </div>
+  </div>
 </div>
 

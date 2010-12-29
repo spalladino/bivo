@@ -342,3 +342,8 @@ h2.login_title {
 .default_font {
   font: 14px/24px "Trebuchet MS",Arial,Helvetica,sans-serif;
 }
+
+li.plain_cell {
+  background: none;
+  border: none;
+}

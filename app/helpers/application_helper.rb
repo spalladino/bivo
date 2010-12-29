@@ -205,6 +205,14 @@ module ApplicationHelper
       end
     end
   end
+
+  def large_single_block(title, &block)
+    content_tag :div, :class => "inbodyM" do
+      content_tag :div, :class => "bodyInner" do
+        '<div class="statGrT"><h2>' + title + '</h2></div>' + '<div class="boxMain">' + content_tag(:div, &block) + '<div class="bodyBot"></div></div>'
+      end
+    end
+  end
   
   def bivo_form_for(record_or_name_or_array, *args, &proc)
     options = args.extract_options!
