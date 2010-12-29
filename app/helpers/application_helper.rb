@@ -190,7 +190,7 @@ module ApplicationHelper
   def single_block(title, &block)
     content_tag :div, :class => "inbodyM" do
       content_tag :div, :class => "bodyInSm" do
-        '<div class="GrTSm"><h2>' + title + '</h2></div>' + content_tag(:div, :class => "boxMainSm", &block)
+        '<div class="GrTSm"><h2>' + title + '</h2></div>' + '<div class="boxMainSm">' + content_tag(:div, &block) + '<div class="bodyBot"></div></div>'
       end
     end
   end

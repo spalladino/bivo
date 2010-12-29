@@ -1,6 +1,10 @@
 <% content_for(:js) do %>
 $(function(){
 	$('.watermark').updnWatermark();
+  $(window).resize();
+});
+
+$(window).resize(function(){
   $('.updnWatermark').each(function(){
     var siblingPos = $(this).next().position();
     $(this).css('top', siblingPos.top);
