@@ -176,6 +176,17 @@ module ApplicationHelper
     html.to_html.html_safe
   end
 
+  def orange_submit_tag(name, options = {}, html_options = {})
+    html = Hpricot(button_to(name, options, html_options))
+    html.search('//input[@type=submit]').wrap('<div class="buttonMainFloat"></div>')
+    html.search('//input[@type=submit]').add_class 'buttonMid accBtnMi'
+    gra = html.search('.buttonMainFloat')
+    gra.prepend('<div class="buttonSide accBtnSt"></div>')
+    gra.append('<div class="buttonSide accBtnEn"></div><br class="spacer"/>')
+
+    html.to_html.html_safe
+  end
+
   def orange_link_to(*args, &block)
     html = Hpricot(link_to(*args, &block))
     html.search('a').wrap('<div class="buttonMainFloat"></div>')

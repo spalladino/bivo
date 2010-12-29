@@ -42,11 +42,10 @@
     <%= _('Period') %>
 		<%= select_tag :period, options_for_select(@periods, @period) %>
   	<%= _('Filter by') %>
-    <%= text_field_tag :description, @description, :id => 'description_filter' %> <%= link_to_function(_('clear'), "$('#description_filter').val('').change();") if @name %>
-
+    <%= text_field_tag :description, @description, :id => 'description_filter', :class => 'accfil' %> <%= link_to_function(_('clear'), "$('#description_filter').val('').change();") if @name %>
 
     <div id="custom">
-      <br/>
+      <br class="spacer"/>
       <%= _('From') %>
       <%= select_date @from, :prefix => :custom_from, :start_year => 2000, :end_year => 2020%>
       <br/>
@@ -54,9 +53,9 @@
       <%= select_date @to, :prefix => :custom_to,:start_year => 2000, :end_year => 2020 %>
       <br/>
     </div>
+    <br class="spacer"/>
 
-
-   	<p><%= submit_tag _('Search'), :disable_with => _('Searching...') %></p>
+   	<%= orange_submit_tag _('Search'), :disable_with => _('Searching...') %><br class="spacer"/>
 	<% end %>
 </div>
 
