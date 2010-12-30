@@ -38,6 +38,7 @@ class HomeController < ApplicationController
     @causes_being_funded = Cause.causes_being_funded(@from, @to)
     @most_voted_causes = Cause.most_voted_causes(@from, @to)
     @shops_to_cloud = Shop.all
+    @fully_funded_causes = Cause.fully_funded(@from, @to).count
   end
   
   def stats

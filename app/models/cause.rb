@@ -260,6 +260,10 @@ class Cause < ActiveRecord::Base
     end
   end
 
+  def self.fully_funded(from, to)
+    Cause.where("(fully_funded_at BETWEEN ? AND ?)", from, to)    
+  end
+  
   def ensure_cause_account
     Account.cause_account self
   end
