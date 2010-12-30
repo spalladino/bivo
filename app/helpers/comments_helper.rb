@@ -16,7 +16,7 @@ module CommentsHelper
     comment = Comment.find(id)
     if rules(entity).can_delete?(current_user,entity,comment)
      form_tag({:action => "destroy",:controller => "comments", :id => id, :entity_id => entity.id, :class => entity.class}, {:remote=>true}) do
-        link_to _("Delete"), "#", :disable_with => _('Deleting...'),:class => "submit_form"
+        orange_link_to _("Delete"), "#", :disable_with => _('Deleting...'),:class => "submit_form"
       end
     end
   end
@@ -71,7 +71,7 @@ module CommentsHelper
 
   def approve_comment_button(id,entity)
     if rules(entity).can_approve?(current_user,entity,Comment.find(id))
-    return button_to(_("Approve"),{:action => "approve",:controller => "comments", :id => id, :entity_id => entity.id, :class => entity.class}, :remote => true, :method => "post")
+    return orange_button_to(_("Approve"),{:action => "approve",:controller => "comments", :id => id, :entity_id => entity.id, :class => entity.class}, :remote => true, :method => "post")
     end
   end
 end
