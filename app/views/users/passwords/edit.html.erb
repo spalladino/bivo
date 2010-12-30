@@ -1,17 +1,16 @@
-<h2>Change your password</h2>
+<%  single_block _("Change your password") do %>
 
-<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f| %>
+<%= bivo_form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f| %>
   <%= render "shared/error_messages", :target => resource %>
   <%= f.hidden_field :reset_password_token %>
 
-  <p><%= f.label :password,_("Password") %><br />
-  <%= f.password_field :password %></p>
+  <%= f.label :password,_("Password") %>
+  <%= f.password_field :password %>
 
-  <p><%= f.label :password_confirmation, ("Password Confirmation")  %><br />
-  <%= f.password_field :password_confirmation %></p>
+  <%= f.label :password_confirmation, ("Password Confirmation")  %>
+  <%= f.password_field :password_confirmation %>
 
-  <p><%= f.submit _("Change my password") %></p>
+  <%= f.submit _("Change my password") %>
 <% end %>
 
-<%= render :partial => "devise/shared/links" %>
-
+<% end %>
