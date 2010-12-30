@@ -23,7 +23,7 @@ module ActionView
    
       alias :old_number_to_currency :number_to_currency
       def number_to_currency(number, options={})
-       # TODO pending currency conversion
+       number = CurrencyExchange.instance.get_conversion_rate(number, :GBP, @current_currency.id)
        old_number_to_currency number, {:unit => @current_currency.html_symbol}.merge(options)
       end
 
