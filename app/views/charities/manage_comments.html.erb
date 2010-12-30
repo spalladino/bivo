@@ -1,21 +1,63 @@
-<div id="comments_list">
-
-  <%if @charity.has_own_comments_to_approve?%>
-  <h3><%=@charity.name%></h3>
-    <% comments_to_approve(@charity).each do |comm|%>
-      <%= render(:partial => 'comment', :locals => {:comment => comm, :entity => @charity})%>
-    <%end%>
-  <%end%>
-
-
-  <% @charity.causes.each do |cause| %>
-    <%if cause.has_own_comments_to_approve?%>
-      <h3> <%=cause.name%></h3>
-      <% comments_to_approve(cause).each do |comm|%>
-        <%= render(:partial => 'comment', :locals => {:comment => comm, :entity => cause})%>
-      <%end%>
-    <%end%>
-  <%end%>
-
-</div>
-
+<%= large_single_block _("Manage Comments") do %>
+  <% if @charity.has_own_comments_to_approve? %>
+    <div class="charity_comments">
+      <div class="cvNews">
+        <h2><%= link_to_charity @charity %></h2>
+      </div>      
+      <br class="spacer" />      
+      <table class="zebra_table">
+        <tr>
+          <th style="width:150px;"><%= _("Owner") %></th>
+          <th style="width:242px;"><%= _("Date") %></th>
+          <th style="width:355px;"><%= _("Body") %></th>
+          <th style="width:165px;" class="noBord">&nbsp;</th>
+        </tr>
+        <% comments_to_approve(@charity).each do |comment|%>
+          <tr>
+            <td><%= owner_of(comment) %></td>
+            <td><%= l comment.created_at %></td>
+            <td><%=comment.body%></td>
+            <td class="noBord">
+              <%=approve_comment_button comment.id, @charity%>
+              <%=delete_comment_button comment.id, @charity%>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  <% end %>
+  <% if @charity.has_pending_comments_in_causes %>
+      
+          <% @charity.causes.each do |cause| %>
+            <% if cause.has_own_comments_to_approve? %>
+              <div class="cause_comments">
+              <div class="cvNews">
+                <h2><%= link_to_cause cause %></h2>
+              </div>
+              <br class="spacer" />
+              <table class="zebra_table">
+                <tr>
+                  <th style="width:150px;"><%= _("Owner") %></th>
+                  <th style="width:242px;"><%= _("Date") %></th>
+                  <th style="width:355px;"><%= _("Body") %></th>
+                  <th style="width:165px;" class="noBord">&nbsp;</th>
+                </tr>
+              <% comments_to_approve(cause).each do |comment| %>
+              <tr>
+                <td><%= owner_of(comment)%></td>
+                <td><%=l comment.created_at%></td>
+                <td><%=comment.body%></td>
+                <td class="noBord">
+                  <%=approve_comment_button comment.id, cause %>
+                  <%=delete_comment_button comment.id, cause %>
+                </td>
+              </tr>
+              <% end %>
+              </table>
+              </div>
+            <% end %>
+          <% end %>
+        
+      
+  <% end %>
+<% end %>
