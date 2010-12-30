@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101227162127) do
+ActiveRecord::Schema.define(:version => 20101230184247) do
 
   create_table "account_movements", :force => true do |t|
     t.integer  "account_id"
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(:version => 20101227162127) do
     t.datetime "updated_at"
     t.integer  "votes_count",                                      :default => 0
     t.integer  "charity_id"
+    t.datetime "fully_funded_at"
   end
 
   create_table "charity_categories", :force => true do |t|
@@ -273,7 +274,7 @@ ActiveRecord::Schema.define(:version => 20101227162127) do
     t.boolean  "notice_comment_added"
     t.boolean  "send_me_news"
     t.boolean  "auto_approve_comments"
-    t.boolean  "from_facebook"
+    t.boolean  "from_facebook",                                 :default => false
     t.boolean  "eula_accepted"
     t.string   "status"
     t.string   "picture_file_name"

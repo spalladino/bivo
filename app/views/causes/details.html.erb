@@ -50,7 +50,7 @@
                 </div>
 
                 <div class="shopListBoxRi">
-                	<div class="shopListGr"><span class="cvMBoxNo"><%= number_to_currency @cause.funds_raised %></span><span class="cvMBoxTxt">raised</span></div>
+                	<div class="shopListGr"><span class="cvMBoxNo"><%= number_to_currency @cause.funds_raised, :precision => 0 %></span><span class="cvMBoxTxt">raised</span></div>
 
 
 

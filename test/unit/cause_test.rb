@@ -54,6 +54,7 @@ class CauseTest < ActiveSupport::TestCase
     cause.save
 
     assert_equal Cause.find(cause.id).status, :raising_funds
+    assert_nil cause.fully_funded_at
   end
 
   test "shouldnt change status from active to completed" do
@@ -86,10 +87,12 @@ class CauseTest < ActiveSupport::TestCase
     cause.funds_raised += 50
     cause.save!
     assert_equal :raising_funds, cause.status
+    assert_nil cause.fully_funded_at
 
     cause.funds_raised += 50
     cause.save!
     assert_equal :completed, cause.status
+    assert_not_nil cause.fully_funded_at
   end
 
   test "should get the most voted cause (the oldest one from them if there is more than one)" do

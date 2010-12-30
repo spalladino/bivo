@@ -4,7 +4,7 @@
     url_opts ||= {}
     opts = {:remote => true, \
       :disabled => disabled, \
-      :onclick => 'disableAndContinue(this,"Voting...")', \
+	  :onclick => "disableAndContinue(this,'#{escape_javascript(disable_with)}')", \
       :class => (small ? "buttonMid accBtnMi " : "buttonMidRec ")}
     opts[:disabled] = true if disabled
     btn = button_to(label, {:action => action,:id => id}.merge(url_opts), opts) 

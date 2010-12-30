@@ -33,7 +33,8 @@ module CauseHelper
         label = _("Vote")
       else
         errors = vote.errors[:cause_id]
-        label = errors
+        label = vote.already_exists ? _("Voted") : _("Vote")
+        # label = errors # displaying the errors was ugly. just diplay Vote.
         disabled = true
         visible = vote.already_exists
       end
@@ -47,7 +48,8 @@ module CauseHelper
       :visible => visible,
       :button_id =>"vote_btn_" + cause.id.to_s,
       :small => small,
-      :url_opts => {:small => small}
+      :url_opts => {:small => small},
+      :disable_with => _("Voting...")
     }
 
 end
@@ -65,11 +67,20 @@ end
       follow = Follow.find_by_cause_id_and_user_id(cause.id, current_user.id)
       label = if follow then _("Unfollow") else _("Follow") end
       action = if follow then "unfollow" else "follow" end
+      disable_with = if follow then _("Unfollowing...") else _("Following...") end
     end
 
     visible = true
 
-   render :partial => 'cause_buttons',:locals => {:action => action, :label => label, :id => cause.id, :disabled => disabled, :visible => visible,:button_id =>"follow_cause_button"}
+    render :partial => 'cause_buttons',:locals => {
+      :action => action, 
+      :label => label, 
+      :id => cause.id, 
+      :disabled => disabled, 
+      :visible => visible,
+      :button_id =>"follow_cause_button",
+      :disable_with => disable_with
+    }
 
   end
 
@@ -114,11 +125,13 @@ end
   # * In “completed” mode: Displays the funds raised.
   def progress_box(cause)
     if cause.status == :active
-      return  raw(_("Voting (%s votes).") % [cause.votes_count.to_s])
+      return raw(_("Voting (%s votes).") % %(<span id="vote_counter_#{cause.id}">#{cause.votes_count}</span>))
     elsif cause.status == :raising_funds
-      return  raw(_("Raising Funds (%s completed).") % [cause_funds_percentage_completed(cause)])
+      return raw(_("Raising Funds (%s completed).") % [cause_funds_percentage_completed(cause)])
     elsif cause.status == :completed || cause.status == :paid
-      return  raw(_("Completed (%s funds raised).") % [number_to_currency(cause.funds_raised,:precision => 0)])
+      return raw(_("Completed (%s funds raised).") % [number_to_currency(cause.funds_raised,:precision => 0)])
+    else
+      return raw(cause.status.description)
     end
   end
 
