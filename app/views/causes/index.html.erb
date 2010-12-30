@@ -43,7 +43,7 @@
           <%= select_tag :region, options_from_collection_for_select(@regions, 'id', 'name', @region), :include_blank => _('All countries'), :class => 'genChoo filterReload' %>
 
           <p class="genFilTxt"><%= _('Filter by') %></p>
-          <%= text_field_tag :name, @name, :id => 'name_filter', :class => 'genChoo' %>
+          <%= text_field_tag :name, @name, :id => 'name_filter', :class => 'genChoo inputWithBorder' %>
 
           <div style="position:relative; top: -3px; left: -18px;" class="hidden">
         		<%= orange_button submit_tag(_('Search'), :disable_with => _('Searching...'), :class => 'buttonMid accBtnMi') %>
