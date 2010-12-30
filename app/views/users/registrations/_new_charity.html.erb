@@ -4,7 +4,7 @@
   <%= f.label :charity_website, _("Charity Website") %>
   <%= f.text_field :charity_website %>
 
-  <%= f.label :short_url, _("Short Url")%>
+  <%= f.label :short_url, _("Short Url"), :for => 'short_url'%>
   <p style ="display:inline;" >
     <span>http://www.bivo.org/ng/</span>
     <%= f.inline_text_field :short_url, :id => 'short_url', :onfocus => "javascript:$('#available').html('');", :style => "width: 198px; float:none; padding-left:7px;"%> 
