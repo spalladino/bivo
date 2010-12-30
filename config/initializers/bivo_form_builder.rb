@@ -2,6 +2,11 @@
 class BivoFormBuilder < ActionView::Helpers::FormBuilder
 
   alias_method :plain_label, :label
+  alias_method :plain_text_field, :text_field
+  alias_method :plain_radio_button, :radio_button
+  alias_method :plain_check_box, :check_box
+  
+  
 
   def label(method, text = nil, options = {})
     ('<p class="accfilTxt">' + super + '</p>').html_safe
@@ -31,6 +36,10 @@ class BivoFormBuilder < ActionView::Helpers::FormBuilder
     normal_input(super)
   end
   
+  def inline_text_field(method, options = {})
+    plain_text_field(method, options.merge(:class => 'accfil'))
+  end
+  
   def text_area(method, options = {})
     normal_input(super, 'accMess')
   end
@@ -45,6 +54,10 @@ class BivoFormBuilder < ActionView::Helpers::FormBuilder
 
   def radio_button(method, options = {})
     ('<p class="accfilTxt"></p>' + super).html_safe
+  end
+  
+  def radio_button(a,method, options = {})
+    super
   end
   
   def self.orange_button_wrap(original)
