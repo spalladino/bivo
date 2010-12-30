@@ -4,9 +4,11 @@
 
     <%= f.label :email,_("Email: ") %>
 	<%= f.text_field :email,:title=>_('Email :')%>
-
-    <%= f.submit _("Send me reset password instructions") %>
-
+	
+	<div class="buttons">
+    	<%= f.submit _("Send me reset password instructions") %>
+	</div>
+	
   <% end %>
   <div class="bodyBot"></div>
 <% end %>

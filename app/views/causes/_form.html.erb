@@ -7,7 +7,7 @@
   <%= render :partial => @partial_cause_edit, :locals => { :f => f }  %>
 
   <%= f.label _('Country')%>
-  <%= collection_select('cause', 'country_id', Country.all, :id, :name) %>
+  <%= collection_select('cause', 'country_id', Country.all, :id, :name, {:include_blank => true} ,{:class =>"accChoo accfil"}) %>
   <br class="spacer" />
 
   <%= f.label _('City')%>
@@ -16,8 +16,10 @@
   <%= f.label _('Description') %>
   <%= f.text_area :description, :id => "wysiwyg", :rows=>"5", :cols=>"47"%>
 
-  <%= f.submit 'Save' %> &nbsp;
-  <%= tag 'input', {:type => 'button', :value => _('Cancel'), :onclick => "javascript:window.location = '#{root_path}';"} %>
+<div class="buttons">
+  <%= f.submit 'Save' %>
+  <%= orange_link_to  _('Cancel'), :onclick => "javascript:window.location = '#{root_path}';" %>
+</div>
 
 <% end %>
 

@@ -20,10 +20,13 @@
   <%= f.text_field :charity_website %>
 
   <%= f.label _("Short Url")%>
-  http://www.bivo.org/ng/<%= f.text_field :short_url, :id => 'short_url', :onfocus => "javascript:$('#available').html('');"%>
-  <%= tag 'input', {:type => 'button', :value => _('Check Url'), :onclick => "javascript:checkUrl();"} %>
-  &nbsp;
-  <span id="available"></span>
+  <p style ="display:inline;" >
+    <span>http://www.bivo.org/ng/</span>
+    <%= f.inline_text_field :short_url, :id => 'short_url', :onfocus => "javascript:$('#available').html('');", :style => "width: 198px; float:none; padding-left:7px;"%> 
+	<%= inline_orange_link_to _('Check Url'), "#", { :onclick => "javascript:checkUrl(); return false;"} %>
+  </p>
+  <br class="accfilTxt" />
+  <p style="font: normal normal normal 13px/24px Arial, Helvetica, sans-serif; margin-left: 175px"><span id="available"></span></p>
   <br/>
 
   <%= f.label :category, "Category" %>
@@ -36,7 +39,7 @@
   <%= f.text_field :tax_reg_number %>
   
   <%= f.label :rating, "Rating" %>
-  <%= select 'charity', 'rating', @ratings, :include_blank => true %>
+  <%= select 'charity', 'rating', @ratings, {:include_blank => true},{ :class => "accChoo accfil" }%>
   <br class="spacer" />
 
   <%= f.label :country, "Country" %>
@@ -53,7 +56,9 @@
       :is_new => true, :url_was => nil, :url_check => '/charity/check_url'
     } %>
   <%end%>
-
-  <p><%= f.submit _("Create Account") %></p>
+  
+  <div class="buttons">
+  	<%= f.submit _("Create Account") %>
+  </div>
 <% end %>
 <% end %>

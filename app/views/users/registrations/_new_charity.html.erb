@@ -1,48 +1,36 @@
-  <p class="accfilTxt"><%= f.label :charity_name, _("Charity Name") %></p>
-  <%= f.text_field :charity_name, :class =>"accfil" %>
-  <br class="spacer" />
+  <%= f.label :charity_name, _("Charity Name") %>
+  <%= f.text_field :charity_name %>
 
-  <p class="accfilTxt"><%= f.label :charity_website, _("Charity Website") %></p>
-  <%= f.text_field :charity_website, :class =>"accfil"%>
-  <br class="spacer" />
+  <%= f.label :charity_website, _("Charity Website") %>
+  <%= f.text_field :charity_website %>
 
-  <p class="accfilTxt"><%= f.label :short_url, _("Short Url")%></p>
-	<p style ="display:inline;" >
-		<span>http://www.bivo.org/ng/</span>
-		<%= f.text_field :short_url, :onfocus => "javascript:$('#available').html('');", :class =>"accfil", :style => "width: 200px; float:none; padding-left:7px;"%> 
-		<span style= "float:right; display: inline;">
-			<span class="buttonSide accBtnSt"></span>
-			<%= link_to  _("Check Url"), "#", {:onclick => "javascript:checkUrl(); return false;", :class => "buttonSide accBtnMi", :style => "width: auto;"}%>
-        	<span class="buttonSide accBtnEn"></span>
-		</span>
-  	</p>
+  <%= f.label :short_url, _("Short Url")%>
+  <p style ="display:inline;" >
+    <span>http://www.bivo.org/ng/</span>
+    <%= f.inline_text_field :short_url, :id => 'short_url', :onfocus => "javascript:$('#available').html('');", :style => "width: 198px; float:none; padding-left:7px;"%> 
+	<%= inline_orange_link_to _('Check Url'), "#", { :onclick => "javascript:checkUrl(); return false;"} %>
+  </p>
   <br class="accfilTxt" />
   <p style="font: normal normal normal 13px/24px Arial, Helvetica, sans-serif; margin-left: 175px"><span id="available"></span></p>
   <br/>
 
-  <p class="accfilTxt"><%= f.label :charity_category_id, _("Category") %></p>
-  <%= f.select :charity_category_id, @categories.collect{ |c| [c.name, c.id] }, {:include_blank => true}, :class =>"accfil accChoo" %>
-  <br class="spacer" />
+  <%= f.label :charity_category_id, _("Category") %>
+  <%= f.select :charity_category_id, @categories.collect{ |c| [c.name, c.id] }, {:include_blank => true} %>
 
-  <p class="accfilTxt"><%= f.label :charity_type, _("Charity Type") %></p>
-  <%= f.text_field :charity_type, :class =>"accfil" %>
-  <br class="spacer" />
+  <%= f.label :charity_type, _("Charity Type") %>
+  <%= f.text_field :charity_type %>
 
-  <p class="accfilTxt"><%= f.label :tax_reg_number, _("Tax Registration No.") %></p>
-  <%= f.text_field :tax_reg_number, :class =>"accfil" %>
-  <br class="spacer" />
+  <%= f.label :tax_reg_number, _("Tax Registration No.") %>
+  <%= f.text_field :tax_reg_number %>
 
-  <p class="accfilTxt"><%= f.label :country_id, _("Country") %></p>
-  <%= f.select :country_id, @countries.collect{ |c| [c.name, c.id] }, {:include_blank => true}, :class =>"accfil accChoo" %>
-  <br class="spacer" />
+  <%= f.label :country_id, _("Country") %>
+  <%= f.select :country_id, @countries.collect{ |c| [c.name, c.id] }, {:include_blank => true} %>
 
-  <p class="accfilTxt"><%= f.label :city, _("City") %></p>
-  <%= f.text_field :city, :class =>"accfil" %>
-  <br class="spacer" />
+  <%= f.label :city, _("City") %>
+  <%= f.text_field :city %>
 
-  <p class="accfilTxt"><%= f.label :description,  _("Description"), :for => "wysiwyg" %></p>
-  <%= f.text_area :description , :id => "wysiwyg", :rows=>"5", :cols=>"47", :class =>"accfil accMess"%>
-  <br class="spacer" />
+  <%= f.label :description,  _("Description"), :for => "wysiwyg" %>
+  <%= f.text_area :description , :id => "wysiwyg", :rows=>"5", :cols=>"47" %>
 
   <% content_for :js do %> <!-- javascript code to run, for this view only -->
     <%= render :partial => 'shared/check_url', :locals => {

@@ -1,20 +1,16 @@
-  <p class="accfilTxt"><%= f.label :first_name, _("First Name") %></p>
-  <%= f.text_field :first_name, :class =>"accfil" %>
-  <br class="spacer" />
+  <%= f.label :first_name, _("First Name") %>
+  <%= f.text_field :first_name%>
 
-  <p class="accfilTxt"><%= f.label :last_name, _("Last Name") %></p>
-  <%= f.text_field :last_name, :class =>"accfil" %>
-  <br class="spacer" />
+  <%= f.label :last_name, _("Last Name") %>
+  <%= f.text_field :last_name %>
 
-  <p class="accfilTxt"><%= f.label :nickname, _("Nickname (optional)") %></p>
-  <%= f.text_field :nickname, :class =>"accfil" %>
-  <br class="spacer" />
+  <%= f.label :nickname, _("Nickname (optional)") %>
+  <%= f.text_field :nickname%>
 
-  <p class="accfilTxt"><%= f.label :birthday, _("Birthday") %></p>
+  <%= f.label :birthday, _("Birthday") %>
   <%= f.date_select :birthday, {:prompt => {:day => _('Choose day'), :month => _('Choose month')}, :discard_year => true}, :class =>"accfil accChoo", :style => "width: 181px !important;" %>
-  <br class="spacer" />
+  <br class="spacer"/>
 
-  <p class="accfilTxt"><%= f.label :gender, _("Sex (optional)") %></p>
-  <%= f.select :gender, [[_("Male"),"M"], [_("Female"),"F"]], {:include_blank => true}, :class => "accfil accChoo" %>
-  <br class="spacer" />
+  <%= f.label :gender, _("Sex (optional)") %>
+  <%= f.select :gender, [[_("Male"),"M"], [_("Female"),"F"]], {:include_blank => true}%>
 

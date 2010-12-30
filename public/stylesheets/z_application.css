@@ -335,8 +335,16 @@ h2.login_title {
     margin: 0 0 28px;
 }
 
+div.buttons {
+	margin-left: 371px;
+	margin-top:40px;
+}
+
 .buttonMainACC {
-  margin-left: 381px;
+  margin-left: 0px;
+  float:left;
+  margin-top:0px; 
+  margin-right:10px;
 }
 
 .default_font {

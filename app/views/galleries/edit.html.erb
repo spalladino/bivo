@@ -19,7 +19,9 @@ t = link_to_cause @entity if @entity.class == Cause
 	<%= f.label :image %>
     <%= f.file_field :image %></p>
     <%= f.hidden_field :gallery_id, :value => @gallery.id %>
-   	<%= f.submit _('Submit Photo'), :disable_with => _('Submitting...') %>
+	<div class="buttons">
+   		<%= f.submit _('Submit Photo'), :disable_with => _('Submitting...') %>
+	</div>
 <% end %>
 </div></div>
 <br/>
@@ -33,7 +35,10 @@ t = link_to_cause @entity if @entity.class == Cause
 		<%= raw(_('Paste any %s or %s video url') % [link_to('Youtube', 'http://www.youtube.com', :target => :_blank),link_to('Vimeo', 'http://www.vimeo.com', :target => :_blank)])%>
 	</p>
     <%= f.hidden_field :gallery_id, :value => @gallery.id %>
-   	<%= f.submit _('Submit Video'), :disable_with => _('Submitting...') %>
+
+	<div class="buttons">
+   		<%= f.submit _('Submit Video'), :disable_with => _('Submitting...') %>
+	</div>
 <% end %>
 </div></div>
 
