@@ -19,7 +19,7 @@ $(document).ready(function(){
   $('#transaction_income_category_id').change(function() {
     var selectedCategory = $('#transaction_income_category_id :selected').text();
     if (selectedCategory == "shop") {
-      $("#shop").css("display", "block");
+      $("#shop").css("display", "inline");
     } else {
       $("#shop").css("display", "none");
     }
@@ -28,11 +28,11 @@ $(document).ready(function(){
   $('#transaction_type').change(function() {
     var selectedCategory = $('#transaction_type :selected').text();
     if (selectedCategory == "Income") {
-      $("#income_fields").css("display", "block");
+      $("#income_fields").css("display", "inline");
       $("#expense_fields").css("display", "none");
     } else if (selectedCategory == "Expense") {
       $("#income_fields").css("display", "none");
-      $("#expense_fields").css("display", "block");
+      $("#expense_fields").css("display", "inline");
     } else {
       $("#income_fields").css("display", "none");
       $("#expense_fields").css("display", "none");
