@@ -33,7 +33,8 @@ module CauseHelper
         label = _("Vote")
       else
         errors = vote.errors[:cause_id]
-        label = errors
+        label = _("Vote")
+        # label = errors. displaying the errors was ugly. just diplay Vote.
         disabled = true
         visible = vote.already_exists
       end
@@ -114,11 +115,13 @@ end
   # * In “completed” mode: Displays the funds raised.
   def progress_box(cause)
     if cause.status == :active
-      return  raw(_("Voting (%s votes).") % [cause.votes_count.to_s])
+      return raw(_("Voting (%s votes).") % [cause.votes_count.to_s])
     elsif cause.status == :raising_funds
-      return  raw(_("Raising Funds (%s completed).") % [cause_funds_percentage_completed(cause)])
+      return raw(_("Raising Funds (%s completed).") % [cause_funds_percentage_completed(cause)])
     elsif cause.status == :completed || cause.status == :paid
-      return  raw(_("Completed (%s funds raised).") % [number_to_currency(cause.funds_raised,:precision => 0)])
+      return raw(_("Completed (%s funds raised).") % [number_to_currency(cause.funds_raised,:precision => 0)])
+    else
+      return raw(cause.status.description)
     end
   end
 

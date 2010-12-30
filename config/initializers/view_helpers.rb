@@ -18,14 +18,22 @@ module ActionView
 end
 
 module ActionView
- module Helpers
-   module NumberHelper
+  module Helpers
+    module NumberHelper
    
-     alias :old_number_to_currency :number_to_currency
-     def number_to_currency(number, options={})
+      alias :old_number_to_currency :number_to_currency
+      def number_to_currency(number, options={})
+       # TODO pending currency conversion
        old_number_to_currency number, {:unit => @current_currency.html_symbol}.merge(options)
-     end
-   
-   end
- end
+      end
+
+    end
+    
+    module AssetTagHelper
+      alias :old_image_tag :image_tag
+      def image_tag(source, options = {}) 
+        old_image_tag source || 'blank.gif', options
+      end
+    end
+  end
 end
