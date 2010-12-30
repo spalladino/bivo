@@ -272,6 +272,7 @@ class Cause < ActiveRecord::Base
     if self.funds_raised_changed? && self.status == :raising_funds
       if self.funds_raised >= self.funds_needed
         self.status = :completed
+        self.fully_funded_at = Time.now.utc
       end
     end
   end
