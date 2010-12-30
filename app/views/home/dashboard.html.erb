@@ -41,7 +41,7 @@
                     <% @causes_being_funded.each do |cause| %>
                     	<div class="boxHu">
                         	<h3><%= cause.cause_category.name %></h3>
-                           <p class="boxHuTxt"><%= cause.name %></p>
+                           <p class="boxHuTxt"><%= link_to_cause cause %></p>
                            <div class="loadMain">
                              <img src="images/loader.jpg" width="138" height="20" alt="" class="load" /><p class="loadTxt"><%= cause.funds_raised_in_period.to_i/cause.funds_needed*100 %>% of <%= cause.funds_needed %></p>
                            </div>
@@ -62,7 +62,7 @@
                   <% @most_voted_causes.each do |cause| %>
                       <div class="boxHu">
                         	<h3><%=cause.cause_category.name%></h3>
-                            <p class="boxHuTxt boxHuTxt2"><%=cause.name%></p>
+                            <p class="boxHuTxt boxHuTxt2"><%= link_to_cause cause %></p>
 
                             <p class="ghanaTxt"><%=cause.funds_needed%></p>
                             <p class="ghanaTxt2"><%=_("to be raised")%></p>

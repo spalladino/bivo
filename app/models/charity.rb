@@ -191,6 +191,10 @@ class Charity < User
     first_gallery_photo.try(:comments_avatar_url)
   end
     
+  def has_pending_comments_in_causes
+    causes.any? { |c| c.has_own_comments_to_approve? }
+  end  
+
   private
 
   def check_presence_of_protocol_in_website

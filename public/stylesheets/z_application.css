@@ -355,3 +355,23 @@ li.plain_cell {
   background: none;
   border: none;
 }
+
+.chriCABox{
+	height:265px !important;
+}
+
+.buttonNews {
+    padding:10px 16px 0px 16px;
+}
+
+.tableNews {
+    padding:0px 0px 0px 16px;
+}
+
+.charity_comments a:hover, .cause_comments a:hover {
+    text-decoration:none;
+}
+
+.charity_comments .cvNews, .cause_comments .cvNews {
+    width:912px;
+}

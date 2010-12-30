@@ -15,6 +15,19 @@ class HomeControllerTest < ActionController::TestCase
   test "should get dashboard" do
     get :dashboard
     assert_response :success
+    
+    assert_equal 0, assigns(:fully_funded_causes)
+  end
+  
+  test "should count fully funded causes in period" do
+    Cause.make :status => :completed, :fully_funded_at => 1.year.ago
+    Cause.make :status => :completed, :fully_funded_at => 1.week.ago
+    Cause.make :status => :completed, :fully_funded_at => 1.day.ago
+
+    get :dashboard
+    assert_response :success
+        
+    assert_equal 2, assigns(:fully_funded_causes)
   end
   
   test "should use browser language if not language setted before" do

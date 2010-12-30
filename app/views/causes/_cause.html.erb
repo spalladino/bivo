@@ -1,7 +1,7 @@
 <div class="chariIn <%= 'noBg' if nobg rescue nil %>">
   <div class="chariLpic">
     <a href="#">
-      <%= image_tag big_avatar(cause) || "causPic.jpg", :width => 150, :height => 110 %>
+      <%= image_tag big_avatar(cause), :width => 150, :height => 110 %>
     </a>
   </div>
 
@@ -18,7 +18,7 @@
     	<strong><%= link_to_charity cause.charity %></strong>
     	<br class="spacer" />
     	<p class="orgaTxt"><%= _("Funds needed")%> :</p>
-    	<strong><%= link_to cause.funds_needed, cause_details_path(cause.url) %></strong>
+    	<strong><%= number_to_currency cause.funds_needed, :precision => 0 %></strong>
     	<br class="spacer" />
     </div>
       	
@@ -36,14 +36,18 @@
 		      <span class="statInBoxTxt chariRiBoxTxt"><%=_('votes')%></span>
 	      <% when :raising_funds%>
 	        <span class="statInBoxNo chariRiBoxNo">
-	          <%= "#{number_to_currency cause.funds_raised, :precision => 0}" %>
-          </span>
-		      <span class="statInBoxTxt chariRiBoxTxt">
+	          <%= number_to_currency cause.funds_raised, :precision => 0 %>
+          	</span>
+		    <span class="statInBoxTxt chariRiBoxTxt">
 		        <%= "#{cause_funds_percentage_completed cause} #{_('raised')}" %>
 	        </span>
 	      <% when :completed%>
-	        <span class="statInBoxNo chariRiBoxNo"><%= "#{number_to_currency cause.funds_raised}"%></span>
-		      <span class="statInBoxTxt chariRiBoxTxt"><%=_('raised')%></span>
+	        <span class="statInBoxNo chariRiBoxNo">
+			  <%= number_to_currency cause.funds_raised, :precision => 0 %>
+		    </span>
+		    <span class="statInBoxTxt chariRiBoxTxt">
+				<%=_('raised')%>
+			</span>
       <% end %>
     </div>
     
