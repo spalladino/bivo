@@ -18,7 +18,7 @@
     	<strong><%= link_to_charity cause.charity %></strong>
     	<br class="spacer" />
     	<p class="orgaTxt"><%= _("Funds needed")%> :</p>
-    	<strong><%= link_to cause.funds_needed, cause_details_path(cause.url) %></strong>
+    	<strong><%= number_to_currency cause.funds_needed, :precision => 0 %></strong>
     	<br class="spacer" />
     </div>
       	
