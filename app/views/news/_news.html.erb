@@ -16,22 +16,24 @@
 
 <% end %>
 <div class="cvNews"><h2><%=_("News")%></h2></div>
-<br />
-<%=add_news_button newsable%>
-<br />
-<%= form_for [newsable, News.new],:html=>{:class => 'nodisplay', :id => 'news_form'},:remote=>true do |f| %>
-  <p><%= f.text_area :body, :class => 'accNewsFil accMess' %></p>
-  <div class="actions">
-    <div><%=submit_news_button%></div>
-    <div style="margin-left:20px;"><%=cancel_news_add_button%></div>
-  </div>
-  <br /> <br />
-<% end %>
 <div class="cvNewsBox">
-	<div class="cvNewsBoxIn cvNewsBoxIn2 flexcroll" id="news">
-  <% for news in all_news %>
-    <%=render :partial=>'news/news_row',:locals => {:news => news, :newsable => newsable}%>
-  <% end %>
+  <div class="cvNewsBoxIn cvNewsBox2 flexcroll">
+    <div class="buttonNews"><%=add_news_button newsable%></div>
+    <div class="tableNews">
+      <%= form_for [newsable, News.new],:html=>{:class => 'nodisplay', :id => 'news_form'},:remote=>true do |f| %>
+        <p><%= f.text_area :body, :class => 'accNewsFil accMess' %></p>
+        <div class="actions">
+          <div><%=submit_news_button%></div>
+          <div style="margin-left:20px;"><%=cancel_news_add_button%></div>
+        </div>
+        <br /> <br />
+      <% end %>
+    </div>
+	  <div id="news">
+    <% for news in all_news %>
+      <%=render :partial=>'news/news_row',:locals => {:news => news, :newsable => newsable}%>
+    <% end %>
+    </div>
   </div>
 </div>
 

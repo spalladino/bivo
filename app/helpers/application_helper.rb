@@ -197,6 +197,20 @@ module ApplicationHelper
 
     html.to_html.html_safe
   end
+  
+  def inline_orange_link_to(*args, &block)
+    html = Hpricot(link_to(*args, &block))
+    html.search('a').wrap('<span class="buttonMainFloat"></span>')
+    html.search('a').add_class 'buttonSide accBtnMi' 
+    html.search('a').set "style", "width: auto;"
+    gra = html.search('.buttonMainFloat')
+    gra.prepend('<span class="buttonSide accBtnSt"></span>')
+    gra.append('<span class="buttonSide accBtnEn"></span>')
+    
+    gra.wrap('<span style= "float:right; display: inline;"></span>')
+
+    html.to_html.html_safe
+  end
 
   def single_block(title, &block)
     content_tag :div, :class => "inbodyM" do

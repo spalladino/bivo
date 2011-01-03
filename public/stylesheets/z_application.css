@@ -344,8 +344,16 @@ h2.login_title {
     margin: 0 0 28px;
 }
 
+div.buttons {
+	margin-left: 371px;
+	margin-top:40px;
+}
+
 .buttonMainACC {
-  margin-left: 381px;
+  margin-left: 0px;
+  float:left;
+  margin-top:0px; 
+  margin-right:10px;
 }
 
 .default_font {
@@ -355,4 +363,24 @@ h2.login_title {
 li.plain_cell {
   background: none;
   border: none;
+}
+
+.chriCABox{
+	height:265px !important;
+}
+
+.buttonNews {
+    padding:10px 16px 0px 16px;
+}
+
+.tableNews {
+    padding:0px 0px 0px 16px;
+}
+
+.charity_comments a:hover, .cause_comments a:hover {
+    text-decoration:none;
+}
+
+.charity_comments .cvNews, .cause_comments .cvNews {
+    width:912px;
 }

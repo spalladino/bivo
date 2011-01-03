@@ -40,7 +40,7 @@
 
                         <strong><%=_('Founds Needed: ')%></strong><p><%=number_to_currency(@cause.funds_needed,:precision => 0)%> </p><br class="spacer" />
                         <strong><%=_('Location: ')%></strong><p><%= @cause.city %>, <%= Country.find(@cause.country_id).name%></p><br class="spacer" />
-                        <strong><%=_('Landing page: ')%></strong><p><%= link_to(url_for(url_cause(@cause).merge({ :only_path => false })), url_cause(@cause)) %></p><br class="spacer" />
+                        <strong><%=_('Home page: ')%></strong><p><%= link_to(url_for(url_cause(@cause).merge({ :only_path => false })), url_cause(@cause)) %></p><br class="spacer" />
 
                     </div>
 
