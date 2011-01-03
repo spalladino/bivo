@@ -77,7 +77,7 @@ class ApplicationController < ActionController::Base
   def get_period_from(period,date)
       case period
         when :this_month   then date.beginning_of_month
-      when :last_month   then date.prev_month.beginning_of_month
+        when :last_month   then date.prev_month.beginning_of_month
         when :this_year    then date.beginning_of_year
         when :last_year    then date.prev_year.beginning_of_year
         when :this_quarter then date.beginning_of_quarter

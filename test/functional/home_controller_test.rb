@@ -21,8 +21,8 @@ class HomeControllerTest < ActionController::TestCase
   
   test "should count fully funded causes in period" do
     Cause.make :status => :completed, :fully_funded_at => 1.year.ago
-    Cause.make :status => :completed, :fully_funded_at => 1.week.ago
-    Cause.make :status => :completed, :fully_funded_at => 1.day.ago
+    Cause.make :status => :completed, :fully_funded_at => Time.now.utc
+    Cause.make :status => :completed, :fully_funded_at => Time.now.utc
 
     get :dashboard
     assert_response :success
