@@ -4,10 +4,13 @@
    <li class="closed">
 <%end%>
 
-  <a href="javascript:filterByCategory(<%=category.id%>)"><%=category.name%></a>
-  <%if @category && (@category == category)%>
-    *
-  <%end%>
+  <%if category.children.empty?%>
+    <%= image_tag "list.gif", :class => "tree_leaf" %>
+  <% end %>
+
+  <% bold = @category && (@category == category) ? 'class=fbold' : '' %>
+
+  <a href="javascript:filterByCategory(<%=category.id%>)" <%= bold %>><%=category.name%></a>
 
   <%if !category.children.empty?%>
     <ul>

@@ -1,9 +1,9 @@
-<%= styled_will_paginate @charities %>
+<%= styled_will_paginate @charities, :class => 'pegi charities' %>
 
 <div id="charities-list">
 <% for charity in @charities %>
   <div class="chariIn">
-    <div class="chariLpic"><a href="#"><%=image_tag big_avatar(charity) %></a></div> <!-- TODO: deshardcodear foto-->
+    <div class="chariLpic"><a href="#"><%=image_tag big_avatar(charity) %></a></div>
     <div class="chariMid">
       <h3><%= link_to charity.name, charity_path(charity.id) %></h3>
       <div class="chariLoca">
