@@ -1,4 +1,5 @@
-$('#<%="row_"+@comment.id.to_s%>').append("<b> <%= _('Approved')%> </b>");
 $('#<%="approve_button_"+@comment.id.to_s%>').hide();
+$('#<%="buttons_field_"+@comment.id.to_s%>').html("<b> <%= _('Approved')%> </b>");
+
 <%= render(:partial => 'shared/notifications.js') %>
 
