@@ -180,6 +180,19 @@ form.inline {
   width: 200px;
 }
 
+.pegi.shops {
+  width: 125px;
+}
+
+.pegi.charities {
+  width: 110px;
+}
+
+.pegi.charities a, .pegi.charities span{
+  top: -31px;
+  right: 15px;
+}
+
 .inputWithBorder {
   border: 1px solid #7F9DB9;
 }
@@ -374,4 +387,34 @@ li.plain_cell {
 
 .charity_comments .cvNews, .cause_comments .cvNews {
     width:912px;
+}
+
+.treeview {
+  margin: 0 0 0 10px;
+}
+
+.treeview li {
+  background: 0 none;
+  padding: 0px 0px 15px 22px;
+}
+
+.treeview div.hitarea {
+  background: url(../images/closed.gif) no-repeat;
+  position: relative;
+  margin-top: 2px;
+  padding-right:10px;
+}
+
+.treeview div.collapsable-hitarea {
+  background: url(../images/open.gif) no-repeat;
+}
+
+.tree_leaf {
+  margin-left: -16px;
+  width: 16px;
+  padding-right: 6px;
+}
+
+.fbold {
+  font-weight: bold;
 }

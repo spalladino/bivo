@@ -25,7 +25,7 @@
             
 	   	  		<div class="gnFilMain">
 	            	<h3 class="shopRinHead searInHead">
-                  <%= n_("%{count} result found", "%{count} results found", @count) % {:count => @count} %>
+                  <%= n_("%{count} Result Found", "%{count} Results Found", @count) % {:count => @count} %>
                 </h3>
 	            	<p class="genFilTxt"><%= label_tag :sorting, _('Sort by')%></p>
                   <%= select_tag :sorting, options_for_select(@sortings, @sorting), :onchange =>"$('#filter_form').submit()", :class => "genChoo" %>
