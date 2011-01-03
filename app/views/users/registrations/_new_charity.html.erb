@@ -6,8 +6,8 @@
 
   <%= f.label :short_url, _("Short Url"), :for => 'short_url'%>
   <p style ="display:inline;" >
-    <span>http://www.bivo.org/ng/</span>
-    <%= f.inline_text_field :short_url, :id => 'short_url', :onfocus => "javascript:$('#available').html('');", :style => "width: 198px; float:none; padding-left:7px;"%> 
+    <span><%= charity_short_url_prefix %></span>
+    <%= f.inline_text_field :short_url, :id => 'short_url', :onfocus => "javascript:$('#available').html('');", :style => "width: 158px; float:none; padding-left:7px;"%> 
 	<%= inline_orange_link_to _('Check Url'), "#", { :onclick => "javascript:checkUrl(); return false;"} %>
   </p>
   <br class="accfilTxt" />

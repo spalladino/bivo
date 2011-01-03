@@ -3,7 +3,7 @@
 
 <%= f.label :short_url, _("Short Url"), :for => 'short_url' %>
   <p style ="display:inline;" >
-    <span>http://www.bivo.org/cause/</span>
+    <span><%= cause_short_url_prefix %></span>
     <%= f.inline_text_field :url, :id => 'short_url', :onfocus => "javascript:$('#available').html('');", :style => "width: 178px; float:none; padding-left:7px;"%> 
 	<%= inline_orange_link_to _('Check Url'), "#", { :onclick => "javascript:checkUrl(); return false;"} %>
   </p>
