@@ -19,29 +19,25 @@
 	<div class="bodyInSm">
     	<div class="GrTSm"><h2><%= _("Create Account") %></h2></div>
         <div class="boxMainSm">
-			<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+			<%= bivo_form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
 				<%= render "shared/error_messages", :target => resource %>
         		<p class="accfilTxt">Account Type</p>
-				<%= f.radio_button :type, _("PersonalUser"), :id => "user_type_personaluser", :class => "radio", :checked => true %>
-				<p class = "accfilTxt radTxt" ><%= f.label :personal, _("Personal"), :for => "user_type_personaluser" %></p>
-				<%= f.radio_button :type, _("Charity"), :id => "user_type_charity", :class => "radio" %>
-				<p class = "accfilTxt radTxt" ><%= f.label :charity, _("Charity"), :for => "user_type_charity", :class => "accfilTxt radTxt"  %></p>
+				<%= f.plain_radio_button :type, _("PersonalUser"), :id => "user_type_personaluser", :class => "radio", :checked => true %>
+				<p class = "accfilTxt radTxt" ><%= f.plain_label :personal, _("Personal"), :for => "user_type_personaluser" %></p>
+				<%= f.plain_radio_button :type, _("Charity"), :id => "user_type_charity", :class => "radio" %>
+				<p class = "accfilTxt radTxt" ><%= f.plain_label :charity, _("Charity"), :for => "user_type_charity", :class => "accfilTxt radTxt"  %></p>
 				<br class="spacer" />
 
 
   
-  				<p class="accfilTxt"><%= f.label :email, _("Email") %></p>
-				<%= f.text_field :email, :class => "accfil" %>
-				<br class="spacer" />
+  				<%= f.label :email, _("Email") %>
+				<%= f.text_field :email %>
 				
-				<p class="accfilTxt"><%= f.label :password, _("Password") %></p>
-				<%= f.password_field :password, :class => "accfil" %>
-				<br class="spacer" />
+				<%= f.label :password, _("Password") %>
+				<%= f.password_field :password %>
 
-				<p class="accfilTxt"><%= f.label :password_confirmation,_("Password Confirmation") %></p>
-				<%= f.password_field :password_confirmation, :class => "accfil" %>
-				<br class="spacer" />
-				
+				<%= f.label :password_confirmation,_("Password Confirmation") %>
+				<%= f.password_field :password_confirmation %>				
 
 				<div id="charity_form" style="<%= get_display_of :Charity, @user %>">
 					<%= render :partial => 'users/registrations/new_charity', :locals => {:countries => @countries, :categories => @categories, :f => f} %>
@@ -55,11 +51,11 @@
 				<div class="captuaR" style="margin-left: 175px;">
 			    	<div class="ChkTxtM">
 						<br class="spacer" />
-						<%= f.check_box :eula_accepted, :class => "Chk"%>
-						<p class="ChkTxt"><%= f.label :eula_accepted, _("I accept the ") %><%= link_to _("terms & conditions"), eula_path, :target => :_new %></p>
+						<%= f.plain_check_box :eula_accepted, :class => "Chk"%>
+						<p class="ChkTxt"><%= f.plain_label :eula_accepted, _("I accept the ") %><%= link_to _("terms & conditions"), eula_path, :target => :_new %></p>
 						<br class="spacer" />
-						<%= f.check_box :send_me_news, :class => "Chk" %>
-						<p class="ChkTxt"><%= f.label :send_me_news, _("Sign me up to the newsletter") %></p>
+						<%= f.plain_check_box :send_me_news, :class => "Chk" %>
+						<p class="ChkTxt"><%= f.rhs_label :send_me_news, _("Sign me up to the newsletter") %></p>
 						<br class="spacer" />
 					</div>					
 				</div>
@@ -69,15 +65,10 @@
 				<br class="spacer" />
 				<br class="spacer" />
 				
-				
-				<div class="buttonMainACC">
-					<div class="buttonSide accBtnSt"></div>
-					<%= f.submit _("Create Account"), :class => "buttonMid accBtnMi", :id => "account" %>
-	                <div class="buttonSide accBtnEn"></div>
-					<br class="spacer" />
-	           </div>
+				<div class="buttons">
+					<%= f.submit _("Create Account"), :id => "account" %>
+	            </div>  
 
-				<p></p>
 			<% end %>
 
  		</div>

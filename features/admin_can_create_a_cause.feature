@@ -16,7 +16,9 @@ Feature: Admin can create a cause navigating throught the charity
 		When I click on add cause
 			And I fill in "cause[name]" with "cause 202"
 			And I fill in "cause[url]" with "cause202"
+			And I select "Human Aid" from "cause[cause_category_id]"
 			And I fill in "cause[funds_needed]" with "500"
+			And I select "Argentina" from "cause[country_id]"
 			And I fill in "cause[city]" with "Somewhere"
 			And I fill in "cause[description]" with "lorem ipsum dolor sit amet"
 			And I press "Save"

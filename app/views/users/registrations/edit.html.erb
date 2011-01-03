@@ -43,7 +43,7 @@
       <%= f.label :description, _("Description") %>
       <%= f.text_area :description %>
 
-		  <%= f.label _("Landing page") %>
+		  <%= f.label _("Home page") %>
 		  <%= link_to(url_for(url_charity(@resource).merge({ :only_path => false })), url_charity(@resource)) %>
       <br class="spacer"/>
 
@@ -83,7 +83,10 @@
     <%= f.check_box :send_me_news %>
     <%= f.rhs_label :send_me_news, _("Send me bivo.org news") %>
 
-    <%= f.submit _("Update") %>
+	<div class="buttons">
+    	<%= f.submit _("Update") %>
+	</div>
+	
   <% end %>
   <div class="bodyBot"></div>
 <% end %>
