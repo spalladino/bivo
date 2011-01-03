@@ -39,7 +39,6 @@ class ShopsController < ApplicationController
     # Set pagination
     @per_page = (params[:per_page] || 20).to_i
 
-    #TODO: Count shouldn't be filtered by category as well?
     @count = if admin_is_logged_in then @shops.count else @shops.where('shops.status != ?',:inactive).count end
 
     @shops = @shops.paginate(:per_page => @per_page, :page => params[:page])

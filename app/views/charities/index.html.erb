@@ -44,7 +44,6 @@
 				  <%= select_tag :region, options_from_collection_for_select(@regions, 'id', 'name', @region), {:include_blank => _('All countries'), :class => 'genChoo filter'}%>
 				  <p class="genFilTxt"><%= _('Filter by') %></p>
 				  <%= text_field_tag :name, @name, :id => 'name_filter', :class => "genChoo inputWithBorder" %> <%= link_to_function(_('clear'), "$('#name_filter').val('').change();") if (@name && @name != "") %>
-          <!-- PUT PAGE SELECTOR HERE-->
         </div><!-- /gnFilMain -->
         <div id="charities">
           <%= render 'charities' %>

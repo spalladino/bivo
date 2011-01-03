@@ -2,29 +2,67 @@
 	<%= javascript_include_tag "pagination" %>
 <% end %>
 
-<% title "Shops" %>
+<% content_for(:js) do %>
+  $(function(){
+    $("#tree").treeview({
+				collapsed: true,
+				animated: "fast",
+			  persist: "location"
+     });
+  });
 
-<% if current_user and current_user.is_admin_user%>
-  <%= link_to "New Shop", new_shop_path%> <br /> <br />
+  function filterByCategory(id){
+    $('#category_field').attr('value',id);
+    $('#filter_form').submit();
+  }
+
+	$(function() {
+		$('.filter').change(function() {
+			$('#filter_form').submit();
+		});
+  });
 <% end %>
 
+<div class="inbodyM">
+  <div class="bodyInner">
+    <%= form_tag shops_path, :method => :get, :id => "filter_form" do %>
+      <%= hidden_field_tag('category_field', @category.try(:id)) %>
+      <div class="bodyInL">
+        <div class="bodyInLTop"></div>
+        <div class="bodyInLmid">
+	        <div class="shopList">
+            <h2><%=_("Categories")%></h2>
+            <div id="sidetree">              
+              <ul id="tree">
+              <li><%= image_tag "list.gif", :class => "tree_leaf" %><a href="javascript:filterByCategory('')"><%=_("All categories")%></a></li>
+                <%= render 'show_categories' %>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="bodyInLbot"></div>
+      </div>
 
-<%=_("Shops count")%> <%=@count%>
-<div id="filters">
-	<%= form_tag shops_path, :method => :get, :id => "filter_form" do %>
-				<%= _("Show per page")%>
-        <%= hidden_field_tag('category_field', @category.try(:id)) %>
-				<%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page)%>
-		<p>
-			<%= submit_tag _('Search'), :disable_with => _('Searching...') %>
-		</p>
-	<% end %>
-</div>
-
-
-<h2>Shops</h2>
-
-<div id="shops">
-  <%= render 'shops' %>
+      <div class="bodyInR">
+      	<h2><%=_("Shop List")%></h2>
+      	<div class="boxMainShoplist">
+          <% if current_user and current_user.is_admin_user%>
+            <%= orange_link_to "New Shop", new_shop_path%><br class="spacer">
+          <% end %>
+          <div class="gnFilMain">
+            <h3 class="shopRinHead"><%= n_("%{count} Result Found", "%{count} Results Found", @count) % {:count => @count} %></h3>
+          </div>
+          <div id="shops">
+            <%= render 'shops' %>
+          </div>
+          <div class="rgtFilmarg">
+            <%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page), :class => 'showChoo filter'%>
+            <p class="showTxt"><%= _("Show per page")%></p><br class="spacer" />
+          </div>                 
+        </div>
+      </div> 
+    <% end %>   
+  </div>
+	<div class="bodyBot"></div>
 </div>
 
