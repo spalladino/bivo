@@ -285,7 +285,7 @@ class RegistrationsControllerTest < ActionController::TestCase
 
     assert_not_nil assigns(:resource)
     assert_equal assigns(:resource), charity
-    assert_select 'select#charity_rating'
+    assert_select 'select#user_rating'
     assert_response :ok
   end
 
