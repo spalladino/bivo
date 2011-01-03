@@ -2,6 +2,8 @@ require 'money'
 require 'money/bank/google_currency'
 
 class HomeController < ApplicationController
+  MIN_FONT_TAG_CLOUD = 15  
+  MAX_FONT_TAG_CLOUD = 40  
   skip_before_filter :set_gettext_locale, :only => [:change_language]
   skip_before_filter :check_eula_accepted, :only => [:accept_eula, :confirm_eula]
 
@@ -39,6 +41,7 @@ class HomeController < ApplicationController
     @most_voted_causes = Cause.most_voted_causes(@from, @to)
     @shops_to_cloud = Shop.all
     @fully_funded_causes = Cause.fully_funded(@from, @to).count
+    @shops_to_cloud = get_shops_with_font_calculation @shops_to_cloud, @from, @to
   end
   
   def stats
@@ -143,6 +146,32 @@ class HomeController < ApplicationController
     @from = get_period_from(@period.to_sym, Date.today)
     @to = get_period_to(@period.to_sym, Date.today)
   end
-  
+
+  def get_shops_with_font_calculation(shops_to_cloud, from, to)
+    shops_to_cloud.each do |shop| 
+      shop.define_accessor :incomes_sum, shop.incomes_in_period(from, to)
+    end
+    
+    shops_to_cloud = shops_to_cloud.select { |shop| shop.incomes_sum.round.to_i > 0 }
+    # calculation to map minimum and maximum incomes to the minimum and maximum fonts in shop cloud.
+    period_incomes = shops_to_cloud.map { |shop| shop.incomes_sum }    
+    min_found = period_incomes.min
+    max_found = period_incomes.max
+    min_font = MIN_FONT_TAG_CLOUD.to_d
+    max_font = MAX_FONT_TAG_CLOUD.to_d
+
+    pend = ((max_font - min_font) / (max_found - min_found))
+    offset = max_font - (pend * max_found)
+
+    shops_to_cloud.each do |shop|
+      if (min_found == max_found)
+        shop.define_accessor :font_size, (min_found + max_found) / 2.0
+      else
+        shop.define_accessor :font_size, ((pend * shop.incomes_sum) + offset).round
+      end
+    end
+
+    shops_to_cloud
+  end
 end
 
