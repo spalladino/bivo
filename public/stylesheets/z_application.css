@@ -180,6 +180,15 @@ form.inline {
   width: 200px;
 }
 
+.pegi.charities {
+  width: 110px;
+}
+
+.pegi.charities a, .pegi.charities span{
+  top: -31px;
+  right: 15px;
+}
+
 .inputWithBorder {
   border: 1px solid #7F9DB9;
 }
