@@ -24,9 +24,7 @@
                     <div class="cloud">
 
   <% @shops_to_cloud.each do |shop| %>
-    <%var = shop.incomes_in_period_rank @from, @to%>
-    <%= link_to(shop.display_name, shop_path(shop.id),:class => var) %>
-
+    <%= link_to(shop.display_name, shop_path(shop.id), :style => "font-size:#{shop.font_size}px;") %>
   <% end %>
            <br class="spacer" />
 
