@@ -1,5 +1,9 @@
 module ApplicationHelper
 
+  def cause_funds_completed(cause)
+    "#{cause.funds_raised} (#{cause_funds_percentage_completed(cause)} #{_('complete')})"
+  end
+
   # Wraps the js code within a document ready initializer
   def on_document_ready(&block)
     "$(function() { #{block.call} });".html_safe

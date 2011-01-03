@@ -4,10 +4,6 @@ module CauseHelper
     number_to_percentage cause.funds_raised/cause.funds_needed*100, :precision => 0
   end
 
-  def cause_funds_completed(cause)
-    "#{cause.funds_raised} (#{cause_funds_percentage_completed(cause)} #{_('complete')})"
-  end
-
   def cause_voted(cause)
     return current_user && !!Vote.find_by_cause_id_and_user_id(cause.id, current_user.id)
   end
