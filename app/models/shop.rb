@@ -95,7 +95,7 @@ class Shop < ActiveRecord::Base
 
   #TODO: Validate widget fields
   def incomes_in_period(from, to)
-    return Income.where('shop_id = ? and transaction_date BETWEEN ? AND ?',self.id,from,to).sum('amount')
+    Income.where('shop_id = ? and transaction_date BETWEEN ? AND ?',self.id,from,to).sum('amount')
   end
 
   def incomes_in_period_rank(from,to)
