@@ -39,9 +39,8 @@ class HomeController < ApplicationController
     @transactions = Income.transactions_count(@from, @to)
     @causes_being_funded = Cause.causes_being_funded(@from, @to)
     @most_voted_causes = Cause.most_voted_causes(@from, @to)
-    @shops_to_cloud = Shop.all
     @fully_funded_causes = Cause.fully_funded(@from, @to).count
-    @shops_to_cloud = get_shops_with_font_calculation @shops_to_cloud, @from, @to
+    @shops_to_cloud = get_shops_with_font_calculation(Shop.all, @from, @to)
   end
   
   def stats
@@ -155,8 +154,8 @@ class HomeController < ApplicationController
     shops_to_cloud = shops_to_cloud.select { |shop| shop.incomes_sum.round.to_i > 0 }
     # calculation to map minimum and maximum incomes to the minimum and maximum fonts in shop cloud.
     period_incomes = shops_to_cloud.map { |shop| shop.incomes_sum }    
-    min_found = period_incomes.min
-    max_found = period_incomes.max
+    min_found = period_incomes.min || 0
+    max_found = period_incomes.max || 0
     min_font = MIN_FONT_TAG_CLOUD.to_d
     max_font = MAX_FONT_TAG_CLOUD.to_d
 
