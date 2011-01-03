@@ -31,7 +31,7 @@
 
       <% if current_user.is_admin_user %>
         <%= f.label :rating, "Rating" %>
-        <%= select 'charity', 'rating', @ratings, :include_blank => true %>
+        <%= f.select :rating, @ratings, { :include_blank => true } %>
       <% end %>
 
       <%= f.label :country, _("Country") %>
