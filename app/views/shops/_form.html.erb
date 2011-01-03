@@ -43,9 +43,9 @@ $(function(){
   <%= f.radio_button :redirection,:custom_widget %>  <%= f.rhs_label :custom_widget %>
   <%= f.radio_button :redirection,:custom_html %>  <%= f.rhs_label :custom_html %>
 
-  <%= f.row_label _("Affiliate Code") %>
+  <%= f.label _("Affiliate Code") %>
   <%= f.text_area :affiliate_code , :rows=>"5", :cols=>"47"%>
-  <%= f.row_label _("$query word will be replaced in the search box option") %>
+  <%= f.label ' ' %> <%= _("$query word will be replaced in the search box option") %>
 
   <%= f.row_label _("Recommended for") %>
   <div class="fat_scroll">
@@ -70,13 +70,18 @@ $(function(){
   <%= f.label :image %>
   <%= f.file_field :image %>
 
+  <%= f.label ' ' %>
   <%= image_tag @shop.image.url(:small) if @shop.image_file_name %>
+  <br class="spacer" />
 
-  <%=f.row_label _("Categories")%>
-  <div id="select_categories_container" class="field">
-	<%= render 'select_categories' %>
-  </div>
-  <%= link_to _('Edit Categories'), :admin_edit_shop_categories, :class => 'iframe' %>
+  <%=f.label _("Categories")%>
+	<div style="padding-left: 165px;" class="default_font">
+	  <div id="select_categories_container" class="field">
+		<%= render 'select_categories' %>
+	  </div>
+	  <%= link_to _('Edit Categories'), :admin_edit_shop_categories, :class => 'iframe' %>
+	</div>
+  <br class="spacer" />
 
   <div class="buttons">
   	<%= f.submit 'Save' %>

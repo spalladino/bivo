@@ -56,8 +56,8 @@ class BivoFormBuilder < ActionView::Helpers::FormBuilder
     ('<p class="accfilTxt"></p>' + super).html_safe
   end
   
-  def radio_button(a,method, options = {})
-    super
+  def radio_button(method, tag_value, options = {})
+    ('<p class="accfilTxt"></p>' + super).html_safe
   end
   
   def self.orange_button_wrap(original)
