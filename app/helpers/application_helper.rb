@@ -127,7 +127,7 @@ module ApplicationHelper
   end
 
   def styled_will_paginate(collection, atts={})
-    will_paginate collection, {:previous_label => image_tag('pegiarL.png'), :next_label => image_tag('pegiarR.png'), :class => 'pegi', :inner_window => 2, :outer_window => 0}.merge(atts)
+    will_paginate collection, {:previous_label => image_tag('pegiarL.png'), :next_label => image_tag('pegiarR.png'), :class => 'pegi', :inner_window => 0, :outer_window => 0}.merge(atts)
   end
 
   # Returns javascript snippet for submitting first parent form
