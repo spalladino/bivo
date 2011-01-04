@@ -10,7 +10,7 @@ Feature: Search shops page
 		And I press "GO"
 		
 		Then I should be on search page
-		And I should see "1 result found"
+		And I should see "1 Result Found"
 		And I should see "First One"
 	
 	Scenario: Paginator: 20 shops in one page (default)
@@ -19,7 +19,7 @@ Feature: Search shops page
 		When I go to the search page
 		And I fill in "Search" with "Shop"
 		And I press "Search"
-		Then I should see "20 results found"
+		Then I should see "20 Results Found"
 	
 	Scenario: Paginator: 20 shops in two pages (10 records per page)
 		Given 20 registered shops
@@ -43,7 +43,7 @@ Feature: Search shops page
 		And I select "10" from "Show per page"
 		And I fill in "Search" with "Shop"
 		And I press "Search"
-		Then I should see "30 results found"
+		Then I should see "30 Results Found"
 		And I should see "3" pages
 		Then I should not see "Shop Name 19"
 		

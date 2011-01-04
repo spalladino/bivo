@@ -11,7 +11,7 @@ Given /^(\d+) registered shops$/ do |count|
 end
 
 Then /^I should see "([^"]*)" pages$/ do |count|
-  1.upto(count.to_i) do |i|
+  [1, count.to_i].each do |i|
     Then %(I should see "#{i}" within ".pegi")
   end
   Then %(I should not see "#{count.to_i + 1}" within ".pegi")
