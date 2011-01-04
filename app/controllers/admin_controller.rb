@@ -92,6 +92,7 @@ class AdminController < ApplicationController
     else
       @countries = Country.all
       @categories = CharityCategory.all
+      @ratings = (0..5).map{|i| ["#{i} #{n_('star', 'stars', i)}", i]}
 
       render "new_charity"
     end

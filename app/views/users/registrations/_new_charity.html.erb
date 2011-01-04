@@ -30,7 +30,7 @@
   <%= f.text_field :city %>
 
   <%= f.label :description,  _("Description"), :for => "wysiwyg" %>
-  <%= f.text_area :description , :id => "wysiwyg", :rows=>"5", :cols=>"47" %>
+  <%= f.wysiwyg :description %>
 
   <% content_for :js do %> <!-- javascript code to run, for this view only -->
     <%= render :partial => 'shared/check_url', :locals => {

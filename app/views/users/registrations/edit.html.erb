@@ -1,8 +1,3 @@
-<% content_for(:js) do %>
-  $(function() {
-    $('#wysiwyg').wysiwyg();
-  });
-<% end %>
 
 <%  single_block (title_for @type) do |s| %>
   <%= bivo_form_for(@resource, :as => :user, :url => @path, :html => { :method => :put, :multipart => (@type == :Personal) }) do |f| %>
@@ -13,8 +8,6 @@
 
     <%= f.label :email, _("E-Mail") %>
     <%= f.text_field :email %>
-
-    <%= f.hidden_field :reset_password_token %>
 
     <%= f.label :password,_("Password") %>
     <%= f.password_field :password %>
@@ -41,7 +34,7 @@
       <%= f.text_field :city %>
 
       <%= f.label :description, _("Description") %>
-      <%= f.text_area :description %>
+      <%= f.wysiwyg :description %>
 
 		  <%= f.label _("Home page") %>
 		  <%= link_to(url_for(url_charity(@resource).merge({ :only_path => false })), url_charity(@resource)) %>

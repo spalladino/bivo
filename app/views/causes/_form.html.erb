@@ -14,7 +14,7 @@
   <%= f.text_field :city %>
 
   <%= f.label _('Description') %>
-  <%= f.text_area :description, :id => "wysiwyg", :rows=>"5", :cols=>"47"%>
+  <%= f.wysiwyg :description %>
 
 <div class="buttons">
   <%= f.submit 'Save' %>

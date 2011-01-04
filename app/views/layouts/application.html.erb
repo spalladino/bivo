@@ -20,6 +20,13 @@
   	<%= on_document_ready { render(:partial => 'shared/notifications.js') } %>
 	  <%= yield(:js) %>
     <%= set_zebra_style_to_table :zebra_table, :even_field, :odd_field %>
+
+	$(function() {
+	  $('#wysiwyg').wysiwyg();
+	  if ($('#wysiwyg').val() == '') {
+	    $('#wysiwyg').wysiwyg('clear');
+  	  }
+	});
   </script>
 
 </head>
