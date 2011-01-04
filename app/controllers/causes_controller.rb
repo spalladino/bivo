@@ -156,7 +156,7 @@ class CausesController < ApplicationController
     if !@cause.save
       redirect_to request.referer
     else
-      redirect_to root_url
+      redirect_to :action => :details, :url => @cause.url
     end
   end
 
