@@ -1,6 +1,6 @@
 
 <%  single_block (title_for @type) do |s| %>
-  <%= bivo_form_for(@resource, :as => :user, :url => @path, :html => { :method => :put, :multipart => (@type == :Personal) }) do |f| %>
+  <%= bivo_form_for(@resource, :as => :user, :url => @path, :html => { :method => :put, :multipart => (@type == :PersonalUser) }) do |f| %>
     <%= render "shared/error_messages", :target => @resource %>
 
     <%= hidden_field_tag :id, @id %>
@@ -43,13 +43,17 @@
     <% elsif (@type == :PersonalUser) %>
       <%= render :partial => 'users/registrations/new_personal', :locals => {:f => f} %>
 
-      <p><%= f.label :about_me, _("About me") %>
-      <%= f.text_area :about_me %></p>
+      <%= f.label :about_me, _("About me") %>
+      <%= f.text_area :about_me %>
 
-	    <p><%= f.label _("Profile picture") %>
-      <%=_("Current:")%> <%= image_tag @resource.picture.url %>
-	    <%= f.check_box :delete_picture %> <%= f.label _("Delete profile picture") %>
-	    <%= f.file_field :picture %></p>
+	  <%= f.label _("Profile picture") %>
+	  <%= f.file_field :picture %>
+	  <br class="spacer" />
+	
+	  <%= f.label ' ' %><%= image_tag @resource.picture.url(:comments_avatar) %>
+	  <%= f.plain_check_box :delete_picture %> <%= f.plain_label _("Delete profile picture") %>
+      <br class="spacer" />
+	  <br class="spacer" />
     <% end %>
     
     <%= f.row_label _("Email me updates of projects or charities I follow when: ")%>
