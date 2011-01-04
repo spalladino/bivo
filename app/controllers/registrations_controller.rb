@@ -37,7 +37,7 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def edit
-    @ratings = (0..5).map{|i| ["#{i} #{n_('star', 'stars', i)}", i]}
+    load_ratings
     render_with_scope :edit
   end
 
@@ -55,7 +55,7 @@ class RegistrationsController < Devise::RegistrationsController
       end
     else
       clean_up_passwords(resource)
-      @ratings = (0..5).map{|i| ["#{i} #{n_('star', 'stars', i)}", i]}
+      load_ratings
       render_with_scope :edit
     end
   end

@@ -130,5 +130,9 @@ class ApplicationController < ActionController::Base
   def store_last_visited_page_as_guest
     session[:"user_return_to"] = request.referrer
   end
+  
+  def load_ratings
+    @ratings = (0..5).map{|i| ["#{i} #{n_('star', 'stars', i)}", i]}
+  end
 end
 
