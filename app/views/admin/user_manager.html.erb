@@ -1,5 +1,5 @@
 <%= large_single_block _('User manager') do %>
-
+  <br class="spacer" />
 	<%= orange_link_to _("Add User"), admin_new_personal_user_path %>
 	<%= orange_link_to _("Add Charity"), admin_new_charity_path %>
 
@@ -54,5 +54,5 @@
     <br class="spacer" />
 	  <%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page), :class => :showChoo %>
 	  <p class="showTxt"><%= _("Show per page")%></p>
-	<br />
+	  <br />
 <% end %>

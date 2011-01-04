@@ -1,5 +1,9 @@
 module ApplicationHelper
 
+  def cause_funds_completed(cause)
+    "#{cause.funds_raised} (#{cause_funds_percentage_completed(cause)} #{_('complete')})"
+  end
+
   # Wraps the js code within a document ready initializer
   def on_document_ready(&block)
     "$(function() { #{block.call} });".html_safe
@@ -127,7 +131,7 @@ module ApplicationHelper
   end
 
   def styled_will_paginate(collection, atts={})
-    will_paginate collection, {:previous_label => image_tag('pegiarL.png'), :next_label => image_tag('pegiarR.png'), :class => 'pegi', :inner_window => 2, :outer_window => 0}.merge(atts)
+    will_paginate collection, {:previous_label => image_tag('pegiarL.png'), :next_label => image_tag('pegiarR.png'), :class => 'pegi', :inner_window => 0, :outer_window => 0}.merge(atts)
   end
 
   # Returns javascript snippet for submitting first parent form
