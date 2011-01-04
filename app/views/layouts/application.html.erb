@@ -20,11 +20,19 @@
   	<%= on_document_ready { render(:partial => 'shared/notifications.js') } %>
 	  <%= yield(:js) %>
     <%= set_zebra_style_to_table :zebra_table, :even_field, :odd_field %>
+
+	<% if Rails.env != 'test' # remove wysiwyg editor in test env due to problems in automated tests %>
+	$(function() {
+	  $('#wysiwyg').wysiwyg();
+	  if ($('#wysiwyg').val() == '') {
+	    $('#wysiwyg').wysiwyg('clear');
+  	  }
+	});
+	<% end %>
   </script>
 
 </head>
 <body>
-
 
 <%= render :partial => "shared/user_nav", :locals => { :language => @language, :languages => @languages, :all_currencies => @all_currencies, :current_currency => @current_currency } %>
 

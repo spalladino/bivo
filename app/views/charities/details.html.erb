@@ -9,6 +9,10 @@
       <div class="cauVMain">
 	
 		<div class="actions">
+			<div>
+				<%= orange_link_to _("Edit"), edit_user_registration_path(:id => @charity.id) if current_user.try(:is_admin_user) %>
+			</div>
+			
 			<div id="delete_charity_button">
 			  <%= delete_charity_button @charity %>
 			</div>

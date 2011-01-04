@@ -1,11 +1,6 @@
-<% content_for(:js) do %>
-  $(function() {
-    $('#wysiwyg').wysiwyg();
-  });
-<% end %>
 
 <%  single_block (title_for @type) do |s| %>
-  <%= bivo_form_for(@resource, :as => :user, :url => @path, :html => { :method => :put, :multipart => (@type == :Personal) }) do |f| %>
+  <%= bivo_form_for(@resource, :as => :user, :url => @path, :html => { :method => :put, :multipart => (@type == :PersonalUser) }) do |f| %>
     <%= render "shared/error_messages", :target => @resource %>
 
     <%= hidden_field_tag :id, @id %>
@@ -13,8 +8,6 @@
 
     <%= f.label :email, _("E-Mail") %>
     <%= f.text_field :email %>
-
-    <%= f.hidden_field :reset_password_token %>
 
     <%= f.label :password,_("Password") %>
     <%= f.password_field :password %>
@@ -31,7 +24,7 @@
 
       <% if current_user.is_admin_user %>
         <%= f.label :rating, "Rating" %>
-        <%= select 'charity', 'rating', @ratings, :include_blank => true %>
+        <%= f.select :rating, @ratings, { :include_blank => true } %>
       <% end %>
 
       <%= f.label :country, _("Country") %>
@@ -41,7 +34,7 @@
       <%= f.text_field :city %>
 
       <%= f.label :description, _("Description") %>
-      <%= f.text_area :description %>
+      <%= f.wysiwyg :description %>
 
 		  <%= f.label _("Home page") %>
 		  <%= link_to(url_for(url_charity(@resource).merge({ :only_path => false })), url_charity(@resource)) %>
@@ -50,13 +43,17 @@
     <% elsif (@type == :PersonalUser) %>
       <%= render :partial => 'users/registrations/new_personal', :locals => {:f => f} %>
 
-      <p><%= f.label :about_me, _("About me") %>
-      <%= f.text_area :about_me %></p>
+      <%= f.label :about_me, _("About me") %>
+      <%= f.text_area :about_me %>
 
-	    <p><%= f.label _("Profile picture") %>
-      <%=_("Current:")%> <%= image_tag @resource.picture.url %>
-	    <%= f.check_box :delete_picture %> <%= f.label _("Delete profile picture") %>
-	    <%= f.file_field :picture %></p>
+	  <%= f.label _("Profile picture") %>
+	  <%= f.file_field :picture %>
+	  <br class="spacer" />
+	
+	  <%= f.label ' ' %><%= image_tag @resource.picture.url(:comments_avatar) %>
+	  <%= f.plain_check_box :delete_picture %> <%= f.plain_label _("Delete profile picture") %>
+      <br class="spacer" />
+	  <br class="spacer" />
     <% end %>
     
     <%= f.row_label _("Email me updates of projects or charities I follow when: ")%>

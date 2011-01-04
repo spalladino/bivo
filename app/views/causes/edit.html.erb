@@ -2,24 +2,19 @@
 
 <%= render 'form' %>
 
-<div id="delete_cause_button">
-  <%= delete_cause_button @cause %>
-</div>
+<br class="spacer"/>
+<div class="buttons">
+	<div id="delete_cause_button">
+	  <%= delete_cause_button @cause %>
+	</div>
 
-<div id="activate_deactivate_cause_btn">
-  <%= active_deactive_cause_button @cause %>
-</div>
+	<div id="activate_deactivate_cause_btn">
+	  <%= active_deactive_cause_button @cause %>
+	</div>
 
-<div id="mark_as_paid_and_unpaid_button">
-  <%= mark_as_paid_and_unpaid_button @cause %>
+	<div id="mark_as_paid_and_unpaid_button">
+	  <%= mark_as_paid_and_unpaid_button @cause %>
+	</div>
 </div>
 
 <% end %>
-
-<% content_for(:js) do %>
-
-  $(function() {
-    $('#wysiwyg').wysiwyg();
-  });
-<% end %>
-

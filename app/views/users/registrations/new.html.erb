@@ -52,7 +52,7 @@
 			    	<div class="ChkTxtM">
 						<br class="spacer" />
 						<%= f.plain_check_box :eula_accepted, :class => "Chk"%>
-						<p class="ChkTxt"><%= f.plain_label :eula_accepted, _("I accept the ") %><%= link_to _("terms & conditions"), eula_path, :target => :_new %></p>
+						<p class="ChkTxt"><%= f.plain_label :eula_accepted, _("I accept the "), :class => 'default_font' %><%= link_to _("terms & conditions"), eula_path, :target => :_new %></p>
 						<br class="spacer" />
 						<%= f.plain_check_box :send_me_news, :class => "Chk" %>
 						<p class="ChkTxt"><%= f.rhs_label :send_me_news, _("Sign me up to the newsletter") %></p>
@@ -61,12 +61,13 @@
 				</div>
 				<%= raw recaptcha_tags :display => {:theme => 'clean'}%>
 				
-				<br class="spacer" />
-				<br class="spacer" />
+				<br class="spacer" /><br class="spacer" />
+				<br class="spacer" /><br class="spacer" />
 				<br class="spacer" />
 				
 				<div class="buttons">
 					<%= f.submit _("Create Account"), :id => "account" %>
+					<br class="spacer" />
 	            </div>  
 
 			<% end %>

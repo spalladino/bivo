@@ -6,8 +6,8 @@
 
   <%= f.label :short_url, _("Short Url"), :for => 'short_url'%>
   <p style ="display:inline;" >
-    <span>http://www.bivo.org/ng/</span>
-    <%= f.inline_text_field :short_url, :id => 'short_url', :onfocus => "javascript:$('#available').html('');", :style => "width: 198px; float:none; padding-left:7px;"%> 
+    <span><%= charity_short_url_prefix %></span>
+    <%= f.inline_text_field :short_url, :id => 'short_url', :onfocus => "javascript:$('#available').html('');", :style => "width: 158px; float:none; padding-left:7px;"%> 
 	<%= inline_orange_link_to _('Check Url'), "#", { :onclick => "javascript:checkUrl(); return false;"} %>
   </p>
   <br class="accfilTxt" />
@@ -30,7 +30,7 @@
   <%= f.text_field :city %>
 
   <%= f.label :description,  _("Description"), :for => "wysiwyg" %>
-  <%= f.text_area :description , :id => "wysiwyg", :rows=>"5", :cols=>"47" %>
+  <%= f.wysiwyg :description %>
 
   <% content_for :js do %> <!-- javascript code to run, for this view only -->
     <%= render :partial => 'shared/check_url', :locals => {

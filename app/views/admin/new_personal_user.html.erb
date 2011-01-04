@@ -1,32 +1,36 @@
-<h2><%= _("Create Personal User") %></h2>
-
-<%= form_for(@resource, :as => @resource_name, :url => admin_create_personal_user_path) do |f| %>
+<%= single_block _("Create Personal User") do %>
+<%= bivo_form_for(@resource, :as => @resource_name, :url => admin_create_personal_user_path) do |f| %>
   <%= render "shared/error_messages", :target => @resource %>
 
   <%= hidden_field_tag :referer, @referer %>
-  <p><%= f.label :email, _("E-Mail") %><br />
-  <%= f.text_field :email %></p>
+  
+  <%= f.label :email, _("E-Mail") %>
+  <%= f.text_field :email %>
 
-  <p><%= f.label :password %><br />
-  <%= f.password_field :password %></p>
+  <%= f.label :password %>
+  <%= f.password_field :password %>
 
-  <p><%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation %></p>
+  <%= f.label :password_confirmation %>
+  <%= f.password_field :password_confirmation %>
 
-  <p><%= f.label :first_name, "First Name" %><br />
-  <%= f.text_field :first_name %></p>
+  <%= f.label :first_name, "First Name" %>
+  <%= f.text_field :first_name %>
 
-  <p><%= f.label :last_name, "Last Name" %><br />
-  <%= f.text_field :last_name %></p>
+  <%= f.label :last_name, "Last Name" %>
+  <%= f.text_field :last_name %>
 
-  <p><%= f.label :nickname, "Nickname (optional)" %><br />
-  <%= f.text_field :nickname %></p>
+  <%= f.label :nickname, "Nickname (optional)" %>
+  <%= f.text_field :nickname %>
 
-  <p><%= f.label :birthday, "Birthday" %><br />
-  <%= f.date_select :birthday, :discard_year => true, :default => { :year => 1950 } %></p>
+  <%= f.label :birthday, "Birthday" %>
+  <%= f.date_select :birthday, {:prompt => {:day => _('Choose day'), :month => _('Choose month')}, :discard_year => true}, :class =>"accfil accChoo", :style => "width: 181px !important;" %>
+  <br class="spacer"/>
 
-  <p><%= f.label :gender, "Sex (optional)" %><br />
-  <%= f.select :gender, [["Male","M"], ["Female","F"]], :include_blank => true %></p>
+  <%= f.label :gender, "Sex (optional)" %>
+  <%= f.select :gender, [["Male","M"], ["Female","F"]], :include_blank => true %>
 
-  <p><%= f.submit _("Create Account") %></p>
+  <div class="buttons">
+    <%= f.submit _("Create Account") %>
+  </div>
+<% end %>
 <% end %>

@@ -20,7 +20,8 @@ t = link_to_cause @entity if @entity.class == Cause
     <%= f.file_field :image %></p>
     <%= f.hidden_field :gallery_id, :value => @gallery.id %>
 	<div class="buttons">
-   		<%= f.submit _('Submit Photo'), :disable_with => _('Submitting...') %>
+		<%= f.submit _('Submit Photo'), :disable_with => _('Submitting...') %>
+		<br class="spacer" />
 	</div>
 <% end %>
 </div></div>
@@ -37,7 +38,8 @@ t = link_to_cause @entity if @entity.class == Cause
     <%= f.hidden_field :gallery_id, :value => @gallery.id %>
 
 	<div class="buttons">
-   		<%= f.submit _('Submit Video'), :disable_with => _('Submitting...') %>
+		<%= f.submit _('Submit Video'), :disable_with => _('Submitting...') %>
+		<br class="spacer" />
 	</div>
 <% end %>
 </div></div>

@@ -206,6 +206,17 @@ module ApplicationHelper
     html.to_html.html_safe
   end
   
+  def orange_link_to_function(*args, &block)
+    html = Hpricot(link_to_function(*args, &block))
+    html.search('a').wrap('<div class="buttonMainFloat"></div>')
+    html.search('a').add_class 'buttonMid accBtnMi'
+    gra = html.search('.buttonMainFloat')
+    gra.prepend('<div class="buttonSide accBtnSt"></div>')
+    gra.append('<div class="buttonSide accBtnEn"></div><br class="spacer"/>')
+
+    html.to_html.html_safe
+  end
+  
   def inline_orange_link_to(*args, &block)
     html = Hpricot(link_to(*args, &block))
     html.search('a').wrap('<span class="buttonMainFloat"></span>')
@@ -246,6 +257,14 @@ module ApplicationHelper
        $('.#{table_class.to_s} tr:not(tr:first):even').addClass('#{even_class.to_s}');
        $('.#{table_class.to_s} tr:not(tr:first):odd').addClass('#{odd_class.to_s}');
      });"
+  end
+  
+  def charity_short_url_prefix
+    request.protocol + request.host + request.port_string + '/charity/c/'
+  end
+  
+  def cause_short_url_prefix
+    request.protocol + request.host + request.port_string + '/cause/'
   end
 end
 

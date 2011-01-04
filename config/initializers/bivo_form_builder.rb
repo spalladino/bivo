@@ -5,7 +5,7 @@ class BivoFormBuilder < ActionView::Helpers::FormBuilder
   alias_method :plain_text_field, :text_field
   alias_method :plain_radio_button, :radio_button
   alias_method :plain_check_box, :check_box
-  
+  alias_method :plain_text_area, :text_area
   
 
   def label(method, text = nil, options = {})
@@ -56,8 +56,18 @@ class BivoFormBuilder < ActionView::Helpers::FormBuilder
     ('<p class="accfilTxt"></p>' + super).html_safe
   end
   
-  def radio_button(a,method, options = {})
-    super
+  def radio_button(method, tag_value, options = {})
+    ('<p class="accfilTxt"></p>' + super).html_safe
+  end
+  
+  def wysiwyg(method)
+    %(<div class="accfil accMess" style="border: 0px;">
+      #{self.plain_text_area method, :id => "wysiwyg", :rows=>"5", :cols=>"47"}
+    </div>
+    <br class="spacer" /><br class="spacer" /><br class="spacer" />
+    <br class="spacer" /><br class="spacer" /><br class="spacer" />
+    <br class="spacer" />
+    ).html_safe
   end
   
   def self.orange_button_wrap(original)
