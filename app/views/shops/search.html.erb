@@ -38,11 +38,11 @@
 				</div>
 	
 				<div class="rgtFilmarg">
-					<%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page), :class => "showChoo", :onchange =>"$('#filter_form').submit()"%>
+					<%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page), :class => "showChoo", :onchange => submit_form %>
 					<p class="showTxt"><%= label_tag :per_page, _("Show per page")%></p>
 					<br class="spacer" />
 	            </div>
-           	<% end %>
+     	<% end %>
 			
         </div>
      </div>

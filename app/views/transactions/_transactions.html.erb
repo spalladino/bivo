@@ -1,33 +1,20 @@
-<%= will_paginate @transactions %>
-
-<div id="transactions-list" class="statIn">
-  <div class="statInmainBord">
-  <ul class="statInmainT">
-    <li class="statInTM genListM">&nbsp;</li>
-    <li class="statInTM genListM"><%= _("Type") %></li>
-    <li class="statInTM genListM"><%= _("Date") %></li>
-    <li class="statInTM genListM"><%= _("Description") %></li>
-    <li class="statInTM genListM"><%= _("Category") %></li>
-    <li class="statInTM genListM noBord"><%= _("Detail") %></li>
-  </ul>
-    <div class="closeTab" id="sub3">
-    <% i = 1%>
-    <% for transaction in @transactions %>     
-      <ul class="statInmainT <%= (i % 2) == 1 ? 'statInmainDark' : 'statInmainLight' %>">
-         <li class="statInTM genListM"><%= link_to _("Edit"),transaction_edit_path(transaction.id)%></li>
-         <li class="statInTM genListM"><%= transaction.type %></li>
-         <li class="statInTM genListM"><%= transaction.transaction_date %></li>
-	       <li class="statInTM genListM"><%= transaction.description %></li>
-         <% if transaction.type == "Income"  %>
-            <li class="statInTM genListM"><%= transaction.income_category.name rescue nil %></li>
-         <% else %>
-            <li class="statInTM genListM"><%= transaction.expense_category.name rescue nil %></li>
-         <% end  %>
-         <li class="statInTM genListM noBord"><%= transaction.detail %></li>
-      </ul>
-    <% i=i+1 %>
-    <% end %>
-    </div>
-  </div>
-</div>
-
+<table class="zebra_table">
+  <tr>
+    <th style="width:80px;"><%=_("Type")%></th>
+    <th style="width:90px;"><%=_("Date")%></th>
+    <th style="width:455px;"><%=_("Description")%></th>
+    <th style="width:100px;"><%=_("Category")%></th>
+    <th style="width:90px;"><%=_("Detail")%></th>
+    <th class="noBord" style="width:80px;">&nbsp;</th>
+  </tr>
+  <% for transaction in @transactions %>
+    <tr>
+      <td><%= transaction.type %></td>
+      <td><%= transaction.transaction_date %></td>
+      <td><%= transaction.description %></td>
+      <td><%=transactions_category_name(transaction) %></td>
+      <td><%= transaction.detail %></td>
+      <td class="noBord"><%= orange_link_to _("Edit"),transaction_edit_path(transaction.id)%></td>
+    </tr>
+  <% end %>
+</table>
