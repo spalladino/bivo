@@ -417,3 +417,7 @@ li.plain_cell {
 .fbold {
   font-weight: bold;
 }
+
+#select_categories_container ul ul {
+	padding-left: 18px;
+}
