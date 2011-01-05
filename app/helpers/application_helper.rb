@@ -9,6 +9,10 @@ module ApplicationHelper
     "$(function() { #{block.call} });".html_safe
   end
 
+  def submit_form
+    "$(this).closest('form').submit();"
+  end
+
   # Trims the text to up to max_words and adds a read more link
   def read_more(text, url, max_words = 30)
     return '' if text.blank?

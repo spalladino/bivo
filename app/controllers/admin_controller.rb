@@ -17,7 +17,7 @@ class AdminController < ApplicationController
     @users = User.where("type <> ?", "Admin")
 
     @filter = params["filter"]
-    @show = params["show"]
+    @show = params["show"] || "all"
 
     @users = @users.where("first_name ~* ? or last_name ~* ? or charity_name ~* ?", @filter, @filter, @filter) unless @filter.blank?
 

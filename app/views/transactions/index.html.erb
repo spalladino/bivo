@@ -1,9 +1,8 @@
 <% content_for(:head) do %>
-	<%= javascript_include_tag "pagination" %>
+	<%#= javascript_include_tag "pagination" %>
 <% end %>
 
 <% content_for(:js) do %>
-
   $(function() {
 		showOrHiddenCustomPeriod();
     $('#period').change(showOrHiddenCustomPeriod);
@@ -23,47 +22,62 @@
 <% title "Transactions" %>
 
 <%= large_single_block _("Transactions") do %>
+  <%=raw @info%>
 
-	<div class="actions">
-		<%= orange_link_to _("add transaction"), new_transaction_path%>
-		
-		<br class="spacer" />
-	</div>
+  <br class="spacer" />
 
-<%=raw @info%>
+  <%= orange_link_to _("add transaction"), new_transaction_path%>
 
-<%=_("Transaction count")%> <%=@count%>
-<div id="filters">
-	<%= form_tag transactions_path, :method => :get, :id => "filter_form" do %>
-		<%= _("Show per page")%>
-    <%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page)%>
-  	<%= _('Show') %>
-		<%= select_tag :kind, options_for_select(@kinds, @kind) %>
-    <%= _('Period') %>
-		<%= select_tag :period, options_for_select(@periods, @period) %>
-  	<%= _('Filter by') %>
-    <%= text_field_tag :description, @description, :id => 'description_filter', :class => 'accfil' %> <%= link_to_function(_('clear'), "$('#description_filter').val('').change();") if @name %>
-
-    <div id="custom">
+  <br class="spacer" />
+  <br class="spacer" />
+  <%= form_tag transactions_path, :method => :get, :id => "filter_form" do %>
+    <div id="gnFilMain2">
+      <p class="genFilTxt2">
+      	<%= _('Show') %>
+	      <%= select_tag :kind, options_for_select(@kinds, @kind), :class => :genChoo2 %>
+      </p>
+	    <p class="genFilTxt2"><%= _('Filter by') %></p>
+      <p>
+        <%= text_field_tag :description, @description, :id => 'description_filter', :class => "genFil" %>
+        <%= link_to_function(_('clear'), "$('#description_filter').val('').change();") if @name %>    
+      </p>
+      <p class="genFilTxt2">
+        <%= _('Period') %>
+	      <%= select_tag :period, options_for_select(@periods, @period), :class => :genChoo2 %>
+      </p>
+      <div id="custom">
+        <br class="spacer"/> <br class="spacer"/>
+        <p class="genFilTxt2">
+          <%= _('From') %>
+          <%= select_date @from, :prefix => :custom_from, :start_year => 2000, :end_year => 2020, :class => :genChoo2 %>
+        </p>
+        <p class="genFilTxt2">
+          <%= _('To') %>
+          <%= select_date @to, :prefix => :custom_to,:start_year => 2000, :end_year => 2020, :class => :genChoo2 %>
+        </p>
+      </div>
       <br class="spacer"/>
-      <%= _('From') %>
-      <%= select_date @from, :prefix => :custom_from, :start_year => 2000, :end_year => 2020%>
-      <br/>
-      <%= _('To') %>
-      <%= select_date @to, :prefix => :custom_to,:start_year => 2000, :end_year => 2020 %>
-      <br/>
+      <br class="spacer"/>
+     	<div style="margin-left:430px;"><%= orange_submit_tag _('Search'), :disable_with => _('Searching...') %></div>
+      
     </div>
-    <br class="spacer"/>
 
-   	<%= orange_submit_tag _('Search'), :disable_with => _('Searching...') %><br class="spacer"/>
-	<% end %>
-</div>
+    <br class="spacer">
 
-<div id="transactions">
-  <%= render 'transactions' %>
-</div>
+		<div class="gnFilMain">
+    	<h3 class="shopRinHead searInHead">
+        <%= n_("%{count} Result Found", "%{count} Results Found", @count) % {:count => @count} %>
+      </h3>
+        <div class="pegi pagination"><%= styled_will_paginate @transactions %></div>
+        <br class="spacer" />
+    </div>
 
-
-
+    <div id="transactions">
+      <%= render 'transactions' %>
+      <br class="spacer" />
+      <%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page), :class => :showChoo, :onchange => submit_form %>
+      <p class="showTxt"><%= _("Show per page")%></p>
+      <br />
+    </div>
+  <% end %>
 <% end %>
-
