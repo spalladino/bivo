@@ -5,16 +5,17 @@ class ShopsController < ApplicationController
 
   around_filter :translate_categories, :except => [ :edit_categories ]
   before_filter :load_shop, :except => [ :new, :create, :index, :search, :edit_categories]
+  before_filter :flash_inactive_shop, :only => [:details, :home, :show]
   before_filter :load_places, :only => [ :new, :edit, :create, :update ]
   before_filter :load_categories, :only => [ :new, :edit, :create, :update, :edit_categories, :index ]
 
   before_filter :ensure_active_if_not_admin, :only => [:home,:details]
 
-
   def details
   end
 
   def home
+    @section = :shop_home
     if @shop.redirection == :custom_html
       redirect_to @shop.affiliate_code
     end
@@ -29,13 +30,15 @@ class ShopsController < ApplicationController
 
   def index
     @is_shop_list = true
+    
+    @shops = if admin_is_logged_in then Shop.all_translated_with_inactives else Shop.translated end
+
     if !params[:category_field].blank?
       @category = ShopCategory.find(params[:category_field])
-      @shops = if admin_is_logged_in then @category.shops.all_translated_with_inactives else @category.shops.translated end
+      @shops = @shops.joins(:categories).where("#{ShopCategory.table_name}.id = ?", @category.id)
       @path = @category.ancestors
-    else
-      @shops = if admin_is_logged_in then Shop.all_translated_with_inactives else Shop.translated end
     end
+    
     # Set pagination
     @per_page = (params[:per_page] || 20).to_i
 
@@ -180,6 +183,12 @@ private
 
   def translate_categories
     ShopCategory.with_lazy_translation { yield }
+  end
+
+  def flash_inactive_shop
+    unless @shop.status_active?
+      flash.now[:alert] = _("This shop is inactive and won't appear to users")
+    end
   end
 
 end

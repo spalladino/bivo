@@ -6,10 +6,10 @@
 	});
 <% end %>
 
-<% if @section == :home_index %>
+<% if @section == :home_index || @section == :shop_home %>
 	<div class="headerFull">
 <%else%>
-	<div id="user_nav" class="innheaderFull">
+	<div class="innheaderFull">
 <%end%>
 	  <div class="main">
 		<%= link_to image_tag("logo.png", :size => "211x77", :alt => "Bivo", :title => "Bivo"), root_url %>
@@ -43,8 +43,11 @@
 		      <li><%= link_to _("Login"), new_user_session_path %></li><br class="spacer" />
 	      <% end %>
 	    </ul>
-	  <%if @section == :home_index %>
+	  <%if @section == :home_index || @section == :shop_home %>
         <%= content_for :home_content %>
 	  <%end%>
 	  </div>
+<% if @section == :home_index || @section == :shop_home %>	
+	  <div class="headerFullIn"></div>
+<% end %>
 	</div>

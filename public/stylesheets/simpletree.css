@@ -25,7 +25,7 @@
 	color:#9bbb27;
 }
 .treeview ul li{ /*Style for LI elements in general (excludes an LI that contains sub lists)*/
-	background: white url(../images/list.gif) no-repeat 0 2px;
+/*	background: white url(../images/list.gif) no-repeat 0 2px; */
 }
 .treeview li.submenu{ /* Style for LI that contains sub lists (other ULs). */
 	background: white url(../images/closed.gif) no-repeat 0 1px;

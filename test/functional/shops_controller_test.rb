@@ -96,6 +96,58 @@ end
     assert assigns(:shop).new_record?
     assert_response :success
   end
+  
+  test "admin should get inactive shops in list" do
+    create_admin_and_sign_in
+    s_a = Shop.make :name => 'aaa'
+    s_i = Shop.make :name => 'bbb', :status => :inactive
+    
+    get :index
+    
+    assert_equal [s_a, s_i], assigns(:shops)
+  end
+  
+  test "guests should not get inactive shops in list" do
+    s_a = Shop.make
+    s_i = Shop.make :status => :inactive
+
+    get :index
+
+    assert_equal [s_a], assigns(:shops)
+  end
+  
+  test "admin should get list filtered by category" do
+    create_admin_and_sign_in
+    s_a = Shop.make :name => 'aaa'
+    s_i = Shop.make :name => 'bbb', :status => :inactive
+    Shop.make
+    Shop.make :status => :inactive
+    c = ShopCategory.make
+    s_a.categories << c
+    s_a.save!
+    s_i.categories << c
+    s_i.save!
+    
+    get :index, :category_field => c.id
+    
+    assert_equal [s_a, s_i], assigns(:shops)    
+  end
+  
+  test "guests should get list filtered by category" do
+    s_a = Shop.make :name => 'aaa'
+    s_i = Shop.make :name => 'bbb', :status => :inactive
+    Shop.make
+    Shop.make :status => :inactive
+    c = ShopCategory.make
+    s_a.categories << c
+    s_a.save!
+    s_i.categories << c
+    s_i.save!
+    
+    get :index, :category_field => c.id
+    
+    assert_equal [s_a], assigns(:shops)    
+  end
 
 end
 

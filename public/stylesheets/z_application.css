@@ -425,6 +425,10 @@ li.plain_cell {
   font-weight: bold;
 }
 
+#select_categories_container ul ul {
+	padding-left: 18px;
+}
+
 .bodyInSmPopUp{
 	width:500px;
 	margin:0 auto;
