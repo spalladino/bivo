@@ -62,7 +62,7 @@ class ExpenseCategoriesController < ApplicationController
 
     respond_to do |format|
       if @expense_category.update_attributes(params[:expense_category])
-        format.html { redirect_to(@expense_category, :notice => 'Expense category was successfully updated.') }
+        format.html { redirect_to(expense_categories_path, :notice => 'Expense category was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

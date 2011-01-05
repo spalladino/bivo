@@ -1,5 +1,3 @@
-<h1>New expense_category</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Back', expense_categories_path %>
+<%= pop_up_single_block _("Expense Categories | Add") do %>
+  <%= render 'form' %>
+<% end %>
