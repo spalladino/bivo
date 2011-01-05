@@ -91,7 +91,7 @@ class ShopsController < ApplicationController
     @shop = Shop.new
     if save_shop
       flash[:notice] = _("Shop successfully created")
-      redirect_to root_url
+      redirect_to shop_details_path @shop.short_url
     else
       render :new
     end

@@ -26,6 +26,9 @@ module NavigationHelpers
     when /cause view (.*) page/
       "/cause/#{$1}"
 
+    when /shop view (.*) page/
+      "/shop/c/#{$1}"
+
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #
