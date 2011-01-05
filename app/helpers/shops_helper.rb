@@ -26,13 +26,7 @@ module ShopsHelper
       return orange_button_to(_("Delete"), shop_path(shop.id), :method => :delete, :confirm => "Are you sure?") 
     end
   end
-  
-  def inactive_shop_notification(shop)
-    unless @shop.status_active?
-      return content_tag :div, _("This shop is inactive and won't appear to users"), :class => 'error'
-    end
-  end
-  
+
   def to_absolute_url(shop_website, default_protocol='http')
     if shop_website =~ /^([^:])+:\/\// 
       URI.escape(shop_website) 
