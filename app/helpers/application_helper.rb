@@ -231,6 +231,14 @@ module ApplicationHelper
     html.to_html.html_safe
   end
 
+  def pop_up_single_block(title, &block)
+    content_tag :div, :class => "inbodyM" do
+      content_tag :div, :class => "bodyInSmPopUp" do
+        '<div class="GrTSm"><h2>' + title + '</h2></div>' + '<div class="boxMainPopUp">' + content_tag(:div, &block) + '<div class="bodyBot"></div></div>'
+      end
+    end
+  end
+
   def single_block(title, &block)
     content_tag :div, :class => "inbodyM" do
       content_tag :div, :class => "bodyInSm" do

@@ -1,23 +1,26 @@
-<h1><%= _("Expense Categories") %></h1>
+<% title _('Manage Expense Categories') %>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-  <% @expense_categories.each do |expense_category| %>
-    <tr>
-      <td><%= expense_category.name %></td>
-      <td><%= link_to 'Show', expense_category %></td>
-      <td><%= link_to 'Edit', edit_expense_category_path(expense_category) %></td>
-      <td><%= link_to 'Destroy', expense_category, :confirm => 'Are you sure?', :method => :delete %></td>
-    </tr>
-  <% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Expense category', new_expense_category_path %>
+<%= pop_up_single_block _("Expense Categories") do %>
+  <table class="zebra_table" style="margin-left:5px;">
+    <% if (@expense_categories.any?) %>
+      <tr>
+        <th style="width:290px;">Name</th>
+        <th></th>
+        <th class="noBord"></th>
+      </tr>
+      <% @expense_categories.each do |expense_category| %>
+        <tr>
+          <td><%= expense_category.name %></td>
+          <td><%= orange_link_to 'Edit', edit_expense_category_path(expense_category) %></td>
+          <td class="noBord"><%= orange_link_to _('Delete'), expense_category, :confirm => 'Are you sure you want to delete this category?', :method => :delete %></td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td class="noBord" colspan="3"><%=_('No Expense Categories Found')%></td>
+      </tr>
+    <% end %>
+  </table>
+  <br class="spacer" />
+  <%= orange_link_to 'New Expense category', new_expense_category_path %>
+<% end %>
