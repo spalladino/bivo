@@ -1,32 +1,57 @@
-<div class="edit_catecories">
-<%= link_to _('Categories'), :action => :edit -%>
-<% @path.each do |c| %>
-	/ <%= link_to c.name, :action => :edit, :id => c.id if c != @category -%>
+<%= pop_up_single_block _("Shop Categories") do %>
+  <div class="shop_categories">
+    <% if @category %>
+      <%= bivo_form_for @category, :as => :category, :url => { :action => :update, :id => @category.try(:id) } do |f| -%>
+        <ul class="shop_categories_path">
+          <li>
+            <%= link_to _('Categories'), :action => :edit -%>
+          </li>
+          <% @path.each do |c| %>
+            <li>
+                &nbsp;&#92;&nbsp; <%= link_to c.name, :action => :edit, :id => c.id if c != @category -%>
+            </li>
+          <% end %>
+          <li>
+            <%= f.text_field :name, :style => "width:110px;", :class => "genFil" %>
+          </li>
+        </ul>
+        <%= orange_button_to _("Rename"), :disable_with => 'Submiting...' %>
+        <%= orange_link_to _("Delete"), :action => :destroy, :id => @category.id, :method => :delete, :confirm => _("Are you sure?") %>
+        <%= render "shared/error_messages", :target => @category %>
+      <% end -%>
+      <br /><br />
+    <% else %>
+      <ul class="shop_categories_path">
+        <li>
+          <%= link_to _('Categories'), :action => :edit -%>
+        </li>
+        <% @path.each do |c| %>
+          <li>
+            \ <%= link_to c.name, :action => :edit, :id => c.id if c != @category -%>
+          </li>
+        <% end %>
+      </ul>
+      <br />
+    <% end %>
+    <div>    
+      <% if @category %>
+        <%=('Subcategories')%>
+      <% end %>
+    </div>
+    <ul>
+      <% @child_categories.each do |c| %>
+        <li style="list-style-type:disc;margin-left:20px;">
+          <%= link_to c.name, :action => :edit, :id => c.id -%>
+        </li>
+      <% end %>
+      <li>
+        <%= bivo_form_for @newcategory, :as => :newcategory, :url => { :action => :create } do |f| -%>
+          <%= f.hidden_field :parent_id %>
+          <%= f.text_field :name %>	
+          <%= orange_button_to "Create category", :disable_with => 'Submiting...' %>
+          <%= render "shared/error_messages", :target => @newcategory %>
+        <% end -%>
+      </li>
+    </ul>
+  </div>
 <% end %>
-
-<% if !@category.nil? %>
-	<%= form_for @category, :as => :category, :url => { :action => :update, :id => @category.id } do |f| -%>
-		<%= f.text_field :name %>	  
-		<%= f.submit _("Update"), :disable_with => 'Submiting...' %>
-	<% end -%>
-	<%= button_to _("Delete"), :action => :destroy, :id => @category.id, :method => :delete, :confirm => _("Are you sure?") %>
-	<%= render "shared/error_messages", :target => @category %>
-<% end %>
-
-</div>
-
-<ul>
-<% @child_categories.each do |c| %>
-	<li><%= link_to c.name, :action => :edit, :id => c.id -%></li>
-<% end %>
-
-	<li>
-		<%= form_for @newcategory, :as => :newcategory, :url => { :action => :create } do |f| -%>
-			<%= f.hidden_field :parent_id %>
-			<%= f.text_field :name %>	
-			<%= f.submit "Create category", :disable_with => 'Submiting...' %>
-		<%= render "shared/error_messages", :target => @newcategory %>
-	</li>
-</ul>
-
-<% end -%>

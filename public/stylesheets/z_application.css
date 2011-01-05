@@ -82,10 +82,17 @@
   overflow: auto;
 }
 
-.edit_catecories form, .edit_catecories form.button_to, .edit_catecories form.button_to div {
-	display: inline;
+.shop_categories_path li {
+    float:left;
 }
 
+.shop_categories li a:hover {
+    text-decoration:underline;
+}
+
+.shop_categories li a {
+    color:#000000;
+}
 
 form.inline {
 	display: inline;
