@@ -15,6 +15,7 @@ class ShopsController < ApplicationController
   end
 
   def home
+    @section = :shop_home
     if @shop.redirection == :custom_html
       redirect_to @shop.affiliate_code
     end
