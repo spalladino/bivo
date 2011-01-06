@@ -274,5 +274,9 @@ module ApplicationHelper
   def cause_short_url_prefix
     request.protocol + request.host + request.port_string + '/cause/'
   end
+  
+  def static_page(id)
+    { :controller => :home, :action => :about, :id => id }
+  end
 end
 

@@ -83,20 +83,13 @@ class HomeController < ApplicationController
     redirect_to request.referrer
   end
 
-  def how_it_works
-  end
-
-  def jobs
-  end
-
-  def social_initiatives
-  end
-
-  def fund_raisers
-  end
-
   def about
-    @section = :about    
+    @section = :about
+    @id = params[:id].try(:to_sym) || :who_we_are
+    if !params[:locale].blank?
+      session[:locale] = params[:locale].to_sym
+      I18n.locale = params[:locale].to_sym
+    end
   end
   
   protected

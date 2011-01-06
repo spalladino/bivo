@@ -120,11 +120,8 @@ Bivo::Application.routes.draw do
   post "change_currency", :to => "home#change_currency"
 
   # path for static pages
-  get "how_it_works", :to => "home#how_it_works"
-  get "jobs", :to => "home#jobs"
-  get "social_initiatives", :to => "home#social_initiatives"
-  get "fund_raisers", :to => "home#fund_raisers"
-  get "about", :to => "home#about"
+  get "about(/:id)", :to => "home#about"
+  get "about/:locale/:id", :to => "home#about"
 
   root :to => "home#index"
 

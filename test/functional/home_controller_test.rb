@@ -122,16 +122,16 @@ class HomeControllerTest < ActionController::TestCase
   test "should set usd in current session" do
     post :change_currency, :currency => 'USD'
     get :index
-    get :jobs
+    get :about
     assert_equal :USD, session[:currency].to_sym
   end
   
   test "should redirect to referrer when changing currency" do
-    get :jobs
-    @request.env['HTTP_REFERER'] = 'http://test.host/jobs'
+    get :about
+    @request.env['HTTP_REFERER'] = 'http://test.host/about'
     
     post :change_currency, :currency => 'USD'
-    assert_redirected_to :action => :jobs
+    assert_redirected_to :action => :about
     assert_equal :USD, session[:currency].to_sym
   end
   
@@ -240,4 +240,15 @@ class HomeControllerTest < ActionController::TestCase
     assert_equal 0, assigns(:revenue_categories).third.revenue_amount
     assert_equal 0, assigns(:revenues_total)
    end
+   
+  [:who_we_are,:how_it_works,:faq,:our_team,:contact_us,
+   :fund_raisers,:social_initiatives,:spread_the_word,:volunteer].each do |id|
+    [:en, :es, :fr].each do |locale|
+      test "should get #{id} for #{locale}" do
+        get :about, :id => id, :locale => locale
+        assert_response :success
+      end
+    end
+  end
+
 end
