@@ -1,7 +1,12 @@
 module HomeHelper
   def link_to_static_page(id)
-    # TODO mark as active
-    link_to static_page_title(id), static_page(id)
+    if @id == id
+      html = { :class => 'leftSelect' }
+    else
+      html = {}
+    end
+    
+    link_to static_page_title(id), static_page(id), html
   end
   
   def static_page_title(id)
