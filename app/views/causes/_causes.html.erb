@@ -1,5 +1,3 @@
-<%= styled_will_paginate @causes %>
-
 <div id="causes-list">
   <% @causes.each_with_index do |cause, index| %>
     <%= render cause, :locals => {:nobg => (index == @causes.size-1)} %>
