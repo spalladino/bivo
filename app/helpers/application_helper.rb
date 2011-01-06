@@ -278,5 +278,9 @@ module ApplicationHelper
   def static_page(id)
     { :controller => :home, :action => :about, :id => id }
   end
+  
+  def feedback_url
+    "http://bivo.uservoice.com/"
+  end
 end
 

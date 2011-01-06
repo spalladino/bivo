@@ -20,7 +20,7 @@
         <strong><%=_("Help Bivo")%></strong>
         <%= link_to _("Spread the Word"), static_page(:spread_the_word) %>
         <%= link_to _("Volunteer"), static_page(:volunteer) %>
-        <%= link_to _("Send Feedback"), '#' %>
+        <%= link_to _("Send Feedback"), feedback_url %>
       </li>
       <li>
         <strong><%=_("International")%></strong><%@languages.each do |l| %>
