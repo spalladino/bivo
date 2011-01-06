@@ -44,8 +44,10 @@ class Charity < User
   UrlFormat = /[a-zA-Z\-_][a-zA-Z0-9\-_]*/
 
   # Default scope excludes deleted charities, the condition
-  # is required to initialize for the first time the DB 
-  default_scope where('users.status != ?', :deleted) if User.table_exists?
+  # is required to initialize for the first time the DB
+  if User.table_exists? 
+    default_scope where('users.status != ?', :deleted)
+  end
 
   scope :exclude_inactive, where('users.status != ?', :inactive)
 
