@@ -444,3 +444,18 @@ li.plain_cell {
 	border-left:1px solid #c2c2c2;
 	padding:15px 23px;
 }
+
+#static_page_content p {
+	font:normal 13px/20px Arial, Helvetica, sans-serif;
+	color:#101010;
+	padding:22px 0 0 0;
+}
+
+#static_page_content h3 {
+	height:40px;
+	background:url(../images/rInheadbg.jpg) 0 100% repeat-x;
+	font:normal 26px/35px Arial, Helvetica, sans-serif;
+	color:#707070;
+	padding:0 0 0 15px;
+	margin:42px 0 0 0;
+}

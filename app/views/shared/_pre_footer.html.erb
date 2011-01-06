@@ -19,10 +19,10 @@
                 <p class="bodytxtR <%=if @section == :home_index then 'bodytxtR2' end%>"><%=_("Tell your friends about Bivo and get even more funding for your favorite causes..")%><%= facebook_like %></p>
 
                 <h2 class="bodyHead <%=if @section == :home_index then 'bodyHead2' end%>"><%=_("Volunteer")%></h2>
-                <p class="bodytxtR <%=if @section == :home_index then 'bodytxtR2' end%>"><%= raw(_("%s at Bivo and help us -- and the charities we support -- grow.") % link_to(_("Volunteer your time"), jobs_url)) %></p>
+                <p class="bodytxtR <%=if @section == :home_index then 'bodytxtR2' end%>"><%= raw(_("%s at Bivo and help us -- and the charities we support -- grow.") % link_to(_("Volunteer your time"), static_page(:volunteer))) %></p>
 
                 <h2 class="bodyHead <%=if @section == :home_index then 'bodyHead2' end%>"><%=_("Support other Fundraisers")%></h2>
-                <p class="bodytxtR <%=if @section == :home_index then 'bodytxtR2' end%> noMarg"><%= raw(_("Learn more about Bivo's other %s and %s.") % [link_to(_("social initiatives"), social_initiatives_url), link_to(_("fund raising projects"), fund_raisers_url)]) %></p>
+                <p class="bodytxtR <%=if @section == :home_index then 'bodytxtR2' end%> noMarg"><%= raw(_("Learn more about Bivo's other %s and %s.") % [link_to(_("social initiatives"), static_page(:social_initiatives)), link_to(_("fund raising projects"), static_page(:fund_raisers))]) %></p>
      
 
 </div><br class="spacer" />

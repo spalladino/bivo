@@ -3,23 +3,23 @@
     <ul>
       <li>
         <strong><%=_("About Bivo")%></strong>	
-        <%= link_to _("Who We Are?"), about_url %>
-        <%= link_to _("How Does it Work?"), how_it_works_url %>
-        <%= link_to _("FAQ"), "#" %>
-        <%= link_to _("Our Team"), "#" %>
+        <%= link_to _("Who We Are?"), static_page(:who_we_are) %>
+        <%= link_to _("How Does it Work?"), static_page(:how_it_works) %>
+        <%= link_to _("FAQ"), static_page(:faq) %>
+        <%= link_to _("Our Team"), static_page(:our_team) %>
         <%= link_to _("Charities We Help"), charities_url %>
         <%= link_to _("Statistics"), stats_path %>
-        <%= link_to _("Contact Us"), '#' %>
+        <%= link_to _("Contact Us"), static_page(:contact_us) %>
       </li>
       <li>
         <strong><%=_("Bivo Ideas")%></strong>
-        <%= link_to _("Fund Raisers"), fund_raisers_url %>
-        <%= link_to _("Social Initiatives"), '#' %>
+        <%= link_to _("Fund Raisers"), static_page(:fund_raisers) %>
+        <%= link_to _("Social Initiatives"), static_page(:social_initiatives) %>
       </li>
       <li>
         <strong><%=_("Help Bivo")%></strong>
-        <%= link_to _("Spread the Word"), '#' %>
-        <%= link_to _("Volunteer"), '#' %>
+        <%= link_to _("Spread the Word"), static_page(:spread_the_word) %>
+        <%= link_to _("Volunteer"), static_page(:volunteer) %>
         <%= link_to _("Send Feedback"), '#' %>
       </li>
       <li>

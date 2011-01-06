@@ -28,6 +28,9 @@ module NavigationHelpers
 
     when /shop view (.*) page/
       "/shop/c/#{$1}"
+      
+    when /the (.*) static page/
+      "/about/#{$1}"
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
