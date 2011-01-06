@@ -47,9 +47,9 @@ class Charity < User
   # is required to initialize for the first time the DB
   if User.table_exists? 
     default_scope where('users.status != ?', :deleted)
-  end
 
-  scope :exclude_inactive, where('users.status != ?', :inactive)
+    scope :exclude_inactive, where('users.status != ?', :inactive)
+  end
 
   scope :with_cause_data, proc { \
        joins("LEFT JOIN #{Cause.table_name} ON #{Cause.table_name}.charity_id = #{Charity.table_name}.id")\
