@@ -74,21 +74,23 @@
 
       <br/>
 
-      <div class="cvNews"><h2>Causes</h2></div>
+      <div class="cvNews"><h2><%=('Causes')%></h2></div>
       <div class="cvNewsBox chriCABox">
     	  <div class="cvNewsBoxIn chriCABox flexcroll" id="cause_list">
-          <ul class="statInmainT2">
-   		      <li class="chariTy"><%=_('Name')%><!--<a class="statInTLArr"><img src="images/tabBullet.png" width="7" height="4" alt="" /></a>--></li>
-        	  <li class="chariSt"><%=_('Status')%></li>
-            <li class="chariPro noBord"><%=_('Progress')%></li><br class="spacer" />
-    	    </ul>
-          <% @charity.causes_to_show(current_user).each do |cause|%>
-          <ul class="statInmainT3">
-            <li class="chariTy"><%=cause_link cause%></li>
-            <li class="chariSt"><%=cause.status%></li>
-            <li class="chariPro noBord"><%=progress_box cause%></li><br class="spacer" />
-          </ul>
-          <%end%>
+          <table class="causesTable">
+            <tr class="statInmainT2">
+              <th class="chariTy"><%=_('Name')%></th>
+              <th class="chariSt"><%=_('Status')%></th>
+              <th class="chariPro noBord"><%=_('Progress')%></th>
+            </tr>
+            <% @charity.causes_to_show(current_user).each do |cause| %>
+              <tr class="statInmainT3">
+                <td class="chariTy"><%=cause_link cause%></td>
+                <td class="chariSt"><%=cause.status%></td>
+                <td class="chariPro"><%=progress_box cause%></td>
+              </tr>
+            <% end %>
+          </table>
         </div><!-- /cause_list -->
       </div>
 

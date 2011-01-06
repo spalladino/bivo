@@ -26,9 +26,12 @@
           <div><%=submit_news_button%></div>
           <div style="margin-left:20px;"><%=cancel_news_add_button%></div>
         </div>
-        <br /> <br />
+        <br />
+        <br />
       <% end %>
     </div>
+
+
 	  <div id="news">
     <% for news in all_news %>
       <%=render :partial=>'news/news_row',:locals => {:news => news, :newsable => newsable}%>
