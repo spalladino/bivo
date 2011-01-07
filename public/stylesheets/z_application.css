@@ -320,6 +320,12 @@ select.genChoo {
 
 .error {
 	color:red;
+    padding-bottom:10px;
+}
+
+.error li {
+    list-style-type:disc;
+    margin-left:30px;
 }
 
 .actions {
