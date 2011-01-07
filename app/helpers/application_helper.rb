@@ -262,8 +262,8 @@ module ApplicationHelper
     
   def set_zebra_style_to_table(table_class, even_class, odd_class)
     "$(document).ready(function() {
-       $('.#{table_class.to_s} tr:not(tr:first):even').addClass('#{even_class.to_s}');
-       $('.#{table_class.to_s} tr:not(tr:first):odd').addClass('#{odd_class.to_s}');
+       $('.#{table_class.to_s} tr:has(td):even').addClass('#{even_class.to_s}');
+       $('.#{table_class.to_s} tr:has(td):odd').addClass('#{odd_class.to_s}');
      });"
   end
   
