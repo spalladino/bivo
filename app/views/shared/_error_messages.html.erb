@@ -1,5 +1,6 @@
 <% if target.errors.any? %>
 	<div class="error">
+    <p><%= _('The following errors have occurred:')%></p>
 		<ul>
 			<% target.errors.full_messages.each do |msg| %>
 				<li><%= msg %></li>

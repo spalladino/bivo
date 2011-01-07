@@ -43,42 +43,41 @@
                 </div><br class="spacer" />
                 <h3 class="statGrTop"><%= _("Expenses details") %></h3>
                 <div class="statInmainBord" id="masterdiv">
-                	<ul class="statInmainT">
-                		<li class="statInTL"><%= _("Type") %><!-- #TODO <a class="statInTLArr" onclick="SwitchMenu('sub1')"><img src="images/tabBullet.png" width="7" height="4" alt="" /></a> --></li>
-                    	<li class="statInTM"><%= _("Description") %></li>
-                    	<li class="statInTM"><%= _("Paid to") %></li>
-                    	<li class="statInTR noBord"><%= _("Amount") %></li><br class="spacer" />
-                	</ul>
-                    <div id="sub1" class="closeTab">
-						<% @expenses.each_with_index do |expense, index| %>
-                    	<ul class="<%= "statInmainT " + (index.even? ? "statInmainDark" : "statInmainLight") %>">
-                    		<li class="statInTL statInTL2"><%= expense.expense_category.name rescue nil %></li>
-                        	<li class="statInTM"><%= expense.description %></li>
-                        	<li class="statInTM"><%= expense.paid_to %></li>
-                        	<li class="statInTR noBord"><%= number_to_currency expense.amount %></li><br class="spacer" />
-                    	</ul>
-						<% end %>
-                    </div>
-                    
+                  <table class="zebra_table">
+                    <tr>
+                      <th style="width:100px;"><%= _("Type") %></th>
+                      <th style="width:450px;"><%= _("Description") %></th>
+                      <th style="width:200px;"><%= _("Paid to") %></th>
+                      <th class="noBord" style="width:150px;"><%= _("Amount") %></th>
+                    </tr>
+                    <% @expenses.each_with_index do |expense, index| %>
+                      <tr>
+                        <td><%= expense.expense_category.name rescue nil %></td>
+                        <td><%= expense.description %></td>
+                        <td><%= expense.paid_to %></td>
+                        <td class="noBord"><%= number_to_currency expense.amount %></td>
+                      </tr>
+                    <% end %>
+                  </table>                    
                 </div>
 			</div>
 
             <h3 class="statGrTop"><%= _("Revenue details") %></h3>
             <div class="statInmainBord" id="masterdiv">
-            	<ul class="statInmainT">
-           			<li class="statInTL statInTL4">Type<!-- #TODO <a class="statInTLArr" onclick="SwitchMenu('sub2')"><img src="images/tabBullet.png" width="7" height="4" alt="" /></a> --></li>
-                	<li class="statInTM">Channel</li>
-					<li class="statInTR noBord">Amount</li><br class="spacer" />
-            	</ul>
-                <div id="sub2" class="closeTab">
-					<% @revenues.each_with_index do |revenue, index| %>
-                	<ul class="<%= "statInmainT " + (index.even? ? "statInmainDark" : "statInmainLight") %>">
-						<li class="statInTL statInTL3"><%= revenue.income_category.name rescue nil %></li>
-						<li class="statInTM"><%= revenue.detail %></li>
-						<li class="statInTR noBord"><%= number_to_currency revenue.revenue_amount %></li><br class="spacer" />
-                    </ul>
-					<% end %>
-                </div>
+              <table class="zebra_table">
+                <tr>
+                  <th style="width:100px;"><%=_('Type')%></th>
+                  <th style="width:650px;"><%=_('Channel')%></th>
+                  <th class="noBord" style="width:150px;"><%=_('Amount')%></th>
+                </tr>
+                <% @revenues.each_with_index do |revenue, index| %>
+                  <tr>
+                    <td><%= revenue.income_category.name rescue nil %></td>
+                    <td><%= revenue.detail %></td>
+                    <td class="noBord"><%= number_to_currency revenue.revenue_amount %></td>
+                  </tr>
+                <% end %>
+              </table>
             </div>
             <p class="statBotTxt">If you can help us optimize our expenses please <%=link_to _("contact us"), static_page(:contact_us) %> or post your proposal to the <%= link_to _("community forum"), feedback_url %></a>.</p> 
 		</div>

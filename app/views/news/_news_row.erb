@@ -1,4 +1,7 @@
-<p class="cvNewsBoxInTxt" id="news_<%=news.id%>">
+<div class="cvNewsBoxInTxt" id="news_<%=news.id%>">
   <%=news.body %>
-</p>
-
+  <div style="height:5px;"></div>
+  <ul class="rpLink" style="padding-bottom:5px;">
+    <li><%= delete_news_button news.id, newsable %></li>
+  </ul>
+</div>

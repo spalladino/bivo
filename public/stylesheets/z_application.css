@@ -320,6 +320,12 @@ select.genChoo {
 
 .error {
 	color:red;
+    padding-bottom:10px;
+}
+
+.error li {
+    list-style-type:disc;
+    margin-left:30px;
 }
 
 .actions {
@@ -458,4 +464,23 @@ li.plain_cell {
 	color:#707070;
 	padding:0 0 0 15px;
 	margin:42px 0 0 0;
+}
+
+.statInmainT3 td {
+	padding:0 0 0 20px;
+	font:normal 14px/50px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color:#000;
+	border-right:1px solid #989898;
+}
+
+.causesTable {
+    border-collapse:collapse;
+    
+}
+
+.statInmainT2 th{
+	padding:0 0 0 20px;
+	font:bold 14px/31px "Trebuchet MS", Arial, Helvetica, sans-serif;
+	color:#f6f6f6;
+	border-right:1px solid #989898;
 }
