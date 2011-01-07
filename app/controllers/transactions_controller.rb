@@ -61,7 +61,7 @@ class TransactionsController < ApplicationController
     @count = @transactions.count
 
     # Set pagination
-    @per_page = (params[:per_page] || 2).to_i
+    @per_page = (params[:per_page] || 10).to_i
     @transactions = @transactions.paginate(:per_page => @per_page, :page => params[:page])
 
     # Options to complete selects

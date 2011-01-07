@@ -31,53 +31,54 @@
   <br class="spacer" />
   <br class="spacer" />
   <%= form_tag transactions_path, :method => :get, :id => "filter_form" do %>
-    <div id="gnFilMain2">
-      <p class="genFilTxt2">
-      	<%= _('Show') %>
-	      <%= select_tag :kind, options_for_select(@kinds, @kind), :class => :genChoo2 %>
-      </p>
-	    <p class="genFilTxt2"><%= _('Filter by') %></p>
-      <p>
-        <%= text_field_tag :description, @description, :id => 'description_filter', :class => "genFil" %>
-        <%= link_to_function(_('clear'), "$('#description_filter').val('').change();") if @name %>    
-      </p>
-      <p class="genFilTxt2">
-        <%= _('Period') %>
-	      <%= select_tag :period, options_for_select(@periods, @period), :class => :genChoo2 %>
-      </p>
-      <div id="custom">
-        <br class="spacer"/> <br class="spacer"/>
+    <div class="container">
+      <div id="gnFilMain2">
         <p class="genFilTxt2">
-          <%= _('From') %>
-          <%= select_date @from, :prefix => :custom_from, :start_year => 2000, :end_year => 2020, :class => :genChoo2 %>
+        	<%= _('Show') %>
+	        <%= select_tag :kind, options_for_select(@kinds, @kind), :class => :genChoo2 %>
+        </p>
+	      <p class="genFilTxt2"><%= _('Filter by') %></p>
+        <p>
+          <%= text_field_tag :description, @description, :id => 'description_filter', :class => "genFil" %>
+          <%= link_to_function(_('clear'), "$('#description_filter').val('').change();") if @name %>    
         </p>
         <p class="genFilTxt2">
-          <%= _('To') %>
-          <%= select_date @to, :prefix => :custom_to,:start_year => 2000, :end_year => 2020, :class => :genChoo2 %>
+          <%= _('Period') %>
+	        <%= select_tag :period, options_for_select(@periods, @period), :class => :genChoo2 %>
         </p>
+        <div id="custom">
+          <br class="spacer"/> <br class="spacer"/>
+          <p class="genFilTxt2">
+            <%= _('From') %>
+            <%= select_date @from, :prefix => :custom_from, :start_year => 2000, :end_year => 2020, :class => :genChoo2 %>
+          </p>
+          <p class="genFilTxt2">
+            <%= _('To') %>
+            <%= select_date @to, :prefix => :custom_to,:start_year => 2000, :end_year => 2020, :class => :genChoo2 %>
+          </p>
+        </div>
+        <br class="spacer"/>
+        <br class="spacer"/>
+       	<div style="margin-left:430px;"><%= orange_submit_tag _('Search'), :disable_with => _('Searching...') %></div>    
       </div>
-      <br class="spacer"/>
-      <br class="spacer"/>
-     	<div style="margin-left:430px;"><%= orange_submit_tag _('Search'), :disable_with => _('Searching...') %></div>
-      
-    </div>
 
-    <br class="spacer">
+      <br class="spacer">
 
-		<div class="gnFilMain">
-    	<h3 class="shopRinHead searInHead">
-        <%= n_("%{count} Result Found", "%{count} Results Found", @count) % {:count => @count} %>
-      </h3>
-        <div class="pegi pagination"><%= styled_will_paginate @transactions %></div>
+		  <div class="gnFilMain">
+      	<h3 class="shopRinHead searInHead">
+          <%= n_("%{count} Result Found", "%{count} Results Found", @count) % {:count => @count} %>
+        </h3>
+          <div class="pegi pagination"><%= styled_will_paginate @transactions %></div>
+          <br class="spacer" />
+      </div>
+
+      <div id="transactions">
+        <%= render 'transactions' %>
         <br class="spacer" />
-    </div>
-
-    <div id="transactions">
-      <%= render 'transactions' %>
-      <br class="spacer" />
-      <%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page), :class => :showChoo, :onchange => submit_form %>
-      <p class="showTxt"><%= _("Show per page")%></p>
-      <br />
+        <%= select_tag :per_page, options_from_collection_for_select(@page_sizes, 'to_i', 'to_s', @per_page), :class => :showChoo, :onchange => submit_form %>
+        <p class="showTxt"><%= _("Show per page")%></p>
+        <br />
+      </div>
     </div>
   <% end %>
 <% end %>
