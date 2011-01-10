@@ -61,7 +61,7 @@ class Shop < ActiveRecord::Base
   default_scope where('shops.status != ?',:inactive)
 
   validates_attachment_size :image, :less_than => 1.megabytes
-  validates_attachment_content_type :image, :content_type => ['image/jpeg', 'image/png']
+  validates_attachment_content_type :image, :content_type => Bivo::Application.config.images_content_types
 
   validates_presence_of :name
   validates_length_of   :name, :maximum => 255

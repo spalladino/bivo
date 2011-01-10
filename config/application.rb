@@ -63,5 +63,7 @@ module Bivo
     
     config.mails_batch_size = 100
     config.mails_max_retries = 5
+    
+    config.images_content_types = ['image/jpeg', 'image/png', 'image/pjpeg']
   end
 end
