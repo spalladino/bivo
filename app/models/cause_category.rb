@@ -4,10 +4,9 @@ class CauseCategory < ActiveRecord::Base
 
   validates_presence_of :name
 
-  scope :sorted_by_causes_count, joins(:causes)\
-      .group(CauseCategory.column_names.map{|c| "#{self.table_name}.#{c}"})\
-      .select("#{self.table_name}.*, COUNT(#{Cause.table_name}.id) AS causes_count")\
+  scope :sorted_by_causes_count, joins("LEFT JOIN causes on cause_categories.id = causes.cause_category_id")
+      .group("cause_categories.id, cause_categories.name")
       .order("causes_count DESC")
-
+      .select("cause_categories.id, cause_categories.name, COUNT(cause_categories.id) causes_count")
 end
 

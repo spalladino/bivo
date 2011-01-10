@@ -28,7 +28,6 @@ class CausesController < ApplicationController
 
     def apply_filters(&block)
       @causes = block.call(@causes)
-      @categories = block.call(@categories)
     end
 
     # Handle sorting options
@@ -43,10 +42,6 @@ class CausesController < ApplicationController
       else 'name ASC, description ASC'
     end
 
-    # Filter by region
-    @region = params[:region]
-    apply_filters { |c| c.where('causes.country_id = ?', params[:region].to_i) } unless @region.blank?
-
     # Filter by status
     @status = params[:status] || :active
     apply_filters do |c|
@@ -57,12 +52,22 @@ class CausesController < ApplicationController
       end
     end
 
+    if @status != :completed
+      @categories = @categories.where('causes.status = ?', @status)
+    else
+      @categories = @categories.where('causes.status = ? OR causes.status = ?', :completed, :paid)
+    end
+
+    # Count for all causes
+    all_causes_count = @categories.all.sum { |c| c.causes_count.to_i }
+
+    # Filter by region
+    @region = params[:region]
+    apply_filters { |c| c.where('causes.country_id = ?', params[:region].to_i) } unless @region.blank?
+
     # Filter by text
     @name = params[:name]
     apply_filters { |c| c.where('causes.name ~* ? OR causes.description ~* ?', @name, @name) } unless @name.blank?
-
-    # Count for all causes
-    all_causes_count = @causes.size
 
     # Filter by category
     @category = params[:category]
@@ -82,7 +87,7 @@ class CausesController < ApplicationController
     else
       @statuses = [:active, :raising_funds, :completed, :inactive]
     end
-    @categories = @categories.first(6).to_a.insert(0, all_category(all_causes_count))
+    @categories = @categories.to_a.insert(0, all_category(all_causes_count))
     @page_sizes = [5,10,20,50]
     @sortings = causes_list_sortings_for(@status)
   end
