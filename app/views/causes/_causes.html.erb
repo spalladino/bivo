@@ -1,6 +1,13 @@
 <div id="causes-list">
-  <% @causes.each_with_index do |cause, index| %>
-    <%= render cause, :locals => {:nobg => (index == @causes.size-1)} %>
+  <% if @causes.any? %>
+    <% @causes.each_with_index do |cause, index| %>
+      <%= render cause, :locals => {:nobg => (index == @causes.size-1)} %>
+    <% end %>
+  <% else %>
+  <div class="chariIn">
+    <div class="chariMid causMid">
+      <p class="clickTxt"><%= _('No causes have been found.') %></p>
+    </div>
+  </div>
   <% end %>
 </div>
-
