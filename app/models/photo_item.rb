@@ -2,7 +2,7 @@ class PhotoItem < GalleryItem
 
   validates_presence_of :image_file_name, :image_updated_at, :image_file_size, :image_content_type
   validates_attachment_size :image, :less_than => 1.megabytes
-  validates_attachment_content_type :image, :content_type => ['image/jpeg', 'image/png']
+  validates_attachment_content_type :image, :content_type => ['image/jpeg', 'image/png', 'image/pjpeg']
 
   def is_photo?
     true

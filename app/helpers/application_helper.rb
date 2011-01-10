@@ -57,10 +57,12 @@ module ApplicationHelper
 
   # Appends a category parameter with the specified id to the current query string
   def category_filter_url(category, controller=@controller_name, action=@action_name)
-    query = CGI.parse(request.query_string).symbolize_keys
-    query.each {|k,v| query[k] = v.first}
-    query[:category] = category.id
-    url_for({:action => action, :controller => controller}.merge(query))
+    url_for({
+      :action => action, 
+      :controller => controller,
+      :sorting  => params['sorting'],
+      :category => category.id
+    })
   end
 
   def comments(entity)
