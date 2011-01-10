@@ -88,6 +88,8 @@ class TransactionsController < ApplicationController
       @transaction = Income.new(params["transaction"])
     elsif (type == "Expense")
       @transaction = Expense.new(params["transaction"])
+    else
+      @transaction = Transaction.new
     end
 
     @transaction.user = current_user
