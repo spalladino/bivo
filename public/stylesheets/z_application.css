@@ -484,3 +484,7 @@ li.plain_cell {
 	color:#f6f6f6;
 	border-right:1px solid #989898;
 }
+
+#sidetree {
+  display:none;
+}
