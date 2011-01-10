@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   before_filter :load_languages
   before_filter :load_currencies
   before_filter :mailer_set_url_options
-  before_filter :store_last_visited_page_as_guest, :only => :new # aproximation to devise/session#new
+  before_filter :store_last_visited_page_as_guest
 
   protected
 
@@ -128,7 +128,11 @@ class ApplicationController < ActionController::Base
   end
   
   def store_last_visited_page_as_guest
-    session[:"user_return_to"] = request.referrer
+    # only for to devise/session#new
+    if params[:action] == "new" && params[:controller] == "devise/sessions"
+      session[:"user_return_to"] = request.referrer
+      @section = :login
+    end
   end
   
   def load_ratings
