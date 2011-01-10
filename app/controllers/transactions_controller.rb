@@ -65,8 +65,13 @@ class TransactionsController < ApplicationController
     @transactions = @transactions.paginate(:per_page => @per_page, :page => params[:page])
 
     # Options to complete selects
-    @periods = [:this_month, :last_month, :this_year, :last_year, :this_quarter, :last_quarter,:custom]
+    @periods = [
+      :this_month, :last_month, :this_year, 
+      :last_year, :this_quarter, :last_quarter,
+      :custom].map { |p| [p.to_pascal_case, p] }
+
     @kinds = [:all, :income, :expense]
+
     @page_sizes = [5,10,20,50,100]
 
   end
