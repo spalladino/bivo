@@ -7,7 +7,7 @@ class PersonalUser < User
 
 
   # Validaciones de Paperclip
- validates_attachment_size :picture, :less_than => 1.megabytes
+ validates_attachment_size :picture, :less_than => 1.megabytes, :message => _('must be 1 megabyte or lower')
  validates_attachment_content_type :picture, :content_type => Bivo::Application.config.images_content_types
 
   before_validation :clear_picture
