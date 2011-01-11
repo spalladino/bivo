@@ -1,5 +1,5 @@
 <%= pop_up_single_block _("Shop Categories") do %>
-  <div class="shop_categories">
+  <div class="shop_categories default_font">
     <% if @category %>
       <%= bivo_form_for @category, :as => :category, :url => { :action => :update, :id => @category.try(:id) } do |f| -%>
         <ul class="shop_categories_path">
@@ -15,6 +15,7 @@
             <%= f.text_field :name, :style => "width:110px;", :class => "genFil" %>
           </li>
         </ul>
+		<div style="float:left;width:10px;">&nbsp;</div>
         <%= orange_button_to _("Rename"), :disable_with => 'Submiting...' %>
         <%= orange_link_to _("Delete"), :action => :destroy, :id => @category.id, :method => :delete, :confirm => _("Are you sure?") %>
         <%= render "shared/error_messages", :target => @category %>
@@ -38,17 +39,18 @@
         <%=('Subcategories')%>
       <% end %>
     </div>
-    <ul>
+    <ul class="shop_categories_subcategories">
       <% @child_categories.each do |c| %>
-        <li style="list-style-type:disc;margin-left:20px;">
+        <li>
           <%= link_to c.name, :action => :edit, :id => c.id -%>
         </li>
       <% end %>
-      <li>
+      <li style="list-style-type:none">
         <%= bivo_form_for @newcategory, :as => :newcategory, :url => { :action => :create } do |f| -%>
           <%= f.hidden_field :parent_id %>
-          <%= f.text_field :name %>	
+          <%= f.plain_text_field :name, :class => 'accfil', :style => 'width: 200px;margin-right:10px;' %>	
           <%= orange_button_to "Create category", :disable_with => 'Submiting...' %>
+		  <br class="spacer"/>
           <%= render "shared/error_messages", :target => @newcategory %>
         <% end -%>
       </li>

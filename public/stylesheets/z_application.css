@@ -82,16 +82,25 @@
   overflow: auto;
 }
 
+form a {
+	color: #0081B1;
+}
+
 .shop_categories_path li {
     float:left;
+}
+
+.shop_categories li a {
+	color: #0081B1;
 }
 
 .shop_categories li a:hover {
     text-decoration:underline;
 }
 
-.shop_categories li a {
-    color:#000000;
+.shop_categories_subcategories li {
+	list-style-type:disc;
+	margin-left:20px;
 }
 
 form.inline {
@@ -320,6 +329,9 @@ select.genChoo {
 
 .error {
 	color:red;
+}
+
+div.error {
     padding-bottom:10px;
 }
 
