@@ -2,11 +2,12 @@ class PersonalUser < User
   attr_accessible :picture, :delete_picture
   has_attached_file :picture,
     :styles => {:comments_avatar=> "50x50#"},
-    :convert_options => {:comments_avatar => "-gravity center -extent 50x50"}
+    :convert_options => {:comments_avatar => "-gravity center -extent 50x50"},
+    :default_url => "missing.png"
 
 
   # Validaciones de Paperclip
- validates_attachment_size :picture, :less_than => 1.megabytes
+ validates_attachment_size :picture, :less_than => 1.megabytes, :message => _('must be 1 megabyte or lower')
  validates_attachment_content_type :picture, :content_type => Bivo::Application.config.images_content_types
 
   before_validation :clear_picture
