@@ -2,7 +2,8 @@ class PersonalUser < User
   attr_accessible :picture, :delete_picture
   has_attached_file :picture,
     :styles => {:comments_avatar=> "50x50#"},
-    :convert_options => {:comments_avatar => "-gravity center -extent 50x50"}
+    :convert_options => {:comments_avatar => "-gravity center -extent 50x50"},
+    :default_url => "missing.png"
 
 
   # Validaciones de Paperclip
