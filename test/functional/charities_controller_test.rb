@@ -393,6 +393,18 @@ class CharitiesControllerTest < ActionController::TestCase
     assert_equal 'not_available',@response.body.to_s
   end
   
+  test "should get comments to approve" do
+    charity = create_charity_and_sign_in
+    cause = Cause.make :charity => charity
+    
+    create_comment charity, "comment in charity"
+    create_comment cause, "comment in cause"
+    
+    get :manage_comments, :id => charity.id
+    
+    assert_response :success
+  end
+  
   private
 
   def assert_charities_unsorted(causes_or_ids)
@@ -407,5 +419,9 @@ class CharitiesControllerTest < ActionController::TestCase
     assert_equal ids, assigns(:charities).map(&:id), "Ids order does not match" if check_sort
   end
 
+  def create_comment(entity, text)
+    comment = Comment.build_from(entity, PersonalUser.make.id, text)
+    comment.save!
+  end
 end
 
