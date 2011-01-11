@@ -1,42 +1,41 @@
 <% content_for :home_content do %>
 <div class="banM">
-	<div class="banMIN">
-        <div class="banL">
-            <h2 class="banWhHead"><%=_("Search For Products or Services") %></h2>
-            <p><%=_("Search for a product, service, or retailer, such as Amazon, here.") %></p>
-            <p><%=_("When you buy from any of Bivo's participating sellers, you support causes that make a difference in the world.") %></p>
-            <p><%=_("You get the same great deal, and deserving charitable efforts get the funding they need.") %></p>
-			<%= form_tag(shop_search_path, :method => :get) do %>
-				<%= text_field_tag :search_word, nil, :class => 'banLFill' %>
-				<div class="buttonMainLog goBtnMain">
-					<div class="logBtnSt"></div>
-					<%= submit_tag _("GO"), :class => "buttonMidlog" %>
-					<div class="logBtnEn"></div><br class="spacer" />
-				</div>
-			<% end -%>
-			<br class="spacer" />
-		</div>
+  <div class="banMIN">
+    <div class="banL">
+        <h2 class="banWhHead"><%=_("Search For Products or Services") %></h2>
+        <p><%=_("Search for a product, service, or retailer, such as Amazon, here.") %></p>
+        <p><%=_("When you buy from any of Bivo's participating sellers, you support causes that make a difference in the world.") %></p>
+        <p><%=_("You get the same great deal, and deserving charitable efforts get the funding they need.") %></p>
+        <%= form_tag(shop_search_path, :method => :get) do %>
+          <%= text_field_tag :search_word, nil, :class => 'banLFill' %>
+          <div class="buttonMainLog goBtnMain">
+            <div class="logBtnSt"></div>
+            <%= submit_tag _("GO"), :class => "buttonMidlog" %>
+            <div class="logBtnEn"></div><br class="spacer" />
+          </div>
+        <% end -%>
+        <br class="spacer" />
+    </div>
 		  
-		<div class="banR">
-			<h2 class="banWhHead">
-				<%=_("Creating a better world.")%><br/>
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<%=_("One purchase at a time.")%>
-			</h2>
-			<p>
-				<%= _("Buy products and services using Bivo. Participating sellers give a portion of your purchase price to Bivo, which we use to support the causes you vote for.") %>
-			</p>
-			<p class="banRDolarTxt"><%= number_to_currency(@raised_amount,:precision => 0) %></p>
-			<p><%= _("Using Bivo to buy online costs you nothing, but it can mean everything to those who need your help today.") %></p>
-			<div class="buttonMainSee1">
-				<div class="see1BtnSt"></div>
-					<%= link_to _("See How it Works !"), static_page(:how_it_works), :class => "buttonMidSee1" %>
-					<div class="see1BtnEn"></div><br class="spacer" />
-				</div>
-			</div>
-			<br class="spacer" />
-		</div>
-	</div>
+    <div class="banR">
+      <h2 class="banWhHead">
+        <%=_("Creating a better world.")%><br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <%=_("One purchase at a time.")%>
+      </h2>
+      <p>
+        <%= _("Buy products and services using Bivo. Participating sellers give a portion of your purchase price to Bivo, which we use to support the causes you vote for.") %>
+      </p>
+      <p class="banRDolarTxt"><%= number_to_currency(@raised_amount,:precision => 0) %></p>
+      <p><%= _("Using Bivo to buy online costs you nothing, but it can mean everything to those who need your help today.") %></p>
+      <div class="buttonMainSee1">
+        <div class="see1BtnSt"></div>
+        <%= link_to _("See How it Works !"), static_page(:how_it_works), :class => "buttonMidSee1" %>
+        <div class="see1BtnEn"></div><br class="spacer" />
+      </div>
+    </div>
+    <br class="spacer" />
+  </div>
 </div>
 <%end%>
 

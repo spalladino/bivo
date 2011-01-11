@@ -1,6 +1,6 @@
 <div class="bodyM">
 	<div class="bodyIn">
-    	<div class="bodyDIVI">
+      <div class="bodyDIVI">
             <div class="bodyL">
                 <h2 class="bodyHead <%=if @section == :home_index then 'bodyHead2' end%>"><%=_("Choose Your Cause")%></h2>
                 <p class="bodytxt <%=if @section == :home_index then 'bodytxt2' end%>"><%=_("Vote for charitable causes from around the globe.")%></p>
@@ -23,12 +23,9 @@
 
                 <h2 class="bodyHead <%=if @section == :home_index then 'bodyHead2' end%>"><%=_("Support other Fundraisers")%></h2>
                 <p class="bodytxtR <%=if @section == :home_index then 'bodytxtR2' end%> noMarg"><%= raw(_("Learn more about Bivo's other %s and %s.") % [link_to(_("social initiatives"), static_page(:social_initiatives)), link_to(_("fund raising projects"), static_page(:fund_raisers))]) %></p>
-     
-
-</div><br class="spacer" />
-       </div>
-     </div>
-
-	<div class="bodyBot"></div>
+            </div><br class="spacer" />
+      </div>
+  </div>
+  <div class="bodyBot"></div>
 </div>
 
