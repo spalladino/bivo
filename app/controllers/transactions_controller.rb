@@ -19,29 +19,27 @@ class TransactionsController < ApplicationController
 
     # Filter by period
     if params[:period]
-      @period = params[:period].to_sym
+      @period = params[:period].to_sym   
+    else
+      @period = :this_month
+    end
+    
 
-      if @period == :custom
+    if @period == :custom
+      @from = Date.civil(
+        params[:custom_from][:year].to_i,
+        params[:custom_from][:month].to_i,
+        params[:custom_from][:day].to_i
+      )
 
-        @from = Date.civil(
-          params[:custom_from][:year].to_i,
-          params[:custom_from][:month].to_i,
-          params[:custom_from][:day].to_i
-        )
-
-        @to = Date.civil(
-          params[:custom_to][:year].to_i,
-          params[:custom_to][:month].to_i,
-          params[:custom_to][:day].to_i
-        )
-
-      else
-
-        @from = get_period_from(@period,Date.today)
-        @to = get_period_to(@period,Date.today)
-
-      end
-
+      @to = Date.civil(
+        params[:custom_to][:year].to_i,
+        params[:custom_to][:month].to_i,
+        params[:custom_to][:day].to_i
+      )
+    else
+      @from = get_period_from(@period,Date.today)
+      @to = get_period_to(@period,Date.today)
     end
 
     # get transactions by kind
