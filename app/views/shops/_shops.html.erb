@@ -10,9 +10,9 @@
 
 <%end%>
 <div id="shop-list">
-  <div class="shop shopListBox <%= searBox%>">
     <% if @shops.any? %>
       <% for shop in @shops %>
+		<div class="shop shopListBox <%= searBox%>">
 		      <div class="shopListBoxL"><%= link_to(image_tag(shop.search_url))%></div>
 		      <div class="shopListBoxMid <%= searBoxMid%>">
 			      <h3><%= link_to shop.display_name, shop_details_path(shop.short_url) %></h3>
@@ -29,10 +29,12 @@
 			      <!--<input type="button" name="shopAmazon" value="Shop at Amazon" id="shopAmazon" class="addBtn shopBtn" />-->
 		      </div>
 		      <br class="spacer" />
+  		</div>
       <% end %>
     <% else %>
-      <p class="clickTxt"><%= _('No shops have been found.') %></p>
+		<div class="shop shopListBox <%= searBox%>">
+	      <p class="clickTxt"><%= _('No shops have been found.') %></p>
+	  	</div>
     <% end %>
-  </div>
 </div>
 
