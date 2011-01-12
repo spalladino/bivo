@@ -272,7 +272,7 @@ module ApplicationHelper
   end
   
   def charity_short_url_prefix
-    request.protocol + request.host + request.port_string + '/charity/c/'
+    request.protocol + request.host + request.port_string + '/charity/'
   end
   
   def cause_short_url_prefix

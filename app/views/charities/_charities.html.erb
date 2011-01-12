@@ -5,7 +5,7 @@
   <div class="chariIn">
     <div class="chariLpic"><a href="#"><%=image_tag big_avatar(charity) %></a></div>
     <div class="chariMid">
-      <h3><%= link_to charity.name, charity_path(charity.id) %></h3>
+      <h3><%= link_to_charity charity %></h3>
       <div class="chariLoca">
       	<p><%=_("Location")%>:</p><strong><%=charity.city%>, <%= charity.country_name rescue nil %></strong><br class="spacer" />
       	<p><%=_("Area")%>:</p><strong><%= charity.charity_category.name rescue nil %></strong><br class="spacer" />
