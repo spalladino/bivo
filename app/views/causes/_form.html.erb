@@ -25,7 +25,7 @@
 
 <% content_for :js do %> <!-- javascript code to run, for this view only -->
     <%= render :partial => 'shared/check_url', :locals => {
-      :is_new => @cause.new_record?, :url_was => @cause.url_was, :url_check => '/cause/check_url'
+      :is_new => @cause.new_record?, :url_was => @cause.url_was, :url_check => '/cause/a/check_url'
     } %>
 <%end%>
 
