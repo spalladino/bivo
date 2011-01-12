@@ -75,11 +75,11 @@ Bivo::Application.routes.draw do
 
   get "charity/:url", :controller => "charities", :action => "details", :constraints => { :url => Charity::UrlFormat }
 
-  get "shop/search/", :controller => "shops", :action => "search"
-  get "shop/h/:short_url", :controller => "shops", :action => "home",:as => "shop_home", :constraints => { :short_url => Shop::UrlFormat }
-  get "shop/c/:short_url", :controller => "shops", :action => "details",:as => "shop_details", :constraints => { :short_url => Shop::UrlFormat }
+  get "shop/a/search/", :controller => "shops", :as => "shop_search", :action => "search"
+  get "shop/:short_url", :controller => "shops", :action => "home", :as => "shop_home", :constraints => { :short_url => Shop::UrlFormat }
+  get "shop/:short_url/details", :controller => "shops", :action => "details", :as => "shop_details", :constraints => { :short_url => Shop::UrlFormat }
 
-  resources :shops, :path => 'shop' do
+  resources :shops, :path => 'shop/a' do
     member do
       post :activate
       post :deactivate
