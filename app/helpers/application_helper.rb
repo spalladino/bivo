@@ -112,12 +112,14 @@ module ApplicationHelper
     escape_javascript generate_html(form_builder, method, options)
   end
 
+  # escape as javascript safe enough to be included inside an html attribute
+  # i.e. single quotes as \x27 and double quotes as \x22 
+  def attr_escape_javascript(s)
+    escape_javascript(s).gsub(/\\'/,'\x27').gsub(/\\"/,'\x22')
+  end
+  
   def nl2br(s)
      s.gsub(/\n/, '<br>')
-  end
-
-  def br2nl(s)
-     s.gsub('<br>',/\n/)
   end
 
   def link_to_cause(cause)

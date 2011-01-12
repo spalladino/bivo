@@ -88,7 +88,7 @@ Bivo::Application.routes.draw do
     end
   end
 
-  get "cause/check_url", :controller => "causes", :action => "check_url", :as => 'check_cause_url'
+  get "cause/a/check_url", :controller => "causes", :action => "check_url", :as => 'check_cause_url'
 
   resources :causes, :path => 'cause/a' do
     member do

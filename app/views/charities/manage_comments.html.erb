@@ -38,14 +38,14 @@
           </div>
           <br class="spacer" />
           <table class="zebra_table">
-            <tr id="<%="row_#{comment.id}"%>">
+            <tr>
               <th style="width:150px;"><%= _("Owner") %></th>
               <th style="width:272px;"><%= _("Date") %></th>
               <th style="width:420px;"><%= _("Body") %></th>
               <thclass="noBord">&nbsp;</th>
             </tr>
             <% comments_to_approve(cause).each do |comment| %>
-              <tr>
+              <tr id="<%="row_#{comment.id}"%>">
                 <td><%= owner_of(comment)%></td>
                 <td><%=l comment.created_at%></td>
                 <td><%=comment.body%></td>
