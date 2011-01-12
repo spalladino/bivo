@@ -35,7 +35,7 @@
     );
 
     if (dateFrom > dateTo) {
-      $('.error').html('<p><%=_('Date from cant be bigger than date to')%></p>');
+      $('.error').html('<p><%=escape_javascript _("Date from can't be bigger than date to") %></p>');
       return false;
     } else {
       return true;
