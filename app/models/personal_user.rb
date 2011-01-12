@@ -9,6 +9,7 @@ class PersonalUser < User
   # Validaciones de Paperclip
  validates_attachment_size :picture, :less_than => 1.megabytes, :message => _('must be 1 megabyte or lower')
  validates_attachment_content_type :picture, :content_type => Bivo::Application.config.images_content_types
+ before_post_process :image?
 
   before_validation :clear_picture
 
@@ -53,6 +54,10 @@ class PersonalUser < User
 
   def comments_avatar_url
     self.picture.url(:comments_avatar) || "/pictures/original/missing.png"
+  end
+
+  def image?
+    !(picture_content_type =~ /^image.*/).nil?
   end
   
 end
