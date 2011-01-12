@@ -60,10 +60,9 @@ Bivo::Application.routes.draw do
   get "stats", :to => "home#stats", :as => "stats"
 
   #paths for charities
-  get "charity/check_url", :to => "charities#check_url"
-  get "charity/c/:url", :controller => "charities", :action => "details", :constraints => { :url => Charity::UrlFormat }
+  get "charity/a/check_url", :to => "charities#check_url"
 
-  resources :charities, :path => 'charity' do
+  resources :charities, :path => 'charity/a' do
     member do
       get  :manage_comments
       post :activate
@@ -73,6 +72,8 @@ Bivo::Application.routes.draw do
     end
     resources :news
   end
+
+  get "charity/:url", :controller => "charities", :action => "details", :constraints => { :url => Charity::UrlFormat }
 
   get "shop/search/", :controller => "shops", :action => "search"
   get "shop/h/:short_url", :controller => "shops", :action => "home",:as => "shop_home", :constraints => { :short_url => Shop::UrlFormat }
