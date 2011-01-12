@@ -138,5 +138,47 @@ class ApplicationController < ActionController::Base
   def load_ratings
     @ratings = (0..5).map{|i| ["#{i} #{n_('star', 'stars', i)}", i]}
   end
+
+  def load_periods
+    @periods = [
+      :this_month, :last_month, :this_year, 
+      :last_year, :this_quarter, :last_quarter,
+      :custom].map { |p| [p.to_pascal_case, p] }
+
+    @period = params["period"] || "this_month"
+
+    if @period.to_sym == :custom
+      begin 
+        load_custom_periods
+      rescue
+        load_non_custom_periods
+        flash.now[:error] = _('Please select a valid date (now displaying current month).')
+        return false
+      end
+    else
+      load_non_custom_periods
+    end
+    
+    return true
+  end
+
+  def load_custom_periods
+    @from = Date.civil(
+      params[:custom_from][:year].to_i,
+      params[:custom_from][:month].to_i,
+      params[:custom_from][:day].to_i
+    )
+
+    @to = Date.civil(
+      params[:custom_to][:year].to_i,
+      params[:custom_to][:month].to_i,
+      params[:custom_to][:day].to_i
+    )
+  end
+  
+  def load_non_custom_periods
+    @from = get_period_from(@period.to_sym, Date.today)
+    @to = get_period_to(@period.to_sym, Date.today)
+  end
 end
 

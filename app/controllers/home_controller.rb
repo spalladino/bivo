@@ -93,51 +93,6 @@ class HomeController < ApplicationController
   end
   
   protected
-  
-  def load_periods
-    @periods = [["this month","this_month"],
-                ["last month","last_month"],
-                ["this year", "this_year"],
-                ["last year", "last_year"],
-                ["this quarter", "this_quarter"],
-                ["last quarter", "last_quarter"],
-                ["custom", "custom"]]
-
-    @period = params["period"] || "this_month"
-
-    if @period.to_sym == :custom
-      begin 
-        load_custom_periods
-      rescue
-        load_non_custom_periods
-        flash.now[:error] = _('Please select a valid date (now displaying current month).')
-        return false
-      end
-    else
-      load_non_custom_periods
-    end
-    
-    true    
-  end
-  
-  def load_custom_periods
-    @from = Date.civil(
-      params[:custom_from][:year].to_i,
-      params[:custom_from][:month].to_i,
-      params[:custom_from][:day].to_i
-    )
-
-    @to = Date.civil(
-      params[:custom_to][:year].to_i,
-      params[:custom_to][:month].to_i,
-      params[:custom_to][:day].to_i
-    )
-  end
-  
-  def load_non_custom_periods
-    @from = get_period_from(@period.to_sym, Date.today)
-    @to = get_period_to(@period.to_sym, Date.today)
-  end
 
   def get_shops_with_font_calculation(shops_to_cloud, from, to)
     shops_to_cloud.each do |shop| 

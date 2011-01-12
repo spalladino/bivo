@@ -17,30 +17,7 @@ class TransactionsController < ApplicationController
       @description = ""
     end
 
-    # Filter by period
-    if params[:period]
-      @period = params[:period].to_sym   
-    else
-      @period = :this_month
-    end
-    
-
-    if @period == :custom
-      @from = Date.civil(
-        params[:custom_from][:year].to_i,
-        params[:custom_from][:month].to_i,
-        params[:custom_from][:day].to_i
-      )
-
-      @to = Date.civil(
-        params[:custom_to][:year].to_i,
-        params[:custom_to][:month].to_i,
-        params[:custom_to][:day].to_i
-      )
-    else
-      @from = get_period_from(@period,Date.today)
-      @to = get_period_to(@period,Date.today)
-    end
+    load_periods
 
     # get transactions by kind
     if @kind && @kind == :all
@@ -61,13 +38,6 @@ class TransactionsController < ApplicationController
     # Set pagination
     @per_page = (params[:per_page] || 10).to_i
     @transactions = @transactions.paginate(:per_page => @per_page, :page => params[:page])
-
-    # Options to complete selects
-    @periods = [
-      :this_month, :last_month, :this_year, 
-      :last_year, :this_quarter, :last_quarter,
-      :custom].map { |p| [p.to_pascal_case, p] }
-
     @kinds = [:all, :income, :expense]
 
     @page_sizes = [5,10,20,50,100]
