@@ -13,7 +13,7 @@ class Admin < User
   enum_attr :status, %w(^active deleted),:nil => false
 
   def comments_avatar_url
-    "admin.png"
+    "/images/admin.png"
   end
 end
 

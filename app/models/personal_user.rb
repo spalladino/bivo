@@ -2,9 +2,7 @@ class PersonalUser < User
   attr_accessible :picture, :delete_picture
   has_attached_file :picture,
     :styles => {:comments_avatar=> "50x50#"},
-    :convert_options => {:comments_avatar => "-gravity center -extent 50x50"},
-    :default_url => "missing.png"
-
+    :convert_options => {:comments_avatar => "-gravity center -extent 50x50"}
 
   # Validaciones de Paperclip
  validates_attachment_size :picture, :less_than => 1.megabytes, :message => _('must be 1 megabyte or lower')
@@ -53,7 +51,7 @@ class PersonalUser < User
   end
 
   def comments_avatar_url
-    self.picture.url(:comments_avatar) || "/pictures/original/missing.png"
+    self.picture.url(:comments_avatar) # default image goes through has_attached_file default_url
   end
 
   def image?

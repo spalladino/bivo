@@ -3,7 +3,7 @@
 <div id="charities-list">
 <% for charity in @charities %>
   <div class="chariIn">
-    <div class="chariLpic"><a href="#"><%=image_tag big_avatar(charity) %></a></div>
+    <div class="chariLpic"><a href="#"><%=image_tag charity_big_avatar(charity) %></a></div>
     <div class="chariMid">
       <h3><%= link_to_charity charity %></h3>
       <div class="chariLoca">

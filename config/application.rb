@@ -65,5 +65,8 @@ module Bivo
     config.mails_max_retries = 5
     
     config.images_content_types = ['image/jpeg', 'image/png', 'image/pjpeg']
+    
+    Paperclip::Attachment.default_options.merge! :default_url => "/images/missing-:class-:style.png"
+
   end
 end

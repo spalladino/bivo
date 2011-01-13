@@ -157,13 +157,14 @@ end
     end
   end
 
+  # TODO rename
   def comments_to_approve(cause)
     return Comment.where(:commentable_type => cause.class.name, :commentable_id => cause.id, :approved => false).order('created_at ASC')
   end
   
-  def big_avatar(cause)
+  def cause_big_avatar(cause)
     photo = cause.first_gallery_photo
-    photo ? photo.big_avatar_url : nil
+    photo.try(:big_avatar_url) || '/images/missing-causes-big_avatar.png'
   end
 
 

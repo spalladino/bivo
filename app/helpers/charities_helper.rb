@@ -56,13 +56,14 @@ module CharitiesHelper
     end
   end
 
+  # TODO rename
   def comments_to_approve(charity)
     return Comment.where(:commentable_type => charity.class.name, :commentable_id => charity.id, :approved => false).order('created_at ASC')
   end
 
-  def big_avatar(charity)
+  def charity_big_avatar(charity)
     photo = charity.first_gallery_photo
-    photo ? photo.big_avatar_url : nil
+    photo.try(:big_avatar_url) || '/images/missing-charities-big_avatar.png'
   end
 
 end

@@ -4,7 +4,7 @@
 <div class="cvComReply comment_row" id="<%="row_" + comment.id.to_s%>">
 <% end %>
 
-  <div class="cvComBoxLPic"><%= image_tag comment.user.comments_avatar_url %><%#TODO: Foto en caso de no encontrar?%>
+  <div class="cvComBoxLPic"><%= image_tag comment.user.comments_avatar_url %>
   </div>
 
   <% if !comment.parent%>
