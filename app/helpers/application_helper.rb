@@ -188,8 +188,8 @@ module ApplicationHelper
     html.to_html.html_safe
   end
 
-  def orange_submit_tag(name, options = {}, html_options = {})
-    html = Hpricot(button_to(name, options, html_options))
+  def orange_submit_tag(name, options = {})
+    html = Hpricot(submit_tag(name, options))
     html.search('//input[@type=submit]').wrap('<div class="buttonMainFloat"></div>')
     html.search('//input[@type=submit]').add_class 'buttonMid accBtnMi'
     gra = html.search('.buttonMainFloat')
