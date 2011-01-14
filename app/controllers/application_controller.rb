@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, :with => :render_not_found
   protect_from_forgery
 
+  before_filter :set_main_site_as_default
   before_filter :set_gettext_locale
   before_filter :set_currency
   before_filter :check_eula_accepted
@@ -12,6 +13,10 @@ class ApplicationController < ActionController::Base
   before_filter :store_last_visited_page_as_guest
 
   protected
+
+  def set_main_site_as_default
+    self.default_url_options = { :host => ['www.', request.domain, request.port_string].join }
+  end
 
   def only_admin
     if not (current_user && current_user.is_admin_user)

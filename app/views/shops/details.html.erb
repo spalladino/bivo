@@ -28,7 +28,7 @@
          	  <div class="cauVLpic shopVLpic"><%= image_tag @shop.image.url(:view) if @shop.image_file_name %></div>
          	</div>
           <div class="chariMid shopVMid">
-            <p class="shopMidTxt"><strong><%=_("Website:")%></strong> <a href= "<%=@shop.url %>"> <%=@shop.url %></a></p>
+            <p class="shopMidTxt"><strong><%=_("Website:")%></strong> <%= link_to @shop.url, to_absolute_url(@shop.url) %></p>
 
             <p class="shopMidTxt"><strong><%=_("Recommended for residents of:")%></strong>
 			  <%= _("Worldwide") if @shop.worldwide %>
@@ -52,7 +52,7 @@
 
             <div class="buttonMainVote29">
   						<div class="buttonSideRec recBtnStS"></div>
-           		<%= button_to(_("Shop at ") + @shop.name, shop_home_path(@shop.short_url), :class=>"buttonMidRec", :method => :get)%>
+           		<%= button_to(_("Shop at ") + @shop.name, shop_home_path(@shop), :class=>"buttonMidRec", :method => :get)%>
           		<div class="buttonSideRec recBtnEn"></div><br class="spacer" /></div>
             </div><br class="spacer" />
 

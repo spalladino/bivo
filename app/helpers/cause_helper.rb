@@ -157,15 +157,21 @@ end
     end
   end
 
+  # TODO rename
   def comments_to_approve(cause)
     return Comment.where(:commentable_type => cause.class.name, :commentable_id => cause.id, :approved => false).order('created_at ASC')
   end
   
-  def big_avatar(cause)
+  def cause_big_avatar(cause)
     photo = cause.first_gallery_photo
-    photo ? photo.big_avatar_url : nil
+    photo.try(:big_avatar_url) || '/images/missing-causes-big_avatar.png'
   end
 
-
+  def cause_comments_pending(cause)
+    if ((current_user) && (cause.charity.id == current_user.id) && 
+       (cause.comments_to_approve_count > 0))
+      content_tag :div, orange_link_to(_("Approve comments (%s)") % cause.comments_to_approve_count, :controller => "charities", :action => "manage_comments", :id => cause.charity.id)
+    end
+  end
 end
 

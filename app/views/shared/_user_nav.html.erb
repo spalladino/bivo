@@ -18,29 +18,29 @@
           		<%= _("Signed in as") %> <%= current_user.email %> - 
 	          <% if (current_user.type == "Charity") %>
 	            <%= link_to _("My Home"), url_charity(current_user) %> - 
-	            <%= link_to _("Settings"), edit_user_registration_path %>
+	            <%= link_to _("Settings"), edit_user_registration_url %>
 	          <% elsif (current_user.type == "PersonalUser") %>
-	            <%= link_to _("Settings"), edit_user_registration_path %>
+	            <%= link_to _("Settings"), edit_user_registration_url %>
 	          <% elsif (current_user.type == "Admin") %>
-	            <%= link_to _("Admin Tools"), admin_tools_path %>
+	            <%= link_to _("Admin Tools"), admin_tools_url %>
 	          <% end %>
 	      <% end %>		
-		    <%= form_tag(change_language_path, :method => "post", :id => "nav_form", :class => "inline") do %>
+		    <%= form_tag(change_language_url, :method => "post", :id => "nav_form", :class => "inline") do %>
 	      	<%= select_tag :language, options_for_select(languages.collect { |l| [l.name, l.id] }, language.id ), :onchange => submit_parent_form %>
 		    <% end %>
-		    <%= form_tag(change_currency_path, :method => "post", :id => "curr_form", :class => "inline") do %>
+		    <%= form_tag(change_currency_url, :method => "post", :id => "curr_form", :class => "inline") do %>
 	      	<%= select_tag :currency, options_for_select(all_currencies.collect { |c| [c.name, c.id] }, current_currency.id), :onchange => submit_parent_form %>
 		    <% end %>
 	    </div><br class="spacer" />
 	    <ul class="nav">
-		    <li><%= link_to _("Home"), root_path, :class => if @section == :home_index then "selected" end %></li><li class="navPipe"><%= image_tag "navPipe.png", :size => "2x19"%></li>
+		    <li><%= link_to _("Home"), root_url, :class => if @section == :home_index then "selected" end %></li><li class="navPipe"><%= image_tag "navPipe.png", :size => "2x19"%></li>
 		    <li><%= link_to _("Vote Causes"), causes_url, :class => if @section == :vote_causes then "selected" end %></li><li class="navPipe"><%= image_tag "navPipe.png", :size => "2x19"%></li>
 		    <li><%= link_to _("Dashboard"), dashboard_url, :class => if @section == :dashboard then "selected" end %><li class="navPipe"><%= image_tag "navPipe.png", :size => "2x19"%></li>
 		    <li><%= link_to _("About Bivo"), static_page(:who_we_are), :class => if @section == :about then "selected" end %><li class="navPipe"><%= image_tag "navPipe.png", :size => "2x19"%></li>
 	      <% if user_signed_in? %>
-	        <li><%= link_to _("Logout"), destroy_user_session_path %></li><br class="spacer" />
+	        <li><%= link_to _("Logout"), destroy_user_session_url %></li><br class="spacer" />
 	      <% else %>
-		    <li><%= link_to _("Login"), new_user_session_path, :class => if @section == :login then "selected" end %></li><br class="spacer" />
+		    <li><%= link_to _("Login"), new_user_session_url, :class => if @section == :login then "selected" end %></li><br class="spacer" />
 	      <% end %>
 	    </ul>
 	  <%if @section == :home_index || @section == :shop_home %>

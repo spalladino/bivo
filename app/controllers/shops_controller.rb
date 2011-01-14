@@ -1,4 +1,5 @@
 class ShopsController < ApplicationController
+  include UrlHelper
 
   before_filter :authenticate_user!, :except => [:details,:home,:show,:search,:index]
   before_filter :only_admin, :only => [:new, :create, :edit, :update, :destroy,:activate, :deactivate, :edit_categories]
@@ -91,7 +92,7 @@ class ShopsController < ApplicationController
     @shop = Shop.new
     if save_shop
       flash[:notice] = _("Shop successfully created")
-      redirect_to shop_details_path @shop.short_url
+      redirect_to :controller => "shops", :action => "details", :short_url => @shop.short_url, :subdomain => 'shop'
     else
       render :new
     end
@@ -100,7 +101,7 @@ class ShopsController < ApplicationController
   def update
     if save_shop
       flash[:notice] = _("Shop successfully updated")
-      redirect_to shop_details_path @shop.short_url
+      redirect_to :controller => "shops", :action => "details", :short_url => @shop.short_url, :subdomain => 'shop'
     else
       render :edit
     end

@@ -191,7 +191,7 @@ class Charity < User
   #
 
   def comments_avatar_url
-    first_gallery_photo.try(:comments_avatar_url)
+    first_gallery_photo.try(:comments_avatar_url) || '/images/missing-charities-comments_avatar.png'
   end
     
   def has_pending_comments_in_causes

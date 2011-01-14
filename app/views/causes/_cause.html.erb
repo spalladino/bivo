@@ -1,12 +1,13 @@
 <div class="chariIn <%= 'noBg' if nobg rescue nil %>">
   <div class="chariLpic">
     <a href="#">
-      <%= image_tag big_avatar(cause), :width => 150, :height => 110 %>
+      <%= image_tag cause_big_avatar(cause), :width => 150, :height => 110 %>
     </a>
   </div>
 
   <div class="chariMid causMid">
   	<h3><%= link_to_cause cause %></h3>
+
   	<div class="flagTxt">
   	  <p class="flagTxt"><%= cause.country.name %></p>
     	<!--img src="images/flag.jpg" width="17" height="12" alt="" /-->

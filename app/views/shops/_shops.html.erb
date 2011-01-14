@@ -15,12 +15,12 @@
 		<div class="shop shopListBox <%= searBox%>">
 		      <div class="shopListBoxL"><%= link_to(image_tag(shop.search_url))%></div>
 		      <div class="shopListBoxMid <%= searBoxMid%>">
-			      <h3><%= link_to shop.display_name, shop_details_path(shop.short_url) %></h3>
+			      <h3><%= link_to shop.display_name, shop_details_path(shop) %></h3>
 			      <%= link_to "Website: #{shop.url}", to_absolute_url(shop.url), :class => "shopListlink" %>
 			      <p><%= shop.description %></p>
 		      </div>
 		      <div class="shopListBoxRi">
-			      <div class="shopListGr"><a href="<%= shop_details_path(shop.short_url) %>"><span class="statInBoxNo chariRiBoxNo"><%= comission_value_text(shop)%></span><span class="shopListGrTxt"><%= (_("of your purchase will be%sdonated") % '<br/>').html_safe %></span></a></div>
+			      <div class="shopListGr"><a href="<%= shop_details_path(shop) %>"><span class="statInBoxNo chariRiBoxNo"><%= comission_value_text(shop)%></span><span class="shopListGrTxt"><%= (_("of your purchase will be%sdonated") % '<br/>').html_safe %></span></a></div>
 			      <div class="buttonMainFloat">
 				      <div class="buttonSide accBtnSt"></div>
 			        <%= shop_at_link shop, :class => "buttonMid accBtnMi"%>
