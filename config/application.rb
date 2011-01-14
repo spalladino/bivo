@@ -4,6 +4,7 @@ require File.expand_path('../boot', __FILE__)
 require 'rails/all'
 require './lib/hash'
 require './lib/symbol'
+require './lib/array'
 
 # If you have a Gemfile, require the gems listed there, including any gems
 # you've limited to :test, :development, or :production.
@@ -65,5 +66,8 @@ module Bivo
     config.mails_max_retries = 5
     
     config.images_content_types = ['image/jpeg', 'image/png', 'image/pjpeg']
+    
+    Paperclip::Attachment.default_options.merge! :default_url => "/images/missing-:class-:style.png"
+
   end
 end

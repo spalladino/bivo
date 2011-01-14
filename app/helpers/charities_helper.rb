@@ -50,20 +50,20 @@ module CharitiesHelper
   end
 
 
-  def comments_pending_approval_link(charity)
+  def charity_comments_pending(charity)
     if current_user && charity.id == current_user.id && (charity.comments_to_approve_count > 0)
       return content_tag :div, orange_link_to(_("Approve comments (%s)") % charity.comments_to_approve_count, :controller => "charities", :action => "manage_comments", :id => charity.id)
     end
   end
 
+  # TODO rename
   def comments_to_approve(charity)
     return Comment.where(:commentable_type => charity.class.name, :commentable_id => charity.id, :approved => false).order('created_at ASC')
   end
 
-  def big_avatar(charity)
+  def charity_big_avatar(charity)
     photo = charity.first_gallery_photo
-    photo ? photo.big_avatar_url : nil
+    photo.try(:big_avatar_url) || '/images/missing-charities-big_avatar.png'
   end
-
 end
 

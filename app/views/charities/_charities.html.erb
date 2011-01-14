@@ -3,7 +3,7 @@
 <div id="charities-list">
 <% for charity in @charities %>
   <div class="chariIn">
-    <div class="chariLpic"><a href="#"><%=image_tag big_avatar(charity) %></a></div>
+    <div class="chariLpic"><a href="#"><%=image_tag charity_big_avatar(charity) %></a></div>
     <div class="chariMid">
       <h3><%= link_to_charity charity %></h3>
       <div class="chariLoca">
@@ -11,13 +11,8 @@
       	<p><%=_("Area")%>:</p><strong><%= charity.charity_category.name rescue nil %></strong><br class="spacer" />
       </div>
 	    <p class="chariTxt"><%= read_more(raw(charity.description), charity_path(charity.id), 20) %></p>
-      <ul class="star">
-      	<li><a href="#"><img src="images/star.png" width="15" height="15" alt="" /></a></li>
-        <li><a href="#"><img src="images/star.png" width="15" height="15" alt="" /></a></li>
-        <li><a href="#"><img src="images/star.png" width="15" height="15" alt="" /></a></li>
-        <li><a href="#"><img src="images/star.png" width="15" height="15" alt="" /></a></li>
-        <li><a href="#"><img src="images/starHo.png" width="15" height="15" alt="" /></a></li>
-      </ul> <!-- TODO: deshardcodear estrellas-->
+		<%= rating_stars charity, :class => "star" %>
+
     </div>
     <div class="chariRi">
     	<div class="chariRiBox">

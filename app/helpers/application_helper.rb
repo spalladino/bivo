@@ -295,5 +295,9 @@ module ApplicationHelper
   def feedback_url
     "http://bivo.uservoice.com/"
   end
+
+  def pipe_li
+    "<li class=\"rpPipe\">|</li>"
+  end
 end
 
