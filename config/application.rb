@@ -65,5 +65,8 @@ module Bivo
     config.mails_max_retries = 5
     
     config.images_content_types = ['image/jpeg', 'image/png', 'image/pjpeg']
+
+    config.action_mailer.default_url_options = { :host => "www.changeme.com" } #TODO: put host of bivo
+
   end
 end

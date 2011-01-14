@@ -1,1 +1,1 @@
-<%= _('Cause status has changed.') %>
+<%= _('The status of the cause ') %><%= absolute_link_to_cause(@cause) %><%= _('has changed to ')%><b><%=@cause.status.to_s%></b>

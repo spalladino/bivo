@@ -1,1 +1,4 @@
-<%= _('User commented a cause.') %>
+<%= _("Someone commented on the cause ")%><%= absolute_link_to_cause(@cause) %><%= _(", which you are following.")%>
+
+<%=_("New comment:") %>
+<%= @comment.body %>

@@ -7,7 +7,7 @@ class Mailer < ActionMailer::Base
     @charity = @cause.charity
 
     set_locale @charity
-    mail :to => @charity.email, :subject => _("New Follower")
+    mail :to => @charity.email, :subject => _('The cause "') + @cause.name + _('" has a new Follower')
   end
 
   def charity_being_followed(mail_data)
@@ -15,7 +15,7 @@ class Mailer < ActionMailer::Base
     @charity = Charity.find(mail_data.charity_id)
 
     set_locale @charity
-    mail :to => @charity.email, :subject => _("New Follower")
+    mail :to => @charity.email, :subject => _('The charity "') + @charity.name + _('" has a new Follower')
   end
 
   def cause_status_changed_for_charity(mail_data)
@@ -23,7 +23,7 @@ class Mailer < ActionMailer::Base
     @follower = User.find(mail_data.charity_id)
 
     set_locale @follower
-    mail :to => @follower.email, :subject => _("Cause status changed")
+    mail :to => @follower.email, :subject => _('The cause "' ) + @cause.name + _('" from your charity has changed its status')
   end
 
   def cause_status_changed_for_follower(mail_data)
@@ -31,7 +31,7 @@ class Mailer < ActionMailer::Base
     @follower = User.find(mail_data.follower_id)
 
     set_locale @follower
-    mail :to => @follower.email, :subject => _("Cause status changed")
+    mail :to => @follower.email, :subject => _("A cause you follow has changed its status")
   end
 
   def cause_commented_for_charity(mail_data)
@@ -40,7 +40,7 @@ class Mailer < ActionMailer::Base
     @comment = Comment.find mail_data.comment_id
 
     set_locale @charity
-    mail :to => @charity.email, :subject => _("New comment in your cause")
+    mail :to => @charity.email, :subject => _('The cause "' ) + @cause.name + _('" from your charity has a new comment')
   end
 
   def cause_commented_for_follower(mail_data)
@@ -49,7 +49,7 @@ class Mailer < ActionMailer::Base
     @comment = Comment.find mail_data.comment_id
 
     set_locale @follower
-    mail :to => @follower.email, :subject => _("New comment for cause")
+    mail :to => @follower.email, :subject => _('The cause "' ) + @cause.name + _('" has a new comment')
   end
 
   def charity_commented_for_follower(mail_data)
@@ -58,7 +58,7 @@ class Mailer < ActionMailer::Base
     @comment = Comment.find mail_data.comment_id
  
     set_locale @follower
-    mail :to => @follower.email, :subject => _("New comment to charity")
+    mail :to => @follower.email, :subject => _('The charity "' ) + @charity.name + _('" has a new comment')
   end
 
   def charity_commented_for_charity(mail_data)
@@ -66,7 +66,7 @@ class Mailer < ActionMailer::Base
     @comment = Comment.find mail_data.comment_id
  
     set_locale @charity
-    mail :to => @charity.email, :subject => _("New comment in your page")
+    mail :to => @charity.email, :subject => _('The charity "' ) + @charity.name + _('" has a new comment')
   end
 
   def funds_completed_for_charity(mail_data)
@@ -74,7 +74,7 @@ class Mailer < ActionMailer::Base
     @charity = User.find(mail_data.charity_id)
 
     set_locale @charity
-    mail :to => @charity.email, :subject => _("Cause completed")
+    mail :to => @charity.email, :subject => _('The cause "' ) + @cause.name + _('" from your charity is fully funded')
   end
 
   def funds_completed_for_follower(mail_data)
@@ -82,7 +82,7 @@ class Mailer < ActionMailer::Base
     @follower = User.find(mail_data.follower_id)
 
     set_locale @follower
-    mail :to => @follower.email, :subject => _("Cause completed")
+    mail :to => @follower.email, :subject => _('The cause "' ) + @cause.name + _('"is fully funded')
   end
 
   def news_created_to_cause(mail_data)
@@ -91,7 +91,7 @@ class Mailer < ActionMailer::Base
     @new = News.find(mail_data.news_id)
 
     set_locale @follower
-    mail :to => @follower.email, :subject => _("News about the cause")
+    mail :to => @follower.email, :subject => _('The cause "') + @cause.name + _('" has news')
   end
 
   def news_created_to_charity(mail_data)
@@ -100,7 +100,7 @@ class Mailer < ActionMailer::Base
     @new = News.find(mail_data.news_id)
 
     set_locale @follower
-    mail :to => @follower.email, :subject => _("News about the charity")
+    mail :to => @follower.email, :subject => _('The charity "') + @charity.name + _('" has news')
   end
   
   private 

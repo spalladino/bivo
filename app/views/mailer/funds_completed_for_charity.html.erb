@@ -1,1 +1,1 @@
-<%= _('Hello charity %1$s. The funds of the cause %2$s have been completed.') % [@charity.name, @cause.name] %>
+<%= _('Hello charity %1$s. The cause %2$s is fully funded.') % [@charity.name, absolute_link_to_cause(@cause)] %>

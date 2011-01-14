@@ -1,1 +1,4 @@
-<%= _('You have new comments. Im follower.') %>
+<%= _("Someone commented on the charity ")%><%= absolute_link_to_charity(@charity) %><%= _(", which you are following.")%>
+
+<%=_("New comment:") %>
+<%= @comment.body %>
