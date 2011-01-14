@@ -76,8 +76,6 @@ Bivo::Application.routes.draw do
   get "charity/:url", :controller => "charities", :action => "details", :constraints => { :url => Charity::UrlFormat }
 
   get "shop/a/search/", :controller => "shops", :as => "shop_search", :action => "search"
-  get "shop/:short_url", :controller => "shops", :action => "home", :as => "shop_home", :constraints => { :short_url => Shop::UrlFormat }
-  get "shop/:short_url/details", :controller => "shops", :action => "details", :as => "shop_details", :constraints => { :short_url => Shop::UrlFormat }
 
   resources :shops, :path => 'shop/a' do
     member do
@@ -88,6 +86,9 @@ Bivo::Application.routes.draw do
       get :edit_categories
     end
   end
+
+  get "shop/:short_url", :controller => "shops", :action => "home", :as => "shop_home", :constraints => { :short_url => Shop::UrlFormat }
+  get "shop/:short_url/details", :controller => "shops", :action => "details", :as => "shop_details", :constraints => { :short_url => Shop::UrlFormat }
 
   get "cause/a/check_url", :controller => "causes", :action => "check_url", :as => 'check_cause_url'
 
