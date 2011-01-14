@@ -166,6 +166,11 @@ end
     photo ? photo.big_avatar_url : nil
   end
 
-
+  def cause_comments_pending(cause)
+    if ((current_user) && (cause.charity.id == current_user.id) && 
+       (cause.comments_to_approve_count > 0))
+      content_tag :div, orange_link_to(_("Approve comments (%s)") % cause.comments_to_approve_count, :controller => "charities", :action => "manage_comments", :id => cause.charity.id)
+    end
+  end
 end
 

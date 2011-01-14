@@ -280,5 +280,9 @@ class Cause < ActiveRecord::Base
       end
     end
   end
+
+  def comments_to_approve_count
+    Comment.where(:commentable_id => self.id, :commentable_type => self.class.name, :approved => false).count
+  end
 end
 
