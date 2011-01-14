@@ -39,7 +39,7 @@ module ShopsHelper
     url = if shop.redirection_purchase_button?
       to_absolute_url(shop.affiliate_code)
     else
-      shop_home_path(shop.short_url)
+      shop_home_path(shop)
     end
     link_to _("Shop at %s") % shop.display_name, url, html_opts
   end

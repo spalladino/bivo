@@ -1,4 +1,5 @@
 module ApplicationHelper
+  include UrlHelper
 
   def cause_funds_completed(cause)
     "#{cause.funds_raised} (#{cause_funds_percentage_completed(cause)} #{_('complete')})"
@@ -135,9 +136,17 @@ module ApplicationHelper
   end
 
   def url_charity(charity)
-    { :controller => "charities", :action => "details", :url => charity.short_url }
+    { :controller => "charities", :action => "details", :url => charity.short_url, :subdomain => 'www' }
   end
-
+  
+  def shop_home_path(shop)
+    { :controller => "shops", :action => "home", :short_url => shop.short_url, :subdomain => 'shop' }
+  end
+  
+  def shop_details_path(shop)
+    { :controller => "shops", :action => "details", :short_url => shop.short_url, :subdomain => 'shop' }
+  end
+  
   def styled_will_paginate(collection, atts={})
     will_paginate collection, {:previous_label => image_tag('pegiarL.png'), :next_label => image_tag('pegiarR.png'), :class => 'pegi', :inner_window => 0, :outer_window => 0}.merge(atts)
   end
@@ -280,7 +289,7 @@ module ApplicationHelper
   end
   
   def static_page(id)
-    { :controller => '/home', :action => :about, :id => id }
+    { :controller => '/home', :action => :about, :id => id, :subdomain => 'www' }
   end
   
   def feedback_url

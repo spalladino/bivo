@@ -1,4 +1,10 @@
 Bivo::Application.routes.draw do
+
+  constraints(ShopSubdomain) do
+    get ":short_url", :controller => "shops", :action => "home", :constraints => { :short_url => Shop::UrlFormat, :subdomain => /shop/ }
+    get ":short_url/details", :controller => "shops", :action => "details", :constraints => { :short_url => Shop::UrlFormat, :subdomain => /shop/ }
+  end
+
   devise_for :users, :controllers => {:registrations => 'registrations' }
   match '/auth/facebook/callback' => 'facebook_authentications#create'
 
@@ -44,10 +50,10 @@ Bivo::Application.routes.draw do
   post 'admin/shop/categories/create', :to => 'shop_categories#create'
   match 'admin/shop/categories/update', :to => 'shop_categories#update'
   match 'admin/shop/categories/delete', :to => 'shop_categories#destroy'
-  
+
   get 'admin/language', :to => "admin#choose_language", :as => 'translation'
   get 'admin/translate', :to => "admin#translate"
-  
+
   post 'admin/save_translation', :to => "admin#save_translation"
 
   #paths for handling eula
@@ -87,9 +93,6 @@ Bivo::Application.routes.draw do
     end
   end
 
-  get "shop/:short_url", :controller => "shops", :action => "home", :as => "shop_home", :constraints => { :short_url => Shop::UrlFormat }
-  get "shop/:short_url/details", :controller => "shops", :action => "details", :as => "shop_details", :constraints => { :short_url => Shop::UrlFormat }
-
   get "cause/a/check_url", :controller => "causes", :action => "check_url", :as => 'check_cause_url'
 
   resources :causes, :path => 'cause/a' do
@@ -105,8 +108,6 @@ Bivo::Application.routes.draw do
 
     resources :news
   end
-
-
 
   get "cause/:url", :controller => "causes", :action => "details", :as => "cause_details", :constraints => { :url => Cause::UrlFormat }
 
@@ -127,80 +128,5 @@ Bivo::Application.routes.draw do
 
   root :to => "home#index"
 
-  #post "cause/create", :to => 'causes#create', :as => 'create'
-  #post "cause/:id/update", :to => 'causes#update'
-  #post "cause/:id/delete", :to => 'causes#delete'
-
-#  post "cause/:id/activate", :to => 'causes#activate'
-#  post "cause/:id/deactivate", :to => 'causes#deactivate'
-#  post "cause/:id/mark_paid", :to => 'causes#mark_paid'
-#  post "cause/:id/vote", :to => 'causes#vote'
-#  post "cause/:id/follow", :to => 'causes#follow'a
-#  post "cause/:id/unfollow", :to => 'causes#unfollow'
-
-
-  #get "cause", :to => 'causes#index'
-  #get "cause/new", :to => 'causes#new'
-  #get "cause/checkUrl", :to => 'causes#checkUrl'
-
-  #get "cause/:id/edit", :to => 'causes#edit'
-
-
-  # The priority is based upon order of creation:
-  # first created -> highest priority.
-
-  # Sample of regular route:
-  #   match 'products/:id' => 'catalog#view'
-  # Keep in mind you can assign values other than :controller and :action
-
-  # Sample of named route:
-  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
-  # This route can be invoked with purchase_url(:id => product.id)
-
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
-
-  # Sample resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Sample resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Sample resource route with more complex sub-resources
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', :on => :collection
-  #     end
-  #   end
-
-  # Sample resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
-
-  # You can have the root of your site routed with "root"
-  # just remember to delete public/index.html.
-  # root :to => "welcome#index"
-
-  # See how all your routes lay out with "rake routes"
-
-  # This is a legacy wild controller route that's not recommended for RESTful applications.
-  # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id(.:format)))'
 end
 
