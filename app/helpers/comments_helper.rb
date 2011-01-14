@@ -1,14 +1,26 @@
 module CommentsHelper
+  def comment_row_buttons(comment, entity)
+    buttons = [
+      reply_comment_button(comment.id, entity), 
+      edit_comment_button(comment.id, entity, comment.body),
+      delete_comment_button(comment.id, entity)
+    ]
+
+    buttons.compact!
+    if buttons.any?
+      raw buttons.wrap_each_with_tag!(:li).join(pipe_li)
+    end
+  end
 
   def reply_comment_button(id,entity)
     if rules(entity).can_add?(current_user)
-      return raw("<li><a href=\"#\" name=\"reply_or_add_button\" onclick=\"showComments(this, #{id});return false;\">#{_("Reply")}</a></li><li class=\"rpPipe\">|</li>")
+      link_to _("Reply"), "#", :name => :reply_or_add_button, :onclick => "showComments(this, #{id});return false;"
     end
   end
 
   def edit_comment_button(id,entity,body)
     if rules(entity).can_edit?(current_user,entity)
-      return raw("<li><a href=\"#\" id=\"edit_button_#{id}\" onclick=\"editComment(#{id},\'#{attr_escape_javascript(body)}\');return false;\">#{_("Edit")} </a></li><li class=\"rpPipe\">|</li>")
+      link_to _("Edit"), "#", :id => "edit_button_#{id}", :onclick => "editComment(#{id},'#{attr_escape_javascript(body)}');return false;"
     end
   end
 
@@ -20,7 +32,6 @@ module CommentsHelper
       end
     end
   end
-
 
   def add_comment_button(entity)
     if rules(entity).can_add?(current_user)
