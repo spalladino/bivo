@@ -112,7 +112,7 @@ class HomeController < ApplicationController
 
     shops_to_cloud.each do |shop|
       if (min_found == max_found)
-        shop.define_accessor :font_size, (min_found + max_found) / 2.0
+        shop.define_accessor :font_size, (min_font + max_font) / 2.0
       else
         shop.define_accessor :font_size, ((pend * shop.incomes_sum) + offset).round
       end
