@@ -67,7 +67,7 @@ module Bivo
     
     config.images_content_types = ['image/jpeg', 'image/png', 'image/pjpeg']
 
-    config.action_mailer.default_url_options = { :host => "www.changeme.com" } #TODO: put host of bivo
+    config.action_mailer.default_url_options = { :host => "www.lvh.me:3000" }
     
     Paperclip::Attachment.default_options.merge! :default_url => "/images/missing-:class-:style.png"
   end
