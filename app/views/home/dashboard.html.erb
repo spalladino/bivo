@@ -41,7 +41,7 @@
                         	<h3><%= cause.cause_category.name %></h3>
                            <p class="boxHuTxt"><%= link_to_cause cause %></p>
                            <div class="loadMain">
-                             <img src="images/loader.jpg" width="138" height="20" alt="" class="load" /><p class="loadTxt"><%=cause_funds_percentage_completed cause %>% of <%= cause.funds_needed %></p>
+                             <img src="images/loader.jpg" width="138" height="20" alt="" class="load" /><p class="loadTxt"><%=cause_funds_percentage_completed cause %> of <%= number_to_currency cause.funds_needed, :precision => 0 %></p>
                            </div>
                       </div>
                     <% end %>
