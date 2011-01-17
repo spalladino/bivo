@@ -15,7 +15,7 @@ module NavigationHelpers
       '/users/sign_up'
       
     when /search page/
-      '/shop/search'
+      '/shop/a/search'
 
     when /the logout page/
       '/users/sign_out'
@@ -27,7 +27,7 @@ module NavigationHelpers
       "/cause/#{$1}"
 
     when /shop view (.*) page/
-      "/shop/c/#{$1}"
+      "/#{$1}/details"
       
     when /the (.*) static page/
       "/about/#{$1}"

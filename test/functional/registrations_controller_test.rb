@@ -434,7 +434,7 @@ class RegistrationsControllerTest < ActionController::TestCase
     assert_equal "char123@bivotest.com", charity.email
     assert_equal 2, charity.rating.to_i
 
-    assert_redirected_to :controller => :admin, :action => :user_manager
+    assert_redirected_to :controller => :admin, :action => :user_manager, :host => 'test.host'
   end
   
   test "guest should not be able to edit charity" do

@@ -27,7 +27,8 @@ Capybara.ignore_hidden_elements = true
 # prefer to use XPath just remove this line and adjust any selectors in your
 # steps to use the XPath syntax.
 Capybara.default_selector = :css
-
+# Capybara.app_host = 'http://www.lvh.me' 
+ 
 # If you set this to false, any error raised from within your app will bubble 
 # up to your step definition and out to cucumber unless you catch it somewhere
 # on the way. You can make Rails rescue errors and render error pages on a
@@ -63,4 +64,10 @@ if defined?(ActiveRecord::Base)
   end
 end
 
-
+module Capybara
+  class Server
+    def host
+      "www.lvh.me"
+    end
+  end
+end

@@ -128,7 +128,7 @@ class HomeControllerTest < ActionController::TestCase
   
   test "should redirect to referrer when changing currency" do
     get :about
-    @request.env['HTTP_REFERER'] = 'http://test.host/about'
+    @request.env['HTTP_REFERER'] = 'http://www.test.host/about'
     
     post :change_currency, :currency => 'USD'
     assert_redirected_to :action => :about
