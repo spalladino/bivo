@@ -36,12 +36,16 @@
                   <h3><%=_("Causes being funded")%></h3>
                   <p class="clickTxt"><%= _("No causes with votes in the current period") if @causes_being_funded.empty? %></p>
                   <div class="boxRIn">
-                    <% @causes_being_funded.each do |cause| %>
+                    <% @causes_being_funded.each do |cause| 
+						loader_width = (138 * cause.funds_raised/cause.funds_needed).to_i
+					%>
                     	<div class="boxHu">
                         	<h3><%= cause.cause_category.name %></h3>
                            <p class="boxHuTxt"><%= link_to_cause cause %></p>
                            <div class="loadMain">
-                             <img src="images/loader.jpg" width="138" height="20" alt="" class="load" /><p class="loadTxt"><%=cause_funds_percentage_completed cause %> of <%= number_to_currency cause.funds_needed, :precision => 0 %></p>
+						     <img src="images/loader-green.jpg" width="<%= loader_width %>" height="20" alt="" class="load" style="display: inline;" />
+                             <img src="images/loader-gray.jpg" width="<%= 138 - loader_width %>" height="20" alt="" class="load" />
+							 <p class="loadTxt"><%=cause_funds_percentage_completed cause %> of <%= number_to_currency cause.funds_needed, :precision => 0 %></p>
                            </div>
                       </div>
                     <% end %>
