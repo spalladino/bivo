@@ -1,1 +1,7 @@
-<%= render :partial => "eula" %>
+<%= large_single_block _('Terms and conditions') do %>
+
+<div class="default_font">
+  <%= render :partial => "static_pages/eula-#{I18n.locale}" %>
+</div>
+
+<% end %>

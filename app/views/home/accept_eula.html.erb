@@ -1,15 +1,22 @@
-<div>
+<%= large_single_block _('Terms and conditions') do %>
+
+<p class="default_font">
 <%= _("As you login from facebook the first time, you should accept the terms and conditions of Bivo") %>
+</p>
+
+<div class="default_font">
+  <%= render :partial => "static_pages/eula-#{I18n.locale}" %>
 </div>
-<div>
-  <h3>Eula: </h3>  
-  <%= render :partial => _("eula") %>
-</div>
+
+<br/>
 <div>
 <%= form_tag confirm_eula_path do %>
   <p><%= check_box_tag :eula_accepted %>
-  <%= label_tag :eula_accepted, _("I agree to the terms and conditions") %></p>
-  <%= submit_tag _("Accept") %>
+  <%= label_tag :eula_accepted, _("I agree to the terms and conditions"), :class => 'default_font' %></p>
+  <div class="buttons">
+  <%= orange_submit_tag _("Accept") %>
+  </div>
 <% end %>
 </div>
 
+<% end %>
