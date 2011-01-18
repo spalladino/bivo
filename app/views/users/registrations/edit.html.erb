@@ -7,7 +7,7 @@
     <%= hidden_field_tag :referer, @referer %>
 
     <%= f.label :email, _("E-Mail") %>
-    <%= f.text_field :email %>
+    <%= f.text_field :email, :readonly => !current_user.is_admin_user %>
 
     <%= f.label :password,_("Password") %>
     <%= f.password_field :password %>
@@ -51,7 +51,7 @@
 	  <br class="spacer" />
 	
 	  <%= f.label ' ' %><%= image_tag @resource.picture.url(:comments_avatar) %>
-	  <%= f.plain_check_box :delete_picture %> <%= f.plain_label _("Delete profile picture") %>
+	  <%= f.plain_check_box :delete_picture %> <%= f.plain_label _("Delete profile picture"), :class => 'default_font' %>
       <br class="spacer" />
 	  <br class="spacer" />
     <% end %>
