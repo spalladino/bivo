@@ -1,7 +1,7 @@
 module LayoutHelper
   
   def title(page_title)
-    @content_for_title = page_title.to_s
+    content_for(:title, page_title)
   end
   
 end
