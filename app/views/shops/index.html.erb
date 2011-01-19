@@ -26,7 +26,7 @@
 
 <div class="inbodyM">
   <div class="bodyInner">
-    <%= form_tag shops_path, :method => :get, :id => "filter_form" do %>
+    <%= form_tag all_shops_path, :method => :get, :id => "filter_form" do %>
       <%= hidden_field_tag('category_field', @category.try(:id)) %>
       <div class="bodyInL">
         <div class="bodyInLTop"></div>

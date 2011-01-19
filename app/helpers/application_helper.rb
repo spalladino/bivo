@@ -151,6 +151,10 @@ module ApplicationHelper
     will_paginate collection, {:previous_label => image_tag('pegiarL.png'), :next_label => image_tag('pegiarR.png'), :class => 'pegi', :inner_window => 0, :outer_window => 0}.merge(atts)
   end
 
+  def all_shops_path
+    { :controller => "shops", :action => "index", :subdomain => 'shop' }
+  end
+
   # Returns javascript snippet for submitting first parent form
   def submit_parent_form
     "$(this).parents('form:first').submit(); return false;"
