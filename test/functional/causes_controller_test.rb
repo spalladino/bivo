@@ -61,6 +61,14 @@ class CausesControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test "shouldnt go to new cause if inactive charity" do
+    user = create_charity_and_sign_in :status => :inactive
+    get :new
+    assert_response :success
+    assert_template :inactive
+
+  end
+
   #EDIT
   test "can go to edit cause" do
     user = create_charity_and_sign_in
@@ -439,7 +447,7 @@ class CausesControllerTest < ActionController::TestCase
     cause = Cause.make(:status=>:inactive, :charity => charity)
     charity.status = :inactive
     charity.save!
-    
+
     post :activate, :id => cause.id
     assert_response :found
     assert_equal :inactive,cause.reload.status
@@ -512,47 +520,47 @@ class CausesControllerTest < ActionController::TestCase
   test "should allow edition of name, short_url nor funds_needed if inactive as admin" do
     create_admin_and_sign_in
     cause = Cause.make :status => :inactive
-    
+
     get :edit, :id => cause.id
 
     assert_edit_sensitve_data
     assert_can_update_sensitive_data cause
   end
-  
+
   [:active, :raising_funds, :completed, :paid].each do |status|
     test "should not allow edition of name, short_url nor funds_needed if #{status} as admin" do
       create_admin_and_sign_in
       cause = Cause.make :status => status
-      
+
       get :edit, :id => cause.id
 
       assert_readonly_sensitve_data
       assert_cant_update_sensitive_data cause
     end
   end
-  
+
   test "should allow edition of name, short_url nor funds_needed if inactive as charity" do
     charity = create_charity_and_sign_in
     cause = Cause.make :charity => charity, :status => :inactive
-    
+
     get :edit, :id => cause.id
 
     assert_edit_sensitve_data
     assert_can_update_sensitive_data cause
   end
-  
+
   [:active, :raising_funds].each do |status|
     test "should not allow edition of name, short_url nor funds_needed if #{status} as charity" do
       create_admin_and_sign_in
       cause = Cause.make :status => status
-      
+
       get :edit, :id => cause.id
 
       assert_readonly_sensitve_data
       assert_cant_update_sensitive_data cause
     end
   end
-  
+
   [:completed, :paid].each do |status|
     test "should not allow edition of name, short_url nor funds_needed if #{status} as charity" do
        user = create_charity_and_sign_in
@@ -563,12 +571,12 @@ class CausesControllerTest < ActionController::TestCase
        assert_cant_update_sensitive_data cause
     end
   end
-  
+
   test "some field are not editable on update" do
     create_admin_and_sign_in
     otherCharity = Charity.make
     cause = Cause.make :status => :active
-    
+
     post :update,
       :id => cause.id,
       :cause =>
@@ -583,8 +591,8 @@ class CausesControllerTest < ActionController::TestCase
         :url=> cause.url,
         :funds_needed=> 270,
         :funds_raised=> 200
-      }   
-      
+      }
+
     cause.reload
     assert_not_equal :raising_funds, cause.status
     assert_not_equal otherCharity.id, cause.charity_id
@@ -613,7 +621,7 @@ class CausesControllerTest < ActionController::TestCase
     assert_equal 1, css_select('#cause_funds_needed').count
     assert_equal 1, css_select('textarea').count # description field
   end
-  
+
   def assert_readonly_sensitve_data
     assert_response :success
 
@@ -622,7 +630,7 @@ class CausesControllerTest < ActionController::TestCase
     assert_equal 0, css_select('#cause_funds_needed').count
     assert_equal 1, css_select('textarea').count # description field
   end
-  
+
   def assert_can_update_sensitive_data(cause)
     post :update,
       :id => cause.id,
@@ -638,19 +646,19 @@ class CausesControllerTest < ActionController::TestCase
         :url=> 'changed_url',
         :funds_needed=> 230,
         :funds_raised=> cause.funds_raised
-      }   
-      
+      }
+
     cause.reload
     assert_equal 'changed', cause.name
     assert_equal 230, cause.funds_needed
     assert_equal 'changed_url', cause.url
   end
-  
+
   def assert_cant_update_sensitive_data(cause)
     old_name = cause.name
     old_funds_needed = cause.funds_needed
     old_url = cause.url
-    
+
     post :update,
       :id => cause.id,
       :cause =>
@@ -665,8 +673,8 @@ class CausesControllerTest < ActionController::TestCase
         :url=> 'changed_url',
         :funds_needed=> '101',
         :funds_raised=> cause.funds_raised
-      }   
-      
+      }
+
     cause.reload
     assert_equal old_name, cause.name
     assert_equal old_funds_needed, cause.funds_needed

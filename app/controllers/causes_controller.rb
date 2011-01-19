@@ -127,7 +127,17 @@ class CausesController < ApplicationController
 
 
   def new
-    @cause = Cause.new :charity_id => params[:charity_id]
+    if !current_user.is_admin_user
+      @charity = current_user
+    else
+      @charity = Charity.find(params[:cause][:charity_id])
+    end
+
+    if @charity.status_inactive?
+      ajax_flash[:notice] = _("Inactive charity")
+      render "inactive"
+    end
+    @cause = Cause.new :charity_id => @charity.id
   end
 
   def edit
@@ -320,5 +330,8 @@ class CausesController < ApplicationController
   def set_section
     @section = :vote_causes
   end
+
+
+
 end
 
