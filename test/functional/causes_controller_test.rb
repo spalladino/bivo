@@ -230,12 +230,12 @@ class CausesControllerTest < ActionController::TestCase
         :charity_id =>user.id,
         :country_id =>Country.make.id,
         :cause_category_id=>CauseCategory.make.id,
-        :url=> "url",
+        :url=> "aurl",
         :funds_needed=>100,
         :funds_raised=>0
       }
     assert_equal 1,Cause.count
-    assert_redirected_to :action => :details, :url => "url"
+    assert_redirected_to :action => :details, :url => "aurl"
   end
 
   #CREATE
@@ -295,7 +295,7 @@ class CausesControllerTest < ActionController::TestCase
         :charity_id =>user.id,
         :country_id =>Country.make.id,
         :cause_category_id=>CauseCategory.make.id,
-        :url=> "url",
+        :url=> "aurl",
         :funds_needed=>100,
         :funds_raised=>0
       }
@@ -411,7 +411,7 @@ class CausesControllerTest < ActionController::TestCase
   #CHECK_URL
   test "should check url and return ok" do
     user = create_and_sign_in
-    get :check_url, :url=>"url"
+    get :check_url, :url=>"aurl"
     assert_equal 'available',@response.body.to_s
   end
 

@@ -14,7 +14,7 @@ class AdminControllerTest < ActionController::TestCase
       :charity_category_id   => CharityCategory.make.id,
       :charity_name          => "test",
       :charity_website       => "http://www.test.com",
-      :short_url             => "abc",
+      :short_url             => "abcd",
       :charity_type          => "def",
       :tax_reg_number        => 123456,
       :country_id            => Country.make.id,
