@@ -19,6 +19,7 @@ Sham.amount       { 1 + rand(1000) }
 
 Country.blueprint do
   name {Sham.country}
+  iso {Sham.short_name}
 end
 
 CauseCategory.blueprint do
@@ -36,7 +37,7 @@ Cause.blueprint do
   charity         {Charity.make_or_get(5)}
   country         {Country.make_or_get(5)}
   cause_category  {CauseCategory.make_or_get(5)}
-  url             {Sham.short_name}
+  url             {Sham.short_name + Sham.short_name}
   name            {Sham.bs}
   funds_needed    {Sham.funds}
   funds_raised    {0}

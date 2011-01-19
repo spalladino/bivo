@@ -1,6 +1,7 @@
 Bivo::Application.routes.draw do
 
   constraints(ShopSubdomain) do
+    get "/all", :controller => "shops", :action => "index"
     get ":short_url", :controller => "shops", :action => "home", :constraints => { :short_url => Shop::UrlFormat, :subdomain => /shop/ }
     get ":short_url/details", :controller => "shops", :action => "details", :constraints => { :short_url => Shop::UrlFormat, :subdomain => /shop/ }
   end

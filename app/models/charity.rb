@@ -82,7 +82,7 @@ class Charity < User
   validates :charity_website, :url_format => true
 
   validates_presence_of :short_url
-  validates_length_of :short_url, :maximum => 255, :minimum => 3
+  validates_length_of :short_url, :maximum => 255, :minimum => 4
   validates_uniqueness_of :short_url, :case_sensitive => false
   validates :short_url, :short_url_format => true
 

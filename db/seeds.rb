@@ -10,7 +10,9 @@
 puts "Creating countries from data/countries.txt"
 File.open("db/data/countries.txt", 'r').each do |country|
   code, name = country.chomp.split("|")
-  Country.find_or_create_by_name name
+  country = Country.find_or_create_by_name name
+  country.iso = code
+  country.save!
 end
 
 puts "Creating categories"

@@ -376,7 +376,7 @@ class CharitiesControllerTest < ActionController::TestCase
 
   #CHECK_URL
   test "should check url and return ok" do
-    get :check_url, :url=>"url"
+    get :check_url, :url=>"aurl"
     assert_equal 'available',@response.body.to_s
   end
 
