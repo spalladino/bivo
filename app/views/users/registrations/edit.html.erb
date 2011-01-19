@@ -7,7 +7,7 @@
     <%= hidden_field_tag :referer, @referer %>
 
     <%= f.label :email, _("E-Mail") %>
-    <%= f.text_field :email, :readonly => !current_user.is_admin_user %>
+    <%= f.text_field :email %>
 
     <%= f.label :password,_("Password") %>
     <%= f.password_field :password %>
