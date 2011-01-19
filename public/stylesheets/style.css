@@ -1056,22 +1056,23 @@ img, input{
 	background:url(../images/delBtn.png) 0 0 no-repeat !important;
 }
 .flagTxt{
-	width:75px;
-	font:bold 12px/14px "Trebuchet MS", Arial, Helvetica, sans-serif;
+/*	width:75px;
+*/	font:bold 12px/14px "Trebuchet MS", Arial, Helvetica, sans-serif;
 	text-transform:uppercase;
 	color:#658005;
 	margin:10px 0 0;
 }
 .flagTxt p{
-	width:48px;
-	float:left;
+/*	width:48px;
+*/	float:left;
 	margin:0 10px 0 0;
 }
 .flagTxt img{
 	width:17px;
 	height:12px;
-	float:right;
-}	
+	float:left;
+/*	float:right;
+*/}	
 /*-----------------------------------causesList-end--------------------------------------------*/
 /*-------------------------------------account-start-------------------------------------------*/
 .bodyInSm{

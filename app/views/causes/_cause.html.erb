@@ -10,7 +10,7 @@
 
   	<div class="flagTxt">
   	  <p class="flagTxt"><%= cause.country.name %></p>
-    	<!--img src="images/flag.jpg" width="17" height="12" alt="" /-->
+		<%= image_tag "flags/#{cause.country.iso.downcase}.gif"%>
     	<br class="spacer" />
   	</div>
         
