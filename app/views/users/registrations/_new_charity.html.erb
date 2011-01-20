@@ -14,7 +14,7 @@
   <p style="font: normal normal normal 13px/24px Arial, Helvetica, sans-serif; margin-left: 175px"><span id="available"></span></p>
   <br/>
 
-  <%= f.label :charity_category_id, _("Category") %>
+  <%= f.label :charity_category, _("Category") %>
   <%= f.select :charity_category_id, @categories.collect{ |c| [c.name, c.id] }, {:include_blank => true} %>
 
   <%= f.label :charity_type, _("Charity Type") %>
