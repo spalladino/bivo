@@ -22,8 +22,8 @@ $(document).ready(function(){
     <%= f.label :description %>
     <%= f.text_area :description %>
 
-	<div class="buttons">	
-    	<%= f.submit :Save %> <%= f.submit :Cancel, :id => "cancel" %>
+	<div class="buttons">
+    	<%= f.submit :Save %> <%=back_button(_("Cancel"))%>
 	</div>
   <% end %>
 

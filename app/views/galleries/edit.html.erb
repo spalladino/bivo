@@ -2,7 +2,7 @@
   <%= javascript_include_tag "flexcroll" %>
 <% end %>
 
-<% 
+<%
 t = link_to_charity @entity if @entity.class == Charity
 t = link_to_cause @entity if @entity.class == Cause
 %>
@@ -43,5 +43,7 @@ t = link_to_cause @entity if @entity.class == Cause
 	</div>
 <% end %>
 </div></div>
-
+<br/>
+<%=back_button(_("Go Back"))%>
 <% end %>
+

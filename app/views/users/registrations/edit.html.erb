@@ -49,13 +49,13 @@
 	  <%= f.label _("Profile picture") %>
 	  <%= f.file_field :picture %>
 	  <br class="spacer" />
-	
+
 	  <%= f.label ' ' %><%= image_tag @resource.picture.url(:comments_avatar) %>
 	  <%= f.plain_check_box :delete_picture %> <%= f.plain_label _("Delete profile picture"), :class => 'default_font' %>
       <br class="spacer" />
 	  <br class="spacer" />
     <% end %>
-    
+
     <%= f.row_label _("Email me updates of projects or charities I follow when: ")%>
 
     <%= f.check_box :notice_all_funds_raised %>
@@ -82,9 +82,11 @@
 
 	<div class="buttons">
     	<%= f.submit _("Update") %>
+      <%=back_button(_("Cancel"))%>
 	</div>
-	
+
   <% end %>
+
   <div class="bodyBot"></div>
 <% end %>
 
