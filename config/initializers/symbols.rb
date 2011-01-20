@@ -5,7 +5,7 @@ class Symbol
       return _("active")
 
     elsif self == :inactive
-      return _("pending to approval")
+      return _("pending approval")
 
     elsif self == :raising_funds
       return _("raising funds")

@@ -31,10 +31,13 @@ Bivo::Application.routes.draw do
   resources :expense_categories
   get "expense/list_categories", :to => "expense_categories#list_options"
 
-  #incomes categories
-  post "income_categories/create", :to => "income_categories#create"
-  put "income_categories/update/:id", :to => "income_categories#update"
-  delete "income_categories/:id", :to => "income_categories#destroy"
+  resources :income_categories
+  get "income/list_categories", :to => "income_categories#list_options"
+
+#incomes categories
+  #post "income_categories/create", :to => "income_categories#create"
+  #put "income_categories/update/:id", :to => "income_categories#update"
+  #delete "income_categories/:id", :to => "income_categories#destroy"
 
   #paths for admin manager
   get "admin/send_mails"

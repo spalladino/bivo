@@ -1,0 +1,25 @@
+<%= bivo_form_for(@income_category) do |f| %>
+  <% if @income_category.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@income_category.errors.count, "error") %> prohibited this income_category from being saved:</h2>
+
+      <ul>
+      <% @income_category.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="gnFilMain2">
+    <p class="genFilTxt2"><%= _('Name') %></p>
+    <p class="genFilTxt2"><%= f.text_field :name, :class => "genFil" %></p>
+    <br class="spacer">
+    <br class="spacer">
+    <p class="genFilTxt2">
+      <%= orange_button_to _('Save') %>
+      <%= orange_link_to _('Back'), income_categories_path %>
+    </p>
+  </div>
+<% end %>
+

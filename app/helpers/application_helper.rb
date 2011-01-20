@@ -5,6 +5,9 @@ module ApplicationHelper
     "#{cause.funds_raised} (#{cause_funds_percentage_completed(cause)} #{_('complete')})"
   end
 
+  def back_button(text)
+   return orange_link_to text,:back
+  end
   # Wraps the js code within a document ready initializer
   def on_document_ready(&block)
     "$(function() { #{block.call} });".html_safe
@@ -59,7 +62,7 @@ module ApplicationHelper
   # Appends a category parameter with the specified id to the current query string
   def category_filter_url(category, controller=@controller_name, action=@action_name)
     url_for({
-      :action => action, 
+      :action => action,
       :controller => controller,
       :sorting  => params['sorting'],
       :category => category.id
@@ -114,11 +117,11 @@ module ApplicationHelper
   end
 
   # escape as javascript safe enough to be included inside an html attribute
-  # i.e. single quotes as \x27 and double quotes as \x22 
+  # i.e. single quotes as \x27 and double quotes as \x22
   def attr_escape_javascript(s)
     escape_javascript(s).gsub(/\\'/,'\x27').gsub(/\\"/,'\x22')
   end
-  
+
   def nl2br(s)
      s.gsub(/\n/, '<br>')
   end
@@ -138,21 +141,21 @@ module ApplicationHelper
   def url_charity(charity)
     { :controller => "charities", :action => "details", :url => charity.short_url, :subdomain => 'www' }
   end
-  
+
   def shop_home_path(shop)
     { :controller => "shops", :action => "home", :short_url => shop.short_url, :subdomain => 'shop' }
   end
-  
+
   def shop_details_path(shop)
     { :controller => "shops", :action => "details", :short_url => shop.short_url, :subdomain => 'shop' }
   end
-  
+
   def styled_will_paginate(collection, atts={})
     will_paginate collection, {:previous_label => image_tag('pegiarL.png'), :next_label => image_tag('pegiarR.png'), :class => 'pegi', :inner_window => 0, :outer_window => 0}.merge(atts)
   end
 
   def all_shops_path
-    { :controller => "shops", :action => "index", :subdomain => 'shop' }
+    { :controller => "/shops", :action => "index", :subdomain => 'shop' }
   end
 
   # Returns javascript snippet for submitting first parent form
@@ -222,7 +225,7 @@ module ApplicationHelper
 
     html.to_html.html_safe
   end
-  
+
   def orange_link_to_function(*args, &block)
     html = Hpricot(link_to_function(*args, &block))
     html.search('a').wrap('<div class="buttonMainFloat"></div>')
@@ -233,16 +236,16 @@ module ApplicationHelper
 
     html.to_html.html_safe
   end
-  
+
   def inline_orange_link_to(*args, &block)
     html = Hpricot(link_to(*args, &block))
     html.search('a').wrap('<span class="buttonMainFloat"></span>')
-    html.search('a').add_class 'buttonSide accBtnMi' 
+    html.search('a').add_class 'buttonSide accBtnMi'
     html.search('a').set "style", "width: auto;"
     gra = html.search('.buttonMainFloat')
     gra.prepend('<span class="buttonSide accBtnSt"></span>')
     gra.append('<span class="buttonSide accBtnEn"></span>')
-    
+
     gra.wrap('<span style= "float:right; display: inline;"></span>')
 
     html.to_html.html_safe
@@ -271,31 +274,31 @@ module ApplicationHelper
       end
     end
   end
-  
+
   def bivo_form_for(record_or_name_or_array, *args, &proc)
     options = args.extract_options!
     form_for(record_or_name_or_array, *(args << options.merge(:builder => BivoFormBuilder)), &proc)
   end
-    
+
   def set_zebra_style_to_table(table_class, even_class, odd_class)
     "$(document).ready(function() {
        $('.#{table_class.to_s} tr:has(td):even').addClass('#{even_class.to_s}');
        $('.#{table_class.to_s} tr:has(td):odd').addClass('#{odd_class.to_s}');
      });"
   end
-  
+
   def charity_short_url_prefix
     request.protocol + request.host + request.port_string + '/charity/'
   end
-  
+
   def cause_short_url_prefix
     request.protocol + request.host + request.port_string + '/cause/'
   end
-  
+
   def static_page(id)
     { :controller => '/home', :action => :about, :id => id, :subdomain => 'www' }
   end
-  
+
   def feedback_url
     "http://bivo.uservoice.com/"
   end

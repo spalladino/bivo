@@ -130,7 +130,7 @@ class CausesController < ApplicationController
     if !current_user.is_admin_user
       @charity = current_user
     else
-      @charity = Charity.find(params[:cause][:charity_id])
+      @charity = Charity.find(params[:charity_id])
     end
 
     if @charity.status_inactive?

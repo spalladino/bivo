@@ -1,7 +1,12 @@
-    <%= f.label :sources %>
-    <%= f.select :income_category_id, income_categories.collect{ |c| [c.name, c.id] }, :include_blank => true %>
+   <%= f.label :sources %>
+   <%= f.select :income_category_id, income_categories.collect{ |c| [c.name, c.id] }, :include_blank => true %>
+
+	<p class="accfilTxt" style="width: 100%; padding-left: 175px;">
+		<%= link_to _("Manage Sources"), income_categories_path, :class => "iframe" %>
+	</p>
 
     <div id="shop" style="<%= get_shop_display(transaction) %>">
       <%= f.label :shops %>
       <%= f.select :shop_id, shops.collect{ |s| [s.name, s.id] }, :include_blank => true %>
     </div>
+

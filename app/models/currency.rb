@@ -22,4 +22,17 @@ class Currency
       nil
     end
   end
+  
+  def self.from_geo(zone, country)
+    case zone
+      when 'SA'
+        'ARS'
+      when 'NA'
+        country == 'CA' ? 'CAD' : 'USD'
+      when 'EU'
+        country == 'GB' ? 'GBP' : 'EUR'
+      else
+        'GBP'
+    end    
+  end
 end
