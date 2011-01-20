@@ -4,4 +4,9 @@
 	<%= link_to "#{lang.name} (#{Shop.translation_pending(lang.id).count} pending translations)", :action => "translate", :language_for_transalte => lang.id%> <br/>
 <% end %>
 </div>
+
+<br class="spacer" />
+<%=back_button(_("Go back"))%>
+<br class="spacer" />
+
 <% end %>
