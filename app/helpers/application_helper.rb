@@ -6,8 +6,9 @@ module ApplicationHelper
   end
 
   def back_button(text)
-   return orange_link_to text,:back
+    return orange_link_to text, "javascript:history.back()"
   end
+  
   # Wraps the js code within a document ready initializer
   def on_document_ready(&block)
     "$(function() { #{block.call} });".html_safe

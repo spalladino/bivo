@@ -1,5 +1,12 @@
-<h1><%= _("Choose a language for start translations")%></h1>
-
+<%= large_single_block _("Choose a language for start translations") do %>
+<div class="default_font">
 <% @languages.each do |lang|%>
-	<%= link_to "#{lang.name} (#{Shop.translation_pending(lang.id).count} pending translations)", :action => "translate", :language_for_transalte => lang.id%> </br>
+	<%= link_to "#{lang.name} (#{Shop.translation_pending(lang.id).count} pending translations)", :action => "translate", :language_for_transalte => lang.id%> <br/>
+<% end %>
+</div>
+
+<br class="spacer" />
+<%=back_button(_("Go back"))%>
+<br class="spacer" />
+
 <% end %>

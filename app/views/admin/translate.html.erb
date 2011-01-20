@@ -1,17 +1,33 @@
-<h1><%= @t_language%></h1>
+<%= large_single_block _("Translations for %s") % Language.by_id(@t_language).name do %>
 
 <% @translated_classes.each do |clazz|%>
 	<%clazz.translated_fields[:translate].each do |field|%>
-		<h2><%= clazz.name%> <%=field.to_s%></h2>
+	
+	<div class="cvNews"><h2><%= clazz.name%> <%=field.to_s%></h2></div>
+	<div class="cvNewsBox"><div style="padding: 20px;">
+	
 			<ul>
 				<% clazz.translation_pending(@t_language).each do |instance|%>
 					<%= form_tag({:action => "save_translation", :id => instance.id, :clazz => clazz.name, :t_field => field, :lang => @t_language}, {:remote => true}) do %>
-						<li><%= label_tag :translation, instance.send(field)%>
-					    <%= text_field_tag :translation %>
-					    <%= submit_tag "Translate"%></li>
+						<li>
+							<p class="accfilTxt">
+								<%= label_tag :translation, instance.send(field)%>
+							</p>
+						    <%= text_field_tag :translation, nil, :class => "accfil", :style => "margin-right: 10px" %>
+						    <%= orange_submit_tag "Translate" %>
+							<br class="spacer"/>
+						</li>
 					  <% end %>		
 				<%end%>
 			</ul>
-	<%end%>
+
+			<br class="spacer" />
+			<%=back_button(_("Go back"))%>
+			<br class="spacer" />
+	</div></div>
 	
+	<%end%>
+		
+<%end%>
+
 <%end%>

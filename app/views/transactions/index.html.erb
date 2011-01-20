@@ -37,10 +37,17 @@
         	<%= _('Show') %>
 	        <%= select_tag :kind, options_for_select(@kinds, @kind), :class => :genChoo2 %>
         </p>
-	      <p class="genFilTxt2"><%= _('Filter by') %></p>
+
+        <p class="genFilTxt2">
+          <%= _('Order By') %>
+	        <%= select_tag :sorting, options_for_select(@sortings, @sorting), :class => :genChoo2 %>
+        </p>
+
+
+         <p class="genFilTxt2"><%= _('Filter by') %></p>
         <p>
           <%= text_field_tag :description, @description, :id => 'description_filter', :class => "genFil" %>
-          <%= link_to_function(_('clear'), "$('#description_filter').val('').change();") if @name %>    
+          <%= link_to_function(_('clear'), "$('#description_filter').val('').change();") if @name %>
         </p>
         <p class="genFilTxt2">
           <%= _('Period') %>
@@ -59,7 +66,7 @@
         </div>
         <br class="spacer"/>
         <br class="spacer"/>
-       	<div style="margin-left:430px;"><%= orange_submit_tag _('Search'), :disable_with => _('Searching...') %></div>    
+       	<div style="margin-left:430px;"><%= orange_submit_tag _('Search'), :disable_with => _('Searching...') %></div>
       </div>
 
       <br class="spacer">
@@ -82,3 +89,4 @@
     </div>
   <% end %>
 <% end %>
+
