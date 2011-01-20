@@ -7,7 +7,7 @@
     <%= hidden_field_tag :referer, @referer %>
 
     <%= f.label :email, _("E-Mail") %>
-    <%= f.text_field :email %>
+    <%= f.text_field :email, :readonly => @resource.from_facebook %>
 
     <%= f.label :password,_("Password") %>
     <%= f.password_field :password %>
