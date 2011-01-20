@@ -40,17 +40,8 @@ class ApplicationController < ActionController::Base
     if user_signed_in? && Currency.by_id(current_user.preferred_currency)
       session[:currency] = current_user.preferred_currency.to_sym
     elsif session[:currency].nil?
-      country = self.get_country_from_ip
-      case country[6]
-      when 'SA'
-        session[:currency] = 'ARS'
-      when 'NA'
-        session[:currency] = country[3] == 'CA' ? 'CAD' : 'USD'
-      when 'EU'
-        session[:currency] = country[3] == 'GB' ? 'GBP' : 'EUR'
-      else
-        session[:currency] = 'GBP'
-      end
+      country_data = self.get_country_from_ip
+      session[:currency] = Currency.from_geo country_data[6], country_data[3]
     end
   end
 
