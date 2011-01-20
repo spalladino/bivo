@@ -1,0 +1,27 @@
+<%= title _('Manage Income Sources') %>
+
+<%= pop_up_single_block _("Income Sources") do %>
+  <table class="zebra_table" style="margin-left:5px;">
+    <% if (@income_categories.any?) %>
+      <tr>
+        <th style="width:290px;">Name</th>
+        <th></th>
+        <th class="noBord"></th>
+      </tr>
+      <% @income_categories.each do |income_category| %>
+        <tr>
+          <td><%= income_category.name %></td>
+          <td><%= orange_link_to('Edit', edit_income_category_path(income_category)) unless income_category.name == IncomeCategory::ShopName %></td>
+          <td class="noBord"><%= orange_link_to(_('Delete'), income_category, :confirm => 'Are you sure you want to delete this source?', :method => :delete) unless income_category.name == IncomeCategory::ShopName %></td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td class="noBord" colspan="3"><%=_('No Income Sources Found')%></td>
+      </tr>
+    <% end %>
+  </table>
+  <br class="spacer" />
+  <%= orange_link_to 'New Income Source', new_income_category_path %>
+<% end %>
+

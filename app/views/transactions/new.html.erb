@@ -6,11 +6,19 @@ $(document).ready(function(){
 
 		  // save current selection
 		  var current_selection = $('#transaction_expense_category_id').val();
+      var income_current_selection = $('#transaction_income_category_id').val();
 
 		  $('#transaction_expense_category_id')
 		  .load('<%=url_for :controller => 'expense_categories', :action => 'list_options'%>', function(){
         if (current_selection) {
           $("#transaction_expense_category_id option[value='" + current_selection + "']").attr('selected', 'selected');
+        }
+		  });
+
+      $('#transaction_income_category_id')
+		  .load('<%=url_for :controller => 'income_categories', :action => 'list_options'%>', function(){
+        if (income_current_selection) {
+          $("#transaction_income_category_id option[value='" + income_current_selection + "']").attr('selected', 'selected');
         }
 		  });
     }
@@ -83,3 +91,4 @@ $(document).ready(function(){
 <% end %>
 
 <% end %>
+
