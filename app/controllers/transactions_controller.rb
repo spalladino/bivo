@@ -3,6 +3,14 @@ class TransactionsController < ApplicationController
   before_filter :only_admin, :except => [:index]
 
  def index
+
+
+    if params[:kind]
+      @sorting = params[:sorting].to_sym
+    else
+      @sorting = :all
+    end
+
    # Filter by kind (income-expense)
     if params[:kind]
       @kind = params[:kind].to_sym
@@ -32,10 +40,29 @@ class TransactionsController < ApplicationController
     #get transactions that match period
     @transactions = @transactions.where('transactions.transaction_date BETWEEN ? AND ?', @from, @to) unless @period.nil?
 
+    @transactions = @transactions.order case @sorting
+      when :type then 'type ASC'
+      when :date_new then 'transaction_date DESC'
+      when :date_old then 'transaction_date ASC'
+      when :description then 'description ASC'
+      when :amount_desc then 'amount DESC'
+      when :amount_asc then 'amount ASC'
+
+      else'id ASC'
+     end
+
     # Set result count
     @count = @transactions.count
 
     # Set pagination
+    @sortings = [
+      [_('type'), :type],
+      [_('newest'), :date_new],
+      [_('oldest'), :date_old],
+      [_('description'), :description],
+      [_('greater amount'),:amount_desc],
+      [_('lower amount'),:amount_asc]
+    ]
     @per_page = (params[:per_page] || 10).to_i
     @transactions = @transactions.paginate(:per_page => @per_page, :page => params[:page])
     @kinds = [:all, :income, :expense]
