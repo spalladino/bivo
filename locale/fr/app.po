@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: version 0.0.1\n"
-"POT-Creation-Date: 2011-01-14 17:07-0300\n"
+"POT-Creation-Date: 2011-01-20 17:09-0300\n"
 "PO-Revision-Date: 2010-11-19 14:21-0300\n"
 "Last-Translator: mhick <mhick@paros>\n"
 "Language-Team: French\n"
@@ -18,13 +18,13 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: app/views/charities/details.html.erb:49
-#: app/views/charities/_charities.html.erb:32
+#: app/views/charities/_charities.html.erb:27
 msgid " cause"
 msgid_plural " causes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/views/charities/_charities.html.erb:32
+#: app/views/charities/_charities.html.erb:27
 msgid " causes"
 msgstr ""
 
@@ -34,16 +34,61 @@ msgid ""
 "today."
 msgstr ""
 
-#: app/views/charities/_charities.html.erb:26
+#: app/views/mailer/cause_being_followed.html.erb:1
+msgid " from charity "
+msgstr ""
+
+#: app/views/mailer/cause_commented_for_charity.html.erb:1
+msgid " from your charity."
+msgstr ""
+
+#: app/views/mailer/news_created_to_charity.html.erb:1
+#: app/views/mailer/news_created_to_cause.html.erb:1
+msgid " has news: "
+msgstr ""
+
+#: app/views/causes/inactive.html.erb:3
+msgid " if you have questions."
+msgstr ""
+
+#: app/views/charities/_charities.html.erb:21
 #: app/views/charities/details.html.erb:48
 msgid " raised"
+msgstr ""
+
+#: app/mailers/mailer.rb:43
+msgid "\" from your charity has a new comment"
+msgstr ""
+
+#: app/mailers/mailer.rb:26
+msgid "\" from your charity has changed its status"
+msgstr ""
+
+#: app/mailers/mailer.rb:77
+msgid "\" from your charity is fully funded"
+msgstr ""
+
+#: app/mailers/mailer.rb:10 app/mailers/mailer.rb:18
+msgid "\" has a new Follower"
+msgstr ""
+
+#: app/mailers/mailer.rb:52 app/mailers/mailer.rb:61 app/mailers/mailer.rb:69
+msgid "\" has a new comment"
+msgstr ""
+
+#: app/mailers/mailer.rb:94 app/mailers/mailer.rb:103
+msgid "\" has news"
+msgstr ""
+
+#: app/mailers/mailer.rb:85
+msgid "\"is fully funded"
 msgstr ""
 
 #: app/views/shops/_form.html.erb:48
 msgid "$query word will be replaced in the search box option"
 msgstr ""
 
-#: app/controllers/causes_controller.rb:297
+#: app/controllers/causes_controller.rb:307
 msgid "% of completion"
 msgstr ""
 
@@ -55,14 +100,19 @@ msgstr ""
 msgid "%s at Bivo and help us -- and the charities we support -- grow."
 msgstr ""
 
-#: app/views/transactions/index.html.erb:69 app/views/shops/search.html.erb:28
+#: app/views/transactions/index.html.erb:76 app/views/shops/search.html.erb:28
 #: app/views/shops/index.html.erb:54
 msgid "%{count} Result Found"
 msgid_plural "%{count} Results Found"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/views/shared/_footer.html.erb:32
+#: app/views/mailer/charity_commented_for_follower.html.erb:1
+#: app/views/mailer/cause_commented_for_follower.html.erb:1
+msgid ", which you are following."
+msgstr ""
+
+#: app/views/shared/_footer.html.erb:33
 msgid "2010 Bivo. All Rights Reserved."
 msgstr ""
 
@@ -74,6 +124,18 @@ msgstr ""
 msgid ">"
 msgstr ""
 
+#: app/mailers/mailer.rb:34
+msgid "A cause you follow has changed its status"
+msgstr ""
+
+#: app/views/mailer/cause_being_followed.html.erb:1
+msgid "A new user is following the cause "
+msgstr ""
+
+#: app/views/mailer/charity_being_followed.html.erb:1
+msgid "A new user is following the charity "
+msgstr ""
+
 #: app/views/shared/_footer.html.erb:5 app/views/shared/_user_nav.html.erb:39
 msgid "About Bivo"
 msgstr ""
@@ -82,7 +144,7 @@ msgstr ""
 msgid "About me"
 msgstr ""
 
-#: app/views/home/accept_eula.html.erb:12
+#: app/views/home/accept_eula.html.erb:17
 msgid "Accept"
 msgstr ""
 
@@ -106,13 +168,17 @@ msgstr ""
 msgid "Account|Name"
 msgstr ""
 
-#: app/helpers/shops_helper.rb:7 app/helpers/application_helper.rb:37
+#: app/views/causes/inactive.html.erb:1
+msgid "Action not allowed"
+msgstr ""
+
+#: app/helpers/shops_helper.rb:7 app/helpers/application_helper.rb:42
 #: app/helpers/cause_helper.rb:87
 msgid "Activate"
 msgstr ""
 
-#: app/controllers/causes_controller.rb:195
-#: app/controllers/shops_controller.rb:116
+#: app/controllers/causes_controller.rb:205
+#: app/controllers/shops_controller.rb:117
 #: app/controllers/charities_controller.rb:91
 msgid "Activated"
 msgstr ""
@@ -157,7 +223,7 @@ msgstr ""
 msgid "Affiliate program details:"
 msgstr ""
 
-#: app/controllers/causes_controller.rb:242
+#: app/controllers/causes_controller.rb:252
 #: app/controllers/charities_controller.rb:157
 msgid "All"
 msgstr ""
@@ -174,6 +240,7 @@ msgstr ""
 msgid "All funds are raised"
 msgstr ""
 
+#: app/views/transactions/_transactions.html.erb:8
 #: app/views/home/stats.html.erb:51 app/views/home/stats.html.erb:71
 msgid "Amount"
 msgstr ""
@@ -186,7 +253,7 @@ msgstr ""
 msgid "Approve"
 msgstr ""
 
-#: app/helpers/charities_helper.rb:55 app/helpers/cause_helper.rb:172
+#: app/helpers/charities_helper.rb:55 app/helpers/cause_helper.rb:173
 msgid "Approve comments (%s)"
 msgstr ""
 
@@ -194,7 +261,7 @@ msgstr ""
 msgid "Approved"
 msgstr ""
 
-#: app/views/shops/_form.html.erb:92
+#: app/views/shops/_form.html.erb:93
 msgid "Are you sure you want to delete this shop?"
 msgstr ""
 
@@ -206,7 +273,7 @@ msgstr ""
 msgid "Area"
 msgstr ""
 
-#: app/views/home/accept_eula.html.erb:2
+#: app/views/home/accept_eula.html.erb:4
 msgid ""
 "As you login from facebook the first time, you should accept the terms and "
 "conditions of Bivo"
@@ -220,6 +287,7 @@ msgstr ""
 msgid "Available"
 msgstr ""
 
+#: app/views/income_categories/_form.html.erb:21
 #: app/views/expense_categories/_form.html.erb:21
 msgid "Back"
 msgstr ""
@@ -228,7 +296,7 @@ msgstr ""
 msgid "Birthday"
 msgstr ""
 
-#: app/views/shared/_footer.html.erb:15
+#: app/views/shared/_footer.html.erb:16
 msgid "Bivo Ideas"
 msgstr ""
 
@@ -236,17 +304,13 @@ msgstr ""
 msgid "Bivo donates commissions from all sales to the causes our users choose."
 msgstr ""
 
-#: app/views/shared/_footer.html.erb:34
+#: app/views/shared/_footer.html.erb:35
 msgid "Bivo is a Community Interest Company"
 msgstr ""
 
 #: app/views/charities/manage_comments.html.erb:12
 #: app/views/charities/manage_comments.html.erb:44
 msgid "Body"
-msgstr ""
-
-#: app/views/causes/details.html.erb:7
-msgid "Build the best skatepark in the midwest"
 msgstr ""
 
 #: app/views/home/index.html.erb:27
@@ -264,7 +328,11 @@ msgstr ""
 msgid "Can't delete shop with incomes"
 msgstr ""
 
-#: app/views/causes/_form.html.erb:21
+#: app/views/transactions/edit.html.erb:26 app/views/shops/_form.html.erb:88
+#: app/views/users/passwords/new.html.erb:11
+#: app/views/users/registrations/edit.html.erb:85
+#: app/views/admin/new_personal_user.html.erb:34
+#: app/views/admin/new_charity.html.erb:62 app/views/causes/_form.html.erb:21
 msgid "Cancel"
 msgstr ""
 
@@ -290,18 +358,6 @@ msgstr ""
 msgid "Cause Name"
 msgstr ""
 
-#: app/mailers/mailer.rb:77 app/mailers/mailer.rb:85
-msgid "Cause completed"
-msgstr ""
-
-#: app/mailers/mailer.rb:26 app/mailers/mailer.rb:34
-msgid "Cause status changed"
-msgstr ""
-
-#: app/views/mailer/cause_status_changed_for_follower.html.erb:1
-msgid "Cause status has changed."
-msgstr ""
-
 #: locale/model_attributes.rb:5
 msgid "CauseCategory|Name"
 msgstr ""
@@ -314,8 +370,12 @@ msgstr ""
 msgid "Causes List"
 msgstr ""
 
-#: app/views/home/dashboard.html.erb:36
-msgid "Causes being funded"
+#: app/views/home/dashboard.html.erb:24
+msgid "Causes currently raising funds"
+msgstr ""
+
+#: app/views/home/dashboard.html.erb:49
+msgid "Causes funded"
 msgstr ""
 
 #: app/views/shared/_pre_footer.html.erb:7
@@ -374,7 +434,7 @@ msgstr ""
 msgid "Channel"
 msgstr ""
 
-#: app/views/admin/tools.html.erb:12
+#: app/views/charities/index.html.erb:22 app/views/admin/tools.html.erb:12
 msgid "Charities"
 msgstr ""
 
@@ -500,7 +560,7 @@ msgstr ""
 msgid "Completed (%s funds raised)."
 msgstr ""
 
-#: app/helpers/home_helper.rb:18 app/views/shared/_footer.html.erb:12
+#: app/helpers/home_helper.rb:18 app/views/shared/_footer.html.erb:13
 msgid "Contact Us"
 msgstr ""
 
@@ -556,21 +616,22 @@ msgstr ""
 msgid "Date from can't be bigger than date to"
 msgstr ""
 
-#: app/helpers/shops_helper.rb:7 app/helpers/application_helper.rb:37
+#: app/helpers/shops_helper.rb:7 app/helpers/application_helper.rb:42
 #: app/helpers/cause_helper.rb:87
 msgid "Deactivate"
 msgstr ""
 
-#: app/controllers/causes_controller.rb:206
-#: app/controllers/shops_controller.rb:126
+#: app/controllers/causes_controller.rb:216
+#: app/controllers/shops_controller.rb:127
 #: app/controllers/charities_controller.rb:103
 msgid "Deactivated"
 msgstr ""
 
 #: app/helpers/news_helper.rb:31 app/helpers/shops_helper.rb:26
 #: app/helpers/comments_helper.rb:31 app/helpers/charities_helper.rb:33
-#: app/helpers/cause_helper.rb:156 app/views/shops/_form.html.erb:92
+#: app/helpers/cause_helper.rb:156 app/views/shops/_form.html.erb:93
 #: app/views/shop_categories/edit.html.erb:20
+#: app/views/income_categories/index.html.erb:15
 #: app/views/expense_categories/index.html.erb:15
 #: app/views/admin/_users.html.erb:31
 msgid "Delete"
@@ -612,6 +673,10 @@ msgstr ""
 msgid "Donate to charity when"
 msgstr ""
 
+#: app/views/galleries/edit.html.erb:47
+msgid "Done"
+msgstr ""
+
 #: app/views/users/registrations/edit.html.erb:9
 #: app/views/users/confirmations/new.html.erb:6
 #: app/views/admin/new_personal_user.html.erb:7
@@ -621,7 +686,7 @@ msgstr ""
 
 #: app/helpers/shops_helper.rb:20 app/helpers/comments_helper.rb:23
 #: app/helpers/cause_helper.rb:146
-#: app/views/transactions/_transactions.html.erb:17
+#: app/views/transactions/_transactions.html.erb:19
 #: app/views/charities/details.html.erb:13 app/views/admin/_users.html.erb:30
 msgid "Edit"
 msgstr ""
@@ -638,7 +703,7 @@ msgstr ""
 msgid "Edit Expense"
 msgstr ""
 
-#: app/helpers/application_helper.rb:54
+#: app/helpers/application_helper.rb:59
 msgid "Edit Gallery"
 msgstr ""
 
@@ -674,7 +739,7 @@ msgid ""
 "(i.e. Amazon)"
 msgstr ""
 
-#: app/controllers/causes_controller.rb:197
+#: app/controllers/causes_controller.rb:207
 msgid "Error activating cause"
 msgstr ""
 
@@ -682,7 +747,7 @@ msgstr ""
 msgid "Error activating charity"
 msgstr ""
 
-#: app/controllers/shops_controller.rb:118
+#: app/controllers/shops_controller.rb:119
 msgid "Error activating shop"
 msgstr ""
 
@@ -690,7 +755,7 @@ msgstr ""
 msgid "Error creating news."
 msgstr ""
 
-#: app/controllers/causes_controller.rb:208
+#: app/controllers/causes_controller.rb:218
 msgid "Error deactivating cause"
 msgstr ""
 
@@ -698,17 +763,21 @@ msgstr ""
 msgid "Error deactivating charity"
 msgstr ""
 
-#: app/controllers/shops_controller.rb:128
+#: app/controllers/shops_controller.rb:129
 msgid "Error deactivating shop"
 msgstr ""
 
-#: app/controllers/causes_controller.rb:219
 #: app/controllers/causes_controller.rb:229
+#: app/controllers/causes_controller.rb:239
 msgid "Error marking as UnPaid cause"
 msgstr ""
 
 #: app/controllers/admin_controller.rb:128
 msgid "Error saving translation"
+msgstr ""
+
+#: app/controllers/income_categories_controller.rb:34
+msgid "Error, invalid name"
 msgstr ""
 
 #: app/controllers/galleries_controller.rb:31
@@ -755,7 +824,7 @@ msgstr ""
 msgid "Female"
 msgstr ""
 
-#: app/views/transactions/index.html.erb:40
+#: app/views/transactions/index.html.erb:47
 #: app/views/charities/index.html.erb:45 app/views/causes/index.html.erb:41
 msgid "Filter by"
 msgstr ""
@@ -772,7 +841,7 @@ msgstr ""
 msgid "Follow"
 msgstr ""
 
-#: app/controllers/causes_controller.rb:280
+#: app/controllers/causes_controller.rb:290
 msgid "Follow already exists"
 msgstr ""
 
@@ -799,7 +868,7 @@ msgstr ""
 msgid "Founds Needed: "
 msgstr ""
 
-#: app/views/transactions/index.html.erb:52
+#: app/views/transactions/index.html.erb:59
 msgid "From"
 msgstr ""
 
@@ -807,17 +876,17 @@ msgstr ""
 msgid "From:"
 msgstr ""
 
-#: app/helpers/home_helper.rb:20 app/views/shared/_footer.html.erb:16
+#: app/helpers/home_helper.rb:20 app/views/shared/_footer.html.erb:17
 msgid "Fund Raisers"
 msgstr ""
 
-#: app/views/home/dashboard.html.erb:23
+#: app/views/home/dashboard.html.erb:35
 msgid "Fundraising Sources"
 msgstr ""
 
 #: app/views/causes/_form_sensitive_readonly.html.erb:10
 #: app/views/causes/_form_sensitive_edit.html.erb:18
-#: app/views/causes/_cause.html.erb:20
+#: app/views/causes/_cause.html.erb:21
 msgid "Funds needed"
 msgstr ""
 
@@ -857,6 +926,16 @@ msgstr ""
 msgid "Gallery|Entity type"
 msgstr ""
 
+#: app/views/charities/manage_comments.html.erb:67
+msgid "Go Back"
+msgstr ""
+
+#: app/views/admin/translate.html.erb:25
+#: app/views/admin/choose_language.html.erb:9
+#: app/views/causes/inactive.html.erb:6
+msgid "Go back"
+msgstr ""
+
 #: app/views/shops/_affiliate_code.html.erb:8
 msgid "Go to "
 msgstr ""
@@ -866,10 +945,10 @@ msgid "Go to Dashboard"
 msgstr ""
 
 #: app/views/mailer/funds_completed_for_charity.html.erb:1
-msgid "Hello charity %1$s. The funds of the cause %2$s have been completed."
+msgid "Hello charity %1$s. The cause %2$s is fully funded."
 msgstr ""
 
-#: app/views/shared/_footer.html.erb:20
+#: app/views/shared/_footer.html.erb:21
 msgid "Help Bivo"
 msgstr ""
 
@@ -893,21 +972,31 @@ msgstr ""
 msgid "I accept the "
 msgstr ""
 
-#: app/views/home/accept_eula.html.erb:11
+#: app/views/home/accept_eula.html.erb:15
 msgid "I agree to the terms and conditions"
 msgstr ""
 
-#: app/views/users/sessions/new.html.erb:43
-msgid ""
-"If you are a charity, please use bivo registration and cancel the sign in. "
-"Otherwise, click ok."
+#: app/controllers/causes_controller.rb:137
+msgid "Inactive charity"
+msgstr ""
+
+#: app/views/income_categories/index.html.erb:3
+msgid "Income Sources"
+msgstr ""
+
+#: app/views/income_categories/new.html.erb:1
+msgid "Income Sources | Add"
+msgstr ""
+
+#: app/views/income_categories/edit.html.erb:1
+msgid "Income Sources | Edit"
 msgstr ""
 
 #: locale/model_attributes.rb:13
 msgid "IncomeCategory|Name"
 msgstr ""
 
-#: app/views/shared/_footer.html.erb:26
+#: app/views/shared/_footer.html.erb:27
 msgid "International"
 msgstr ""
 
@@ -972,6 +1061,14 @@ msgstr ""
 msgid "Manage Expense Categories"
 msgstr ""
 
+#: app/views/income_categories/index.html.erb:1
+msgid "Manage Income Sources"
+msgstr ""
+
+#: app/views/transactions/_income_fields.html.erb:5
+msgid "Manage Sources"
+msgstr ""
+
 #: app/helpers/cause_helper.rb:102
 msgid "Mark as Paid"
 msgstr ""
@@ -980,15 +1077,15 @@ msgstr ""
 msgid "Mark as Unpaid"
 msgstr ""
 
-#: app/controllers/causes_controller.rb:217
+#: app/controllers/causes_controller.rb:227
 msgid "Marked as Paid"
 msgstr ""
 
-#: app/controllers/causes_controller.rb:227
+#: app/controllers/causes_controller.rb:237
 msgid "Marked as UnPaid"
 msgstr ""
 
-#: app/views/home/dashboard.html.erb:55
+#: app/views/home/dashboard.html.erb:61
 msgid "Most voted causes queued for funding"
 msgstr ""
 
@@ -997,29 +1094,17 @@ msgid "My Home"
 msgstr ""
 
 #: app/views/charities/details.html.erb:82
+#: app/views/income_categories/_form.html.erb:15
 #: app/views/expense_categories/_form.html.erb:15
 #: app/views/admin/_users.html.erb:4
 msgid "Name"
 msgstr ""
 
-#: app/mailers/mailer.rb:10 app/mailers/mailer.rb:18
-msgid "New Follower"
-msgstr ""
-
-#: app/mailers/mailer.rb:52
-msgid "New comment for cause"
-msgstr ""
-
-#: app/mailers/mailer.rb:43
-msgid "New comment in your cause"
-msgstr ""
-
-#: app/mailers/mailer.rb:69
-msgid "New comment in your page"
-msgstr ""
-
-#: app/mailers/mailer.rb:61
-msgid "New comment to charity"
+#: app/views/mailer/charity_commented_for_follower.html.erb:3
+#: app/views/mailer/charity_commented_for_charity.html.erb:3
+#: app/views/mailer/cause_commented_for_charity.html.erb:3
+#: app/views/mailer/cause_commented_for_follower.html.erb:3
+msgid "New comment:"
 msgstr ""
 
 #: app/views/users/registrations/edit.html.erb:68
@@ -1028,14 +1113,6 @@ msgstr ""
 
 #: app/views/news/_news.html.erb:18
 msgid "News"
-msgstr ""
-
-#: app/mailers/mailer.rb:94
-msgid "News about the cause"
-msgstr ""
-
-#: app/mailers/mailer.rb:103
-msgid "News about the charity"
 msgstr ""
 
 #: locale/model_attributes.rb:121
@@ -1054,16 +1131,20 @@ msgstr ""
 msgid "No Expense Categories Found"
 msgstr ""
 
+#: app/views/income_categories/index.html.erb:20
+msgid "No Income Sources Found"
+msgstr ""
+
 #: app/views/causes/_causes.html.erb:9
 msgid "No causes have been found."
 msgstr ""
 
-#: app/views/home/dashboard.html.erb:56
+#: app/views/home/dashboard.html.erb:50 app/views/home/dashboard.html.erb:62
 msgid "No causes in the current period"
 msgstr ""
 
-#: app/views/home/dashboard.html.erb:37
-msgid "No causes with votes in the current period"
+#: app/views/home/dashboard.html.erb:25
+msgid "No causes to display"
 msgstr ""
 
 #: app/views/shops/_shops.html.erb:36
@@ -1074,15 +1155,19 @@ msgstr ""
 msgid "One purchase at a time."
 msgstr ""
 
-#: app/controllers/causes_controller.rb:250
+#: app/controllers/causes_controller.rb:260
 msgid "Only admin"
 msgstr ""
 
-#: app/controllers/causes_controller.rb:257
+#: app/controllers/causes_controller.rb:267
 msgid "Only admin or charity"
 msgstr ""
 
-#: app/views/causes/_cause.html.erb:17
+#: app/views/transactions/index.html.erb:42
+msgid "Order By"
+msgstr ""
+
+#: app/views/causes/_cause.html.erb:18
 msgid "Organized by"
 msgstr ""
 
@@ -1149,7 +1234,7 @@ msgstr ""
 msgid "PendingMail|Retries"
 msgstr ""
 
-#: app/views/transactions/index.html.erb:46
+#: app/views/transactions/index.html.erb:53
 msgid "Period"
 msgstr ""
 
@@ -1165,7 +1250,7 @@ msgstr ""
 msgid "Photo submitted"
 msgstr ""
 
-#: app/controllers/application_controller.rb:155
+#: app/controllers/application_controller.rb:151
 msgid "Please select a valid date (now displaying current month)."
 msgstr ""
 
@@ -1193,7 +1278,7 @@ msgstr ""
 msgid "Register"
 msgstr ""
 
-#: app/views/shared/_footer.html.erb:36
+#: app/views/shared/_footer.html.erb:37
 msgid "Registered in England"
 msgstr ""
 
@@ -1226,11 +1311,12 @@ msgid "Revenue details"
 msgstr ""
 
 #: app/helpers/comments_helper.rb:44
+#: app/views/income_categories/_form.html.erb:20
 #: app/views/expense_categories/_form.html.erb:20
 msgid "Save"
 msgstr ""
 
-#: app/views/transactions/index.html.erb:62 app/views/shops/search.html.erb:18
+#: app/views/transactions/index.html.erb:69 app/views/shops/search.html.erb:18
 #: app/views/home/_choose_period.html.erb:62
 #: app/views/admin/user_manager.html.erb:10 app/views/causes/index.html.erb:45
 msgid "Search"
@@ -1252,7 +1338,7 @@ msgstr ""
 msgid "Search for a product, service, or retailer, such as Amazon, here."
 msgstr ""
 
-#: app/views/transactions/index.html.erb:62
+#: app/views/transactions/index.html.erb:69
 #: app/views/admin/user_manager.html.erb:10 app/views/causes/index.html.erb:45
 msgid "Searching..."
 msgstr ""
@@ -1261,7 +1347,7 @@ msgstr ""
 msgid "See How it Works !"
 msgstr ""
 
-#: app/views/shared/_footer.html.erb:23 app/views/home/about.html.erb:27
+#: app/views/shared/_footer.html.erb:24 app/views/home/about.html.erb:28
 msgid "Send Feedback"
 msgstr ""
 
@@ -1269,7 +1355,7 @@ msgstr ""
 msgid "Send me bivo.org news"
 msgstr ""
 
-#: app/views/users/passwords/new.html.erb:9
+#: app/views/users/passwords/new.html.erb:8
 msgid "Send me reset password instructions"
 msgstr ""
 
@@ -1298,19 +1384,19 @@ msgstr ""
 msgid "Shop at %s"
 msgstr ""
 
-#: app/controllers/shops_controller.rb:141
+#: app/controllers/shops_controller.rb:142
 msgid "Shop could not be deleted"
 msgstr ""
 
-#: app/controllers/shops_controller.rb:138
+#: app/controllers/shops_controller.rb:139
 msgid "Shop has been deleted"
 msgstr ""
 
-#: app/controllers/shops_controller.rb:93
+#: app/controllers/shops_controller.rb:94
 msgid "Shop successfully created"
 msgstr ""
 
-#: app/controllers/shops_controller.rb:102
+#: app/controllers/shops_controller.rb:103
 msgid "Shop successfully updated"
 msgstr ""
 
@@ -1318,7 +1404,9 @@ msgstr ""
 msgid "ShopCategory|Name"
 msgstr ""
 
-#: app/views/shared/_footer.html.erb:29 app/views/admin/tools.html.erb:11
+#: app/views/shared/_footer.html.erb:11 app/views/shared/_footer.html.erb:30
+#: app/views/shops/search.html.erb:6 app/views/home/about.html.erb:15
+#: app/views/admin/tools.html.erb:11
 msgid "Shops"
 msgstr ""
 
@@ -1398,7 +1486,7 @@ msgstr ""
 msgid "Show"
 msgstr ""
 
-#: app/views/transactions/index.html.erb:79 app/views/shops/search.html.erb:42
+#: app/views/transactions/index.html.erb:86 app/views/shops/search.html.erb:42
 #: app/views/shops/index.html.erb:61 app/views/charities/index.html.erb:53
 #: app/views/admin/user_manager.html.erb:21 app/views/causes/index.html.erb:59
 msgid "Show per page"
@@ -1434,8 +1522,21 @@ msgstr ""
 msgid "Signup Date"
 msgstr ""
 
-#: app/helpers/home_helper.rb:21 app/views/shared/_footer.html.erb:17
+#: app/helpers/home_helper.rb:21 app/views/shared/_footer.html.erb:18
 msgid "Social Initiatives"
+msgstr ""
+
+#: app/views/mailer/cause_commented_for_charity.html.erb:1
+#: app/views/mailer/cause_commented_for_follower.html.erb:1
+msgid "Someone commented on the cause "
+msgstr ""
+
+#: app/views/mailer/charity_commented_for_follower.html.erb:1
+msgid "Someone commented on the charity "
+msgstr ""
+
+#: app/views/mailer/charity_commented_for_charity.html.erb:1
+msgid "Someone commented on your charity "
 msgstr ""
 
 #: app/views/shops/search.html.erb:30 app/views/charities/index.html.erb:41
@@ -1443,12 +1544,12 @@ msgstr ""
 msgid "Sort by"
 msgstr ""
 
-#: app/helpers/home_helper.rb:23 app/views/shared/_footer.html.erb:21
+#: app/helpers/home_helper.rb:23 app/views/shared/_footer.html.erb:22
 #: app/views/shared/_pre_footer.html.erb:18
 msgid "Spread the Word"
 msgstr ""
 
-#: app/views/shared/_footer.html.erb:11 app/views/home/about.html.erb:15
+#: app/views/shared/_footer.html.erb:12 app/views/home/about.html.erb:16
 msgid "Statistics"
 msgstr ""
 
@@ -1460,11 +1561,11 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: app/controllers/causes_controller.rb:271
+#: app/controllers/causes_controller.rb:281
 msgid "Status doesnt allow delete"
 msgstr ""
 
-#: app/controllers/causes_controller.rb:264
+#: app/controllers/causes_controller.rb:274
 msgid "Status doesnt allow edit"
 msgstr ""
 
@@ -1511,28 +1612,51 @@ msgid ""
 "causes.."
 msgstr ""
 
+#: app/views/home/accept_eula.html.erb:1 app/views/home/eula.html.erb:1
+msgid "Terms and conditions"
+msgstr ""
+
 #: app/views/shared/inactive.html.erb:2
 msgid "The"
+msgstr ""
+
+#: app/views/mailer/news_created_to_cause.html.erb:1
+msgid "The cause "
+msgstr ""
+
+#: app/mailers/mailer.rb:10 app/mailers/mailer.rb:26 app/mailers/mailer.rb:43
+#: app/mailers/mailer.rb:52 app/mailers/mailer.rb:77 app/mailers/mailer.rb:85
+#: app/mailers/mailer.rb:94
+msgid "The cause \""
+msgstr ""
+
+#: app/views/mailer/funds_completed_for_follower.html.erb:1
+msgid "The cause %1$s, which you are following, is fully funded."
+msgstr ""
+
+#: app/views/mailer/news_created_to_charity.html.erb:1
+msgid "The charity "
+msgstr ""
+
+#: app/mailers/mailer.rb:18 app/mailers/mailer.rb:61 app/mailers/mailer.rb:69
+#: app/mailers/mailer.rb:103
+msgid "The charity \""
 msgstr ""
 
 #: app/views/shared/_error_messages.html.erb:3
 msgid "The following errors have occurred:"
 msgstr ""
 
-#: app/views/mailer/funds_completed_for_follower.html.erb:1
-msgid "The funds of the cause has been completed. Im follower"
-msgstr ""
-
 #: app/views/users/registrations/edit.html.erb:65
 msgid "The status changes"
 msgstr ""
 
-#: app/views/mailer/new_created_to_cause.html.erb:1
-msgid "There are news about the cause."
+#: app/views/mailer/cause_status_changed_for_follower.html.erb:1
+msgid "The status of the cause "
 msgstr ""
 
-#: app/views/mailer/new_created_to_charity.html.erb:1
-msgid "There are news about the charity."
+#: app/views/mailer/cause_status_changed_for_charity.html.erb:1
+msgid "The status of your cause "
 msgstr ""
 
 #: app/controllers/facebook_authentications_controller.rb:32
@@ -1543,11 +1667,11 @@ msgstr ""
 msgid "This is about you and your rights."
 msgstr ""
 
-#: app/controllers/shops_controller.rb:190
+#: app/controllers/shops_controller.rb:191
 msgid "This shop is inactive and won't appear to users"
 msgstr ""
 
-#: app/views/transactions/index.html.erb:56
+#: app/views/transactions/index.html.erb:63
 msgid "To"
 msgstr ""
 
@@ -1573,6 +1697,7 @@ msgstr ""
 msgid "Transaction manager"
 msgstr ""
 
+#: app/views/transactions/index.html.erb:22
 #: app/views/transactions/index.html.erb:24
 msgid "Transactions"
 msgstr ""
@@ -1581,7 +1706,7 @@ msgstr ""
 msgid "Transactions | "
 msgstr ""
 
-#: app/views/transactions/new.html.erb:50
+#: app/views/transactions/new.html.erb:58
 msgid "Transactions | Add Income/Expense"
 msgstr ""
 
@@ -1615,6 +1740,10 @@ msgstr ""
 
 #: app/views/admin/tools.html.erb:23
 msgid "Translation manager"
+msgstr ""
+
+#: app/views/admin/translate.html.erb:1
+msgid "Translations for %s"
 msgstr ""
 
 #: app/views/transactions/_transactions.html.erb:3
@@ -1658,18 +1787,6 @@ msgstr ""
 
 #: app/models/shop.rb:57
 msgid "Use custom HTML"
-msgstr ""
-
-#: app/views/mailer/cause_commented_for_follower.html.erb:1
-msgid "User commented a cause."
-msgstr ""
-
-#: app/views/mailer/cause_commented_for_charity.html.erb:1
-msgid "User commented a cause. Im charity."
-msgstr ""
-
-#: app/views/mailer/cause_being_followed.html.erb:1
-msgid "User is following a cause of you."
 msgstr ""
 
 #: app/views/admin/user_manager.html.erb:1 app/views/admin/tools.html.erb:10
@@ -1862,7 +1979,7 @@ msgstr ""
 msgid "View"
 msgstr ""
 
-#: app/helpers/home_helper.rb:24 app/views/shared/_footer.html.erb:22
+#: app/helpers/home_helper.rb:24 app/views/shared/_footer.html.erb:23
 #: app/views/shared/_pre_footer.html.erb:21
 msgid "Volunteer"
 msgstr ""
@@ -1960,12 +2077,10 @@ msgid ""
 "funding they need."
 msgstr ""
 
-#: app/views/mailer/charity_commented_for_charity.html.erb:1
-msgid "You have new comments. Im charity."
-msgstr ""
-
-#: app/views/mailer/charity_commented_for_follower.html.erb:1
-msgid "You have new comments. Im follower."
+#: app/views/causes/inactive.html.erb:3
+msgid ""
+"Your charity cannot add new Causes until your charity is approved by Bivo, "
+"this should happen within the next 24 hours. Please contact "
 msgstr ""
 
 #: locale/model_attributes.rb:108
@@ -1984,13 +2099,13 @@ msgstr ""
 msgid "add transaction"
 msgstr ""
 
-#: app/controllers/causes_controller.rb:287
-#: app/controllers/shops_controller.rb:84
+#: app/controllers/causes_controller.rb:297
+#: app/controllers/shops_controller.rb:85
 #: app/controllers/charities_controller.rb:58
 msgid "alphabetically"
 msgstr ""
 
-#: app/controllers/causes_controller.rb:185
+#: app/controllers/causes_controller.rb:195
 #: app/controllers/charities_controller.rb:74
 msgid "available"
 msgstr ""
@@ -2007,7 +2122,7 @@ msgstr ""
 msgid "cash reserves"
 msgstr ""
 
-#: app/controllers/causes_controller.rb:308
+#: app/controllers/causes_controller.rb:318
 #: app/views/charities/details.html.erb:71 locale/model_attributes.rb:98
 msgid "cause"
 msgstr ""
@@ -2028,7 +2143,7 @@ msgstr ""
 msgid "charity category"
 msgstr ""
 
-#: app/controllers/causes_controller.rb:289
+#: app/controllers/causes_controller.rb:299
 msgid "charity rating"
 msgstr ""
 
@@ -2036,7 +2151,7 @@ msgstr ""
 msgid "checking..."
 msgstr ""
 
-#: app/views/transactions/index.html.erb:43
+#: app/views/transactions/index.html.erb:50
 #: app/views/charities/index.html.erb:46
 msgid "clear"
 msgstr ""
@@ -2065,8 +2180,8 @@ msgstr ""
 msgid "deleted"
 msgstr ""
 
-#: app/views/home/accept_eula.html.erb:6
-msgid "eula"
+#: app/controllers/transactions_controller.rb:62
+msgid "description"
 msgstr ""
 
 #: locale/model_attributes.rb:10
@@ -2090,12 +2205,12 @@ msgstr ""
 msgid "fund raising projects"
 msgstr ""
 
-#: app/controllers/causes_controller.rb:290
+#: app/controllers/causes_controller.rb:300
 msgid "funds needed"
 msgstr ""
 
-#: app/controllers/causes_controller.rb:297
-#: app/controllers/causes_controller.rb:299
+#: app/controllers/causes_controller.rb:307
+#: app/controllers/causes_controller.rb:309
 #: app/controllers/charities_controller.rb:61
 #: app/views/home/dashboard.html.erb:15
 msgid "funds raised"
@@ -2109,9 +2224,19 @@ msgstr ""
 msgid "gallery item"
 msgstr ""
 
-#: app/controllers/causes_controller.rb:288
+#: app/controllers/causes_controller.rb:298
 #: app/controllers/charities_controller.rb:59
 msgid "geographically"
+msgstr ""
+
+#: app/controllers/transactions_controller.rb:63
+#, fuzzy
+msgid "greater amount"
+msgstr "soulevées montant"
+
+#: app/views/mailer/cause_status_changed_for_charity.html.erb:1
+#: app/views/mailer/cause_status_changed_for_follower.html.erb:1
+msgid "has changed to "
 msgstr ""
 
 #: locale/model_attributes.rb:12
@@ -2126,7 +2251,7 @@ msgstr ""
 msgid "inexistent user"
 msgstr ""
 
-#: app/controllers/causes_controller.rb:187
+#: app/controllers/causes_controller.rb:197
 #: app/controllers/charities_controller.rb:76
 msgid "invalid"
 msgstr ""
@@ -2135,15 +2260,24 @@ msgstr ""
 msgid "is inactive."
 msgstr ""
 
-#: app/models/personal_user.rb:10
+#: app/controllers/transactions_controller.rb:64
+#, fuzzy
+msgid "lower amount"
+msgstr "soulevées montant"
+
+#: app/models/personal_user.rb:8
 msgid "must be 1 megabyte or lower"
+msgstr ""
+
+#: app/controllers/transactions_controller.rb:60
+msgid "newest"
 msgstr ""
 
 #: locale/model_attributes.rb:120
 msgid "news"
 msgstr ""
 
-#: app/controllers/causes_controller.rb:182
+#: app/controllers/causes_controller.rb:192
 #: app/controllers/charities_controller.rb:71
 msgid "not_available"
 msgstr ""
@@ -2156,31 +2290,35 @@ msgstr ""
 msgid "of your purchase will be%sdonated"
 msgstr ""
 
+#: app/controllers/transactions_controller.rb:61
+msgid "oldest"
+msgstr ""
+
 #: app/views/charities/_comment.html.erb:4
 msgid "on"
+msgstr ""
+
+#: config/initializers/symbols.rb:8
+msgid "pending approval"
 msgstr ""
 
 #: locale/model_attributes.rb:93
 msgid "pending mail"
 msgstr ""
 
-#: config/initializers/symbols.rb:8
-msgid "pending to approval"
-msgstr ""
-
 #: app/models/shop.rb:48
 msgid "percentage"
 msgstr ""
 
-#: app/controllers/causes_controller.rb:295
+#: app/controllers/causes_controller.rb:305
 msgid "popularity"
 msgstr ""
 
-#: app/controllers/shops_controller.rb:85
+#: app/controllers/shops_controller.rb:86
 msgid "proximity"
 msgstr ""
 
-#: app/views/causes/_cause.html.erb:49
+#: app/views/causes/_cause.html.erb:50
 msgid "raised"
 msgstr ""
 
@@ -2200,7 +2338,7 @@ msgstr ""
 msgid "revenue"
 msgstr ""
 
-#: app/controllers/shops_controller.rb:178 locale/model_attributes.rb:14
+#: app/controllers/shops_controller.rb:179 locale/model_attributes.rb:14
 msgid "shop"
 msgstr ""
 
@@ -2220,7 +2358,7 @@ msgstr ""
 msgid "the country is already recomended for the shop"
 msgstr ""
 
-#: app/views/home/dashboard.html.erb:66
+#: app/views/home/dashboard.html.erb:72
 msgid "to be raised"
 msgstr ""
 
@@ -2232,6 +2370,10 @@ msgstr ""
 msgid "transactions"
 msgstr ""
 
+#: app/controllers/transactions_controller.rb:59
+msgid "type"
+msgstr ""
+
 #: locale/model_attributes.rb:31
 msgid "user"
 msgstr ""
@@ -2240,7 +2382,7 @@ msgstr ""
 msgid "using Bivo."
 msgstr ""
 
-#: app/views/causes/_cause.html.erb:36
+#: app/views/causes/_cause.html.erb:37
 msgid "votes"
 msgstr ""
 
@@ -2251,14 +2393,3 @@ msgstr ""
 #: app/views/shops/home.html.erb:20
 msgid "you shop at "
 msgstr ""
-
-#: app/views/mailer/cause_status_changed_for_charity.html.erb:1
-msgid "your cause status has changed"
-msgstr ""
-
-#: app/views/mailer/charity_being_followed.html.erb:1
-msgid "your charity has a new follower"
-msgstr ""
-
-#~ msgid "Raised amount"
-#~ msgstr "soulevées montant"

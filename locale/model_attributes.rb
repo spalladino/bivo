@@ -1,8 +1,9 @@
 #DO NOT MODIFY! AUTOMATICALLY GENERATED FILE!
-_('country')
-_('Country|Name')
 _('cause category')
 _('CauseCategory|Name')
+_('country')
+_('Country|Name')
+_('Country|Iso')
 _('charity category')
 _('CharityCategory|Name')
 _('shop category')
