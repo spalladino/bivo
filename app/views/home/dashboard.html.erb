@@ -19,6 +19,18 @@
             </div>
 
         	<div class="dashBoxR">
+	
+				<div class="dashBoxRin">
+				  <h3><%=_("Causes currently raising funds")%></h3>
+				  <% if @causes_raising_funds.empty? %><p class="clickTxt"><%= _("No causes to display") %></p><% end %>
+				  <div class="boxRIn">
+				    <% @causes_raising_funds.each do |cause| %>
+						<%= render :partial => 'cause_card', :locals => { :cause => cause } %>
+				    <% end %>
+				    <br class="spacer" />
+				  </div>
+				</div>
+	
             	<div class="dashBoxRin">
                 	<h3><%= _("Fundraising Sources") %></h3>
                     <div class="cloud">
@@ -32,32 +44,22 @@
                 </div>
 
 
+
                 <div class="dashBoxRin">
-                  <h3><%=_("Causes being funded")%></h3>
-                  <p class="clickTxt"><%= _("No causes with votes in the current period") if @causes_being_funded.empty? %></p>
+                  <h3><%=_("Causes funded")%></h3>
+                  <% if @causes_being_funded.empty? %><p class="clickTxt"><%= _("No causes in the current period") %></p><% end %>
                   <div class="boxRIn">
-                    <% @causes_being_funded.each do |cause|
-						loader_width = (138 * cause.funds_raised/cause.funds_needed).to_i
-					%>
-                    	<div class="boxHu">
-                        	<h3><%= cause.cause_category.name %></h3>
-                           <p class="boxHuTxt"><%= link_to_cause cause %></p>
-                           <div class="loadMain">
-						     <img src="images/loader-green.jpg" width="<%= loader_width %>" height="20" alt="" class="load" style="float: left;" />
-                             <img src="images/loader-gray.jpg" width="<%= 138 - loader_width %>" height="20" alt="" class="load" />
-							 <p class="loadTxt"><%=cause_funds_percentage_completed cause %> of <%= number_to_currency cause.funds_needed, :precision => 0 %></p>
-                           </div>
-                      </div>
+                    <% @causes_being_funded.each do |cause| %>
+						<%= render :partial => 'cause_card', :locals => { :cause => cause } %>
                     <% end %>
                     <br class="spacer" />
                   </div>
-
                 </div>
 
 
                 <div class="dashBoxRin">
                 	<h3><%=_("Most voted causes queued for funding")%></h3>
-                  <p class="clickTxt"><%= _("No causes in the current period") if @most_voted_causes.empty? %></p>
+                  <% if @most_voted_causes.empty? %><p class="clickTxt"><%= _("No causes in the current period") %></p><% end %>
 
                   <div class="boxRIn">
 

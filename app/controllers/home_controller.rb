@@ -37,6 +37,7 @@ class HomeController < ApplicationController
     
     @funds_raised = Income.funds_raised(@from, @to)
     @transactions = Income.transactions_count(@from, @to)
+    @causes_raising_funds = Cause.where(:status => :raising_funds).all
     @causes_being_funded = Cause.causes_being_funded(@from, @to)
     @most_voted_causes = Cause.most_voted_causes(@from, @to)
     @fully_funded_causes = Cause.fully_funded(@from, @to).count
