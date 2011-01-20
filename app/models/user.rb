@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-
+  DEFAULT_CURRENCY = :GBP
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, :lockable and :timeoutable
