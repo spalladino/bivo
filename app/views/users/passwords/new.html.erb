@@ -4,11 +4,13 @@
 
     <%= f.label :email,_("Email: ") %>
 	<%= f.text_field :email,:title=>_('Email :')%>
-	
-	<div class="buttons">
-    	<%= f.submit _("Send me reset password instructions") %>
-	</div>
-	
+  <br/>
+	<%= f.submit _("Send me reset password instructions") %>
+
+  <br/>  <br/>
+  <%=back_button(_("Cancel"))%>
+
   <% end %>
   <div class="bodyBot"></div>
 <% end %>
+

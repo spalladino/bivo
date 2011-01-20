@@ -1,7 +1,7 @@
 <%= single_block _("Create New Charity") do %>
 <%= bivo_form_for(@resource, :as => @resource_name, :url => admin_create_charity_path) do |f| %>
   <%= render "shared/error_messages", :target => @resource %>
-  
+
   <%= hidden_field_tag :referer, @referer %>
 
   <%= f.label :email, _("E-Mail") %>
@@ -22,7 +22,7 @@
   <%= f.label _("Short Url")%>
   <p style ="display:inline;" >
     <span><%= charity_short_url_prefix %></span>
-    <%= f.inline_text_field :short_url, :id => 'short_url', :onfocus => "javascript:$('#available').html('');", :style => "width: 158px; float:none; padding-left:7px;"%> 
+    <%= f.inline_text_field :short_url, :id => 'short_url', :onfocus => "javascript:$('#available').html('');", :style => "width: 158px; float:none; padding-left:7px;"%>
 	<%= inline_orange_link_to _('Check Url'), "#", { :onclick => "javascript:checkUrl(); return false;"} %>
   </p>
   <br class="accfilTxt" />
@@ -37,7 +37,7 @@
 
   <%= f.label :tax_reg_number, "Tax Registration Number" %>
   <%= f.text_field :tax_reg_number %>
-  
+
   <%= f.label :rating, "Rating" %>
   <%= select 'charity', 'rating', @ratings, {:include_blank => true},{ :class => "accChoo accfil" }%>
   <br class="spacer" />
@@ -56,9 +56,11 @@
       :is_new => true, :url_was => nil, :url_check => '/charity/a/check_url'
     } %>
   <%end%>
-  
+
   <div class="buttons">
   	<%= f.submit _("Create Account") %>
+    <%= back_button (_("Cancel"))%>
   </div>
 <% end %>
 <% end %>
+
