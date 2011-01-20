@@ -152,7 +152,7 @@ module ApplicationHelper
   end
 
   def all_shops_path
-    { :controller => "shops", :action => "index", :subdomain => 'shop' }
+    { :controller => "/shops", :action => "index", :subdomain => 'shop' }
   end
 
   # Returns javascript snippet for submitting first parent form
