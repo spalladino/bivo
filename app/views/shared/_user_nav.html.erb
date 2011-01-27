@@ -15,7 +15,7 @@
 		<%= link_to image_tag("logo.png", :size => "211x77", :alt => "Bivo", :title => "Bivo"), root_url %>
 	    <div class="topDropDev default_font">
 	      <% if user_signed_in? %>
-          		<%= _("Signed in as") %> <%= current_user.email %> - 
+          		<%= _("Signed in as") %> <%= current_user.from_facebook ? current_user.facebook_email : current_user.email %> - 
 	          <% if (current_user.type == "Charity") %>
 	            <%= link_to _("My Home"), url_charity(current_user) %> - 
 	            <%= link_to _("Settings"), edit_user_registration_url %>
