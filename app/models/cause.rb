@@ -185,9 +185,9 @@ class Cause < ActiveRecord::Base
     if can_delete?
       super
     else
-      transfer_funds = self.status != :paid      
+      transfer_funds = self.status != :paid
       update_attribute :status, :deleted
-      
+
       if transfer_funds
         account = Account.cause_account self
         Account.transfer account, Account.cash_pool_account, account.balance
@@ -241,6 +241,7 @@ class Cause < ActiveRecord::Base
     result = result.joins("INNER JOIN accounts ON accounts.cause_id = causes.id")
     result = result.joins("INNER JOIN account_movements ON account_movements.account_id = accounts.id")
     result = result.where("account_movements.created_at BETWEEN ? AND ?", from, to)
+    result = result.where("#{Cause.table_name}.status != ?",:raising_funds)
     result = result.order("cause_category_id ASC, funds_raised_in_period DESC")
     result = result.group(cause_columns)
     result.all
@@ -261,9 +262,9 @@ class Cause < ActiveRecord::Base
   end
 
   def self.fully_funded(from, to)
-    Cause.where("(fully_funded_at BETWEEN ? AND ?)", from, to)    
+    Cause.where("(fully_funded_at BETWEEN ? AND ?)", from, to)
   end
-  
+
   def ensure_cause_account
     Account.cause_account self
   end
