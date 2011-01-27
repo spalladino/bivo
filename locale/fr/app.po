@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: version 0.0.1\n"
-"POT-Creation-Date: 2011-01-20 17:09-0300\n"
+"POT-Creation-Date: 2011-01-27 15:23-0300\n"
 "PO-Revision-Date: 2010-11-19 14:21-0300\n"
 "Last-Translator: mhick <mhick@paros>\n"
 "Language-Team: French\n"
@@ -140,7 +140,7 @@ msgstr ""
 msgid "About Bivo"
 msgstr ""
 
-#: app/views/users/registrations/edit.html.erb:46
+#: app/views/users/registrations/edit.html.erb:53
 msgid "About me"
 msgstr ""
 
@@ -148,23 +148,23 @@ msgstr ""
 msgid "Accept"
 msgstr ""
 
-#: locale/model_attributes.rb:91
+#: locale/model_attributes.rb:92
 msgid "AccountMovement|Amount"
 msgstr ""
 
-#: locale/model_attributes.rb:92
+#: locale/model_attributes.rb:93
 msgid "AccountMovement|Balance"
 msgstr ""
 
-#: locale/model_attributes.rb:90
+#: locale/model_attributes.rb:91
 msgid "AccountMovement|Description"
 msgstr ""
 
-#: locale/model_attributes.rb:110
+#: locale/model_attributes.rb:111
 msgid "Account|Balance"
 msgstr ""
 
-#: locale/model_attributes.rb:109
+#: locale/model_attributes.rb:110
 msgid "Account|Name"
 msgstr ""
 
@@ -236,7 +236,7 @@ msgstr ""
 msgid "All countries"
 msgstr ""
 
-#: app/views/users/registrations/edit.html.erb:62
+#: app/views/users/registrations/edit.html.erb:69
 msgid "All funds are raised"
 msgstr ""
 
@@ -279,7 +279,7 @@ msgid ""
 "conditions of Bivo"
 msgstr ""
 
-#: app/views/users/registrations/edit.html.erb:77
+#: app/views/users/registrations/edit.html.erb:84
 msgid "Auto-approve comments of my charity or projects"
 msgstr ""
 
@@ -330,7 +330,7 @@ msgstr ""
 
 #: app/views/transactions/edit.html.erb:26 app/views/shops/_form.html.erb:88
 #: app/views/users/passwords/new.html.erb:11
-#: app/views/users/registrations/edit.html.erb:85
+#: app/views/users/registrations/edit.html.erb:92
 #: app/views/admin/new_personal_user.html.erb:34
 #: app/views/admin/new_charity.html.erb:62 app/views/causes/_form.html.erb:21
 msgid "Cancel"
@@ -358,7 +358,7 @@ msgstr ""
 msgid "Cause Name"
 msgstr ""
 
-#: locale/model_attributes.rb:5
+#: locale/model_attributes.rb:3
 msgid "CauseCategory|Name"
 msgstr ""
 
@@ -382,39 +382,39 @@ msgstr ""
 msgid "Causes with the most votes get funds faster."
 msgstr ""
 
-#: locale/model_attributes.rb:102
+#: locale/model_attributes.rb:103
 msgid "Cause|City"
 msgstr ""
 
-#: locale/model_attributes.rb:103
+#: locale/model_attributes.rb:104
 msgid "Cause|Description"
 msgstr ""
 
-#: locale/model_attributes.rb:107
+#: locale/model_attributes.rb:108
 msgid "Cause|Fully funded at"
 msgstr ""
 
-#: locale/model_attributes.rb:101
+#: locale/model_attributes.rb:102
 msgid "Cause|Funds needed"
 msgstr ""
 
-#: locale/model_attributes.rb:104
+#: locale/model_attributes.rb:105
 msgid "Cause|Funds raised"
 msgstr ""
 
-#: locale/model_attributes.rb:99
+#: locale/model_attributes.rb:100
 msgid "Cause|Name"
 msgstr ""
 
-#: locale/model_attributes.rb:105
+#: locale/model_attributes.rb:106
 msgid "Cause|Status"
 msgstr ""
 
-#: locale/model_attributes.rb:100
+#: locale/model_attributes.rb:101
 msgid "Cause|Url"
 msgstr ""
 
-#: locale/model_attributes.rb:106
+#: locale/model_attributes.rb:107
 msgid "Cause|Votes count"
 msgstr ""
 
@@ -448,7 +448,7 @@ msgid "Charity"
 msgstr ""
 
 #: app/views/users/registrations/_new_charity.html.erb:1
-#: app/views/users/registrations/edit.html.erb:19
+#: app/views/users/registrations/edit.html.erb:26
 msgid "Charity Name"
 msgstr ""
 
@@ -465,11 +465,11 @@ msgid "Charity Type"
 msgstr ""
 
 #: app/views/users/registrations/_new_charity.html.erb:4
-#: app/views/users/registrations/edit.html.erb:22
+#: app/views/users/registrations/edit.html.erb:29
 msgid "Charity Website"
 msgstr ""
 
-#: locale/model_attributes.rb:7
+#: locale/model_attributes.rb:8
 msgid "CharityCategory|Name"
 msgstr ""
 
@@ -498,7 +498,7 @@ msgid "Choose month"
 msgstr ""
 
 #: app/views/users/registrations/_new_charity.html.erb:29
-#: app/views/users/registrations/edit.html.erb:33
+#: app/views/users/registrations/edit.html.erb:40
 #: app/views/causes/_form.html.erb:13
 msgid "City"
 msgstr ""
@@ -516,35 +516,35 @@ msgstr ""
 msgid "Comment text is required"
 msgstr ""
 
-#: app/views/users/registrations/edit.html.erb:71
+#: app/views/users/registrations/edit.html.erb:78
 msgid "Comments are added"
 msgstr ""
 
-#: locale/model_attributes.rb:81
+#: locale/model_attributes.rb:82
 msgid "Comment|Approved"
 msgstr ""
 
-#: locale/model_attributes.rb:77
+#: locale/model_attributes.rb:78
 msgid "Comment|Body"
 msgstr ""
 
-#: locale/model_attributes.rb:75
+#: locale/model_attributes.rb:76
 msgid "Comment|Commentable type"
 msgstr ""
 
-#: locale/model_attributes.rb:79
+#: locale/model_attributes.rb:80
 msgid "Comment|Lft"
 msgstr ""
 
-#: locale/model_attributes.rb:80
+#: locale/model_attributes.rb:81
 msgid "Comment|Rgt"
 msgstr ""
 
-#: locale/model_attributes.rb:78
+#: locale/model_attributes.rb:79
 msgid "Comment|Subject"
 msgstr ""
 
-#: locale/model_attributes.rb:76
+#: locale/model_attributes.rb:77
 msgid "Comment|Title"
 msgstr ""
 
@@ -565,12 +565,16 @@ msgid "Contact Us"
 msgstr ""
 
 #: app/views/users/registrations/_new_charity.html.erb:26
-#: app/views/users/registrations/edit.html.erb:30
+#: app/views/users/registrations/edit.html.erb:37
 #: app/views/causes/_form.html.erb:9
 msgid "Country"
 msgstr ""
 
-#: locale/model_attributes.rb:3
+#: locale/model_attributes.rb:6
+msgid "Country|Iso"
+msgstr ""
+
+#: locale/model_attributes.rb:5
 msgid "Country|Name"
 msgstr ""
 
@@ -637,7 +641,7 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: app/views/users/registrations/edit.html.erb:54
+#: app/views/users/registrations/edit.html.erb:61
 msgid "Delete profile picture"
 msgstr ""
 
@@ -648,7 +652,7 @@ msgstr ""
 #: app/views/transactions/_transactions.html.erb:5
 #: app/views/home/stats.html.erb:49
 #: app/views/users/registrations/_new_charity.html.erb:32
-#: app/views/users/registrations/edit.html.erb:36
+#: app/views/users/registrations/edit.html.erb:43
 #: app/views/admin/new_charity.html.erb:51 app/views/causes/_form.html.erb:16
 msgid "Description"
 msgstr ""
@@ -677,7 +681,7 @@ msgstr ""
 msgid "Done"
 msgstr ""
 
-#: app/views/users/registrations/edit.html.erb:9
+#: app/views/users/registrations/edit.html.erb:13
 #: app/views/users/confirmations/new.html.erb:6
 #: app/views/admin/new_personal_user.html.erb:7
 #: app/views/admin/new_charity.html.erb:7
@@ -725,7 +729,7 @@ msgstr ""
 msgid "Email :"
 msgstr ""
 
-#: app/views/users/registrations/edit.html.erb:59
+#: app/views/users/registrations/edit.html.erb:66
 msgid "Email me updates of projects or charities I follow when: "
 msgstr ""
 
@@ -804,7 +808,7 @@ msgstr ""
 msgid "Expense Categories | Edit"
 msgstr ""
 
-#: locale/model_attributes.rb:11
+#: locale/model_attributes.rb:12
 msgid "ExpenseCategory|Name"
 msgstr ""
 
@@ -898,31 +902,31 @@ msgstr ""
 msgid "Gallery"
 msgstr ""
 
-#: locale/model_attributes.rb:117
+#: locale/model_attributes.rb:118
 msgid "GalleryItem|Image content type"
 msgstr ""
 
-#: locale/model_attributes.rb:116
+#: locale/model_attributes.rb:117
 msgid "GalleryItem|Image file name"
 msgstr ""
 
-#: locale/model_attributes.rb:118
+#: locale/model_attributes.rb:119
 msgid "GalleryItem|Image file size"
 msgstr ""
 
-#: locale/model_attributes.rb:119
+#: locale/model_attributes.rb:120
 msgid "GalleryItem|Image updated at"
 msgstr ""
 
-#: locale/model_attributes.rb:114
+#: locale/model_attributes.rb:115
 msgid "GalleryItem|Relative order"
 msgstr ""
 
-#: locale/model_attributes.rb:115
+#: locale/model_attributes.rb:116
 msgid "GalleryItem|Video url"
 msgstr ""
 
-#: locale/model_attributes.rb:112
+#: locale/model_attributes.rb:113
 msgid "Gallery|Entity type"
 msgstr ""
 
@@ -956,7 +960,7 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: app/views/users/registrations/edit.html.erb:39
+#: app/views/users/registrations/edit.html.erb:46
 msgid "Home page"
 msgstr ""
 
@@ -992,7 +996,7 @@ msgstr ""
 msgid "Income Sources | Edit"
 msgstr ""
 
-#: locale/model_attributes.rb:13
+#: locale/model_attributes.rb:14
 msgid "IncomeCategory|Name"
 msgstr ""
 
@@ -1107,7 +1111,7 @@ msgstr ""
 msgid "New comment:"
 msgstr ""
 
-#: app/views/users/registrations/edit.html.erb:68
+#: app/views/users/registrations/edit.html.erb:75
 msgid "New status updates are published"
 msgstr ""
 
@@ -1115,11 +1119,11 @@ msgstr ""
 msgid "News"
 msgstr ""
 
-#: locale/model_attributes.rb:121
+#: locale/model_attributes.rb:122
 msgid "News|Body"
 msgstr ""
 
-#: locale/model_attributes.rb:122
+#: locale/model_attributes.rb:123
 msgid "News|Newsable type"
 msgstr ""
 
@@ -1175,7 +1179,7 @@ msgstr ""
 msgid "Organized by: "
 msgstr ""
 
-#: app/views/users/registrations/edit.html.erb:73
+#: app/views/users/registrations/edit.html.erb:80
 msgid "Other: "
 msgstr ""
 
@@ -1201,7 +1205,7 @@ msgid "Paid to"
 msgstr ""
 
 #: app/views/users/passwords/edit.html.erb:7
-#: app/views/users/registrations/edit.html.erb:12
+#: app/views/users/registrations/edit.html.erb:17
 #: app/views/users/registrations/new.html.erb:36
 msgid "Password"
 msgstr ""
@@ -1218,19 +1222,19 @@ msgstr ""
 msgid "Paste any %s or %s video url"
 msgstr ""
 
-#: locale/model_attributes.rb:95
+#: locale/model_attributes.rb:96
 msgid "PendingMail|Data"
 msgstr ""
 
-#: locale/model_attributes.rb:97
+#: locale/model_attributes.rb:98
 msgid "PendingMail|Language"
 msgstr ""
 
-#: locale/model_attributes.rb:94
+#: locale/model_attributes.rb:95
 msgid "PendingMail|Method"
 msgstr ""
 
-#: locale/model_attributes.rb:96
+#: locale/model_attributes.rb:97
 msgid "PendingMail|Retries"
 msgstr ""
 
@@ -1254,7 +1258,7 @@ msgstr ""
 msgid "Please select a valid date (now displaying current month)."
 msgstr ""
 
-#: app/views/users/registrations/edit.html.erb:49
+#: app/views/users/registrations/edit.html.erb:56
 msgid "Profile picture"
 msgstr ""
 
@@ -1351,7 +1355,7 @@ msgstr ""
 msgid "Send Feedback"
 msgstr ""
 
-#: app/views/users/registrations/edit.html.erb:81
+#: app/views/users/registrations/edit.html.erb:88
 msgid "Send me bivo.org news"
 msgstr ""
 
@@ -1400,7 +1404,7 @@ msgstr ""
 msgid "Shop successfully updated"
 msgstr ""
 
-#: locale/model_attributes.rb:9
+#: locale/model_attributes.rb:10
 msgid "ShopCategory|Name"
 msgstr ""
 
@@ -1410,67 +1414,67 @@ msgstr ""
 msgid "Shops"
 msgstr ""
 
-#: locale/model_attributes.rb:21
+#: locale/model_attributes.rb:22
 msgid "Shop|Affiliate code"
 msgstr ""
 
-#: locale/model_attributes.rb:29
+#: locale/model_attributes.rb:30
 msgid "Shop|Comission details"
 msgstr ""
 
-#: locale/model_attributes.rb:28
+#: locale/model_attributes.rb:29
 msgid "Shop|Comission kind"
 msgstr ""
 
-#: locale/model_attributes.rb:30
+#: locale/model_attributes.rb:31
 msgid "Shop|Comission recurrent"
 msgstr ""
 
-#: locale/model_attributes.rb:27
+#: locale/model_attributes.rb:28
 msgid "Shop|Comission value"
 msgstr ""
 
-#: locale/model_attributes.rb:19
+#: locale/model_attributes.rb:20
 msgid "Shop|Description"
 msgstr ""
 
-#: locale/model_attributes.rb:23
+#: locale/model_attributes.rb:24
 msgid "Shop|Image content type"
 msgstr ""
 
-#: locale/model_attributes.rb:22
+#: locale/model_attributes.rb:23
 msgid "Shop|Image file name"
 msgstr ""
 
-#: locale/model_attributes.rb:24
+#: locale/model_attributes.rb:25
 msgid "Shop|Image file size"
 msgstr ""
 
-#: locale/model_attributes.rb:25
+#: locale/model_attributes.rb:26
 msgid "Shop|Image updated at"
 msgstr ""
 
-#: locale/model_attributes.rb:15
+#: locale/model_attributes.rb:16
 msgid "Shop|Name"
 msgstr ""
 
-#: locale/model_attributes.rb:18
+#: locale/model_attributes.rb:19
 msgid "Shop|Redirection"
 msgstr ""
 
-#: locale/model_attributes.rb:16
+#: locale/model_attributes.rb:17
 msgid "Shop|Short url"
 msgstr ""
 
-#: locale/model_attributes.rb:26
+#: locale/model_attributes.rb:27
 msgid "Shop|Status"
 msgstr ""
 
-#: locale/model_attributes.rb:17
+#: locale/model_attributes.rb:18
 msgid "Shop|Url"
 msgstr ""
 
-#: locale/model_attributes.rb:20
+#: locale/model_attributes.rb:21
 msgid "Shop|Worldwide"
 msgstr ""
 
@@ -1514,7 +1518,7 @@ msgid "Signed in as"
 msgstr ""
 
 #: app/controllers/facebook_authentications_controller.rb:20
-#: app/controllers/facebook_authentications_controller.rb:29
+#: app/controllers/facebook_authentications_controller.rb:30
 msgid "Signed in succesfully"
 msgstr ""
 
@@ -1647,7 +1651,7 @@ msgstr ""
 msgid "The following errors have occurred:"
 msgstr ""
 
-#: app/views/users/registrations/edit.html.erb:65
+#: app/views/users/registrations/edit.html.erb:72
 msgid "The status changes"
 msgstr ""
 
@@ -1659,7 +1663,7 @@ msgstr ""
 msgid "The status of your cause "
 msgstr ""
 
-#: app/controllers/facebook_authentications_controller.rb:32
+#: app/controllers/facebook_authentications_controller.rb:33
 msgid "There was an error creating the user"
 msgstr ""
 
@@ -1669,6 +1673,10 @@ msgstr ""
 
 #: app/controllers/shops_controller.rb:191
 msgid "This shop is inactive and won't appear to users"
+msgstr ""
+
+#: app/views/users/registrations/edit.html.erb:10
+msgid "This user is related to %s Facebook account"
 msgstr ""
 
 #: app/views/transactions/index.html.erb:63
@@ -1710,27 +1718,27 @@ msgstr ""
 msgid "Transactions | Add Income/Expense"
 msgstr ""
 
-#: locale/model_attributes.rb:84
+#: locale/model_attributes.rb:85
 msgid "Transaction|Amount"
 msgstr ""
 
-#: locale/model_attributes.rb:85
+#: locale/model_attributes.rb:86
 msgid "Transaction|Description"
 msgstr ""
 
-#: locale/model_attributes.rb:88
+#: locale/model_attributes.rb:89
 msgid "Transaction|Input amount"
 msgstr ""
 
-#: locale/model_attributes.rb:87
+#: locale/model_attributes.rb:88
 msgid "Transaction|Input currency"
 msgstr ""
 
-#: locale/model_attributes.rb:86
+#: locale/model_attributes.rb:87
 msgid "Transaction|Paid to"
 msgstr ""
 
-#: locale/model_attributes.rb:83
+#: locale/model_attributes.rb:84
 msgid "Transaction|Transaction date"
 msgstr ""
 
@@ -1769,7 +1777,7 @@ msgstr ""
 msgid "Unfollowing..."
 msgstr ""
 
-#: app/views/users/registrations/edit.html.erb:84
+#: app/views/users/registrations/edit.html.erb:91
 msgid "Update"
 msgstr ""
 
@@ -1793,171 +1801,171 @@ msgstr ""
 msgid "User manager"
 msgstr ""
 
-#: locale/model_attributes.rb:48
+#: locale/model_attributes.rb:49
 msgid "User|About me"
 msgstr ""
 
-#: locale/model_attributes.rb:58
+#: locale/model_attributes.rb:59
 msgid "User|Active"
 msgstr ""
 
-#: locale/model_attributes.rb:64
+#: locale/model_attributes.rb:65
 msgid "User|Auto approve comments"
 msgstr ""
 
-#: locale/model_attributes.rb:46
+#: locale/model_attributes.rb:47
 msgid "User|Birthday"
 msgstr ""
 
-#: locale/model_attributes.rb:49
+#: locale/model_attributes.rb:50
 msgid "User|Charity name"
 msgstr ""
 
-#: locale/model_attributes.rb:52
+#: locale/model_attributes.rb:53
 msgid "User|Charity type"
 msgstr ""
 
-#: locale/model_attributes.rb:50
+#: locale/model_attributes.rb:51
 msgid "User|Charity website"
 msgstr ""
 
-#: locale/model_attributes.rb:56
+#: locale/model_attributes.rb:57
 msgid "User|City"
 msgstr ""
 
-#: locale/model_attributes.rb:38
+#: locale/model_attributes.rb:39
 msgid "User|Current sign in at"
 msgstr ""
 
-#: locale/model_attributes.rb:40
+#: locale/model_attributes.rb:41
 msgid "User|Current sign in ip"
 msgstr ""
 
-#: locale/model_attributes.rb:57
+#: locale/model_attributes.rb:58
 msgid "User|Description"
 msgstr ""
 
-#: locale/model_attributes.rb:32
+#: locale/model_attributes.rb:33
 msgid "User|Email"
 msgstr ""
 
-#: locale/model_attributes.rb:33
+#: locale/model_attributes.rb:34
 msgid "User|Encrypted password"
 msgstr ""
 
-#: locale/model_attributes.rb:66
+#: locale/model_attributes.rb:67
 msgid "User|Eula accepted"
 msgstr ""
 
-#: locale/model_attributes.rb:43
+#: locale/model_attributes.rb:44
 msgid "User|First name"
 msgstr ""
 
-#: locale/model_attributes.rb:65
+#: locale/model_attributes.rb:66
 msgid "User|From facebook"
 msgstr ""
 
-#: locale/model_attributes.rb:47
+#: locale/model_attributes.rb:48
 msgid "User|Gender"
 msgstr ""
 
-#: locale/model_attributes.rb:44
+#: locale/model_attributes.rb:45
 msgid "User|Last name"
 msgstr ""
 
-#: locale/model_attributes.rb:39
+#: locale/model_attributes.rb:40
 msgid "User|Last sign in at"
 msgstr ""
 
-#: locale/model_attributes.rb:41
+#: locale/model_attributes.rb:42
 msgid "User|Last sign in ip"
 msgstr ""
 
-#: locale/model_attributes.rb:45
+#: locale/model_attributes.rb:46
 msgid "User|Nickname"
 msgstr ""
 
-#: locale/model_attributes.rb:59
+#: locale/model_attributes.rb:60
 msgid "User|Notice all funds raised"
 msgstr ""
 
-#: locale/model_attributes.rb:62
+#: locale/model_attributes.rb:63
 msgid "User|Notice comment added"
 msgstr ""
 
-#: locale/model_attributes.rb:60
+#: locale/model_attributes.rb:61
 msgid "User|Notice status change"
 msgstr ""
 
-#: locale/model_attributes.rb:61
+#: locale/model_attributes.rb:62
 msgid "User|Notice status update published"
 msgstr ""
 
-#: locale/model_attributes.rb:69
+#: locale/model_attributes.rb:70
 msgid "User|Picture content type"
 msgstr ""
 
-#: locale/model_attributes.rb:68
+#: locale/model_attributes.rb:69
 msgid "User|Picture file name"
 msgstr ""
 
-#: locale/model_attributes.rb:70
+#: locale/model_attributes.rb:71
 msgid "User|Picture file size"
 msgstr ""
 
-#: locale/model_attributes.rb:71
+#: locale/model_attributes.rb:72
 msgid "User|Picture updated at"
 msgstr ""
 
-#: locale/model_attributes.rb:73
+#: locale/model_attributes.rb:74
 msgid "User|Preferred currency"
 msgstr ""
 
-#: locale/model_attributes.rb:72
+#: locale/model_attributes.rb:73
 msgid "User|Preferred language"
 msgstr ""
 
-#: locale/model_attributes.rb:54
+#: locale/model_attributes.rb:55
 msgid "User|Rating"
 msgstr ""
 
-#: locale/model_attributes.rb:55
+#: locale/model_attributes.rb:56
 msgid "User|Rating url"
 msgstr ""
 
-#: locale/model_attributes.rb:36
+#: locale/model_attributes.rb:37
 msgid "User|Remember created at"
 msgstr ""
 
-#: locale/model_attributes.rb:35
+#: locale/model_attributes.rb:36
 msgid "User|Remember token"
 msgstr ""
 
-#: locale/model_attributes.rb:34
+#: locale/model_attributes.rb:35
 msgid "User|Reset password token"
 msgstr ""
 
-#: locale/model_attributes.rb:42
+#: locale/model_attributes.rb:43
 msgid "User|Rpx identifier"
 msgstr ""
 
-#: locale/model_attributes.rb:63
+#: locale/model_attributes.rb:64
 msgid "User|Send me news"
 msgstr ""
 
-#: locale/model_attributes.rb:51
+#: locale/model_attributes.rb:52
 msgid "User|Short url"
 msgstr ""
 
-#: locale/model_attributes.rb:37
+#: locale/model_attributes.rb:38
 msgid "User|Sign in count"
 msgstr ""
 
-#: locale/model_attributes.rb:67
+#: locale/model_attributes.rb:68
 msgid "User|Status"
 msgstr ""
 
-#: locale/model_attributes.rb:53
+#: locale/model_attributes.rb:54
 msgid "User|Tax reg number"
 msgstr ""
 
@@ -2083,11 +2091,11 @@ msgid ""
 "this should happen within the next 24 hours. Please contact "
 msgstr ""
 
-#: locale/model_attributes.rb:108
+#: locale/model_attributes.rb:109
 msgid "account"
 msgstr ""
 
-#: locale/model_attributes.rb:89
+#: locale/model_attributes.rb:90
 msgid "account movement"
 msgstr ""
 
@@ -2123,11 +2131,11 @@ msgid "cash reserves"
 msgstr ""
 
 #: app/controllers/causes_controller.rb:318
-#: app/views/charities/details.html.erb:71 locale/model_attributes.rb:98
+#: app/views/charities/details.html.erb:71 locale/model_attributes.rb:99
 msgid "cause"
 msgstr ""
 
-#: locale/model_attributes.rb:4
+#: locale/model_attributes.rb:2
 msgid "cause category"
 msgstr ""
 
@@ -2139,7 +2147,7 @@ msgstr ""
 msgid "charity"
 msgstr ""
 
-#: locale/model_attributes.rb:6
+#: locale/model_attributes.rb:7
 msgid "charity category"
 msgstr ""
 
@@ -2156,7 +2164,7 @@ msgstr ""
 msgid "clear"
 msgstr ""
 
-#: locale/model_attributes.rb:74
+#: locale/model_attributes.rb:75
 msgid "comment"
 msgstr ""
 
@@ -2172,7 +2180,7 @@ msgstr ""
 msgid "contact us"
 msgstr ""
 
-#: locale/model_attributes.rb:2
+#: locale/model_attributes.rb:4
 msgid "country"
 msgstr ""
 
@@ -2184,7 +2192,7 @@ msgstr ""
 msgid "description"
 msgstr ""
 
-#: locale/model_attributes.rb:10
+#: locale/model_attributes.rb:11
 msgid "expense category"
 msgstr ""
 
@@ -2216,11 +2224,11 @@ msgstr ""
 msgid "funds raised"
 msgstr ""
 
-#: locale/model_attributes.rb:111
+#: locale/model_attributes.rb:112
 msgid "gallery"
 msgstr ""
 
-#: locale/model_attributes.rb:113
+#: locale/model_attributes.rb:114
 msgid "gallery item"
 msgstr ""
 
@@ -2239,7 +2247,7 @@ msgstr "soulevées montant"
 msgid "has changed to "
 msgstr ""
 
-#: locale/model_attributes.rb:12
+#: locale/model_attributes.rb:13
 msgid "income category"
 msgstr ""
 
@@ -2273,7 +2281,7 @@ msgstr ""
 msgid "newest"
 msgstr ""
 
-#: locale/model_attributes.rb:120
+#: locale/model_attributes.rb:121
 msgid "news"
 msgstr ""
 
@@ -2302,7 +2310,7 @@ msgstr ""
 msgid "pending approval"
 msgstr ""
 
-#: locale/model_attributes.rb:93
+#: locale/model_attributes.rb:94
 msgid "pending mail"
 msgstr ""
 
@@ -2338,11 +2346,11 @@ msgstr ""
 msgid "revenue"
 msgstr ""
 
-#: app/controllers/shops_controller.rb:179 locale/model_attributes.rb:14
+#: app/controllers/shops_controller.rb:179 locale/model_attributes.rb:15
 msgid "shop"
 msgstr ""
 
-#: locale/model_attributes.rb:8
+#: locale/model_attributes.rb:9
 msgid "shop category"
 msgstr ""
 
@@ -2362,7 +2370,7 @@ msgstr ""
 msgid "to be raised"
 msgstr ""
 
-#: locale/model_attributes.rb:82
+#: locale/model_attributes.rb:83
 msgid "transaction"
 msgstr ""
 
@@ -2374,7 +2382,7 @@ msgstr ""
 msgid "type"
 msgstr ""
 
-#: locale/model_attributes.rb:31
+#: locale/model_attributes.rb:32
 msgid "user"
 msgstr ""
 
