@@ -6,14 +6,21 @@
     <%= hidden_field_tag :id, @id %>
     <%= hidden_field_tag :referer, @referer %>
 
+    <% if @resource.from_facebook %>
+      <%=f.row_label _("This user is related to %s Facebook account") % @resource.facebook_email %>
+    <% end -%>
+
     <%= f.label :email, _("E-Mail") %>
-    <%= f.text_field :email, :readonly => @resource.from_facebook %>
+    <%= f.text_field :email %>
 
-    <%= f.label :password,_("Password") %>
-    <%= f.password_field :password %>
+    <% if !@resource.from_facebook %>
+      <%= f.label :password,_("Password") %>
+      <%= f.password_field :password %>
 
-    <%= f.label :password_confirmation, ("Password Confirmation")  %>
-    <%= f.password_field :password_confirmation %>
+      <%= f.label :password_confirmation, ("Password Confirmation")  %>
+      <%= f.password_field :password_confirmation %>
+
+    <% end -%>
 
     <% if (@type == :Charity) %>
       <%= f.label :charity_name, _("Charity Name") %>

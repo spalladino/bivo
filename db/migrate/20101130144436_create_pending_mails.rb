@@ -13,3 +13,4 @@ class CreatePendingMails < ActiveRecord::Migration
     drop_table :pending_mails
   end
 end
+
