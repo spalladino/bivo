@@ -7,12 +7,12 @@
     <div class="statGrT"><h2><%= @charity.charity_name%></h2></div>
     <div class="boxMain">
       <div class="cauVMain">
-	
+
 		<div class="actions">
 			<div>
 				<%= orange_link_to _("Edit"), edit_user_registration_path(:id => @charity.id) if current_user.try(:is_admin_user) %>
 			</div>
-			
+
 			<div id="delete_charity_button">
 			  <%= delete_charity_button @charity %>
 			</div>
@@ -24,17 +24,17 @@
 			<div id="add_cause_button">
 			  <%= add_cause_button @charity %>
 			</div>
-			
+
 			<div>
 			  <%= edit_gallery_link @charity %>
 			</div>
-			
+
 			<div>
-			  <%= charity_comments_pending @charity %>			  
+			  <%= charity_comments_pending @charity %>
 			</div>
 			<br class="spacer"/>
 		</div>
-	
+
         <%= gallery @charity %>
 
         <div class="chariMid cauVMid">
@@ -46,14 +46,14 @@
         </div><!-- /chariMid cauVMid -->
         <div class="shopListBoxRi">
         	<div class="shopListGr"><span class="cvMBoxNo"><%=number_to_currency(@charity.total_funds_raised || 0,:precision => 0)%></span><span class="cvMBoxTxt"><%=_(' raised')%></span></div>
-	        <div class="shopListGr"><span class="cvMBoxNo"><%=@charity.causes_count.to_s%></span><span class="cvMBoxTxt"><%= n_(' cause', ' causes', @charity.causes_count.to_i) %></span></div>  
+	        <div class="shopListGr"><span class="cvMBoxNo"><%=@charity.causes_count.to_s%></span><span class="cvMBoxTxt"><%= n_(' cause', ' causes', @charity.causes_count.to_i) %></span></div>
           <div class="buttonMainVote29">
 		        <div class="buttonSideRec recBtnStF"></div>
             <div id="follow_charity_button">
               <%= follow_charity_button @charity, :class => "buttonMidRec" %>
             </div>
         		<div class="buttonSideRec recBtnEn"></div><br class="spacer" />
-   			  </div>            
+   			  </div>
           <div class="buttonMainVote29">
             <!--<div class="buttonSideRec recBtnStL"></div>
         		<input type="button" name="like" value="Like" id="like" class="buttonMidRec" />
@@ -64,7 +64,7 @@
             </div>
           </div>
         </div><!-- /shopListBoxRi -->
-        <br class="spacer" />      
+        <br class="spacer" />
   	  </div><!--cauVMain-->
 
 
@@ -86,7 +86,7 @@
             <% @charity.causes_to_show(current_user).each do |cause| %>
               <tr class="statInmainT3">
                 <td class="chariTy"><%=cause_link cause%></td>
-                <td class="chariSt"><%=cause.status%></td>
+                <td class="chariSt"><%=cause.status.description%></td>
                 <td class="chariPro"><%=progress_box cause%></td>
               </tr>
             <% end %>
@@ -104,5 +104,4 @@
   </div><!-- /bodyInner -->
   <div class="bodyBot"></div>
 </div><!-- /inbodyM -->
-
 
