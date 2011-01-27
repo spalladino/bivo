@@ -7,13 +7,18 @@
     <%= hidden_field_tag :referer, @referer %>
 
     <%= f.label :email, _("E-Mail") %>
-    <%= f.text_field :email, :readonly => @resource.from_facebook %>
+    <%= f.text_field :email %>
 
-    <%= f.label :password,_("Password") %>
-    <%= f.password_field :password %>
+    <% if @resource.from_facebook %>
+      <%= f.label :facebook_email,_("Facebook Email: ") %> <%=@resuource.facebook_email %>
+    <% else -%>
+      <%= f.label :password,_("Password") %>
+      <%= f.password_field :password %>
 
-    <%= f.label :password_confirmation, ("Password Confirmation")  %>
-    <%= f.password_field :password_confirmation %>
+      <%= f.label :password_confirmation, ("Password Confirmation")  %>
+      <%= f.password_field :password_confirmation %>
+
+    <% end -%>
 
     <% if (@type == :Charity) %>
       <%= f.label :charity_name, _("Charity Name") %>

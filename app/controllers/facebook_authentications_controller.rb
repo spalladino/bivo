@@ -13,7 +13,7 @@ class FacebookAuthenticationsController < ApplicationController
       "preferred_language" => 'en'
     }
 
-    user = User.find_by_email(user_info["email"])
+    user = User.find_by_facebook_email(user_info["email"])
 
     if (user)
       if (user.from_facebook)
@@ -25,9 +25,10 @@ class FacebookAuthenticationsController < ApplicationController
       end
     else
       user = PersonalUser.new(user_info)
+      user.facebook_email = user.email
       if (user.save)
         flash[:notice] = _("Signed in succesfully")
-        sign_in_and_redirect :user, user 
+        sign_in_and_redirect :user, user
       else
         flash[:notice] = _("There was an error creating the user")
         redirect_to root_path
@@ -35,3 +36,4 @@ class FacebookAuthenticationsController < ApplicationController
     end
   end
 end
+
